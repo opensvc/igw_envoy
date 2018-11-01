@@ -1,0 +1,1671 @@
+#!/usr/bin/python3
+
+"""
+Example listeners data structure:
+
+        data = [
+            {
+                "name": "collector:6379/tcp",
+                "address": {
+                    "socket_address": {
+                        "address": "10.0.3.10",
+                        "port_value": 1111,
+                    },
+                },
+                "filter_chains": [
+                    {
+                        "filters": [
+                            {
+                                "name": "envoy.tcp_proxy",
+                                "config": {
+                                    "stat_prefix": "ingress_redis",
+                                    "cluster": "collector.expose#0",
+                                },
+                            },
+                        ],
+                    }
+                ],
+            },
+            {
+                "name": "default_https",
+                "address": {
+                    "socket_address": {
+                        "10.0.3.10",
+                        "port_value": 443,
+                    },
+                },
+                "filter_chains": [
+                    {
+                        "tls_context": {
+                            "common_tls_context": {
+                                "tls_certificates": [
+                                    {
+                                        "private_key": {
+                                            "filename": "/etc/envoy/server.key",
+                                        },
+                                        "certificate_chain": {
+                                            "filename": "/etc/envoy/server.pem",
+                                        },
+                                    },
+                                ],
+                                "tls_params": {
+                                    "tls_minimum_protocol_version": 0,
+                                },
+                            },
+                        },
+                        "filters": [
+                            {
+                                "name": "envoy.http_connection_manager",
+                                "config": {
+                                    "codec_type": "auto",
+                                    "stat_prefix": "ingress_https",
+                                    "http_filters": {
+                                        "name": "envoy.router",
+                                    },
+                                    "rds": {
+                                        "route_config_name": "local_route",
+                                        "config_source": {
+                                            "api_config_source": {
+                                                #"api_type": envoy.api.v2.core.config_source_pb2.ApiConfigSource.ApiType.Value("GRPC"),
+                                                "api_type": "GRPC",
+                                                "grpc_services": [
+                                                    {
+                                                        "envoy_grpc": {
+                                                            "cluster_name": "xds_cluster",
+                                                        },
+                                                    },
+                                                ],
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        ],
+                    }
+                ],
+            },
+            {
+                "name": "default:443/tcp",
+                "address": {
+                    "socket_address": {
+                        "address": "10.0.3.10",
+                        "port_value": 444,
+                    },
+                },
+                "listener_filters": [
+                    {
+                        "name": "envoy.listener.tls_inspector",
+                        "config": {},
+                    },
+                ],
+                "filter_chains": [
+                    {
+                        "filter_chain_match": {
+                            "server_names": [
+                                "collector",
+                                "px-collector",
+                            ],
+                        },
+                        "filters": [
+                            {
+                                "name": "envoy.tcp_proxy",
+                                "config": {
+                                    "stat_prefix": "default:443/tcp",
+                                    "cluster": "collector.expose#1",
+                                },
+                            },
+                        ],
+                    }
+                ],
+            },
+        ]
+"""
+
+
+from __future__ import print_function
+
+import sys
+import grpc
+from concurrent import futures
+import time
+import optparse
+import socket
+import contextlib
+import time
+import os
+import json
+import re
+import traceback
+import six
+import six.moves.queue as queue
+import types
+import threading
+import select
+
+import envoy.api.v2.core.config_source_pb2
+import envoy.api.v2.core.address_pb2
+import envoy.api.v2.discovery_pb2
+import envoy.api.v2.cds_pb2
+import envoy.api.v2.cds_pb2_grpc
+import envoy.api.v2.eds_pb2
+import envoy.api.v2.eds_pb2_grpc
+import envoy.api.v2.lds_pb2
+import envoy.api.v2.lds_pb2_grpc
+import envoy.api.v2.rds_pb2
+import envoy.api.v2.rds_pb2_grpc
+import envoy.service.discovery.v2.ads_pb2
+import envoy.service.discovery.v2.ads_pb2_grpc
+
+from google.protobuf import text_format
+from google.protobuf import json_format
+
+DEFAULT_OSOCK = "/var/lib/opensvc/lsnr/osvcd.sock"
+DEFAULT_CONNECT_TIMEOUT = 0.25
+DEFAULT_LB_POLICY = "ROUND ROBIN"
+DEFAULT_GATEWAY_NAME = "envoy"
+DEFAULT_PROTOCOL = "tcp"
+DEFAULT_PORT_RANGE = [1025, 65536]
+DEFAULT_ENVOY_PORT = 9901
+DEFAULT_PORT = 50051
+
+CDS_Q = queue.Queue()
+LDS_Q = queue.Queue()
+EDS_Q = {}
+RDS_Q = {}
+
+VERSION = {}
+NONCE = 0
+LAST_NONCE = {}
+RES_VERSION = {}
+ADDED_CLUSTERS = set()
+
+def gen_nonce(key, version):
+    global NONCE
+    global LAST_NONCE
+    NONCE += 1
+    nonce = "n%d" % NONCE
+    LAST_NONCE[key] = (nonce, version)
+    return nonce
+
+def get_nonce(key):
+    return LAST_NONCE.get(key, (None, None))
+
+def get_version(type_url):
+    return str(VERSION.get(type_url, 0))
+
+def inc_version(type_url, v=None):
+    if type_url not in VERSION:
+        try:
+            VERSION[type_url] = int(v)
+        except (ValueError, TypeError):
+            VERSION[type_url] = 1
+    VERSION[type_url] += 1
+    return str(VERSION[type_url])
+
+def get_res_version(type_url, name):
+    return str(RES_VERSION.get(type_url, {}).get(name, 0))
+
+def inc_res_version(type_url, name, v=1):
+    if type_url not in RES_VERSION:
+        RES_VERSION[type_url] = {}
+    if name not in RES_VERSION[type_url]:
+        RES_VERSION[type_url][name] = int(v)
+    RES_VERSION[type_url][name] += 1
+    return str(RES_VERSION[type_url][name])
+
+def request_waiter(request_iterator, q):
+    while True:
+        try:
+            request = request_iterator.next()
+        except StopIteration:
+            print("*** exit waiter on StopIteration")
+            break
+        except grpc.RpcError:
+            print("*** exit waiter on grpc error")
+            break
+        except KeyboardInterrupt:
+            print("*** exit waiter on KeyboardInterrupt")
+            break
+        q.put(("request", request))
+
+class _StreamClusters(object):
+    def __init__(self, request_iterator, context):
+        print("+++ StreamClusters")
+        self.request_iterator = request_iterator
+        self.context = context
+        self.n_req = 0
+        self.waiter = threading.Thread(target=request_waiter, args=(request_iterator, CDS_Q))
+        self.waiter.start()
+
+    def __iter__(self):
+        return self
+
+    def next(self):
+        """
+        This method required by the Python 2 iterator protocol
+        """
+        return self._next()
+
+    def __next__(self):
+        """
+        This method required by the Python 3 iterator protocol
+        """
+        return self._next()
+
+    def _next(self):
+        """
+        This method ends by either returning a response value or raising a StopIteration
+        """
+        if not self.context.is_active():
+            print("StreamClusters context not active")
+            raise StopIteration
+        while True:
+            kind, data = CDS_Q.get(True)
+            if kind == "request":
+                #print(text_format.MessageToString(data))
+                self.n_req += 1
+                if self.n_req == 1:
+                    print("<<< StreamClusters", "first message")
+                    message = OSVC.init_clusters()
+                    if message:
+                        return message
+                else:
+                    message = OSVC.stream_clusters(data)
+                    if message:
+                        return message
+            else:
+                message = OSVC.init_clusters()
+                if message:
+                    return message
+
+class _StreamListeners(object):
+    def __init__(self, request_iterator, context):
+        print("+++ StreamListeners")
+        self.request_iterator = request_iterator
+        self.context = context
+        self.n_req = 0
+        self.waiter = threading.Thread(target=request_waiter, args=(request_iterator, LDS_Q))
+        self.waiter.start()
+
+    def __iter__(self):
+        return self
+
+    def next(self):
+        """
+        This method required by the Python 2 iterator protocol
+        """
+        return self._next()
+
+    def __next__(self):
+        """
+        This method required by the Python 3 iterator protocol
+        """
+        return self._next()
+
+    def _next(self):
+        """
+        This method ends by either returning a response value or raising a StopIteration
+        """
+        if not self.context.is_active():
+            print("StreamListeners context not active")
+            raise StopIteration
+        while True:
+            kind, data = LDS_Q.get(True)
+            if kind == "request":
+                #print(text_format.MessageToString(data))
+                self.n_req += 1
+                if self.n_req == 1:
+                    print("<<< StreamListener", "first message")
+                    message = OSVC.init_listeners()
+                    if message:
+                        return message
+                else:
+                    message = OSVC.stream_listeners(data)
+                    if message:
+                        return message
+            else:
+                message = OSVC.init_listeners()
+                if message:
+                    return message
+
+class _StreamEndpoints(object):
+    def __init__(self, request_iterator, context):
+        print("+++ StreamEndpoints")
+        self.request_iterator = request_iterator
+        self.context = context
+        self.n_req = 0
+        self.svcnames = set()
+        self.last_request = None
+        self.queue = queue.Queue()
+        self.waiter = threading.Thread(target=request_waiter, args=(request_iterator, self.queue))
+        self.waiter.start()
+
+    def __iter__(self):
+        return self
+
+    def next(self):
+        """
+        This method required by the Python 2 iterator protocol
+        """
+        return self._next()
+
+    def __next__(self):
+        """
+        This method required by the Python 3 iterator protocol
+        """
+        return self._next()
+
+    def set_svcnames(self, data):
+        for name in data.resource_names:
+            self.svcnames.add(name.split(".expose#")[0])
+
+    def _next(self):
+        """
+        This method ends by either returning a response value or raising a StopIteration
+        """
+        if not self.context.is_active():
+            print("StreamEndpoints context not active")
+            raise StopIteration
+        while True:
+            try:
+                kind, data = self.queue.get(True, 1)
+                self.set_svcnames(data)
+                self.last_request = data
+                #print(text_format.MessageToString(data))
+                self.n_req += 1
+                if self.n_req == 1:
+                    print("<<< StreamEndpoints", data.resource_names, "first message")
+                    message = OSVC.endpoints(data)
+                    if message:
+                        return message
+                else:
+                    message = OSVC.stream_endpoints(data)
+                    if message:
+                        return message
+            except queue.Empty:
+                pass
+            try:
+                for svcname in self.svcnames:
+                    q = EDS_Q.get(svcname)
+                    if not q:
+                        continue
+                    q.get(False)
+                    message = OSVC.endpoints(self.last_request)
+                    if message:
+                        return message
+            except queue.Empty:
+                pass
+
+class _StreamRoutes(object):
+    def __init__(self, request_iterator, context):
+        print("+++ StreamRoutes")
+        self.request_iterator = request_iterator
+        self.context = context
+        self.n_req = 0
+        self.svcnames = set()
+        self.last_request = None
+        self.queue = queue.Queue()
+        self.waiter = threading.Thread(target=request_waiter, args=(request_iterator, self.queue))
+        self.waiter.start()
+
+    def __iter__(self):
+        return self
+
+    def next(self):
+        """
+        This method required by the Python 2 iterator protocol
+        """
+        return self._next()
+
+    def __next__(self):
+        """
+        This method required by the Python 3 iterator protocol
+        """
+        return self._next()
+
+    def set_svcnames(self, data):
+        for name in data.resource_names:
+            self.svcnames.add(name.split(".expose#")[0])
+
+    def _next(self):
+        """
+        This method ends by either returning a response value or raising a StopIteration
+        """
+        if not self.context.is_active():
+            print("StreamRoutes context not active")
+            raise StopIteration
+        while True:
+            try:
+                kind, data = self.queue.get(True, 1)
+                self.set_svcnames(data)
+                self.last_request = data
+                #print(text_format.MessageToString(data))
+                self.n_req += 1
+                if self.n_req == 1:
+                    print("<<< StreamRoutes", data.resource_names, "first message")
+                    message = OSVC.routes(data)
+                    if message:
+                        return message
+                else:
+                    message = OSVC.stream_routes(data)
+                    if message:
+                        return message
+            except queue.Empty:
+                pass
+            try:
+                for svcname in self.svcnames:
+                    q = RDS_Q.get(svcname)
+                    if not q:
+                        continue
+                    q.get(False)
+                    message = OSVC.routes(self.last_request)
+                    if message:
+                        return message
+            except queue.Empty:
+                pass
+
+class ClusterDiscoveryServiceServicer(envoy.api.v2.cds_pb2_grpc.ClusterDiscoveryServiceServicer):
+    StreamClusters = _StreamClusters
+
+class EndpointDiscoveryServiceServicer(envoy.api.v2.eds_pb2_grpc.EndpointDiscoveryServiceServicer):
+    StreamEndpoints = _StreamEndpoints
+
+class ListenerDiscoveryServiceServicer(envoy.api.v2.lds_pb2_grpc.ListenerDiscoveryServiceServicer):
+    StreamListeners = _StreamListeners
+
+class RouteDiscoveryServiceServicer(envoy.api.v2.rds_pb2_grpc.RouteDiscoveryServiceServicer):
+    StreamRoutes = _StreamRoutes
+
+def get_options():
+    parser = optparse.OptionParser()
+    parser.add_option("-n", "--name", action="store", dest="gateway_name",
+                      help="The name of this gateway, can be used by services "
+                           "to specify one of multiple available gateways. "
+                           "default %s" % DEFAULT_GATEWAY_NAME)
+    parser.add_option("-p", "--port", action="store", dest="port", type="int",
+                      help="The xds listener port. default %d" % DEFAULT_PORT)
+    parser.add_option("-P", "--envoy-port", action="store", dest="envoy_port", type="int",
+                      help="The xds envoy client listener port. default %d" % DEFAULT_ENVOY_PORT)
+    parser.add_option("-r", "--port-range", action="store", dest="port_range",
+                      help="The port range the xds allocates new ports from. "
+                           "Some hosting providers may allow a restricted range. "
+                           "default %s" % DEFAULT_PORT_RANGE)
+    parser.add_option("-S", "--socket", action="store", dest="osock",
+                      help="The OpenSVC daemon unix socket path. default %s" % DEFAULT_OSOCK)
+    options, _ = parser.parse_args()
+    options = vars(options)
+    return options
+
+class Error(Exception):
+    """
+    A known error handled by the daemon
+    """
+    pass
+
+class LsnrReset(Exception):
+    """
+    Signals a OpenSVC listener socket issue (timeout, refused, ...)
+    """
+    pass
+
+def bdecode(buff):
+    """
+    On python, convert bytes to string using utf-8 and ascii as a fallback
+    """
+    if buff is None:
+        return buff
+    if sys.version_info[0] < 3:
+        return buff
+    if isinstance(buff, str):
+        return buff
+    else:
+        return buff.decode("utf-8", errors="ignore")
+    return buff
+
+def msg_encode(data):
+    """
+    Prepare a structure for sending on the OpenSVC listener socket.
+    """
+    return (json.dumps(data)+'\0').encode()
+
+def msg_decode(message):
+    """
+    Decode a structure from a message received on the OpenSVC listener socket.
+    """
+    message = bdecode(message).rstrip("\0\x00")
+    if len(message) == 0:
+        return
+    return json.loads(message)
+
+class Osvc(object):
+    """
+    The daemon class.
+    """
+    daemon_status_data = None
+
+    #
+    # GRPC helpers: Cluster
+    #
+    def stream_clusters(self, request):
+        nonce, version = get_nonce("cluster")
+        announce = "<<< StreamClusters %s %s" % (request.response_nonce, request.version_info)
+        if request.response_nonce is None:
+            print(announce, "client restart")
+            return self.init_clusters()
+        elif nonce is None:
+            print(announce, "manager restart")
+            return self.init_clusters(version_info=request.version_info)
+        elif request.response_nonce == nonce:
+            if request.version_info == version:
+                print(announce, "ACK")
+            else:
+                print(announce, "NACK")
+                time.sleep(10)
+                return self.init_clusters()
+        else:
+            print(announce, "unsync: expected %s %s" % (nonce, version))
+
+    def init_clusters(self, version_info=None):
+        version = inc_version("cluster", v=version_info)
+        response = envoy.api.v2.discovery_pb2.DiscoveryResponse()
+        data = {
+            "type_url": "type.googleapis.com/envoy.api.v2.Cluster",
+            "version_info": version,
+            "nonce": gen_nonce("cluster", version),
+            "resources": [res for res in self.get_clusters()]
+        }
+        json_format.Parse(json.dumps(data), response, ignore_unknown_fields=False)
+        print(">>> StreamClusters", response.nonce, version)
+        #print(text_format.MessageToString(response))
+        return response
+
+    def get_clusters(self):
+        data = {}
+        for svcname in self.get_svcnames():
+            data.update(self.get_svc_clusters(svcname))
+        return data.values()
+
+    def get_svc_clusters(self, svcname):
+        clusters = {}
+        cluster_svcname = self.scaler_svcname(svcname)
+        if not cluster_svcname:
+            cluster_svcname = svcname
+
+        for (slave, nodename), instance in self.get_instances(svcname).items():
+            instance_data = self.instance_expose_data(slave, nodename)
+            for resource in instance["resources"].values():
+                for expose in resource.get("info", {}).get("expose", []):
+                    try:
+                        expose_data = instance_data[expose]
+                    except (KeyError, TypeError):
+                        continue
+                    name = ".".join([cluster_svcname, expose])
+                    clusters[name] = {
+                        "@type": "type.googleapis.com/envoy.api.v2.Cluster",
+                        "name": name,
+                        "type": "EDS",
+                        "drain_connections_on_host_removal": True,
+                        "connect_timeout": str(expose_data.get("connect_timeout", DEFAULT_CONNECT_TIMEOUT))+"s",
+                        "lb_policy": expose_data.get("lb_policy", DEFAULT_LB_POLICY).upper().replace(" ", "_"),
+#                        "http2_protocol_options": {},
+                        "health_checks": [
+                            {
+                                "tcp_health_check": {},
+                                "timeout": "5s",
+                                "interval": "30s",
+                                "interval_jitter": "15s",
+                                "unhealthy_threshold": 3,
+                                "healthy_threshold": 1,
+                            },
+                        ],
+                        "eds_cluster_config": {
+                            "eds_config": {
+                                "api_config_source": {
+                                    "api_type": "GRPC",
+                                    "grpc_services": [
+                                        {
+                                            "envoy_grpc": {
+                                                "cluster_name": "xds_cluster"
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        },
+                    }
+                    certs = expose_data.get("cluster_certificates")
+                    tls_context = self.get_tls_context(certs, instance)
+                    if tls_context:
+                        clusters[name]["tls_context"] = tls_context
+        return clusters
+
+    def cluster(self, data):
+        cluster = envoy.api.v2.cds_pb2.Cluster()
+        ADDED_CLUSTERS.add(data["name"])
+        return cluster
+
+    #
+    # GRPC helpers: Listeners
+    #
+    def stream_listeners(self, request):
+        nonce, version = get_nonce("listener")
+        announce = "<<< StreamListeners %s %s" % (request.response_nonce, request.version_info)
+        if request.response_nonce is None:
+            print(announce, "client restart")
+            return self.init_listeners()
+        elif nonce is None:
+            print(announce, "manager restart")
+            return self.init_listeners(version_info=request.version_info)
+        elif request.response_nonce == nonce:
+            if request.version_info == version:
+                print(announce, "ACK")
+            else:
+                print(announce, "NACK")
+                time.sleep(10)
+                return self.init_listeners()
+        else:
+            print(announce, "unsync: expected %s %s" % (nonce, version))
+
+    def init_listeners(self, version_info=None):
+        version = inc_version("listener", v=version_info)
+        response = envoy.api.v2.discovery_pb2.DiscoveryResponse()
+        response.type_url = "type.googleapis.com/envoy.api.v2.Listener"
+        data = {
+            "version_info": version,
+            "nonce": gen_nonce("listener", version),
+            "resources": [lsnr for lsnr in self.get_listeners()],
+        }
+        json_format.Parse(json.dumps(data), response, ignore_unknown_fields=False)
+        print(">>> StreamListeners", response.nonce, version)
+        #print(text_format.MessageToString(response))
+        return response
+
+    def listener(self, data):
+        listener = envoy.api.v2.lds_pb2.Listener()
+        json_format.Parse(json.dumps(data), listener, ignore_unknown_fields=False)
+        return listener
+
+
+    #
+    # GRPC helpers: Endpoints
+    #
+    def stream_endpoints(self, request):
+        nonce, version = get_nonce("endpoint")
+        announce = "<<< StreamEndpoints %s %s %s" % (str(request.resource_names), request.response_nonce, request.version_info)
+        if nonce is None:
+            print(announce, "manager restart")
+            return self.endpoints(request, init=True)
+        elif request.response_nonce is None:
+            print(announce, "client restart")
+            return self.endpoints(request)
+        elif request.response_nonce == nonce:
+            if request.version_info == version:
+                print(announce, "ACK")
+            else:
+                print(announce, "NACK")
+                time.sleep(10)
+                return self.endpoints(request)
+        else:
+            print(announce, "unsync: expected %s %s" % (nonce, version))
+
+    def endpoints(self, request, init=False):
+        if init:
+            version = inc_version("endpoint", request.version_info)
+        else:
+            version = inc_version("endpoint")
+        response = envoy.api.v2.discovery_pb2.DiscoveryResponse()
+        response.version_info = version
+        response.nonce = gen_nonce("endpoint", version)
+        response.type_url = request.type_url
+        for name in request.resource_names:
+            if version == request.version_info:
+                continue
+            data = self.get_cluster_endpoints(name)
+            for _data in data:
+                cla = self.cla(_data)
+                if not cla:
+                    continue
+                resource = response.resources.add()
+                resource.Pack(cla)
+        print(">>> StreamEndpoints", request.resource_names, response.nonce, version)
+        print(text_format.MessageToString(response))
+        return response
+
+    def cla(self, data):
+        cla = envoy.api.v2.eds_pb2.ClusterLoadAssignment()
+        cla.cluster_name = data["name"]
+        if not data["endpoints"]:
+            return
+        for ep_data in data["endpoints"].values():
+            locality_endpoint = cla.endpoints.add()
+            #locality_endpoint.locality =
+            for lbep_data in ep_data["lb_endpoints"].values():
+                lb_endpoint = locality_endpoint.lb_endpoints.add()
+                try:
+                    lb_endpoint.endpoint.address.socket_address.address = lbep_data["address"]
+                    lb_endpoint.endpoint.address.socket_address.port_value = lbep_data["port"]
+                except (TypeError, KeyError) as exc:
+                    print("missing cla data key: %s %s" % (str(exc), str(lbep_data)))
+        return cla
+
+    #
+    # GRPC helpers: Routes
+    #
+    def stream_routes(self, request):
+        nonce, version = get_nonce("route")
+        announce = "<<< StreamRoutes %s %s %s" % (str(request.resource_names), request.response_nonce, request.version_info)
+        if nonce is None:
+            print(announce, "manager restart")
+            return self.routes(request, init=True)
+        elif request.response_nonce is None:
+            print(announce, "client restart")
+            return self.routes(request)
+        elif request.response_nonce == nonce:
+            if request.version_info == version:
+                print(announce, "ACK")
+            else:
+                print(announce, "NACK")
+                time.sleep(10)
+                return self.routes(request)
+        else:
+            print(announce, "unsync: expected %s %s" % (nonce, version))
+
+    def routes(self, request, init=False):
+        if init:
+            version = inc_version("route", request.version_info)
+        else:
+            version = inc_version("route")
+        response = envoy.api.v2.discovery_pb2.DiscoveryResponse()
+        data = {
+            "version_info": version,
+            "nonce": gen_nonce("route", version),
+            "type_url": "type.googleapis.com/envoy.api.v2.RouteConfiguration",
+            "resources": [],
+        }
+        for name in request.resource_names:
+            _data = self.get_cluster_routes(name)
+            for __data in _data:
+                res = self.route(__data)
+                if res:
+                    data["resources"].append(res)
+        json_format.Parse(json.dumps(data), response, ignore_unknown_fields=False)
+        print(">>> StreamRoutes", response.nonce, response.version_info)
+        print(text_format.MessageToString(response))
+        return response
+
+    def route(self, data):
+        routeconf = {
+            "@type": "type.googleapis.com/envoy.api.v2.RouteConfiguration",
+            "name": data["name"],
+            "virtual_hosts": [],
+        }
+        for vhost_data in data.get("vhosts", []):
+            vhost = {
+                "name": vhost_data["name"],
+                "domains": vhost_data.get("domains", []),
+                "routes": [],
+            }
+            for route_data in vhost_data.get("routes", []):
+                route = {
+                    "match": {},
+                }
+                for key in ["path", "prefix", "regex", "case_sensitive"]:
+                    val = route_data.get("match_"+key)
+                    if val is not None:
+                        route["match"][key] = val
+
+                sub = {}
+                obj = envoy.api.v2.route.route_pb2.RouteAction()
+                for key in ["prefix_rewrite", "cluster_header", "host_rewrite", "use_websocket", "timeout"]:
+                    val = route_data.get("route_"+key)
+                    if val == getattr(obj, key):
+                        continue
+                    if val is not None:
+                        sub[key] = val
+                if sub:
+                    sub["cluster"] = data["name"]
+                    route["route"] = sub
+
+                sub = {}
+                obj = envoy.api.v2.route.route_pb2.RedirectAction()
+                for key in ["host_redirect", "path_redirect", "prefix_rewrite", "response_code", "https_redirect", "strip_query"]:
+                    val = route_data.get("redirect_"+key)
+                    if val == getattr(obj, key):
+                        continue
+                    if val is not None:
+                        sub[key] = val
+                if sub:
+                    route["redirect"] = sub
+                vhost["routes"].append(route)
+            routeconf["virtual_hosts"].append(vhost)
+        return routeconf
+
+
+    #
+    # osvcd socket helpers
+    #
+    @contextlib.contextmanager
+    def lsnr_socket(self):
+        """
+        A context wrapper yield a socket to the OpenSVC listener,
+        taking care of the clean up.
+        """
+        try:
+            while True:
+                try:
+                    sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+                    sock.settimeout(0.2)
+                    sock.connect(self.lsnr_path)
+                    break
+                except socket.error as exc:
+                    if exc.errno in (11, 146, 149):
+                        # 11  EBUSY
+                        # 146 EREFUSED
+                        # 149 EALREADY
+                        # Resource temporarily unavailable (daemon busy, overflow)
+                        # Give it a little time, and make sure we don't short loop
+                        sock.close()
+                        time.sleep(0.1)
+                        continue
+                    raise
+            yield sock
+        finally:
+            sock.close()
+
+    def recv_message(self, *args, **kwargs):
+        data = self.recv_messages(*args, **kwargs)
+        if data is None:
+            return
+        return data[0]
+
+    @staticmethod
+    def recv_messages(sock, use_select=True, bufsize=65536, stream=False):
+        """
+        Receive, decrypt and return a message from a socket.
+        """
+        sock.setblocking(0)
+        messages = []
+        chunks = []
+        sep = b"\x00"
+        while True:
+            if use_select:
+                ready = select.select([sock], [], [sock], 60)
+                if ready[0]:
+                    chunk = sock.recv(bufsize)
+                else:
+                    break
+                if ready[2]:
+                    break
+            else:
+                chunk = sock.recv(bufsize)
+            if not chunk:
+                if stream:
+                    raise SockReset
+                break
+            if chunk == sep:
+                break
+            chunks.append(chunk)
+        if six.PY3:
+            data = b"".join(chunks)
+        else:
+            data = "".join(chunks)
+        if len(data) == 0:
+            return
+        for message in data.split(sep):
+            message = msg_decode(data)
+            messages.append(message)
+        return messages
+
+    def daemon_get_stream(self, data):
+        """
+        Send a request to the daemon running on nodename and yield the results
+        fetched if with_result is set.
+        """
+        try:
+            sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+            sock.settimeout(6.2)
+            sock.connect(self.lsnr_path)
+            message = msg_encode(data)
+            if message is None:
+                return
+            sock.sendall(message)
+            while True:
+                data = self.recv_messages(sock, bufsize=1)
+                if data is None:
+                    return
+                for message in data:
+                    yield message
+        except socket.error as exc:
+            raise LsnrReset("daemon send to %s error: %s" % (self.lsnr_path, str(exc)))
+        finally:
+            sock.close()
+
+    #
+    # osvc data helpers
+    #
+    def get_service_config(self, svcname):
+        """
+        Request the OpenSVC listener for a service configuration.
+        """
+        with self.lsnr_socket() as lsnr:
+            lsnr.sendall(msg_encode({
+                "action": "get_service_config",
+                "options": {
+                    "svcname": svcname,
+                    "format": "json",
+                    "evaluate": True
+                }
+            }))
+            return self.recv_message(lsnr)
+
+    def get_service_env_section(self, svcname):
+        """
+        Return the OpenSVC "env" section of a given service.
+        """
+        return self.get_service_config(svcname)["env"]
+
+    def get_cluster_config(self):
+        """
+        Request the OpenSVC listener for the cluster configuration.
+        """
+        with self.lsnr_socket() as lsnr:
+            lsnr.sendall(msg_encode({
+                "action": "get_node_config",
+                "options": {
+                    "format": "json",
+                    "evaluate": True
+                }
+            }))
+            return self.recv_message(lsnr)
+
+    def get_clustername(self):
+        """
+        Return the clustername.
+        """
+        return self.daemon_status_data["cluster"]["name"].rstrip(".")
+
+    @staticmethod
+    def check_mandatory_keys(svcname, data):
+        """
+        Check that the mandatory keys are configured, if not raise an error.
+        """
+        mandatory = None
+
+        if data["bind"] is None:
+            print("service '%s' mandatory key: BIND, missing in data" % svcname)
+            mandatory = True
+
+        if mandatory:
+            raise Error
+
+    def service_expose_data(self, svcname):
+        """
+        Return True whether a service needs load balancing.
+        """
+        data = {}
+        for (slave, nodename) in self.get_instances(svcname).keys():
+            idata = self.instance_expose_data(slave, nodename)
+            if idata:
+                data[nodename] = idata
+        return data
+
+    def instance_expose_data(self, svcname, nodename):
+        ndata = self.daemon_status_data["monitor"]["nodes"][nodename]
+        if ndata is None:
+            return
+        try:
+            sdata = ndata["services"]["status"][svcname]
+        except KeyError:
+            return
+        data = {}
+        for resource in sdata.get("resources", {}).values():
+            try:
+                expose = resource["info"]["expose"]
+            except KeyError:
+                continue
+            for _expose in expose:
+                try:
+                    expose_data = sdata["resources"][_expose]
+                except KeyError:
+                    continue
+                if expose_data.get("type") != "expose.envoy":
+                    continue
+                if expose_data.get("info", {}).get("gateway") not in (None, self.options["gateway_name"]):
+                    continue
+                data[_expose] = expose_data.get("info", {})
+        return data
+
+    def service_needs_lb(self, svcname):
+        """
+        Return True whether a service needs load balancing.
+        """
+        if self.service_expose_data(svcname):
+            return True
+        return False
+
+    def scaler_svcname(self, svcname):
+        if self.is_scaler_slave(svcname):
+            return re.sub("^[0-9]+\.", "", svcname)
+
+    def split_clustername(self, name):
+        svcname, suffix = name.split(".expose#")
+        return svcname, "expose#"+suffix
+
+    def is_scaler_slave(self, svcname):
+        """
+        Return True whether a service is a scaler slave.
+        """
+        for ndata in self.daemon_status_data["monitor"]["nodes"].values():
+            if ndata is None:
+                continue
+            if svcname not in ndata.get("services", {}).get("status", {}):
+                continue
+            sdata = ndata["services"]["status"][svcname]
+            if sdata.get("scaler_slave"):
+                return True
+        return False
+
+    def get_daemon_status(self):
+        """
+        Request the OpenSVC listener to get the daemon status.
+        """
+        with self.lsnr_socket() as lsnr:
+            if lsnr is None:
+                raise Error("lsnr socket not ready")
+            lsnr.sendall(msg_encode({"action": "daemon_status"}))
+            data = self.recv_message(lsnr)
+            if data is None:
+                print("unable to get opensvc daemon data")
+                return
+            self.daemon_status_data = data
+
+    def get_instances(self, svcname):
+        instances = {}
+        for nodename, node_data in self.daemon_status_data.get("monitor", {}).get("nodes", {}).items():
+            try:
+                instance = node_data["services"]["status"][svcname]
+            except KeyError:
+                continue
+            slaves = instance.get("scaler_slaves")
+            if not slaves:
+                instances[(svcname, nodename)] = instance
+            else:
+                for slave in slaves:
+                    instances.update(self.get_instances(slave))
+        return instances
+
+    def get_svcnames(self):
+        return self.daemon_status_data.get("monitor", {}).get("services", {}).keys()
+
+    def get_endpoints(self):
+        data = {}
+        for svcname in self.get_svcnames():
+            data.update(self.get_svc_endpoints(svcname))
+        return data.values()
+
+    def get_cluster_endpoints(self, name):
+        data = {}
+        svcname, expose = self.split_clustername(name)
+        for (slave, nodename), instance in self.get_instances(svcname).items():
+            xdata = self.instance_expose_data(slave, nodename)
+            for resource in instance["resources"].values():
+                if expose not in resource.get("info", {}).get("expose", []):
+                    continue
+                try:
+                    expose_data = xdata[expose]
+                except KeyError:
+                    continue
+                port = expose_data["port"]
+                protocol = expose_data.get("protocol", DEFAULT_PROTOCOL)
+                locality = expose_data.get("locality", "default")
+                ep_key = "%s:%d" % (resource["info"]["ipaddr"], port)
+                if name not in data:
+                    data[name] = {
+                        "name": name,
+                        "endpoints": {},
+                    }
+                endpoint = {
+                    "locality": locality,
+                    "lb_endpoints": {},
+                }
+                if locality not in data[name]["endpoints"]:
+                    data[name]["endpoints"][locality] = endpoint
+                if resource["info"]["ipaddr"]:
+                    lb_endpoint = {
+                        "address": resource["info"]["ipaddr"],
+                        "port": port,
+                    }
+                    data[name]["endpoints"][locality]["lb_endpoints"][ep_key] = lb_endpoint
+        return data.values()
+
+    def get_svc_endpoints(self, svcname):
+        data = {}
+        for (slave, nodename), instance in self.get_instances(svcname).items():
+            for resource in instance["resources"].values():
+                for expose in resource.get("info", {}).get("expose", []):
+                    try:
+                        expose_data = instance["resources"][expose]["info"]
+                    except KeyError:
+                        continue
+                    port = expose_data["port"]
+                    protocol = expose_data.get("protocol", DEFAULT_PROTOCOL)
+                    locality = expose_data.get("locality", "default")
+                    name = "%s.%s" % (svcname, expose)
+                    ep_key = "%s:%d" % (resource["info"]["ipaddr"], port)
+                    if name not in data:
+                        data[name] = {
+                            "name": name,
+                            "endpoints": {},
+                        }
+                    endpoint = {
+                        "locality": locality,
+                        "lb_endpoints": {},
+                    }
+                    if locality not in data[name]["endpoints"]:
+                        data[name]["endpoints"][locality] = endpoint
+                    if resource["info"]["ipaddr"]:
+                        lb_endpoint = {
+                            "address": resource["info"]["ipaddr"],
+                            "port": port,
+                        }
+                        data[name]["endpoints"][locality]["lb_endpoints"][ep_key] = lb_endpoint
+        return data
+
+    def route_data_from_expose_data(self, name, expose_data, resources):
+        data = {
+            "name": name,
+            "vhosts": [],
+        }
+        for vhost in expose_data.get("vhosts", []):
+            vhost_data = {}
+            vhost_data.update(resources.get(vhost, {}).get("info", {}))
+            vhost_data["name"] = "%s.%s" % (name, vhost)
+            routes = []
+            for route in vhost_data.get("routes", []):
+                route_data = resources.get(route, {}).get("info", {})
+                if route_data:
+                    routes.append(route_data)
+            vhost_data["routes"] = routes
+            data["vhosts"].append(vhost_data)
+        return data
+
+    def get_cluster_routes(self, name):
+        data = {}
+        svcname, expose = self.split_clustername(name)
+        for (slave, nodename), instance in self.get_instances(svcname).items():
+            xdata = self.instance_expose_data(slave, nodename)
+            for resource in instance["resources"].values():
+                if expose not in resource.get("info", {}).get("expose", []):
+                    continue
+                try:
+                    expose_data = xdata[expose]
+                except KeyError:
+                    continue
+                return [self.route_data_from_expose_data(name, expose_data, instance["resources"])]
+        return []
+
+    def get_svc_routes(self, svcname):
+        data = {}
+        for (slave, nodename), instance in self.get_instances(svcname).items():
+            for resource in instance["resources"].values():
+                for expose in resource.get("info", {}).get("expose", []):
+                    name = "%s.%s" % (svcname, expose)
+                    if name in data:
+                        continue
+                    try:
+                        expose_data = instance["resources"][expose]["info"]
+                    except KeyError:
+                        continue
+                    data[name] = self.route_data_from_expose_data(name, expose_data, instance["resources"])
+        return data
+
+    #
+    # Event routing
+    #
+    @staticmethod
+    def parse_change(change):
+        """
+        Fetch any changes in OpenSVC services through the listener.
+        """
+        change_len = len(change)
+        if change_len == 0:
+            return None, None
+        key = change[0]
+        key_len = len(key)
+        if change_len == 2:
+            if key_len == 3 and \
+               key[0] == "services" and \
+               key[1] == "status":
+                print("EVT new service:", change)
+                return key[2], "add"
+            elif key_len == 4 and \
+               key[0] == "services" and \
+               key[1] == "config" and \
+               key[3] == "updated":
+                print("EVT service config change:", change)
+                return key[2], "update"
+            elif key_len >= 7 and \
+               key[5] == "info":
+                if key[-1] == "ipaddr":
+                    # services, status, 3.tstscaler3, resources, ip#0, info, ipaddr
+                    print("EVT endpoint change:", change)
+                    return key[2], "update"
+                if key[4].startswith("expose#") or \
+                   key[4].startswith("vhost#") or \
+                   key[4].startswith("route#") or \
+                   key[4].startswith("certificate#"):
+                    print("EVT expose config change:", change)
+                    return key[2], "update"
+        elif change_len == 1:
+            if key_len == 3 and \
+               key[0] == "services" and \
+               key[1] == "status":
+                print("EVT deleted service:", change)
+                return key[2], "delete"
+        return None, None
+
+    def event_router(self, data):
+        """
+        Trigger the action when it's required.
+        """
+        if data is None:
+            return
+        changes = data.get("data", {})
+        valid_changes = []
+        for change in changes:
+            svcname, evt = self.parse_change(change)
+            if evt is None and svcname is None:
+                continue
+            if evt is None or svcname is None:
+                print("unexpected event: service '%s' %s event" % (svcname, evt))
+                continue
+            valid_changes.append((svcname, evt))
+
+        if not valid_changes:
+            return
+
+        self.get_daemon_status()
+        for svcname, evt in valid_changes:
+            self.do_action(svcname, evt)
+
+    def do_action(self, svcname, evt):
+        """
+        Do a action in response to event.
+        """
+        print("service '%s' %s event" % (svcname, evt))
+
+        scaler_svcname = self.scaler_svcname(svcname)
+        if scaler_svcname:
+            svcname = scaler_svcname
+
+        if evt == "add":
+            if self.service_needs_lb(svcname):
+                self.add_service_lb(svcname)
+            else:
+                print("service '%s' doesn't enable load balancing" % svcname)
+        elif evt == "update":
+            if self.service_needs_lb(svcname):
+                self.update_service_lb(svcname)
+            else:
+                print("service '%s' no longer enables load balancing" % svcname)
+                self.del_service_lb(svcname)
+        elif evt == "delete":
+            self.del_service_lb(svcname)
+
+    def get_listeners(self):
+        data = {}
+        for svcname in self.get_svcnames():
+            data = self.get_svc_listeners(svcname, data)
+        return data.values()
+
+    def allocate_port(self, svcname, rid, addr):
+        import requests
+        allocated = set()
+        resp = requests.get("http://127.0.0.1:%d/listeners" % self.options["envoy_port"])
+        data = resp.json()
+        print("allocate port: envoy listeners:", data)
+        for text in data:
+            _addr, _port = text.split(":")
+            if _addr == "0.0.0.0" or addr == "0.0.0.0" or addr == _addr:
+                allocated.add(int(_port))
+        for _svcname in self.get_svcnames():
+            for (slave, nodename), instance in self.get_instances(_svcname).items():
+                instance_data = self.instance_expose_data(slave, nodename)
+                for resource in instance["resources"].values():
+                    for expose in resource.get("info", {}).get("expose", []):
+                        try:
+                            expose_data = instance_data[expose]
+                        except (KeyError, TypeError):
+                            continue
+                        _addr = expose_data.get("listener_addr")
+                        if not _addr:
+                            _addr = "0.0.0.0"
+                        _port = expose_data.get("listener_port")
+                        if not _port:
+                            _port = expose_data["port"]
+                        if _port == 0:
+                            continue
+                        if _addr == "0.0.0.0" or addr == "0.0.0.0" or addr == _addr:
+                            allocated.add(_port)
+        print("allocate_port: allocated:", sorted(list(allocated)))
+        allocate = sorted(list(set(range(*self.options["port_range"])) - allocated))[0]
+        print("allocate_port: allocate:", allocate)
+        self.osvc_service_set_listener_port(svcname, rid, allocate)
+        return allocate
+
+    def osvc_service_set_listener_port(self, svcname, rid, port):
+        self._osvc_service_set_listener_port(svcname, rid, port)
+        for nodename, node_data in self.daemon_status_data.get("monitor", {}).get("nodes", {}).items():
+            try:
+                instance = node_data["services"]["status"][svcname]
+            except KeyError:
+                continue
+            slaves = instance.get("scaler_slaves", [])
+            for slave in slaves:
+                self._osvc_service_set_listener_port(slave, rid, port)
+            break
+
+    def _osvc_service_set_listener_port(self, svcname, rid, port):
+        """
+        Submit to the OpenSVC listener a service configuration set action
+        to change the env.igw_gobtw_bind value.
+        """
+        with self.lsnr_socket() as lsnr:
+            lsnr.sendall(msg_encode({
+                "action": "service_action",
+                "options": {
+                    "svcname": svcname,
+                    "cmd": ["set", "--kw=%s.listener_port=%d" % (rid, port)],
+                    "sync": True
+                }
+            }))
+
+    def get_svc_listeners(self, svcname, data):
+        cluster_svcname = self.scaler_svcname(svcname)
+        allocated_ports = {}
+        if not cluster_svcname:
+            cluster_svcname = svcname
+        for (slave, nodename), instance in self.get_instances(cluster_svcname).items():
+            instance_data = self.instance_expose_data(slave, nodename)
+            for rid, resource in instance["resources"].items():
+                for expose in resource.get("info", {}).get("expose", []):
+                    try:
+                        expose_data = instance_data[expose]
+                    except (KeyError, TypeError):
+                        continue
+                    protocol = expose_data.get("protocol", "tcp")
+                    listener_addr = expose_data.get("listener_addr")
+                    if not listener_addr:
+                        listener_addr = "0.0.0.0"
+                    listener_port = expose_data.get("listener_port")
+                    if listener_port is None:
+                        listener_port = expose_data["port"]
+                    elif listener_port == 0:
+                        if (cluster_svcname, expose) in allocated_ports:
+                            listener_port = allocated_ports[(cluster_svcname, expose)]
+                        else:
+                            listener_port = self.allocate_port(cluster_svcname, expose, expose)
+                            allocated_ports[(cluster_svcname, expose)] = listener_port
+                    name = "%s:%d/%s" % (listener_addr, listener_port, protocol)
+                    cluster = ".".join([cluster_svcname, expose])
+                    if name in data:
+                        _data = data[name]
+                    else:
+                        _data = {
+                            "@type": "type.googleapis.com/envoy.api.v2.Listener",
+                            "name": name,
+                            "address": {
+                                "socket_address": {
+                                    "address": listener_addr,
+                                    "port_value": listener_port,
+                                },
+                            },
+                            "filter_chains": []
+                        }
+                    vhosts = expose_data.get("vhosts", [])
+                    sni = expose_data.get("sni", [])
+                    if sni:
+                        # tcp proxy with sni matching
+                        tls_inspector_data = [
+                            {
+                                "name": "envoy.listener.tls_inspector",
+                                "config": {},
+                            },
+                        ]
+                        if "listener_filters" not in _data:
+                            _data["listener_filters"] = tls_inspector_data
+                        elif not [lfi for lfi in _data["listener_filters"] if lfi["name"] == "envoy.listener.tls_inspector"]:
+                            _data["listener_filters"] += tls_inspector_data
+                        chain = {
+                            "filter_chain_match": {
+                                "server_names": sni,
+                            },
+                            "filters": [
+                                {
+                                    "name": "envoy.tcp_proxy",
+                                    "config": {
+                                        "stat_prefix": "ingress_"+cluster,
+                                        "cluster": cluster,
+                                    },
+                                },
+                            ],
+                        }
+                        if not _data["filter_chains"] or not [_chain for _chain in _data["filter_chains"] if _chain.get("filter_chain_match", {}).get("server_names") == sni]:
+                            _data["filter_chains"].append(chain)
+                    elif not vhosts:
+                        # tcp proxy on dedicated listener port
+                        chain = {
+                            "filters": [
+                                {
+                                    "name": "envoy.tcp_proxy",
+                                    "config": {
+                                        "stat_prefix": "ingress_"+cluster,
+                                        "cluster": cluster,
+                                    },
+                                },
+                            ],
+                        }
+                        if not _data["filter_chains"] or not [_chain for _chain in _data["filter_chains"] if any([fil for fil in _chain.get("filters", {}) if fil.get("config", {}).get("cluster") == cluster])]:
+                            _data["filter_chains"].append(chain)
+                    else:
+                        chain = {
+                            "filters": [
+                                {
+                                    "name": "envoy.http_connection_manager",
+                                    "config": {
+                                        "codec_type": "auto",
+                                        "stat_prefix": "ingress_"+cluster,
+                                        "http_filters": {
+                                            "name": "envoy.router",
+                                        },
+                                        "rds": {
+                                            "route_config_name": cluster,
+                                            "config_source": {
+                                                "api_config_source": {
+                                                    "api_type": "GRPC",
+                                                    "grpc_services": [
+                                                        {
+                                                            "envoy_grpc": {
+                                                                "cluster_name": "xds_cluster",
+                                                            },
+                                                        },
+                                                    ],
+                                                },
+                                            },
+                                        },
+                                    },
+                                },
+                            ],
+                        }
+
+                        certs = expose_data.get("listener_certificates")
+                        tls_context = self.get_tls_context(certs, instance)
+                        if tls_context:
+                            chain["tls_context"] = tls_context
+                        if not _data["filter_chains"] or not [_chain for _chain in _data["filter_chains"] if any([fil for fil in _chain.get("filters", {}) if fil.get("config", {}).get("rds", {}).get("route_config_name") == cluster])]:
+                            _data["filter_chains"].append(chain)
+                    data[name] = _data
+        return data
+
+    def get_tls_context(self, certs, instance):
+        tls_context = {"common_tls_context": {"tls_certificates": []}}
+        if not certs:
+            return
+        for cert in certs:
+            cert_data = instance["resources"].get(cert, {}).get("info")
+            if not cert_data:
+                continue
+            _data = {
+                "private_key": {},
+                "certificate_chain": {},
+            }
+            val = cert_data.get("private_key_filename")
+            if val:
+                _data["private_key"]["filename"] = val
+
+            val = cert_data.get("private_key_inline_string")
+            if val:
+                _data["private_key"]["inline_inline_string"] = val
+
+            val = cert_data.get("certificate_chain_filename")
+            if val:
+                _data["certificate_chain"]["filename"] = val
+
+            val = cert_data.get("certificate_chain_inline_string")
+            if val:
+                _data["certificate_chain"]["inline_string"] = val
+
+            tls_context["common_tls_context"]["tls_certificates"].append(_data)
+        if tls_context["common_tls_context"]["tls_certificates"]:
+            return tls_context
+
+    def update_clusters(self):
+        CDS_Q.put(("update", True))
+
+    def update_listeners(self):
+        LDS_Q.put(("update", True))
+
+    def update_endpoints(self, svcname):
+        if svcname not in EDS_Q:
+            EDS_Q[svcname] = queue.Queue()
+        EDS_Q[svcname].put(True)
+
+    def update_routes(self, svcname):
+        if svcname not in RDS_Q:
+            RDS_Q[svcname] = queue.Queue()
+        RDS_Q[svcname].put(True)
+
+    def update_service_lb(self, svcname):
+        """
+        Add or update a service gw configuration
+        """
+        self.update_clusters()
+        self.update_listeners()
+        self.update_endpoints(svcname)
+        self.update_routes(svcname)
+
+    def add_service_lb(self, svcname):
+        """
+        Add or update a service gw configuration
+        """
+        self.update_clusters()
+        self.update_listeners()
+        self.update_endpoints(svcname)
+        self.update_routes(svcname)
+
+    def del_service_lb(self, svcname):
+        """
+        Delete a service gw configuration
+        """
+        self.update_clusters()
+        self.update_listeners()
+
+    def set_options(self, **options):
+        """
+        Parser for command line options.
+        """
+        if options["osock"] is None:
+            options["osock"] = DEFAULT_OSOCK
+        if options["gateway_name"] is None:
+            options["gateway_name"] = DEFAULT_GATEWAY_NAME
+        if options["port"] is None:
+            options["port"] = DEFAULT_PORT
+        if options["envoy_port"] is None:
+            options["envoy_port"] = DEFAULT_ENVOY_PORT
+        if options["port_range"] is None:
+            options["port_range"] = DEFAULT_PORT_RANGE
+        else:
+            _min, _max = options["port_range"].split("-")
+            if _min < DEFAULT_PORT_RANGE[0] or _max > DEFAULT_PORT_RANGE[1]:
+                raise Exception("port range must be a subrange of %d-%d" % (DEFAULT_PORT_RANGE[0], DEFAULT_PORT_RANGE[1]))
+            options["port_range"] = [int(_min), int(_max)]
+        self.options = options
+
+        if "OPENSVC_LSNR_SOCK" in os.environ:
+            self.lsnr_path = os.environ["OPENSVC_LSNR_SOCK"]
+        elif self.options.get("osock"):
+            self.lsnr_path = self.options.get("osock")
+        elif os.path.exists("/var/run/lsnr/lsnr.sock"):
+            self.lsnr_path = "/var/run/lsnr/lsnr.sock"
+        else:
+            self.lsnr_path = "/var/lib/opensvc/lsnr/lsnr.sock"
+
+    def start_grpc_server(self):
+        self.server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
+
+        envoy.api.v2.cds_pb2_grpc.add_ClusterDiscoveryServiceServicer_to_server(ClusterDiscoveryServiceServicer(), self.server)
+        envoy.api.v2.eds_pb2_grpc.add_EndpointDiscoveryServiceServicer_to_server(EndpointDiscoveryServiceServicer(), self.server)
+        envoy.api.v2.lds_pb2_grpc.add_ListenerDiscoveryServiceServicer_to_server(ListenerDiscoveryServiceServicer(), self.server)
+        envoy.api.v2.rds_pb2_grpc.add_RouteDiscoveryServiceServicer_to_server(RouteDiscoveryServiceServicer(), self.server)
+        #envoy.service.discovery.v2.ads_pb2_grpc.add_AggregatedDiscoveryServiceServicer_to_server(AggregatedDiscoveryServiceServicer(), self.server)
+
+        print('Starting server. Listening on port %d.' % self.options["port"])
+        self.server.add_insecure_port('[::]:%d' % self.options["port"])
+        self.server.start()
+
+    def _main(self):
+        """
+        Mainloop where we listen to the server events.
+        """
+        for message in self.daemon_get_stream({"action": "events"}):
+            self.event_router(message)
+
+    def main(self, **kwargs):
+        """
+        Main function.
+        """
+        self.set_options(**kwargs)
+        self.start_grpc_server()
+
+        # grpc client subs
+        self.channel = grpc.insecure_channel('[::]:%d' % self.options["envoy_port"])
+        self.cds_stub = envoy.api.v2.cds_pb2_grpc.ClusterDiscoveryServiceStub(self.channel)
+        self.lds_stub = envoy.api.v2.lds_pb2_grpc.ListenerDiscoveryServiceStub(self.channel)
+        self.eds_stub = envoy.api.v2.eds_pb2_grpc.EndpointDiscoveryServiceStub(self.channel)
+        self.rds_stub = envoy.api.v2.rds_pb2_grpc.RouteDiscoveryServiceStub(self.channel)
+        self.ads_stub = envoy.service.discovery.v2.ads_pb2_grpc.AggregatedDiscoveryServiceStub(self.channel)
+
+        try:
+            self.get_daemon_status()
+        except IOError as exc:
+            print("osvcd socket %s: %s" % (self.lsnr_path, str(exc)), file=sys.stderr)
+            return 1
+
+        while True:
+            try:
+                self._main()
+            except (LsnrReset, Error) as exc:
+                print(exc)
+                time.sleep(1)
+            except KeyboardInterrupt:
+                print("keyboard interrupt")
+                break
+            except Exception:
+                traceback.print_exc()
+                time.sleep(1)
+        self.server.stop(0)
+
+if __name__ == "__main__":
+    options = get_options()
+    OSVC = Osvc()
+    OSVC.main(**options)
