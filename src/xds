@@ -1315,6 +1315,7 @@ class Osvc(object):
                 if key[4].startswith("expose#") or \
                    key[4].startswith("vhost#") or \
                    key[4].startswith("route#") or \
+                   key[4].startswith("hash_policy#") or \
                    key[4].startswith("certificate#"):
                     print("EVT expose config change:", change)
                     return key[2], "update"
