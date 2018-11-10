@@ -1256,7 +1256,10 @@ class Osvc(object):
         return data
 
     def get_listener_routes(self, name):
-        ipaddr, port, protocol = self.split_listenername(name)
+        try:
+            ipaddr, port, protocol = self.split_listenername(name)
+        except TypeError:
+            return {}
         done = []
         data = {
             "name": name,
