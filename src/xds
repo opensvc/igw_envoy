@@ -219,10 +219,14 @@ def request_waiter(request_iterator, q):
             request = request_iterator.next()
         except StopIteration:
             print("*** exit waiter on StopIteration")
-            break
+            time.sleep(1)
+            continue
+            #break
         except grpc.RpcError:
             print("*** exit waiter on grpc error")
-            break
+            time.sleep(1)
+            continue
+            #break
         except KeyboardInterrupt:
             print("*** exit waiter on KeyboardInterrupt")
             break
@@ -317,6 +321,7 @@ class _StreamListeners(object):
                 if self.n_req == 1:
                     print("<<< StreamListener", "first message")
                     message = OSVC.init_listeners()
+                    print(message)
                     if message:
                         return message
                 else:
@@ -607,7 +612,6 @@ class Osvc(object):
                         "drain_connections_on_host_removal": True,
                         "connect_timeout": str(expose_data.get("connect_timeout", DEFAULT_CONNECT_TIMEOUT))+"s",
                         "lb_policy": expose_data.get("lb_policy", DEFAULT_LB_POLICY).upper().replace(" ", "_"),
-#                        "http2_protocol_options": {},
                         "health_checks": [
                             {
                                 "tcp_health_check": {},
@@ -783,11 +787,10 @@ class Osvc(object):
             "resources": [],
         }
         for name in request.resource_names:
-            _data = self.get_cluster_routes(name)
-            for __data in _data:
-                res = self.route(__data)
-                if res:
-                    data["resources"].append(res)
+            _data = self.get_listener_routes(name)
+            res = self.route(_data)
+            if res:
+                data["resources"].append(res)
         json_format.Parse(json.dumps(data), response, ignore_unknown_fields=False)
         print(">>> StreamRoutes", response.nonce, response.version_info)
         print(text_format.MessageToString(response))
@@ -815,18 +818,6 @@ class Osvc(object):
                         route["match"][key] = val
 
                 sub = {}
-                obj = envoy.api.v2.route.route_pb2.RouteAction()
-                for key in ["prefix_rewrite", "cluster_header", "host_rewrite", "use_websocket", "timeout"]:
-                    val = route_data.get("route_"+key)
-                    if val == getattr(obj, key):
-                        continue
-                    if val is not None:
-                        sub[key] = val
-                if sub:
-                    sub["cluster"] = data["name"]
-                    route["route"] = sub
-
-                sub = {}
                 obj = envoy.api.v2.route.route_pb2.RedirectAction()
                 for key in ["host_redirect", "path_redirect", "prefix_rewrite", "response_code", "https_redirect", "strip_query"]:
                     val = route_data.get("redirect_"+key)
@@ -836,10 +827,71 @@ class Osvc(object):
                         sub[key] = val
                 if sub:
                     route["redirect"] = sub
+                else:
+                    sub = {}
+                    obj = envoy.api.v2.route.route_pb2.RouteAction()
+                    for key in ["prefix_rewrite", "cluster_header", "host_rewrite", "use_websocket", "timeout"]:
+                        val = route_data.get("route_"+key)
+                        if val == getattr(obj, key):
+                            continue
+                        if val in (None, False):
+                            continue
+                        sub[key] = val
+                    sub["cluster"] = vhost_data["name"].split(".vhost#")[0]
+                    hpos = self.route_hpos(route_data)
+                    if hpos:
+                        sub["hash_policy"] = hpos
+                    route["route"] = sub
+
                 vhost["routes"].append(route)
+
             routeconf["virtual_hosts"].append(vhost)
         return routeconf
 
+    def route_hpos(self, route_data):
+        hpos = route_data.get("hash_policies", [])
+        if not hpos:
+            return
+        data = []
+        for hpo_data in hpos:
+            _data = {}
+
+            cookie_data = {}
+            for key in ("cookie_name", "cookie_path", "cookie_ttl"):
+                val = hpo_data.get(key)
+                if val is not None:
+                    cookie_data[key[7:]] = val
+            try:
+                cookie_data["ttl"] = str(cookie_data["ttl"])+"s"
+            except KeyError:
+                pass
+            if cookie_data:
+                _data["cookie"] = cookie_data
+
+            header_data = {}
+            for key in ("header_name"):
+                val = hpo_data.get(key)
+                if val is not None:
+                    header_data[key[7:]] = val
+            if header_data:
+                _data["header"] = header_data
+
+            connection_data = {}
+            for key in ("connection_source_ip"):
+                val = hpo_data.get(key)
+                if val is not None:
+                    connection_data[key[11:]] = val
+            if connection_data:
+                _data["connection"] = connection_data
+
+            val = hpo_data.get("terminal")
+            if val not in (None, False):
+                _data["terminal"] = val
+
+            if _data:
+                data.append(_data)
+
+        return data
 
     #
     # osvcd socket helpers
@@ -1051,6 +1103,18 @@ class Osvc(object):
         svcname, suffix = name.split(".expose#")
         return svcname, "expose#"+suffix
 
+    def format_listenername(self, ipaddr, port, protocol):
+        return "%s:%d/%s" % (ipaddr, port, protocol)
+
+    def split_listenername(self, name):
+        try:
+            ipaddr, rest = name.split(":", 1)
+            port, protocol = rest.split("/", 1)
+            port = int(port)
+        except (IndexError, TypeError):
+            raise TypeError
+        return ipaddr, port, protocol
+
     def is_scaler_slave(self, svcname):
         """
         Return True whether a service is a scaler slave.
@@ -1171,53 +1235,48 @@ class Osvc(object):
                         data[name]["endpoints"][locality]["lb_endpoints"][ep_key] = lb_endpoint
         return data
 
-    def route_data_from_expose_data(self, name, expose_data, resources):
+    def get_expose_vhosts(self, svcname, expose, expose_data, resources):
+        data = []
+        for vhost in expose_data.get("vhosts", []):
+            vhost_data = {}
+            vhost_data.update(resources.get(vhost, {}).get("info", {}))
+            vhost_data["name"] = "%s.%s.%s" % (svcname, expose, vhost)
+            routes = []
+            for route in vhost_data.get("routes", []):
+                route_data = {}
+                route_data.update(resources.get(route, {}).get("info", {}))
+                if not route_data:
+                    continue
+                hpos = route_data.get("hash_policies", [])
+                if hpos:
+                    route_data["hash_policies"] = [resources.get(hpo, {}).get("info", {}) for hpo in hpos]
+                routes.append(route_data)
+            vhost_data["routes"] = routes
+            data.append(vhost_data)
+        return data
+
+    def get_listener_routes(self, name):
+        ipaddr, port, protocol = self.split_listenername(name)
+        done = []
         data = {
             "name": name,
             "vhosts": [],
         }
-        for vhost in expose_data.get("vhosts", []):
-            vhost_data = {}
-            vhost_data.update(resources.get(vhost, {}).get("info", {}))
-            vhost_data["name"] = "%s.%s" % (name, vhost)
-            routes = []
-            for route in vhost_data.get("routes", []):
-                route_data = resources.get(route, {}).get("info", {})
-                if route_data:
-                    routes.append(route_data)
-            vhost_data["routes"] = routes
-            data["vhosts"].append(vhost_data)
+        for svcname in self.get_svcnames():
+            for (slave, nodename), instance in self.get_instances(svcname).items():
+                xdata = self.instance_expose_data(slave, nodename)
+                for expose, expose_data in xdata.items():
+                    if (svcname, expose) in done:
+                        continue
+                    if expose_data["listener_addr"] != ipaddr or \
+                       expose_data["listener_port"] != port or \
+                       expose_data["protocol"] != protocol:
+                        continue
+                    vhosts = self.get_expose_vhosts(svcname, expose, expose_data, instance["resources"])
+                    data["vhosts"] += vhosts
+                    done.append((svcname, expose))
         return data
 
-    def get_cluster_routes(self, name):
-        data = {}
-        svcname, expose = self.split_clustername(name)
-        for (slave, nodename), instance in self.get_instances(svcname).items():
-            xdata = self.instance_expose_data(slave, nodename)
-            for resource in instance["resources"].values():
-                if expose not in resource.get("info", {}).get("expose", []):
-                    continue
-                try:
-                    expose_data = xdata[expose]
-                except KeyError:
-                    continue
-                return [self.route_data_from_expose_data(name, expose_data, instance["resources"])]
-        return []
-
-    def get_svc_routes(self, svcname):
-        data = {}
-        for (slave, nodename), instance in self.get_instances(svcname).items():
-            for resource in instance["resources"].values():
-                for expose in resource.get("info", {}).get("expose", []):
-                    name = "%s.%s" % (svcname, expose)
-                    if name in data:
-                        continue
-                    try:
-                        expose_data = instance["resources"][expose]["info"]
-                    except KeyError:
-                        continue
-                    data[name] = self.route_data_from_expose_data(name, expose_data, instance["resources"])
-        return data
 
     #
     # Event routing
@@ -1312,12 +1371,6 @@ class Osvc(object):
         elif evt == "delete":
             self.del_service_lb(svcname)
 
-    def get_listeners(self):
-        data = {}
-        for svcname in self.get_svcnames():
-            data = self.get_svc_listeners(svcname, data)
-        return data.values()
-
     def allocate_port(self, svcname, rid, addr):
         import requests
         allocated = set()
@@ -1380,132 +1433,150 @@ class Osvc(object):
                 }
             }))
 
-    def get_svc_listeners(self, svcname, data):
-        cluster_svcname = self.scaler_svcname(svcname)
+    def get_listeners(self):
+        data = {}
         allocated_ports = {}
-        if not cluster_svcname:
-            cluster_svcname = svcname
-        for (slave, nodename), instance in self.get_instances(cluster_svcname).items():
-            instance_data = self.instance_expose_data(slave, nodename)
-            for rid, resource in instance["resources"].items():
-                for expose in resource.get("info", {}).get("expose", []):
-                    try:
-                        expose_data = instance_data[expose]
-                    except (KeyError, TypeError):
-                        continue
-                    protocol = expose_data.get("protocol", "tcp")
-                    listener_addr = expose_data.get("listener_addr")
-                    if not listener_addr:
-                        listener_addr = "0.0.0.0"
-                    listener_port = expose_data.get("listener_port")
-                    if listener_port is None:
-                        listener_port = expose_data["port"]
-                    elif listener_port == 0:
-                        if (cluster_svcname, expose) in allocated_ports:
-                            listener_port = allocated_ports[(cluster_svcname, expose)]
+        chains = []
+
+        for svcname in self.get_svcnames():
+            cluster_svcname = self.scaler_svcname(svcname)
+            if not cluster_svcname:
+                cluster_svcname = svcname
+            for (slave, nodename), instance in self.get_instances(cluster_svcname).items():
+                instance_data = self.instance_expose_data(slave, nodename)
+                for rid, resource in instance["resources"].items():
+                    for expose in resource.get("info", {}).get("expose", []):
+                        try:
+                            expose_data = instance_data[expose]
+                        except (KeyError, TypeError):
+                            continue
+                        protocol = expose_data.get("protocol", "tcp")
+                        listener_addr = expose_data.get("listener_addr")
+                        if not listener_addr:
+                            listener_addr = "0.0.0.0"
+                        listener_port = expose_data.get("listener_port")
+                        if listener_port is None:
+                            listener_port = expose_data["port"]
+                        elif listener_port == 0:
+                            if (cluster_svcname, expose) in allocated_ports:
+                                listener_port = allocated_ports[(cluster_svcname, expose)]
+                            else:
+                                listener_port = self.allocate_port(cluster_svcname, expose, expose)
+                                allocated_ports[(cluster_svcname, expose)] = listener_port
+                        name = self.format_listenername(listener_addr, listener_port, protocol)
+                        cluster = ".".join([cluster_svcname, expose])
+                        if name in data:
+                            _data = data[name]
                         else:
-                            listener_port = self.allocate_port(cluster_svcname, expose, expose)
-                            allocated_ports[(cluster_svcname, expose)] = listener_port
-                    name = "%s:%d/%s" % (listener_addr, listener_port, protocol)
-                    cluster = ".".join([cluster_svcname, expose])
-                    if name in data:
-                        _data = data[name]
-                    else:
-                        _data = {
-                            "@type": "type.googleapis.com/envoy.api.v2.Listener",
-                            "name": name,
-                            "address": {
-                                "socket_address": {
-                                    "address": listener_addr,
-                                    "port_value": listener_port,
-                                },
-                            },
-                            "filter_chains": []
-                        }
-                    vhosts = expose_data.get("vhosts", [])
-                    sni = expose_data.get("sni", [])
-                    if sni:
-                        # tcp proxy with sni matching
-                        tls_inspector_data = [
-                            {
-                                "name": "envoy.listener.tls_inspector",
-                                "config": {},
-                            },
-                        ]
-                        if "listener_filters" not in _data:
-                            _data["listener_filters"] = tls_inspector_data
-                        elif not [lfi for lfi in _data["listener_filters"] if lfi["name"] == "envoy.listener.tls_inspector"]:
-                            _data["listener_filters"] += tls_inspector_data
-                        chain = {
-                            "filter_chain_match": {
-                                "server_names": sni,
-                            },
-                            "filters": [
-                                {
-                                    "name": "envoy.tcp_proxy",
-                                    "config": {
-                                        "stat_prefix": "ingress_"+cluster,
-                                        "cluster": cluster,
+                            _data = {
+                                "@type": "type.googleapis.com/envoy.api.v2.Listener",
+                                "name": name,
+                                "address": {
+                                    "socket_address": {
+                                        "address": listener_addr,
+                                        "port_value": listener_port,
                                     },
                                 },
-                            ],
-                        }
-                        if not _data["filter_chains"] or not [_chain for _chain in _data["filter_chains"] if _chain.get("filter_chain_match", {}).get("server_names") == sni]:
-                            _data["filter_chains"].append(chain)
-                    elif not vhosts:
-                        # tcp proxy on dedicated listener port
-                        chain = {
-                            "filters": [
+                                "filter_chains": []
+                            }
+                        vhosts = expose_data.get("vhosts", [])
+                        sni = expose_data.get("sni", [])
+                        if sni:
+                            # tcp proxy with sni matching
+                            tls_inspector_data = [
                                 {
-                                    "name": "envoy.tcp_proxy",
-                                    "config": {
-                                        "stat_prefix": "ingress_"+cluster,
-                                        "cluster": cluster,
-                                    },
+                                    "name": "envoy.listener.tls_inspector",
+                                    "config": {},
                                 },
-                            ],
-                        }
-                        if not _data["filter_chains"] or not [_chain for _chain in _data["filter_chains"] if any([fil for fil in _chain.get("filters", {}) if fil.get("config", {}).get("cluster") == cluster])]:
-                            _data["filter_chains"].append(chain)
-                    else:
-                        chain = {
-                            "filters": [
-                                {
-                                    "name": "envoy.http_connection_manager",
-                                    "config": {
-                                        "codec_type": "auto",
-                                        "stat_prefix": "ingress_"+cluster,
-                                        "http_filters": {
-                                            "name": "envoy.router",
+                            ]
+                            if "listener_filters" not in _data:
+                                _data["listener_filters"] = tls_inspector_data
+                            elif not [lfi for lfi in _data["listener_filters"] if lfi["name"] == "envoy.listener.tls_inspector"]:
+                                _data["listener_filters"] += tls_inspector_data
+                            chain = {
+                                "filter_chain_match": {
+                                    "server_names": sni,
+                                },
+                                "filters": [
+                                    {
+                                        "name": "envoy.tcp_proxy",
+                                        "config": {
+                                            "stat_prefix": "ingress_"+cluster,
+                                            "cluster": cluster,
                                         },
-                                        "rds": {
-                                            "route_config_name": cluster,
-                                            "config_source": {
-                                                "api_config_source": {
-                                                    "api_type": "GRPC",
-                                                    "grpc_services": [
-                                                        {
-                                                            "envoy_grpc": {
-                                                                "cluster_name": "xds_cluster",
+                                    },
+                                ],
+                            }
+                            if not _data["filter_chains"] or not [_chain for _chain in _data["filter_chains"] if _chain.get("filter_chain_match", {}).get("server_names") == sni]:
+                                _data["filter_chains"].append(chain)
+                        elif not vhosts:
+                            # tcp proxy on dedicated listener port
+                            chain = {
+                                "filters": [
+                                    {
+                                        "name": "envoy.tcp_proxy",
+                                        "config": {
+                                            "stat_prefix": "ingress_"+cluster,
+                                            "cluster": cluster,
+                                        },
+                                    },
+                                ],
+                            }
+                            if not _data["filter_chains"] or not [_chain for _chain in _data["filter_chains"] if any([fil for fil in _chain.get("filters", {}) if fil.get("config", {}).get("cluster") == cluster])]:
+                                _data["filter_chains"].append(chain)
+                        else:
+                            chain = {
+                                "filters": [
+                                    {
+                                        "name": "envoy.http_connection_manager",
+                                        "config": {
+                                            "codec_type": "auto",
+                                            "stat_prefix": "ingress_"+name,
+                                            "tracing": {},
+                                            "http_filters": {
+                                                "name": "envoy.router",
+                                            },
+                                            "http_protocol_options": {
+                                                "accept_http_10": True,
+                                            },
+                                            "http2_protocol_options": {},
+                                            "rds": {
+                                                "route_config_name": name,
+                                                "config_source": {
+                                                    "api_config_source": {
+                                                        "api_type": "GRPC",
+                                                        "grpc_services": [
+                                                            {
+                                                                "envoy_grpc": {
+                                                                    "cluster_name": "xds_cluster",
+                                                                },
                                                             },
-                                                        },
-                                                    ],
+                                                        ],
+                                                    },
                                                 },
                                             },
                                         },
                                     },
-                                },
-                            ],
-                        }
+                                ],
+                            }
 
-                        certs = expose_data.get("listener_certificates")
-                        tls_context = self.get_tls_context(certs, instance)
-                        if tls_context:
-                            chain["tls_context"] = tls_context
-                        if not _data["filter_chains"] or not [_chain for _chain in _data["filter_chains"] if any([fil for fil in _chain.get("filters", {}) if fil.get("config", {}).get("rds", {}).get("route_config_name") == cluster])]:
+                            certs = expose_data.get("listener_certificates")
+                            tls_context = self.get_tls_context(certs, instance)
+                            if tls_context:
+                                chain["tls_context"] = tls_context
+                            #    server_names = []
+                            #    for vhost in vhosts:
+                            #        server_names += instance["resources"][vhost].get("info", {}).get("domains", [])
+                            #    chain["filter_chain_match"] = {
+                            #        "server_names": server_names,
+                            #    }
+                            if (name, "envoy.http_connection_manager") in chains:
+                                continue
                             _data["filter_chains"].append(chain)
-                    data[name] = _data
-        return data
+                            chains.append((name, "envoy.http_connection_manager"))
+                        data[name] = _data
+
+        return data.values()
 
     def get_tls_context(self, certs, instance):
         tls_context = {"common_tls_context": {"tls_certificates": []}}
