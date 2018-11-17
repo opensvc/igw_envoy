@@ -1576,7 +1576,16 @@ class Osvc(object):
                             }
 
                             certs = expose_data.get("listener_certificates")
-                            idx = chains.get((name, "envoy.http_connection_manager"))
+                            server_names = []
+                            if certs:
+                                for vhost in vhosts:
+                                    server_names += instance["resources"][vhost].get("info", {}).get("domains", [])
+                                chain["filter_chain_match"] = {
+                                    "server_names": server_names,
+                                }
+                            server_names = tuple(sorted(server_names))
+
+                            idx = chains.get((name, "envoy.http_connection_manager", server_names))
                             if idx is not None:
                                 # add certificates to an existing http_connection_manager
                                 tls_context = self.get_tls_context(certs, instance,
@@ -1588,7 +1597,7 @@ class Osvc(object):
                                 tls_context = self.get_tls_context(certs, instance)
                                 if tls_context:
                                     chain["tls_context"] = tls_context
-                                chains[(name, "envoy.http_connection_manager")] = len(_data["filter_chains"])
+                                chains[(name, "envoy.http_connection_manager", server_names)] = len(_data["filter_chains"])
                                 _data["filter_chains"].append(chain)
                         data[name] = _data
 
