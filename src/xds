@@ -232,6 +232,9 @@ def request_waiter(request_iterator, q):
             break
         q.put(("request", request))
 
+class SockReset(Exception):
+    pass
+
 class _StreamClusters(object):
     def __init__(self, request_iterator, context):
         print("+++ StreamClusters")
@@ -797,6 +800,8 @@ class Osvc(object):
         return response
 
     def route(self, data):
+        if "name" not in data:
+            return
         routeconf = {
             "@type": "type.googleapis.com/envoy.api.v2.RouteConfiguration",
             "name": data["name"],
@@ -987,7 +992,7 @@ class Osvc(object):
                     return
                 for message in data:
                     yield message
-        except socket.error as exc:
+        except (SockReset, socket.error) as exc:
             raise LsnrReset("daemon send to %s error: %s" % (self.lsnr_path, str(exc)))
         finally:
             sock.close()
@@ -1111,7 +1116,7 @@ class Osvc(object):
             ipaddr, rest = name.split(":", 1)
             port, protocol = rest.split("/", 1)
             port = int(port)
-        except (IndexError, TypeError):
+        except (ValueError, IndexError, TypeError):
             raise TypeError
         return ipaddr, port, protocol
 
@@ -1259,6 +1264,7 @@ class Osvc(object):
         try:
             ipaddr, port, protocol = self.split_listenername(name)
         except TypeError:
+            print("discard invalid route name:", name)
             return {}
         done = []
         data = {
@@ -1271,9 +1277,14 @@ class Osvc(object):
                 for expose, expose_data in xdata.items():
                     if (svcname, expose) in done:
                         continue
-                    if expose_data["listener_addr"] != ipaddr or \
-                       expose_data["listener_port"] != port or \
-                       expose_data["protocol"] != protocol:
+                    _protocol = expose_data.get("protocol", "tcp")
+                    _listener_addr = expose_data.get("listener_addr",
+                                                     "0.0.0.0")
+                    _listener_port = expose_data.get("listener_port",
+                                                     expose_data.get("port"))
+                    if _listener_addr != ipaddr or \
+                       _listener_port != port or \
+                       _protocol != protocol:
                         continue
                     vhosts = self.get_expose_vhosts(svcname, expose, expose_data, instance["resources"])
                     data["vhosts"] += vhosts
@@ -1440,7 +1451,7 @@ class Osvc(object):
     def get_listeners(self):
         data = {}
         allocated_ports = {}
-        chains = []
+        chains = {}
 
         for svcname in self.get_svcnames():
             cluster_svcname = self.scaler_svcname(svcname)
@@ -1565,54 +1576,63 @@ class Osvc(object):
                             }
 
                             certs = expose_data.get("listener_certificates")
-                            tls_context = self.get_tls_context(certs, instance)
-                            if tls_context:
-                                chain["tls_context"] = tls_context
-                            #    server_names = []
-                            #    for vhost in vhosts:
-                            #        server_names += instance["resources"][vhost].get("info", {}).get("domains", [])
-                            #    chain["filter_chain_match"] = {
-                            #        "server_names": server_names,
-                            #    }
-                            if (name, "envoy.http_connection_manager") in chains:
-                                continue
-                            _data["filter_chains"].append(chain)
-                            chains.append((name, "envoy.http_connection_manager"))
+                            idx = chains.get((name, "envoy.http_connection_manager"))
+                            if idx is not None:
+                                # add certificates to an existing http_connection_manager
+                                tls_context = self.get_tls_context(certs, instance,
+                                                                   tls_context=_data["filter_chains"][idx].get("tls_context"))
+                                if tls_context:
+                                    _data["filter_chains"][idx]["tls_context"] = tls_context
+                            else:
+                                # new http_connection_manager
+                                tls_context = self.get_tls_context(certs, instance)
+                                if tls_context:
+                                    chain["tls_context"] = tls_context
+                                chains[(name, "envoy.http_connection_manager")] = len(_data["filter_chains"])
+                                _data["filter_chains"].append(chain)
                         data[name] = _data
 
         return data.values()
 
-    def get_tls_context(self, certs, instance):
-        tls_context = {"common_tls_context": {"tls_certificates": []}}
+    def get_tls_context(self, certs, instance, tls_context=None):
         if not certs:
             return
+        if tls_context is None:
+            tls_context = {"common_tls_context": {"tls_certificates": []}}
         for cert in certs:
-            cert_data = instance["resources"].get(cert, {}).get("info")
-            if not cert_data:
+            _data = self.get_tls_cert(cert, instance)
+            if _data is None:
                 continue
-            _data = {
-                "private_key": {},
-                "certificate_chain": {},
-            }
-            val = cert_data.get("private_key_filename")
-            if val:
-                _data["private_key"]["filename"] = val
-
-            val = cert_data.get("private_key_inline_string")
-            if val:
-                _data["private_key"]["inline_inline_string"] = val
-
-            val = cert_data.get("certificate_chain_filename")
-            if val:
-                _data["certificate_chain"]["filename"] = val
-
-            val = cert_data.get("certificate_chain_inline_string")
-            if val:
-                _data["certificate_chain"]["inline_string"] = val
-
-            tls_context["common_tls_context"]["tls_certificates"].append(_data)
+            if _data not in tls_context["common_tls_context"]["tls_certificates"]:
+                tls_context["common_tls_context"]["tls_certificates"].append(_data)
         if tls_context["common_tls_context"]["tls_certificates"]:
             return tls_context
+
+    def get_tls_cert(self, cert, instance):
+        cert_data = instance["resources"].get(cert, {}).get("info")
+        if not cert_data:
+            return
+        _data = {
+            "private_key": {},
+            "certificate_chain": {},
+        }
+        val = cert_data.get("private_key_filename")
+        if val:
+            _data["private_key"]["filename"] = val
+
+        val = cert_data.get("private_key_inline_string")
+        if val:
+            _data["private_key"]["inline_inline_string"] = val
+
+        val = cert_data.get("certificate_chain_filename")
+        if val:
+            _data["certificate_chain"]["filename"] = val
+
+        val = cert_data.get("certificate_chain_inline_string")
+        if val:
+            _data["certificate_chain"]["inline_string"] = val
+
+        return _data
 
     def update_clusters(self):
         CDS_Q.put(("update", True))
