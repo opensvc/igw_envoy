@@ -179,6 +179,22 @@ LAST_NONCE = {}
 RES_VERSION = {}
 ADDED_CLUSTERS = set()
 
+ACTION_ROUTE_DEFAULTS = {
+    "prefix_rewrite": None,
+    "cluster_header": None,
+    "host_rewrite": None,
+    "use_websocket": False,
+    "timeout": None,
+}
+ACTION_REDIRECT_DEFAULTS = {
+    "host_redirect": None,
+    "path_redirect": None,
+    "prefix_rewrite": None,
+    "response_code": None,
+    "https_redirect": False,
+    "strip_query": False,
+}
+
 def gen_nonce(key, version):
     global NONCE
     global LAST_NONCE
@@ -824,22 +840,22 @@ class Osvc(object):
 
                 sub = {}
                 obj = envoy.api.v2.route.route_pb2.RedirectAction()
-                for key in ["host_redirect", "path_redirect", "prefix_rewrite", "response_code", "https_redirect", "strip_query"]:
+                for key, default in ACTION_REDIRECT_DEFAULTS.items():
                     val = route_data.get("redirect_"+key)
                     if val == getattr(obj, key):
                         continue
-                    if val is not None:
+                    if val != default:
                         sub[key] = val
                 if sub:
                     route["redirect"] = sub
                 else:
                     sub = {}
                     obj = envoy.api.v2.route.route_pb2.RouteAction()
-                    for key in ["prefix_rewrite", "cluster_header", "host_rewrite", "use_websocket", "timeout"]:
+                    for key in ACTION_ROUTE_DEFAULTS.items():
                         val = route_data.get("route_"+key)
                         if val == getattr(obj, key):
                             continue
-                        if val in (None, False):
+                        if val != default:
                             continue
                         sub[key] = val
                     sub["cluster"] = vhost_data["name"].split(".vhost#")[0]
