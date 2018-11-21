@@ -409,8 +409,7 @@ class _StreamEndpoints(object):
             except queue.Empty:
                 pass
             try:
-                for svcname in self.svcnames:
-                    q = EDS_Q.get(svcname)
+                for svcname, q in RDS_Q.items():
                     if not q:
                         continue
                     q.get(False)
@@ -477,8 +476,7 @@ class _StreamRoutes(object):
             except queue.Empty:
                 pass
             try:
-                for svcname in self.svcnames:
-                    q = RDS_Q.get(svcname)
+                for svcname, q in RDS_Q.items():
                     if not q:
                         continue
                     q.get(False)
@@ -598,9 +596,13 @@ class Osvc(object):
             "nonce": gen_nonce("cluster", version),
             "resources": [res for res in self.get_clusters()]
         }
-        json_format.Parse(json.dumps(data), response, ignore_unknown_fields=False)
+        try:
+            json_format.Parse(json.dumps(data), response, ignore_unknown_fields=False)
+        except Exception as exc:
+            print(">>> StreamClusters error:", str(exc))
+            print(json.dumps(data, indent=4))
+            return
         print(">>> StreamClusters", response.nonce, version)
-        #print(text_format.MessageToString(response))
         return response
 
     def get_clusters(self):
@@ -698,15 +700,14 @@ class Osvc(object):
             "nonce": gen_nonce("listener", version),
             "resources": [lsnr for lsnr in self.get_listeners()],
         }
-        json_format.Parse(json.dumps(data), response, ignore_unknown_fields=False)
+        try:
+            json_format.Parse(json.dumps(data), response, ignore_unknown_fields=False)
+        except Exception as exc:
+            print(">>> StreamListeners error:", str(exc))
+            print(json.dumps(data, indent=4))
+            return
         print(">>> StreamListeners", response.nonce, version)
-        #print(text_format.MessageToString(response))
         return response
-
-    def listener(self, data):
-        listener = envoy.api.v2.lds_pb2.Listener()
-        json_format.Parse(json.dumps(data), listener, ignore_unknown_fields=False)
-        return listener
 
 
     #
@@ -810,7 +811,12 @@ class Osvc(object):
             res = self.route(_data)
             if res:
                 data["resources"].append(res)
-        json_format.Parse(json.dumps(data), response, ignore_unknown_fields=False)
+        try:
+            json_format.Parse(json.dumps(data), response, ignore_unknown_fields=False)
+        except Exception as exc:
+            print(">>> StreamRoutes error:", str(exc))
+            print(json.dumps(data, indent=4))
+            return
         print(">>> StreamRoutes", response.nonce, response.version_info)
         print(text_format.MessageToString(response))
         return response
@@ -856,8 +862,7 @@ class Osvc(object):
                         if val == getattr(obj, key):
                             continue
                         if val != default:
-                            continue
-                        sub[key] = val
+                            sub[key] = val
                     sub["cluster"] = vhost_data["name"].split(".vhost#")[0]
                     hpos = self.route_hpos(route_data)
                     if hpos:
