@@ -1150,6 +1150,8 @@ class Osvc(object):
 
     def get_instances(self, svcname):
         instances = {}
+        if self.daemon_status_data is None:
+            return {}
         for nodename, node_data in self.daemon_status_data.get("monitor", {}).get("nodes", {}).items():
             try:
                 instance = node_data["services"]["status"][svcname]
@@ -1164,6 +1166,8 @@ class Osvc(object):
         return instances
 
     def get_svcnames(self):
+        if self.daemon_status_data is None:
+            return []
         return self.daemon_status_data.get("monitor", {}).get("services", {}).keys()
 
     def get_endpoints(self):
@@ -1423,6 +1427,8 @@ class Osvc(object):
 
     def osvc_service_set_listener_port(self, svcname, rid, port):
         self._osvc_service_set_listener_port(svcname, rid, port)
+        if self.daemon_status_data is None:
+            return
         for nodename, node_data in self.daemon_status_data.get("monitor", {}).get("nodes", {}).items():
             try:
                 instance = node_data["services"]["status"][svcname]
