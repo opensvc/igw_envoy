@@ -183,7 +183,6 @@ ACTION_ROUTE_DEFAULTS = {
     "prefix_rewrite": None,
     "cluster_header": None,
     "host_rewrite": None,
-    "use_websocket": False,
     "timeout": None,
 }
 ACTION_REDIRECT_DEFAULTS = {
@@ -1575,6 +1574,11 @@ class Osvc(object):
                                             "codec_type": "auto",
                                             "stat_prefix": "ingress_"+name,
                                             "tracing": {},
+                                            "upgrade_configs": [
+                                                {
+                                                    "upgrade_type": "websocket",
+                                                },
+                                            ],
                                             "http_filters": {
                                                 "name": "envoy.router",
                                             },
