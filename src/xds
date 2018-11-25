@@ -178,6 +178,8 @@ NONCE = 0
 LAST_NONCE = {}
 RES_VERSION = {}
 ADDED_CLUSTERS = set()
+TERMINATE = False
+WAITERS = {}
 
 ACTION_ROUTE_DEFAULTS = {
     "prefix_rewrite": None,
@@ -228,24 +230,30 @@ def inc_res_version(type_url, name, v=1):
     RES_VERSION[type_url][name] += 1
     return str(RES_VERSION[type_url][name])
 
-def request_waiter(request_iterator, q):
+def request_waiter(name, request_iterator, q):
     while True:
         try:
             request = request_iterator.next()
+            q.put(("request", request))
         except StopIteration:
-            print("*** exit waiter on StopIteration")
-            time.sleep(1)
-            continue
-            #break
+            if TERMINATE:
+                print("*** exit '%s' waiter on StopIteration" % name)
+                break
+            else:
+                print("*** sleep '%s' waiter on StopIteration" % name)
+                time.sleep(1)
+                continue
         except grpc.RpcError:
-            print("*** exit waiter on grpc error")
-            time.sleep(1)
-            continue
-            #break
+            if TERMINATE:
+                print("*** exit '%s' waiter on grpc error" % name)
+                break
+            else:
+                print("*** sleep '%s' waiter on grpc error" % name)
+                time.sleep(1)
+                continue
         except KeyboardInterrupt:
-            print("*** exit waiter on KeyboardInterrupt")
+            print("*** exit '%s' waiter on KeyboardInterrupt" % name)
             break
-        q.put(("request", request))
 
 class SockReset(Exception):
     pass
@@ -256,8 +264,9 @@ class _StreamClusters(object):
         self.request_iterator = request_iterator
         self.context = context
         self.n_req = 0
-        self.waiter = threading.Thread(target=request_waiter, args=(request_iterator, CDS_Q))
-        self.waiter.start()
+        self.queue = queue.Queue()
+        WAITERS["cds"] = threading.Thread(target=request_waiter, args=("cds", request_iterator, self.queue))
+        WAITERS["cds"].start()
 
     def __iter__(self):
         return self
@@ -282,12 +291,15 @@ class _StreamClusters(object):
             print("StreamClusters context not active")
             raise StopIteration
         while True:
-            kind, data = CDS_Q.get(True)
-            if kind == "request":
+            if TERMINATE:
+                break
+            try:
+                kind, data = self.queue.get(True, 1)
+                self.last_request = data
                 #print(text_format.MessageToString(data))
                 self.n_req += 1
                 if self.n_req == 1:
-                    print("<<< StreamClusters", "first message")
+                    print("<<< StreamClusters", data.resource_names, "first message")
                     message = OSVC.init_clusters()
                     if message:
                         return message
@@ -295,10 +307,29 @@ class _StreamClusters(object):
                     message = OSVC.stream_clusters(data)
                     if message:
                         return message
-            else:
-                message = OSVC.init_clusters()
-                if message:
-                    return message
+            except queue.Empty:
+                pass
+
+            try:
+                kind, data = CDS_Q.get(False)
+                if kind == "request":
+                    #print(text_format.MessageToString(data))
+                    self.n_req += 1
+                    if self.n_req == 1:
+                        print("<<< StreamClusters", "first message")
+                        message = OSVC.init_clusters()
+                        if message:
+                            return message
+                    else:
+                        message = OSVC.stream_clusters(data)
+                        if message:
+                            return message
+                else:
+                    message = OSVC.init_clusters()
+                    if message:
+                        return message
+            except queue.Empty:
+                pass
 
 class _StreamListeners(object):
     def __init__(self, request_iterator, context):
@@ -306,8 +337,10 @@ class _StreamListeners(object):
         self.request_iterator = request_iterator
         self.context = context
         self.n_req = 0
-        self.waiter = threading.Thread(target=request_waiter, args=(request_iterator, LDS_Q))
-        self.waiter.start()
+        self.last_request = None
+        self.queue = queue.Queue()
+        WAITERS["lds"] = threading.Thread(target=request_waiter, args=("lds", request_iterator, self.queue))
+        WAITERS["lds"].start()
 
     def __iter__(self):
         return self
@@ -332,12 +365,15 @@ class _StreamListeners(object):
             print("StreamListeners context not active")
             raise StopIteration
         while True:
-            kind, data = LDS_Q.get(True)
-            if kind == "request":
+            if TERMINATE:
+                break
+            try:
+                kind, data = self.queue.get(True, 1)
+                self.last_request = data
                 #print(text_format.MessageToString(data))
                 self.n_req += 1
                 if self.n_req == 1:
-                    print("<<< StreamListener", "first message")
+                    print("<<< StreamListeners", data.resource_names, "first message")
                     message = OSVC.init_listeners()
                     print(message)
                     if message:
@@ -346,10 +382,29 @@ class _StreamListeners(object):
                     message = OSVC.stream_listeners(data)
                     if message:
                         return message
-            else:
-                message = OSVC.init_listeners()
-                if message:
-                    return message
+            except queue.Empty:
+                pass
+
+            try:
+                kind, data = LDS_Q.get(False)
+                if kind == "request":
+                    #print(text_format.MessageToString(data))
+                    self.n_req += 1
+                    if self.n_req == 1:
+                        print("<<< StreamListener", "first message")
+                        message = OSVC.init_listeners()
+                        if message:
+                            return message
+                    else:
+                        message = OSVC.stream_listeners(data)
+                        if message:
+                            return message
+                else:
+                    message = OSVC.init_listeners()
+                    if message:
+                        return message
+            except queue.Empty:
+                pass
 
 class _StreamEndpoints(object):
     def __init__(self, request_iterator, context):
@@ -360,8 +415,8 @@ class _StreamEndpoints(object):
         self.svcnames = set()
         self.last_request = None
         self.queue = queue.Queue()
-        self.waiter = threading.Thread(target=request_waiter, args=(request_iterator, self.queue))
-        self.waiter.start()
+        WAITERS["eds"] = threading.Thread(target=request_waiter, args=("eds", request_iterator, self.queue))
+        WAITERS["eds"].start()
 
     def __iter__(self):
         return self
@@ -390,6 +445,8 @@ class _StreamEndpoints(object):
             print("StreamEndpoints context not active")
             raise StopIteration
         while True:
+            if TERMINATE:
+                break
             try:
                 kind, data = self.queue.get(True, 1)
                 self.set_svcnames(data)
@@ -408,7 +465,7 @@ class _StreamEndpoints(object):
             except queue.Empty:
                 pass
             try:
-                for svcname, q in RDS_Q.items():
+                for svcname, q in EDS_Q.items():
                     if not q:
                         continue
                     q.get(False)
@@ -427,8 +484,8 @@ class _StreamRoutes(object):
         self.svcnames = set()
         self.last_request = None
         self.queue = queue.Queue()
-        self.waiter = threading.Thread(target=request_waiter, args=(request_iterator, self.queue))
-        self.waiter.start()
+        WAITERS["rds"] = threading.Thread(target=request_waiter, args=("rds", request_iterator, self.queue))
+        WAITERS["rds"].start()
 
     def __iter__(self):
         return self
@@ -457,6 +514,8 @@ class _StreamRoutes(object):
             print("StreamRoutes context not active")
             raise StopIteration
         while True:
+            if TERMINATE:
+                break
             try:
                 kind, data = self.queue.get(True, 1)
                 self.set_svcnames(data)
@@ -823,15 +882,34 @@ class Osvc(object):
     def route(self, data):
         if "name" not in data:
             return
+        name = data["name"]
         routeconf = {
             "@type": "type.googleapis.com/envoy.api.v2.RouteConfiguration",
-            "name": data["name"],
+            "name": name,
             "virtual_hosts": [],
         }
+        try:
+            ipaddr, port, protocol = self.split_listenername(name)
+        except TypeError:
+            print("discard invalid route name:", name)
+            return {}
         for vhost_data in data.get("vhosts", []):
+            domains = set()
+
+            for domain in vhost_data.get("domains", []):
+                try:
+                    _server, _port = domain.split(":")
+                except ValueError:
+                    _server = domain
+                if port in (80, 443):
+                    domains.add(_server)
+                    domains.add("%s:%d" % (_server, port))
+                else:
+                    domains.add("%s:%d" % (_server, port))
+
             vhost = {
                 "name": vhost_data["name"],
-                "domains": vhost_data.get("domains", []),
+                "domains": sorted(list(domains)),
                 "routes": [],
             }
             for route_data in vhost_data.get("routes", []):
@@ -1296,10 +1374,13 @@ class Osvc(object):
             "vhosts": [],
         }
         for svcname in self.get_svcnames():
-            for (slave, nodename), instance in self.get_instances(svcname).items():
+            cluster_svcname = self.scaler_svcname(svcname)
+            if not cluster_svcname:
+                cluster_svcname = svcname
+            for (slave, nodename), instance in self.get_instances(cluster_svcname).items():
                 xdata = self.instance_expose_data(slave, nodename)
                 for expose, expose_data in xdata.items():
-                    if (svcname, expose) in done:
+                    if (cluster_svcname, expose) in done:
                         continue
                     _protocol = expose_data.get("protocol", "tcp")
                     _listener_addr = expose_data.get("listener_addr",
@@ -1310,9 +1391,9 @@ class Osvc(object):
                        _listener_port != port or \
                        _protocol != protocol:
                         continue
-                    vhosts = self.get_expose_vhosts(svcname, expose, expose_data, instance["resources"])
+                    vhosts = self.get_expose_vhosts(cluster_svcname, expose, expose_data, instance["resources"])
                     data["vhosts"] += vhosts
-                    done.append((svcname, expose))
+                    done.append((cluster_svcname, expose))
         return data
 
 
@@ -1798,7 +1879,13 @@ class Osvc(object):
             except Exception:
                 traceback.print_exc()
                 time.sleep(1)
+        global TERMINATE
+        TERMINATE = True
         self.server.stop(0)
+        print("gprc server stopped")
+        for thr in WAITERS.values():
+            print(thr)
+            thr.join()
 
 if __name__ == "__main__":
     options = get_options()
