@@ -240,7 +240,7 @@ def request_waiter(name, request_iterator, q):
                 print("*** exit '%s' waiter on StopIteration" % name)
                 break
             else:
-                print("*** sleep '%s' waiter on StopIteration" % name)
+                #print("*** sleep '%s' waiter on StopIteration" % name)
                 time.sleep(1)
                 continue
         except grpc.RpcError:
