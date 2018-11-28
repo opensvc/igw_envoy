@@ -237,23 +237,9 @@ def request_waiter(name, request_iterator, q):
         except StopIteration:
             print("*** exit '%s' waiter on StopIteration" % name)
             break
-#            if STATE == "SHUTTING":
-#                print("*** exit '%s' waiter on StopIteration" % name)
-#                break
-#            else:
-#                #print("*** sleep '%s' waiter on StopIteration" % name)
-#                time.sleep(1)
-#                continue
         except grpc.RpcError:
             print("*** exit '%s' waiter on grpc error" % name)
             break
-#            if STATE == "SHUTTING":
-#                print("*** exit '%s' waiter on grpc error" % name)
-#                break
-#            else:
-#                print("*** sleep '%s' waiter on grpc error" % name)
-#                time.sleep(1)
-#                continue
         except KeyboardInterrupt:
             print("*** exit '%s' waiter on KeyboardInterrupt" % name)
             break
@@ -454,7 +440,8 @@ class _StreamEndpoints(object):
             except queue.Empty:
                 pass
             try:
-                for svcname, q in EDS_Q.items():
+                for svcname in self.svcnames:
+                    q = EDS_Q.get(svcname)
                     if not q:
                         continue
                     q.get(False)
@@ -470,7 +457,7 @@ class _StreamRoutes(object):
         self.request_iterator = request_iterator
         self.context = context
         self.n_req = 0
-        self.svcnames = set()
+        self.names = set()
         self.last_request = None
         self.queue = queue.Queue()
         self.waiter = threading.Thread(target=request_waiter, args=("rds", request_iterator, self.queue))
@@ -491,9 +478,8 @@ class _StreamRoutes(object):
         """
         return self._next()
 
-    def set_svcnames(self, data):
-        for name in data.resource_names:
-            self.svcnames.add(name.split(".expose#")[0])
+    def set_names(self, data):
+        self.names = data.resource_names
 
     def _next(self):
         """
@@ -510,7 +496,7 @@ class _StreamRoutes(object):
                 break
             try:
                 kind, data = self.queue.get(True, 1)
-                self.set_svcnames(data)
+                self.set_names(data)
                 self.last_request = data
                 #print(text_format.MessageToString(data))
                 self.n_req += 1
@@ -526,7 +512,8 @@ class _StreamRoutes(object):
             except queue.Empty:
                 pass
             try:
-                for svcname, q in RDS_Q.items():
+                for name in self.names:
+                    q = RDS_Q.get(name)
                     if not q:
                         continue
                     q.get(False)
@@ -1547,6 +1534,36 @@ class Osvc(object):
                 }
             }))
 
+    def get_svc_listener_names(self, svcname):
+        names = []
+        cluster_svcname = self.scaler_svcname(svcname)
+        if not cluster_svcname:
+            cluster_svcname = svcname
+        for (slave, nodename), instance in self.get_instances(cluster_svcname).items():
+            instance_data = self.instance_expose_data(slave, nodename)
+            for rid, resource in instance["resources"].items():
+                for expose in resource.get("info", {}).get("expose", []):
+                    try:
+                        expose_data = instance_data[expose]
+                    except (KeyError, TypeError):
+                        continue
+                    protocol = expose_data.get("protocol", "tcp")
+                    listener_addr = expose_data.get("listener_addr")
+                    if not listener_addr:
+                        listener_addr = "0.0.0.0"
+                    listener_port = expose_data.get("listener_port")
+                    if listener_port is None:
+                        listener_port = expose_data["port"]
+                    elif listener_port == 0:
+                        if (cluster_svcname, expose) in allocated_ports:
+                            listener_port = allocated_ports[(cluster_svcname, expose)]
+                        else:
+                            listener_port = self.allocate_port(cluster_svcname, expose, expose)
+                            allocated_ports[(cluster_svcname, expose)] = listener_port
+                    name = self.format_listenername(listener_addr, listener_port, protocol)
+                    names.append(name)
+        return names
+
     def get_listeners(self):
         data = {}
         allocated_ports = {}
@@ -1759,9 +1776,11 @@ class Osvc(object):
         EDS_Q[svcname].put(True)
 
     def update_routes(self, svcname):
-        if svcname not in RDS_Q:
-            RDS_Q[svcname] = queue.Queue()
-        RDS_Q[svcname].put(True)
+        names = self.get_svc_listener_names(svcname)
+        for name in names:
+            if name not in RDS_Q:
+                RDS_Q[name] = queue.Queue()
+            RDS_Q[name].put(True)
 
     def update_service_lb(self, svcname):
         """
