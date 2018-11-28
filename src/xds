@@ -178,8 +178,7 @@ NONCE = 0
 LAST_NONCE = {}
 RES_VERSION = {}
 ADDED_CLUSTERS = set()
-TERMINATE = False
-WAITERS = {}
+STATE = "INIT"
 
 ACTION_ROUTE_DEFAULTS = {
     "prefix_rewrite": None,
@@ -236,21 +235,25 @@ def request_waiter(name, request_iterator, q):
             request = request_iterator.next()
             q.put(("request", request))
         except StopIteration:
-            if TERMINATE:
-                print("*** exit '%s' waiter on StopIteration" % name)
-                break
-            else:
-                #print("*** sleep '%s' waiter on StopIteration" % name)
-                time.sleep(1)
-                continue
+            print("*** exit '%s' waiter on StopIteration" % name)
+            break
+#            if STATE == "SHUTTING":
+#                print("*** exit '%s' waiter on StopIteration" % name)
+#                break
+#            else:
+#                #print("*** sleep '%s' waiter on StopIteration" % name)
+#                time.sleep(1)
+#                continue
         except grpc.RpcError:
-            if TERMINATE:
-                print("*** exit '%s' waiter on grpc error" % name)
-                break
-            else:
-                print("*** sleep '%s' waiter on grpc error" % name)
-                time.sleep(1)
-                continue
+            print("*** exit '%s' waiter on grpc error" % name)
+            break
+#            if STATE == "SHUTTING":
+#                print("*** exit '%s' waiter on grpc error" % name)
+#                break
+#            else:
+#                print("*** sleep '%s' waiter on grpc error" % name)
+#                time.sleep(1)
+#                continue
         except KeyboardInterrupt:
             print("*** exit '%s' waiter on KeyboardInterrupt" % name)
             break
@@ -265,8 +268,8 @@ class _StreamClusters(object):
         self.context = context
         self.n_req = 0
         self.queue = queue.Queue()
-        WAITERS["cds"] = threading.Thread(target=request_waiter, args=("cds", request_iterator, self.queue))
-        WAITERS["cds"].start()
+        self.waiter = threading.Thread(target=request_waiter, args=("cds", request_iterator, self.queue))
+        self.waiter.start()
 
     def __iter__(self):
         return self
@@ -287,11 +290,14 @@ class _StreamClusters(object):
         """
         This method ends by either returning a response value or raising a StopIteration
         """
-        if not self.context.is_active():
-            print("StreamClusters context not active")
-            raise StopIteration
         while True:
-            if TERMINATE:
+            if STATE == "SHUTTING":
+                self.waiter.join()
+                print("--- StreamClusters shutdown")
+                break
+            if not self.context.is_active():
+                self.waiter.join()
+                print("--- StreamClusters context not active")
                 break
             try:
                 kind, data = self.queue.get(True, 1)
@@ -301,9 +307,11 @@ class _StreamClusters(object):
                 if self.n_req == 1:
                     print("<<< StreamClusters", data.resource_names, "first message")
                     message = OSVC.init_clusters()
+                    print(message)
                     if message:
                         return message
                 else:
+                    print(">>> StreamClusters", data.resource_names)
                     message = OSVC.stream_clusters(data)
                     if message:
                         return message
@@ -312,22 +320,9 @@ class _StreamClusters(object):
 
             try:
                 kind, data = CDS_Q.get(False)
-                if kind == "request":
-                    #print(text_format.MessageToString(data))
-                    self.n_req += 1
-                    if self.n_req == 1:
-                        print("<<< StreamClusters", "first message")
-                        message = OSVC.init_clusters()
-                        if message:
-                            return message
-                    else:
-                        message = OSVC.stream_clusters(data)
-                        if message:
-                            return message
-                else:
-                    message = OSVC.init_clusters()
-                    if message:
-                        return message
+                message = OSVC.init_clusters()
+                if message:
+                    return message
             except queue.Empty:
                 pass
 
@@ -339,8 +334,8 @@ class _StreamListeners(object):
         self.n_req = 0
         self.last_request = None
         self.queue = queue.Queue()
-        WAITERS["lds"] = threading.Thread(target=request_waiter, args=("lds", request_iterator, self.queue))
-        WAITERS["lds"].start()
+        self.waiter = threading.Thread(target=request_waiter, args=("lds", request_iterator, self.queue))
+        self.waiter.start()
 
     def __iter__(self):
         return self
@@ -361,11 +356,14 @@ class _StreamListeners(object):
         """
         This method ends by either returning a response value or raising a StopIteration
         """
-        if not self.context.is_active():
-            print("StreamListeners context not active")
-            raise StopIteration
         while True:
-            if TERMINATE:
+            if STATE == "SHUTTING":
+                self.waiter.join()
+                print("--- StreamListeners shutdown")
+                break
+            if not self.context.is_active():
+                self.waiter.join()
+                print("--- StreamListeners context not active")
                 break
             try:
                 kind, data = self.queue.get(True, 1)
@@ -379,6 +377,7 @@ class _StreamListeners(object):
                     if message:
                         return message
                 else:
+                    print(">>> StreamListeners", data.resource_names)
                     message = OSVC.stream_listeners(data)
                     if message:
                         return message
@@ -387,22 +386,9 @@ class _StreamListeners(object):
 
             try:
                 kind, data = LDS_Q.get(False)
-                if kind == "request":
-                    #print(text_format.MessageToString(data))
-                    self.n_req += 1
-                    if self.n_req == 1:
-                        print("<<< StreamListener", "first message")
-                        message = OSVC.init_listeners()
-                        if message:
-                            return message
-                    else:
-                        message = OSVC.stream_listeners(data)
-                        if message:
-                            return message
-                else:
-                    message = OSVC.init_listeners()
-                    if message:
-                        return message
+                message = OSVC.init_listeners()
+                if message:
+                    return message
             except queue.Empty:
                 pass
 
@@ -415,8 +401,8 @@ class _StreamEndpoints(object):
         self.svcnames = set()
         self.last_request = None
         self.queue = queue.Queue()
-        WAITERS["eds"] = threading.Thread(target=request_waiter, args=("eds", request_iterator, self.queue))
-        WAITERS["eds"].start()
+        self.waiter = threading.Thread(target=request_waiter, args=("eds", request_iterator, self.queue))
+        self.waiter.start()
 
     def __iter__(self):
         return self
@@ -441,11 +427,14 @@ class _StreamEndpoints(object):
         """
         This method ends by either returning a response value or raising a StopIteration
         """
-        if not self.context.is_active():
-            print("StreamEndpoints context not active")
-            raise StopIteration
         while True:
-            if TERMINATE:
+            if STATE == "SHUTTING":
+                self.waiter.join()
+                print("--- StreamEndpoints shutdown")
+                break
+            if not self.context.is_active():
+                self.waiter.join()
+                print("--- StreamEndpoints context not active")
                 break
             try:
                 kind, data = self.queue.get(True, 1)
@@ -484,8 +473,8 @@ class _StreamRoutes(object):
         self.svcnames = set()
         self.last_request = None
         self.queue = queue.Queue()
-        WAITERS["rds"] = threading.Thread(target=request_waiter, args=("rds", request_iterator, self.queue))
-        WAITERS["rds"].start()
+        self.waiter = threading.Thread(target=request_waiter, args=("rds", request_iterator, self.queue))
+        self.waiter.start()
 
     def __iter__(self):
         return self
@@ -510,11 +499,14 @@ class _StreamRoutes(object):
         """
         This method ends by either returning a response value or raising a StopIteration
         """
-        if not self.context.is_active():
-            print("StreamRoutes context not active")
-            raise StopIteration
         while True:
-            if TERMINATE:
+            if STATE == "SHUTTING":
+                self.waiter.join()
+                print("--- StreamEndpoints shutdown")
+                break
+            if not self.context.is_active():
+                self.waiter.join()
+                print("--- StreamRoutes context not active")
                 break
             try:
                 kind, data = self.queue.get(True, 1)
@@ -1850,6 +1842,7 @@ class Osvc(object):
         """
         Main function.
         """
+        global STATE
         self.set_options(**kwargs)
         self.start_grpc_server()
 
@@ -1867,6 +1860,8 @@ class Osvc(object):
             print("osvcd socket %s: %s" % (self.lsnr_path, str(exc)), file=sys.stderr)
             return 1
 
+        STATE = "LIVE"
+
         while True:
             try:
                 self._main()
@@ -1879,13 +1874,10 @@ class Osvc(object):
             except Exception:
                 traceback.print_exc()
                 time.sleep(1)
-        global TERMINATE
-        TERMINATE = True
+
+        STATE = "SHUTTING"
         self.server.stop(0)
         print("gprc server stopped")
-        for thr in WAITERS.values():
-            print(thr)
-            thr.join()
 
 if __name__ == "__main__":
     options = get_options()
