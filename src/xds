@@ -141,6 +141,7 @@ import six.moves.queue as queue
 import types
 import threading
 import select
+import uuid
 
 import envoy.api.v2.core.config_source_pb2
 import envoy.api.v2.core.address_pb2
@@ -167,6 +168,7 @@ DEFAULT_PROTOCOL = "tcp"
 DEFAULT_PORT_RANGE = [1025, 65536]
 DEFAULT_ENVOY_PORT = 9901
 DEFAULT_PORT = 50051
+DEFAULT_MAX_WORKERS=256
 
 CDS_Q = queue.Queue()
 LDS_Q = queue.Queue()
@@ -206,28 +208,14 @@ def gen_nonce(key, version):
 def get_nonce(key):
     return LAST_NONCE.get(key, (None, None))
 
-def get_version(type_url):
-    return str(VERSION.get(type_url, 0))
-
-def inc_version(type_url, v=None):
-    if type_url not in VERSION:
+def inc_version(key, v=None):
+    if key not in VERSION:
         try:
-            VERSION[type_url] = int(v)
+            VERSION[key] = int(v)
         except (ValueError, TypeError):
-            VERSION[type_url] = 1
-    VERSION[type_url] += 1
-    return str(VERSION[type_url])
-
-def get_res_version(type_url, name):
-    return str(RES_VERSION.get(type_url, {}).get(name, 0))
-
-def inc_res_version(type_url, name, v=1):
-    if type_url not in RES_VERSION:
-        RES_VERSION[type_url] = {}
-    if name not in RES_VERSION[type_url]:
-        RES_VERSION[type_url][name] = int(v)
-    RES_VERSION[type_url][name] += 1
-    return str(RES_VERSION[type_url][name])
+            VERSION[key] = 0
+    VERSION[key] += 1
+    return str(VERSION[key])
 
 def request_waiter(name, request_iterator, q):
     while True:
@@ -250,6 +238,7 @@ class SockReset(Exception):
 class _StreamClusters(object):
     def __init__(self, request_iterator, context):
         print("+++ StreamClusters")
+        self.sid = "cds-%s" % str(uuid.uuid4())
         self.request_iterator = request_iterator
         self.context = context
         self.n_req = 0
@@ -292,21 +281,21 @@ class _StreamClusters(object):
                 self.n_req += 1
                 if self.n_req == 1:
                     print("<<< StreamClusters", data.resource_names, "first message")
-                    message = OSVC.init_clusters()
+                    message = OSVC.init_clusters(version_info=data.version_info, sid=self.sid)
                     print(message)
                     if message:
                         return message
                 else:
-                    print(">>> StreamClusters", data.resource_names)
-                    message = OSVC.stream_clusters(data)
+                    message = OSVC.stream_clusters(data, sid=self.sid)
                     if message:
                         return message
             except queue.Empty:
                 pass
-
+            if not self.last_request:
+                continue
             try:
                 kind, data = CDS_Q.get(False)
-                message = OSVC.init_clusters()
+                message = OSVC.init_clusters(sid=self.sid)
                 if message:
                     return message
             except queue.Empty:
@@ -315,6 +304,7 @@ class _StreamClusters(object):
 class _StreamListeners(object):
     def __init__(self, request_iterator, context):
         print("+++ StreamListeners")
+        self.sid = "lds-%s" % str(uuid.uuid4())
         self.request_iterator = request_iterator
         self.context = context
         self.n_req = 0
@@ -358,21 +348,21 @@ class _StreamListeners(object):
                 self.n_req += 1
                 if self.n_req == 1:
                     print("<<< StreamListeners", data.resource_names, "first message")
-                    message = OSVC.init_listeners()
+                    message = OSVC.init_listeners(version_info=data.version_info, sid=self.sid)
                     print(message)
                     if message:
                         return message
                 else:
-                    print(">>> StreamListeners", data.resource_names)
-                    message = OSVC.stream_listeners(data)
+                    message = OSVC.stream_listeners(data, sid=self.sid)
                     if message:
                         return message
             except queue.Empty:
                 pass
-
+            if not self.last_request:
+                continue
             try:
                 kind, data = LDS_Q.get(False)
-                message = OSVC.init_listeners()
+                message = OSVC.init_listeners(sid=self.sid)
                 if message:
                     return message
             except queue.Empty:
@@ -381,6 +371,7 @@ class _StreamListeners(object):
 class _StreamEndpoints(object):
     def __init__(self, request_iterator, context):
         print("+++ StreamEndpoints")
+        self.sid = "eds-%s" % str(uuid.uuid4())
         self.request_iterator = request_iterator
         self.context = context
         self.n_req = 0
@@ -430,22 +421,24 @@ class _StreamEndpoints(object):
                 self.n_req += 1
                 if self.n_req == 1:
                     print("<<< StreamEndpoints", data.resource_names, "first message")
-                    message = OSVC.endpoints(data)
+                    message = OSVC.endpoints(data, sid=self.sid)
                     if message:
                         return message
                 else:
-                    message = OSVC.stream_endpoints(data)
+                    message = OSVC.stream_endpoints(data, sid=self.sid)
                     if message:
                         return message
             except queue.Empty:
                 pass
+            if not self.last_request:
+                continue
             try:
                 for svcname in self.svcnames:
                     q = EDS_Q.get(svcname)
                     if not q:
                         continue
                     q.get(False)
-                    message = OSVC.endpoints(self.last_request)
+                    message = OSVC.endpoints(self.last_request, sid=self.sid)
                     if message:
                         return message
             except queue.Empty:
@@ -454,6 +447,7 @@ class _StreamEndpoints(object):
 class _StreamRoutes(object):
     def __init__(self, request_iterator, context):
         print("+++ StreamRoutes")
+        self.sid = "rds-%s" % str(uuid.uuid4())
         self.request_iterator = request_iterator
         self.context = context
         self.n_req = 0
@@ -502,22 +496,24 @@ class _StreamRoutes(object):
                 self.n_req += 1
                 if self.n_req == 1:
                     print("<<< StreamRoutes", data.resource_names, "first message")
-                    message = OSVC.routes(data)
+                    message = OSVC.routes(data, sid=self.sid)
                     if message:
                         return message
                 else:
-                    message = OSVC.stream_routes(data)
+                    message = OSVC.stream_routes(data, sid=self.sid)
                     if message:
                         return message
             except queue.Empty:
                 pass
+            if not self.last_request:
+                continue
             try:
                 for name in self.names:
                     q = RDS_Q.get(name)
                     if not q:
                         continue
                     q.get(False)
-                    message = OSVC.routes(self.last_request)
+                    message = OSVC.routes(self.last_request, sid=self.sid)
                     if message:
                         return message
             except queue.Empty:
@@ -551,6 +547,8 @@ def get_options():
                            "default %s" % DEFAULT_PORT_RANGE)
     parser.add_option("-S", "--socket", action="store", dest="osock",
                       help="The OpenSVC daemon unix socket path. default %s" % DEFAULT_OSOCK)
+    parser.add_option("-w", "--max-workers", action="store", dest="max_workers",
+                      help="The maximum number of workers. default %s" % DEFAULT_MAX_WORKERS)
     options, _ = parser.parse_args()
     options = vars(options)
     return options
@@ -605,32 +603,32 @@ class Osvc(object):
     #
     # GRPC helpers: Cluster
     #
-    def stream_clusters(self, request):
-        nonce, version = get_nonce("cluster")
-        announce = "<<< StreamClusters %s %s" % (request.response_nonce, request.version_info)
+    def stream_clusters(self, request, sid=""):
+        nonce, version = get_nonce(sid)
+        announce = "<<< StreamClusters %s %s v%s" % (str(request.resource_names), request.response_nonce, request.version_info)
         if request.response_nonce is None:
             print(announce, "client restart")
-            return self.init_clusters()
+            return self.init_clusters(version_info=request.version_info, sid=sid)
         elif nonce is None:
             print(announce, "manager restart")
-            return self.init_clusters(version_info=request.version_info)
+            return self.init_clusters(version_info=request.version_info, sid=sid)
         elif request.response_nonce == nonce:
             if request.version_info == version:
                 print(announce, "ACK")
             else:
                 print(announce, "NACK")
                 time.sleep(10)
-                return self.init_clusters()
+                return self.init_clusters(sid=sid)
         else:
-            print(announce, "unsync: expected %s %s" % (nonce, version))
+            print(announce, "unsync: expected %s v%s" % (nonce, version))
 
-    def init_clusters(self, version_info=None):
-        version = inc_version("cluster", v=version_info)
+    def init_clusters(self, version_info=None, sid=""):
+        version = inc_version(sid, v=version_info)
         response = envoy.api.v2.discovery_pb2.DiscoveryResponse()
         data = {
             "type_url": "type.googleapis.com/envoy.api.v2.Cluster",
             "version_info": version,
-            "nonce": gen_nonce("cluster", version),
+            "nonce": gen_nonce(sid, version),
             "resources": [res for res in self.get_clusters()]
         }
         try:
@@ -639,7 +637,7 @@ class Osvc(object):
             print(">>> StreamClusters error:", str(exc))
             print(json.dumps(data, indent=4))
             return
-        print(">>> StreamClusters", response.nonce, version)
+        print(">>> StreamClusters [] %s v%s" % (response.nonce, version))
         return response
 
     def get_clusters(self):
@@ -709,32 +707,32 @@ class Osvc(object):
     #
     # GRPC helpers: Listeners
     #
-    def stream_listeners(self, request):
-        nonce, version = get_nonce("listener")
-        announce = "<<< StreamListeners %s %s" % (request.response_nonce, request.version_info)
+    def stream_listeners(self, request, sid=""):
+        nonce, version = get_nonce(sid)
+        announce = "<<< StreamListeners %s %s v%s" % (str(request.resource_names), request.response_nonce, request.version_info)
         if request.response_nonce is None:
             print(announce, "client restart")
-            return self.init_listeners()
+            return self.init_listeners(sid=sid)
         elif nonce is None:
             print(announce, "manager restart")
-            return self.init_listeners(version_info=request.version_info)
+            return self.init_listeners(version_info=request.version_info, sid=sid)
         elif request.response_nonce == nonce:
             if request.version_info == version:
                 print(announce, "ACK")
             else:
                 print(announce, "NACK")
                 time.sleep(10)
-                return self.init_listeners()
+                return self.init_listeners(sid=sid)
         else:
-            print(announce, "unsync: expected %s %s" % (nonce, version))
+            print(announce, "unsync: expected %s v%s" % (nonce, version))
 
-    def init_listeners(self, version_info=None):
-        version = inc_version("listener", v=version_info)
+    def init_listeners(self, version_info=None, sid=""):
+        version = inc_version(sid, v=version_info)
         response = envoy.api.v2.discovery_pb2.DiscoveryResponse()
         response.type_url = "type.googleapis.com/envoy.api.v2.Listener"
         data = {
             "version_info": version,
-            "nonce": gen_nonce("listener", version),
+            "nonce": gen_nonce(sid, version),
             "resources": [lsnr for lsnr in self.get_listeners()],
         }
         try:
@@ -743,44 +741,41 @@ class Osvc(object):
             print(">>> StreamListeners error:", str(exc))
             print(json.dumps(data, indent=4))
             return
-        print(">>> StreamListeners", response.nonce, version)
+        print(">>> StreamListeners [] %s v%s" % (response.nonce, version))
         return response
 
 
     #
     # GRPC helpers: Endpoints
     #
-    def stream_endpoints(self, request):
-        nonce, version = get_nonce("endpoint")
-        announce = "<<< StreamEndpoints %s %s %s" % (str(request.resource_names), request.response_nonce, request.version_info)
+    def stream_endpoints(self, request, sid=""):
+        nonce, version = get_nonce(sid)
+        announce = "<<< StreamEndpoints %s %s v%s" % (str(request.resource_names), request.response_nonce, request.version_info)
         if nonce is None:
             print(announce, "manager restart")
-            return self.endpoints(request, init=True)
+            return self.endpoints(request, sid=sid)
         elif request.response_nonce is None:
             print(announce, "client restart")
-            return self.endpoints(request)
+            return self.endpoints(request, sid=sid)
         elif request.response_nonce == nonce:
             if request.version_info == version:
                 print(announce, "ACK")
             else:
                 print(announce, "NACK")
                 time.sleep(10)
-                return self.endpoints(request)
+                return self.endpoints(request, sid=sid)
         else:
-            print(announce, "unsync: expected %s %s" % (nonce, version))
+            print(announce, "unsync: expected %s v%s" % (nonce, version))
 
-    def endpoints(self, request, init=False):
-        if init:
-            version = inc_version("endpoint", request.version_info)
-        else:
-            version = inc_version("endpoint")
+    def endpoints(self, request, sid=""):
+        version = inc_version(sid, v=request.version_info)
         response = envoy.api.v2.discovery_pb2.DiscoveryResponse()
         response.version_info = version
-        response.nonce = gen_nonce("endpoint", version)
+        response.nonce = gen_nonce(sid, version)
         response.type_url = request.type_url
+        #if version == request.version_info:
+        #    return response
         for name in request.resource_names:
-            if version == request.version_info:
-                continue
             data = self.get_cluster_endpoints(name)
             for _data in data:
                 cla = self.cla(_data)
@@ -788,7 +783,7 @@ class Osvc(object):
                     continue
                 resource = response.resources.add()
                 resource.Pack(cla)
-        print(">>> StreamEndpoints", request.resource_names, response.nonce, version)
+        print(">>> StreamEndpoints %s %s v%s" % (str(request.resource_names), response.nonce, version))
         print(text_format.MessageToString(response))
         return response
 
@@ -796,7 +791,9 @@ class Osvc(object):
         cla = envoy.api.v2.eds_pb2.ClusterLoadAssignment()
         cla.cluster_name = data["name"]
         if not data["endpoints"]:
-            return
+            locality_endpoint = cla.endpoints.add()
+            lb_endpoint = locality_endpoint.lb_endpoints.add()
+            return cla
         for ep_data in data["endpoints"].values():
             locality_endpoint = cla.endpoints.add()
             #locality_endpoint.locality =
@@ -812,34 +809,31 @@ class Osvc(object):
     #
     # GRPC helpers: Routes
     #
-    def stream_routes(self, request):
-        nonce, version = get_nonce("route")
-        announce = "<<< StreamRoutes %s %s %s" % (str(request.resource_names), request.response_nonce, request.version_info)
+    def stream_routes(self, request, sid=""):
+        nonce, version = get_nonce(sid)
+        announce = "<<< StreamRoutes %s %s v%s" % (str(request.resource_names), request.response_nonce, request.version_info)
         if nonce is None:
             print(announce, "manager restart")
-            return self.routes(request, init=True)
+            return self.routes(request, sid=sid)
         elif request.response_nonce is None:
             print(announce, "client restart")
-            return self.routes(request)
+            return self.routes(request, sid=sid)
         elif request.response_nonce == nonce:
             if request.version_info == version:
                 print(announce, "ACK")
             else:
                 print(announce, "NACK")
                 time.sleep(10)
-                return self.routes(request)
+                return self.routes(request, sid=sid)
         else:
-            print(announce, "unsync: expected %s %s" % (nonce, version))
+            print(announce, "unsync: expected %s v%s" % (nonce, version))
 
-    def routes(self, request, init=False):
-        if init:
-            version = inc_version("route", request.version_info)
-        else:
-            version = inc_version("route")
+    def routes(self, request, sid=""):
+        version = inc_version(sid, v=request.version_info)
         response = envoy.api.v2.discovery_pb2.DiscoveryResponse()
         data = {
             "version_info": version,
-            "nonce": gen_nonce("route", version),
+            "nonce": gen_nonce(sid, version),
             "type_url": "type.googleapis.com/envoy.api.v2.RouteConfiguration",
             "resources": [],
         }
@@ -854,7 +848,7 @@ class Osvc(object):
             print(">>> StreamRoutes error:", str(exc))
             print(json.dumps(data, indent=4))
             return
-        print(">>> StreamRoutes", response.nonce, response.version_info)
+        print(">>> StreamRoutes %s %s v%s" % (str(request.resource_names), response.nonce, response.version_info))
         print(text_format.MessageToString(response))
         return response
 
@@ -1535,6 +1529,7 @@ class Osvc(object):
             }))
 
     def get_svc_listener_names(self, svcname):
+        allocated_ports = {}
         names = []
         cluster_svcname = self.scaler_svcname(svcname)
         if not cluster_svcname:
@@ -1813,6 +1808,8 @@ class Osvc(object):
         """
         if options["osock"] is None:
             options["osock"] = DEFAULT_OSOCK
+        if options["max_workers"] is None:
+            options["max_workers"] = DEFAULT_MAX_WORKERS
         if options["gateway_name"] is None:
             options["gateway_name"] = DEFAULT_GATEWAY_NAME
         if options["port"] is None:
@@ -1838,7 +1835,7 @@ class Osvc(object):
             self.lsnr_path = "/var/lib/opensvc/lsnr/lsnr.sock"
 
     def start_grpc_server(self):
-        self.server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
+        self.server = grpc.server(futures.ThreadPoolExecutor(max_workers=self.options["max_workers"]))
 
         envoy.api.v2.cds_pb2_grpc.add_ClusterDiscoveryServiceServicer_to_server(ClusterDiscoveryServiceServicer(), self.server)
         envoy.api.v2.eds_pb2_grpc.add_EndpointDiscoveryServiceServicer_to_server(EndpointDiscoveryServiceServicer(), self.server)
@@ -1871,7 +1868,7 @@ class Osvc(object):
         self.lds_stub = envoy.api.v2.lds_pb2_grpc.ListenerDiscoveryServiceStub(self.channel)
         self.eds_stub = envoy.api.v2.eds_pb2_grpc.EndpointDiscoveryServiceStub(self.channel)
         self.rds_stub = envoy.api.v2.rds_pb2_grpc.RouteDiscoveryServiceStub(self.channel)
-        self.ads_stub = envoy.service.discovery.v2.ads_pb2_grpc.AggregatedDiscoveryServiceStub(self.channel)
+        #self.ads_stub = envoy.service.discovery.v2.ads_pb2_grpc.AggregatedDiscoveryServiceStub(self.channel)
 
         try:
             self.get_daemon_status()
