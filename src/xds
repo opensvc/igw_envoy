@@ -375,7 +375,7 @@ class _StreamEndpoints(object):
         self.request_iterator = request_iterator
         self.context = context
         self.n_req = 0
-        self.svcnames = set()
+        self.names = set()
         self.last_request = None
         self.queue = queue.Queue()
         self.waiter = threading.Thread(target=request_waiter, args=("eds", request_iterator, self.queue))
@@ -396,9 +396,8 @@ class _StreamEndpoints(object):
         """
         return self._next()
 
-    def set_svcnames(self, data):
-        for name in data.resource_names:
-            self.svcnames.add(name.split(".expose#")[0])
+    def set_names(self, data):
+        self.names = data.resource_names
 
     def _next(self):
         """
@@ -415,7 +414,7 @@ class _StreamEndpoints(object):
                 break
             try:
                 kind, data = self.queue.get(True, 1)
-                self.set_svcnames(data)
+                self.set_names(data)
                 self.last_request = data
                 #print(text_format.MessageToString(data))
                 self.n_req += 1
@@ -433,8 +432,8 @@ class _StreamEndpoints(object):
             if not self.last_request:
                 continue
             try:
-                for svcname in self.svcnames:
-                    q = EDS_Q.get(svcname)
+                for name in self.names:
+                    q = EDS_Q.get(name)
                     if not q:
                         continue
                     q.get(False)
@@ -1528,6 +1527,23 @@ class Osvc(object):
                 }
             }))
 
+    def get_svc_endpoint_names(self, svcname):
+        names = []
+        cluster_svcname = self.scaler_svcname(svcname)
+        if not cluster_svcname:
+            cluster_svcname = svcname
+        for (slave, nodename), instance in self.get_instances(cluster_svcname).items():
+            instance_data = self.instance_expose_data(slave, nodename)
+            for rid, resource in instance["resources"].items():
+                for expose in resource.get("info", {}).get("expose", []):
+                    try:
+                        expose_data = instance_data[expose]
+                    except (KeyError, TypeError):
+                        continue
+                    name = "%s.%s" % (svcname, expose)
+                    names.append(name)
+        return names
+
     def get_svc_listener_names(self, svcname):
         allocated_ports = {}
         names = []
@@ -1766,9 +1782,11 @@ class Osvc(object):
         LDS_Q.put(("update", True))
 
     def update_endpoints(self, svcname):
-        if svcname not in EDS_Q:
-            EDS_Q[svcname] = queue.Queue()
-        EDS_Q[svcname].put(True)
+        names = self.get_svc_endpoint_names(svcname)
+        for name in names:
+            if name not in EDS_Q:
+                EDS_Q[name] = queue.Queue()
+            EDS_Q[name].put(True)
 
     def update_routes(self, svcname):
         names = self.get_svc_listener_names(svcname)
