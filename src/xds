@@ -653,7 +653,7 @@ class Osvc(object):
 
         for (slave, nodename), instance in self.get_instances(svcname).items():
             instance_data = self.instance_expose_data(slave, nodename)
-            for resource in instance["resources"].values():
+            for resource in instance.get("resources", {}).values():
                 for expose in resource.get("info", {}).get("expose", []):
                     try:
                         expose_data = instance_data[expose]
@@ -908,6 +908,11 @@ class Osvc(object):
                     obj = envoy.api.v2.route.route_pb2.RouteAction()
                     for key, default in ACTION_ROUTE_DEFAULTS.items():
                         val = route_data.get("route_"+key)
+                        if val and key == "timeout":
+                            if re.match("^[0-9]+$", val):
+                                val += "s"
+                            elif not re.match("^[0-9]+s$", val):
+                                continue
                         if val == getattr(obj, key):
                             continue
                         if val != default:
@@ -1078,7 +1083,7 @@ class Osvc(object):
             lsnr.sendall(msg_encode({
                 "action": "get_service_config",
                 "options": {
-                    "svcname": svcname,
+                    "svcpath": svcname,
                     "format": "json",
                     "evaluate": True
                 }
@@ -1251,7 +1256,7 @@ class Osvc(object):
         svcname, expose = self.split_clustername(name)
         for (slave, nodename), instance in self.get_instances(svcname).items():
             xdata = self.instance_expose_data(slave, nodename)
-            for resource in instance["resources"].values():
+            for resource in instance.get("resources", {}).values():
                 if expose not in resource.get("info", {}).get("expose", []):
                     continue
                 try:
@@ -1284,7 +1289,7 @@ class Osvc(object):
     def get_svc_endpoints(self, svcname):
         data = {}
         for (slave, nodename), instance in self.get_instances(svcname).items():
-            for resource in instance["resources"].values():
+            for resource in instance.get("resources", {}).values():
                 for expose in resource.get("info", {}).get("expose", []):
                     try:
                         expose_data = instance["resources"][expose]["info"]
@@ -1363,7 +1368,7 @@ class Osvc(object):
                        _listener_port != port or \
                        _protocol != protocol:
                         continue
-                    vhosts = self.get_expose_vhosts(cluster_svcname, expose, expose_data, instance["resources"])
+                    vhosts = self.get_expose_vhosts(cluster_svcname, expose, expose_data, instance.get("resources", {}))
                     data["vhosts"] += vhosts
                     done.append((cluster_svcname, expose))
         return data
@@ -1476,7 +1481,7 @@ class Osvc(object):
         for _svcname in self.get_svcnames():
             for (slave, nodename), instance in self.get_instances(_svcname).items():
                 instance_data = self.instance_expose_data(slave, nodename)
-                for resource in instance["resources"].values():
+                for resource in instance.get("resources", {}).values():
                     for expose in resource.get("info", {}).get("expose", []):
                         try:
                             expose_data = instance_data[expose]
@@ -1534,7 +1539,7 @@ class Osvc(object):
             cluster_svcname = svcname
         for (slave, nodename), instance in self.get_instances(cluster_svcname).items():
             instance_data = self.instance_expose_data(slave, nodename)
-            for rid, resource in instance["resources"].items():
+            for rid, resource in instance.get("resources", {}).items():
                 for expose in resource.get("info", {}).get("expose", []):
                     try:
                         expose_data = instance_data[expose]
@@ -1552,7 +1557,7 @@ class Osvc(object):
             cluster_svcname = svcname
         for (slave, nodename), instance in self.get_instances(cluster_svcname).items():
             instance_data = self.instance_expose_data(slave, nodename)
-            for rid, resource in instance["resources"].items():
+            for rid, resource in instance.get("resources", {}).items():
                 for expose in resource.get("info", {}).get("expose", []):
                     try:
                         expose_data = instance_data[expose]
@@ -1586,7 +1591,7 @@ class Osvc(object):
                 cluster_svcname = svcname
             for (slave, nodename), instance in self.get_instances(cluster_svcname).items():
                 instance_data = self.instance_expose_data(slave, nodename)
-                for rid, resource in instance["resources"].items():
+                for rid, resource in instance.get("resources", {}).items():
                     for expose in resource.get("info", {}).get("expose", []):
                         try:
                             expose_data = instance_data[expose]
@@ -1750,7 +1755,7 @@ class Osvc(object):
             return tls_context
 
     def get_tls_cert(self, cert, instance):
-        cert_data = instance["resources"].get(cert, {}).get("info")
+        cert_data = instance.get("resources", {}).get(cert, {}).get("info")
         if not cert_data:
             return
         _data = {
