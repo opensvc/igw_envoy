@@ -235,12 +235,80 @@ def request_waiter(name, request_iterator, q):
 class SockReset(Exception):
     pass
 
+class _DeltaClusters(object):
+    def __init__(self, request_iterator, context):
+        print("+++ DeltaClusters")
+        self.sid = "deltacds-%s" % str(uuid.uuid4())
+        self.request_iterator = request_iterator
+        self.context = context
+        self.last_request = None
+        self.n_req = 0
+        self.queue = queue.Queue()
+        self.waiter = threading.Thread(target=request_waiter, args=("deltacds", request_iterator, self.queue))
+        self.waiter.start()
+
+    def __iter__(self):
+        return self
+
+    def next(self):
+        """
+        This method required by the Python 2 iterator protocol
+        """
+        return self._next()
+
+    def __next__(self):
+        """
+        This method required by the Python 3 iterator protocol
+        """
+        return self._next()
+
+    def _next(self):
+        """
+        This method ends by either returning a response value or raising a StopIteration
+        """
+        while True:
+            if STATE == "SHUTTING":
+                self.waiter.join()
+                print("--- DeltaClusters shutdown")
+                break
+            if not self.context.is_active():
+                self.waiter.join()
+                print("--- DeltaClusters context not active")
+                break
+            try:
+                kind, data = self.queue.get(True, 1)
+                self.last_request = data
+                #print(text_format.MessageToString(data))
+                self.n_req += 1
+                if self.n_req == 1:
+                    print("<<< DeltaClusters", data.resource_names_subscribe, "first message")
+                    message = OSVC.init_clusters(version_info=0, sid=self.sid)
+                    print(message)
+                    if message:
+                        return message
+                else:
+                    message = OSVC.stream_clusters(data, sid=self.sid)
+                    if message:
+                        return message
+            except queue.Empty:
+                pass
+            if not self.last_request:
+                continue
+#            try:
+#                kind, data = CDS_Q.get(False)
+#                message = OSVC.init_clusters(sid=self.sid)
+#                if message:
+#                    return message
+#            except queue.Empty:
+#                pass
+
 class _StreamClusters(object):
     def __init__(self, request_iterator, context):
         print("+++ StreamClusters")
         self.sid = "cds-%s" % str(uuid.uuid4())
         self.request_iterator = request_iterator
         self.context = context
+        self.last_request = None
         self.n_req = 0
         self.queue = queue.Queue()
         self.waiter = threading.Thread(target=request_waiter, args=("cds", request_iterator, self.queue))
@@ -520,6 +588,7 @@ class _StreamRoutes(object):
 
 class ClusterDiscoveryServiceServicer(envoy.api.v2.cds_pb2_grpc.ClusterDiscoveryServiceServicer):
     StreamClusters = _StreamClusters
+    DeltaClusters = _DeltaClusters
 
 class EndpointDiscoveryServiceServicer(envoy.api.v2.eds_pb2_grpc.EndpointDiscoveryServiceServicer):
     StreamEndpoints = _StreamEndpoints
@@ -660,23 +729,11 @@ class Osvc(object):
                     except (KeyError, TypeError):
                         continue
                     name = ".".join([cluster_svcname, expose])
-                    clusters[name] = {
+                    cluster_data = expose_data.get("cluster_data", {})
+                    cluster_data.update({
                         "@type": "type.googleapis.com/envoy.api.v2.Cluster",
                         "name": name,
                         "type": "EDS",
-                        "drain_connections_on_host_removal": True,
-                        "connect_timeout": str(expose_data.get("connect_timeout", DEFAULT_CONNECT_TIMEOUT))+"s",
-                        "lb_policy": expose_data.get("lb_policy", DEFAULT_LB_POLICY).upper().replace(" ", "_"),
-                        "health_checks": [
-                            {
-                                "tcp_health_check": {},
-                                "timeout": "5s",
-                                "interval": "30s",
-                                "interval_jitter": "15s",
-                                "unhealthy_threshold": 3,
-                                "healthy_threshold": 1,
-                            },
-                        ],
                         "eds_cluster_config": {
                             "eds_config": {
                                 "api_config_source": {
@@ -690,12 +747,30 @@ class Osvc(object):
                                     ]
                                 }
                             }
-                        },
-                    }
+                        }
+                    })
+                    if "drain_connections_on_host_removal" not in cluster_data:
+                        cluster_data["drain_connections_on_host_removal"] = True
+                    if "connect_timeout" not in cluster_data:
+                        cluster_data["connect_timeout"] = str(expose_data.get("connect_timeout", DEFAULT_CONNECT_TIMEOUT))+"s"
+                    if "lb_policy" not in cluster_data:
+                        cluster_data["lb_policy"] = expose_data.get("lb_policy", DEFAULT_LB_POLICY).upper().replace(" ", "_")
+                    if "health_checks" not in cluster_data:
+                        cluster_data["health_checks"] = [
+                            {
+                                "tcp_health_check": {},
+                                "timeout": "5s",
+                                "interval": "30s",
+                                "interval_jitter": "15s",
+                                "unhealthy_threshold": 3,
+                                "healthy_threshold": 1,
+                            },
+                        ]
                     certs = expose_data.get("cluster_certificates")
                     tls_context = self.get_tls_context(certs, instance)
-                    if tls_context:
-                        clusters[name]["tls_context"] = tls_context
+                    if tls_context and "tls_context" not in cluster_data:
+                        cluster_data["tls_context"] = tls_context
+                    clusters[name] = cluster_data
         return clusters
 
     def cluster(self, data):
@@ -1626,6 +1701,7 @@ class Osvc(object):
                                 },
                                 "filter_chains": []
                             }
+                        filter_config_data = expose_data.get("filter_config_data", {})
                         vhosts = expose_data.get("vhosts", [])
                         sni = expose_data.get("sni", [])
                         if sni:
@@ -1633,13 +1709,17 @@ class Osvc(object):
                             tls_inspector_data = [
                                 {
                                     "name": "envoy.listener.tls_inspector",
-                                    "config": {},
+                                    "type_config": {},
                                 },
                             ]
                             if "listener_filters" not in _data:
                                 _data["listener_filters"] = tls_inspector_data
                             elif not [lfi for lfi in _data["listener_filters"] if lfi["name"] == "envoy.listener.tls_inspector"]:
                                 _data["listener_filters"] += tls_inspector_data
+                            filter_config_data.update({
+                                "stat_prefix": "ingress_"+cluster,
+                                "cluster": cluster,
+                            })
                             chain = {
                                 "filter_chain_match": {
                                     "server_names": sni,
@@ -1647,10 +1727,7 @@ class Osvc(object):
                                 "filters": [
                                     {
                                         "name": "envoy.tcp_proxy",
-                                        "config": {
-                                            "stat_prefix": "ingress_"+cluster,
-                                            "cluster": cluster,
-                                        },
+                                        "config": filter_config_data,
                                     },
                                 ],
                             }
@@ -1658,56 +1735,66 @@ class Osvc(object):
                                 _data["filter_chains"].append(chain)
                         elif not vhosts:
                             # tcp proxy on dedicated listener port
+                            filter_config_data.update({
+                                "stat_prefix": "ingress_"+cluster,
+                                "cluster": cluster,
+                            })
                             chain = {
                                 "filters": [
                                     {
                                         "name": "envoy.tcp_proxy",
-                                        "config": {
-                                            "stat_prefix": "ingress_"+cluster,
-                                            "cluster": cluster,
-                                        },
+                                        "config": filter_config_data,
                                     },
                                 ],
                             }
                             if not _data["filter_chains"] or not [_chain for _chain in _data["filter_chains"] if any([fil for fil in _chain.get("filters", {}) if fil.get("config", {}).get("cluster") == cluster])]:
                                 _data["filter_chains"].append(chain)
                         else:
+                            filter_config_data.update({
+                                "stat_prefix": "ingress_"+name,
+                                "rds": {
+                                    "route_config_name": name,
+                                    "config_source": {
+                                        "api_config_source": {
+                                            "api_type": "GRPC",
+                                            "grpc_services": [
+                                                {
+                                                    "envoy_grpc": {
+                                                        "cluster_name": "xds_cluster",
+                                                    },
+                                                },
+                                            ],
+                                        },
+                                    },
+                                },
+                            })
+
+                            if "codec_type" not in filter_config_data:
+                                filter_config_data["codec_type"] = "auto"
+                            if "tracing" not in filter_config_data:
+                                filter_config_data["tracing"] = {}
+                            if "http2_protocol_options" not in filter_config_data:
+                                filter_config_data["http2_protocol_options"] = {}
+                            if "upgrade_configs" not in filter_config_data:
+                                filter_config_data["upgrade_configs"] = [
+                                    {
+                                        "upgrade_type": "websocket",
+                                    },
+                                ]
+                            if "http_protocol_options" not in filter_config_data:
+                                filter_config_data["http_protocol_options"] = {
+                                    "accept_http_10": True,
+                                }
+                            if "http_filters" not in filter_config_data:
+                                filter_config_data["http_filters"] = [{
+                                    "name": "envoy.router",
+                                }]
+
                             chain = {
                                 "filters": [
                                     {
                                         "name": "envoy.http_connection_manager",
-                                        "config": {
-                                            "codec_type": "auto",
-                                            "stat_prefix": "ingress_"+name,
-                                            "tracing": {},
-                                            "upgrade_configs": [
-                                                {
-                                                    "upgrade_type": "websocket",
-                                                },
-                                            ],
-                                            "http_filters": {
-                                                "name": "envoy.router",
-                                            },
-                                            "http_protocol_options": {
-                                                "accept_http_10": True,
-                                            },
-                                            "http2_protocol_options": {},
-                                            "rds": {
-                                                "route_config_name": name,
-                                                "config_source": {
-                                                    "api_config_source": {
-                                                        "api_type": "GRPC",
-                                                        "grpc_services": [
-                                                            {
-                                                                "envoy_grpc": {
-                                                                    "cluster_name": "xds_cluster",
-                                                                },
-                                                            },
-                                                        ],
-                                                    },
-                                                },
-                                            },
-                                        },
+                                        "config": filter_config_data,
                                     },
                                 ],
                             }
