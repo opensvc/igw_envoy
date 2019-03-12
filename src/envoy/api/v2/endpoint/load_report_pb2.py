@@ -13,7 +13,10 @@ from google.protobuf import descriptor_pb2
 _sym_db = _symbol_database.Default()
 
 
+from envoy.api.v2.core import address_pb2 as envoy_dot_api_dot_v2_dot_core_dot_address__pb2
 from envoy.api.v2.core import base_pb2 as envoy_dot_api_dot_v2_dot_core_dot_base__pb2
+from google.protobuf import duration_pb2 as google_dot_protobuf_dot_duration__pb2
+from google.protobuf import struct_pb2 as google_dot_protobuf_dot_struct__pb2
 from validate import validate_pb2 as validate_dot_validate__pb2
 from gogoproto import gogo_pb2 as gogoproto_dot_gogo__pb2
 
@@ -22,9 +25,9 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='envoy/api/v2/endpoint/load_report.proto',
   package='envoy.api.v2.endpoint',
   syntax='proto3',
-  serialized_pb=_b('\n\'envoy/api/v2/endpoint/load_report.proto\x12\x15\x65nvoy.api.v2.endpoint\x1a\x1c\x65nvoy/api/v2/core/base.proto\x1a\x17validate/validate.proto\x1a\x14gogoproto/gogo.proto\"\x88\x02\n\x15UpstreamLocalityStats\x12-\n\x08locality\x18\x01 \x01(\x0b\x32\x1b.envoy.api.v2.core.Locality\x12!\n\x19total_successful_requests\x18\x02 \x01(\x04\x12\"\n\x1atotal_requests_in_progress\x18\x03 \x01(\x04\x12\x1c\n\x14total_error_requests\x18\x04 \x01(\x04\x12I\n\x11load_metric_stats\x18\x05 \x03(\x0b\x32..envoy.api.v2.endpoint.EndpointLoadMetricStats\x12\x10\n\x08priority\x18\x06 \x01(\r\"u\n\x17\x45ndpointLoadMetricStats\x12\x13\n\x0bmetric_name\x18\x01 \x01(\t\x12)\n!num_requests_finished_with_metric\x18\x02 \x01(\x04\x12\x1a\n\x12total_metric_value\x18\x03 \x01(\x01\"\xaa\x01\n\x0c\x43lusterStats\x12\x1f\n\x0c\x63luster_name\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12Y\n\x17upstream_locality_stats\x18\x02 \x03(\x0b\x32,.envoy.api.v2.endpoint.UpstreamLocalityStatsB\n\xba\xe9\xc0\x03\x05\x92\x01\x02\x08\x01\x12\x1e\n\x16total_dropped_requests\x18\x03 \x01(\x04\x62\x06proto3')
+  serialized_pb=_b('\n\'envoy/api/v2/endpoint/load_report.proto\x12\x15\x65nvoy.api.v2.endpoint\x1a\x1f\x65nvoy/api/v2/core/address.proto\x1a\x1c\x65nvoy/api/v2/core/base.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x17validate/validate.proto\x1a\x14gogoproto/gogo.proto\"\xd7\x02\n\x15UpstreamLocalityStats\x12-\n\x08locality\x18\x01 \x01(\x0b\x32\x1b.envoy.api.v2.core.Locality\x12!\n\x19total_successful_requests\x18\x02 \x01(\x04\x12\"\n\x1atotal_requests_in_progress\x18\x03 \x01(\x04\x12\x1c\n\x14total_error_requests\x18\x04 \x01(\x04\x12I\n\x11load_metric_stats\x18\x05 \x03(\x0b\x32..envoy.api.v2.endpoint.EndpointLoadMetricStats\x12M\n\x17upstream_endpoint_stats\x18\x07 \x03(\x0b\x32,.envoy.api.v2.endpoint.UpstreamEndpointStats\x12\x10\n\x08priority\x18\x06 \x01(\r\"\x9f\x02\n\x15UpstreamEndpointStats\x12+\n\x07\x61\x64\x64ress\x18\x01 \x01(\x0b\x32\x1a.envoy.api.v2.core.Address\x12)\n\x08metadata\x18\x06 \x01(\x0b\x32\x17.google.protobuf.Struct\x12!\n\x19total_successful_requests\x18\x02 \x01(\x04\x12\"\n\x1atotal_requests_in_progress\x18\x03 \x01(\x04\x12\x1c\n\x14total_error_requests\x18\x04 \x01(\x04\x12I\n\x11load_metric_stats\x18\x05 \x03(\x0b\x32..envoy.api.v2.endpoint.EndpointLoadMetricStats\"u\n\x17\x45ndpointLoadMetricStats\x12\x13\n\x0bmetric_name\x18\x01 \x01(\t\x12)\n!num_requests_finished_with_metric\x18\x02 \x01(\x04\x12\x1a\n\x12total_metric_value\x18\x03 \x01(\x01\"\x97\x03\n\x0c\x43lusterStats\x12\x1f\n\x0c\x63luster_name\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12\x1c\n\x14\x63luster_service_name\x18\x06 \x01(\t\x12Y\n\x17upstream_locality_stats\x18\x02 \x03(\x0b\x32,.envoy.api.v2.endpoint.UpstreamLocalityStatsB\n\xba\xe9\xc0\x03\x05\x92\x01\x02\x08\x01\x12\x1e\n\x16total_dropped_requests\x18\x03 \x01(\x04\x12M\n\x10\x64ropped_requests\x18\x05 \x03(\x0b\x32\x33.envoy.api.v2.endpoint.ClusterStats.DroppedRequests\x12\x37\n\x14load_report_interval\x18\x04 \x01(\x0b\x32\x19.google.protobuf.Duration\x1a\x45\n\x0f\x44roppedRequests\x12\x1b\n\x08\x63\x61tegory\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12\x15\n\rdropped_count\x18\x02 \x01(\x04\x42\x38\n#io.envoyproxy.envoy.api.v2.endpointB\x0fLoadReportProtoP\x01\x62\x06proto3')
   ,
-  dependencies=[envoy_dot_api_dot_v2_dot_core_dot_base__pb2.DESCRIPTOR,validate_dot_validate__pb2.DESCRIPTOR,gogoproto_dot_gogo__pb2.DESCRIPTOR,])
+  dependencies=[envoy_dot_api_dot_v2_dot_core_dot_address__pb2.DESCRIPTOR,envoy_dot_api_dot_v2_dot_core_dot_base__pb2.DESCRIPTOR,google_dot_protobuf_dot_duration__pb2.DESCRIPTOR,google_dot_protobuf_dot_struct__pb2.DESCRIPTOR,validate_dot_validate__pb2.DESCRIPTOR,gogoproto_dot_gogo__pb2.DESCRIPTOR,])
 
 
 
@@ -72,7 +75,14 @@ _UPSTREAMLOCALITYSTATS = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='priority', full_name='envoy.api.v2.endpoint.UpstreamLocalityStats.priority', index=5,
+      name='upstream_endpoint_stats', full_name='envoy.api.v2.endpoint.UpstreamLocalityStats.upstream_endpoint_stats', index=5,
+      number=7, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='priority', full_name='envoy.api.v2.endpoint.UpstreamLocalityStats.priority', index=6,
       number=6, type=13, cpp_type=3, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -90,8 +100,74 @@ _UPSTREAMLOCALITYSTATS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=144,
-  serialized_end=408,
+  serialized_start=239,
+  serialized_end=582,
+)
+
+
+_UPSTREAMENDPOINTSTATS = _descriptor.Descriptor(
+  name='UpstreamEndpointStats',
+  full_name='envoy.api.v2.endpoint.UpstreamEndpointStats',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='address', full_name='envoy.api.v2.endpoint.UpstreamEndpointStats.address', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='metadata', full_name='envoy.api.v2.endpoint.UpstreamEndpointStats.metadata', index=1,
+      number=6, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='total_successful_requests', full_name='envoy.api.v2.endpoint.UpstreamEndpointStats.total_successful_requests', index=2,
+      number=2, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='total_requests_in_progress', full_name='envoy.api.v2.endpoint.UpstreamEndpointStats.total_requests_in_progress', index=3,
+      number=3, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='total_error_requests', full_name='envoy.api.v2.endpoint.UpstreamEndpointStats.total_error_requests', index=4,
+      number=4, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='load_metric_stats', full_name='envoy.api.v2.endpoint.UpstreamEndpointStats.load_metric_stats', index=5,
+      number=5, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=585,
+  serialized_end=872,
 )
 
 
@@ -135,35 +211,28 @@ _ENDPOINTLOADMETRICSTATS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=410,
-  serialized_end=527,
+  serialized_start=874,
+  serialized_end=991,
 )
 
 
-_CLUSTERSTATS = _descriptor.Descriptor(
-  name='ClusterStats',
-  full_name='envoy.api.v2.endpoint.ClusterStats',
+_CLUSTERSTATS_DROPPEDREQUESTS = _descriptor.Descriptor(
+  name='DroppedRequests',
+  full_name='envoy.api.v2.endpoint.ClusterStats.DroppedRequests',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='cluster_name', full_name='envoy.api.v2.endpoint.ClusterStats.cluster_name', index=0,
+      name='category', full_name='envoy.api.v2.endpoint.ClusterStats.DroppedRequests.category', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004r\002 \001'))),
     _descriptor.FieldDescriptor(
-      name='upstream_locality_stats', full_name='envoy.api.v2.endpoint.ClusterStats.upstream_locality_stats', index=1,
-      number=2, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\222\001\002\010\001'))),
-    _descriptor.FieldDescriptor(
-      name='total_dropped_requests', full_name='envoy.api.v2.endpoint.ClusterStats.total_dropped_requests', index=2,
-      number=3, type=4, cpp_type=4, label=1,
+      name='dropped_count', full_name='envoy.api.v2.endpoint.ClusterStats.DroppedRequests.dropped_count', index=1,
+      number=2, type=4, cpp_type=4, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -180,14 +249,87 @@ _CLUSTERSTATS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=530,
-  serialized_end=700,
+  serialized_start=1332,
+  serialized_end=1401,
+)
+
+_CLUSTERSTATS = _descriptor.Descriptor(
+  name='ClusterStats',
+  full_name='envoy.api.v2.endpoint.ClusterStats',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='cluster_name', full_name='envoy.api.v2.endpoint.ClusterStats.cluster_name', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004r\002 \001'))),
+    _descriptor.FieldDescriptor(
+      name='cluster_service_name', full_name='envoy.api.v2.endpoint.ClusterStats.cluster_service_name', index=1,
+      number=6, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='upstream_locality_stats', full_name='envoy.api.v2.endpoint.ClusterStats.upstream_locality_stats', index=2,
+      number=2, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\222\001\002\010\001'))),
+    _descriptor.FieldDescriptor(
+      name='total_dropped_requests', full_name='envoy.api.v2.endpoint.ClusterStats.total_dropped_requests', index=3,
+      number=3, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='dropped_requests', full_name='envoy.api.v2.endpoint.ClusterStats.dropped_requests', index=4,
+      number=5, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='load_report_interval', full_name='envoy.api.v2.endpoint.ClusterStats.load_report_interval', index=5,
+      number=4, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[_CLUSTERSTATS_DROPPEDREQUESTS, ],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=994,
+  serialized_end=1401,
 )
 
 _UPSTREAMLOCALITYSTATS.fields_by_name['locality'].message_type = envoy_dot_api_dot_v2_dot_core_dot_base__pb2._LOCALITY
 _UPSTREAMLOCALITYSTATS.fields_by_name['load_metric_stats'].message_type = _ENDPOINTLOADMETRICSTATS
+_UPSTREAMLOCALITYSTATS.fields_by_name['upstream_endpoint_stats'].message_type = _UPSTREAMENDPOINTSTATS
+_UPSTREAMENDPOINTSTATS.fields_by_name['address'].message_type = envoy_dot_api_dot_v2_dot_core_dot_address__pb2._ADDRESS
+_UPSTREAMENDPOINTSTATS.fields_by_name['metadata'].message_type = google_dot_protobuf_dot_struct__pb2._STRUCT
+_UPSTREAMENDPOINTSTATS.fields_by_name['load_metric_stats'].message_type = _ENDPOINTLOADMETRICSTATS
+_CLUSTERSTATS_DROPPEDREQUESTS.containing_type = _CLUSTERSTATS
 _CLUSTERSTATS.fields_by_name['upstream_locality_stats'].message_type = _UPSTREAMLOCALITYSTATS
+_CLUSTERSTATS.fields_by_name['dropped_requests'].message_type = _CLUSTERSTATS_DROPPEDREQUESTS
+_CLUSTERSTATS.fields_by_name['load_report_interval'].message_type = google_dot_protobuf_dot_duration__pb2._DURATION
 DESCRIPTOR.message_types_by_name['UpstreamLocalityStats'] = _UPSTREAMLOCALITYSTATS
+DESCRIPTOR.message_types_by_name['UpstreamEndpointStats'] = _UPSTREAMENDPOINTSTATS
 DESCRIPTOR.message_types_by_name['EndpointLoadMetricStats'] = _ENDPOINTLOADMETRICSTATS
 DESCRIPTOR.message_types_by_name['ClusterStats'] = _CLUSTERSTATS
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
@@ -199,6 +341,13 @@ UpstreamLocalityStats = _reflection.GeneratedProtocolMessageType('UpstreamLocali
   ))
 _sym_db.RegisterMessage(UpstreamLocalityStats)
 
+UpstreamEndpointStats = _reflection.GeneratedProtocolMessageType('UpstreamEndpointStats', (_message.Message,), dict(
+  DESCRIPTOR = _UPSTREAMENDPOINTSTATS,
+  __module__ = 'envoy.api.v2.endpoint.load_report_pb2'
+  # @@protoc_insertion_point(class_scope:envoy.api.v2.endpoint.UpstreamEndpointStats)
+  ))
+_sym_db.RegisterMessage(UpstreamEndpointStats)
+
 EndpointLoadMetricStats = _reflection.GeneratedProtocolMessageType('EndpointLoadMetricStats', (_message.Message,), dict(
   DESCRIPTOR = _ENDPOINTLOADMETRICSTATS,
   __module__ = 'envoy.api.v2.endpoint.load_report_pb2'
@@ -207,13 +356,25 @@ EndpointLoadMetricStats = _reflection.GeneratedProtocolMessageType('EndpointLoad
 _sym_db.RegisterMessage(EndpointLoadMetricStats)
 
 ClusterStats = _reflection.GeneratedProtocolMessageType('ClusterStats', (_message.Message,), dict(
+
+  DroppedRequests = _reflection.GeneratedProtocolMessageType('DroppedRequests', (_message.Message,), dict(
+    DESCRIPTOR = _CLUSTERSTATS_DROPPEDREQUESTS,
+    __module__ = 'envoy.api.v2.endpoint.load_report_pb2'
+    # @@protoc_insertion_point(class_scope:envoy.api.v2.endpoint.ClusterStats.DroppedRequests)
+    ))
+  ,
   DESCRIPTOR = _CLUSTERSTATS,
   __module__ = 'envoy.api.v2.endpoint.load_report_pb2'
   # @@protoc_insertion_point(class_scope:envoy.api.v2.endpoint.ClusterStats)
   ))
 _sym_db.RegisterMessage(ClusterStats)
+_sym_db.RegisterMessage(ClusterStats.DroppedRequests)
 
 
+DESCRIPTOR.has_options = True
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n#io.envoyproxy.envoy.api.v2.endpointB\017LoadReportProtoP\001'))
+_CLUSTERSTATS_DROPPEDREQUESTS.fields_by_name['category'].has_options = True
+_CLUSTERSTATS_DROPPEDREQUESTS.fields_by_name['category']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004r\002 \001'))
 _CLUSTERSTATS.fields_by_name['cluster_name'].has_options = True
 _CLUSTERSTATS.fields_by_name['cluster_name']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004r\002 \001'))
 _CLUSTERSTATS.fields_by_name['upstream_locality_stats'].has_options = True

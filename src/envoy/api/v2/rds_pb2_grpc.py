@@ -27,10 +27,10 @@ class RouteDiscoveryServiceStub(object):
         request_serializer=envoy_dot_api_dot_v2_dot_discovery__pb2.DiscoveryRequest.SerializeToString,
         response_deserializer=envoy_dot_api_dot_v2_dot_discovery__pb2.DiscoveryResponse.FromString,
         )
-    self.IncrementalRoutes = channel.stream_stream(
-        '/envoy.api.v2.RouteDiscoveryService/IncrementalRoutes',
-        request_serializer=envoy_dot_api_dot_v2_dot_discovery__pb2.IncrementalDiscoveryRequest.SerializeToString,
-        response_deserializer=envoy_dot_api_dot_v2_dot_discovery__pb2.IncrementalDiscoveryResponse.FromString,
+    self.DeltaRoutes = channel.stream_stream(
+        '/envoy.api.v2.RouteDiscoveryService/DeltaRoutes',
+        request_serializer=envoy_dot_api_dot_v2_dot_discovery__pb2.DeltaDiscoveryRequest.SerializeToString,
+        response_deserializer=envoy_dot_api_dot_v2_dot_discovery__pb2.DeltaDiscoveryResponse.FromString,
         )
     self.FetchRoutes = channel.unary_unary(
         '/envoy.api.v2.RouteDiscoveryService/FetchRoutes',
@@ -58,7 +58,7 @@ class RouteDiscoveryServiceServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def IncrementalRoutes(self, request_iterator, context):
+  def DeltaRoutes(self, request_iterator, context):
     # missing associated documentation comment in .proto file
     pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -80,10 +80,10 @@ def add_RouteDiscoveryServiceServicer_to_server(servicer, server):
           request_deserializer=envoy_dot_api_dot_v2_dot_discovery__pb2.DiscoveryRequest.FromString,
           response_serializer=envoy_dot_api_dot_v2_dot_discovery__pb2.DiscoveryResponse.SerializeToString,
       ),
-      'IncrementalRoutes': grpc.stream_stream_rpc_method_handler(
-          servicer.IncrementalRoutes,
-          request_deserializer=envoy_dot_api_dot_v2_dot_discovery__pb2.IncrementalDiscoveryRequest.FromString,
-          response_serializer=envoy_dot_api_dot_v2_dot_discovery__pb2.IncrementalDiscoveryResponse.SerializeToString,
+      'DeltaRoutes': grpc.stream_stream_rpc_method_handler(
+          servicer.DeltaRoutes,
+          request_deserializer=envoy_dot_api_dot_v2_dot_discovery__pb2.DeltaDiscoveryRequest.FromString,
+          response_serializer=envoy_dot_api_dot_v2_dot_discovery__pb2.DeltaDiscoveryResponse.SerializeToString,
       ),
       'FetchRoutes': grpc.unary_unary_rpc_method_handler(
           servicer.FetchRoutes,

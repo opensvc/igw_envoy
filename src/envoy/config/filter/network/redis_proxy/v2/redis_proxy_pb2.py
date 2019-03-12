@@ -22,7 +22,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='envoy/config/filter/network/redis_proxy/v2/redis_proxy.proto',
   package='envoy.config.filter.network.redis_proxy.v2',
   syntax='proto3',
-  serialized_pb=_b('\n<envoy/config/filter/network/redis_proxy/v2/redis_proxy.proto\x12*envoy.config.filter.network.redis_proxy.v2\x1a\x1egoogle/protobuf/duration.proto\x1a\x17validate/validate.proto\x1a\x14gogoproto/gogo.proto\"\x82\x02\n\nRedisProxy\x12\x1e\n\x0bstat_prefix\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12\x1a\n\x07\x63luster\x18\x02 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12\x65\n\x08settings\x18\x03 \x01(\x0b\x32G.envoy.config.filter.network.redis_proxy.v2.RedisProxy.ConnPoolSettingsB\n\xba\xe9\xc0\x03\x05\x8a\x01\x02\x10\x01\x1aQ\n\x10\x43onnPoolSettings\x12=\n\nop_timeout\x18\x01 \x01(\x0b\x32\x19.google.protobuf.DurationB\x0e\xba\xe9\xc0\x03\x05\xaa\x01\x02\x08\x01\x98\xdf\x1f\x01\x42\x04Z\x02v2b\x06proto3')
+  serialized_pb=_b('\n<envoy/config/filter/network/redis_proxy/v2/redis_proxy.proto\x12*envoy.config.filter.network.redis_proxy.v2\x1a\x1egoogle/protobuf/duration.proto\x1a\x17validate/validate.proto\x1a\x14gogoproto/gogo.proto\"\x9e\x02\n\nRedisProxy\x12\x1e\n\x0bstat_prefix\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12\x1a\n\x07\x63luster\x18\x02 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12\x65\n\x08settings\x18\x03 \x01(\x0b\x32G.envoy.config.filter.network.redis_proxy.v2.RedisProxy.ConnPoolSettingsB\n\xba\xe9\xc0\x03\x05\x8a\x01\x02\x10\x01\x1am\n\x10\x43onnPoolSettings\x12=\n\nop_timeout\x18\x01 \x01(\x0b\x32\x19.google.protobuf.DurationB\x0e\xba\xe9\xc0\x03\x05\xaa\x01\x02\x08\x01\x98\xdf\x1f\x01\x12\x1a\n\x12\x65nable_hashtagging\x18\x02 \x01(\x08\x42Q\n8io.envoyproxy.envoy.config.filter.network.redis_proxy.v2B\x0fRedisProxyProtoP\x01Z\x02v2b\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_duration__pb2.DESCRIPTOR,validate_dot_validate__pb2.DESCRIPTOR,gogoproto_dot_gogo__pb2.DESCRIPTOR,])
 
@@ -43,6 +43,13 @@ _REDISPROXY_CONNPOOLSETTINGS = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\252\001\002\010\001\230\337\037\001'))),
+    _descriptor.FieldDescriptor(
+      name='enable_hashtagging', full_name='envoy.config.filter.network.redis_proxy.v2.RedisProxy.ConnPoolSettings.enable_hashtagging', index=1,
+      number=2, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -56,7 +63,7 @@ _REDISPROXY_CONNPOOLSETTINGS = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=365,
-  serialized_end=446,
+  serialized_end=474,
 )
 
 _REDISPROXY = _descriptor.Descriptor(
@@ -100,7 +107,7 @@ _REDISPROXY = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=188,
-  serialized_end=446,
+  serialized_end=474,
 )
 
 _REDISPROXY_CONNPOOLSETTINGS.fields_by_name['op_timeout'].message_type = google_dot_protobuf_dot_duration__pb2._DURATION
@@ -126,7 +133,7 @@ _sym_db.RegisterMessage(RedisProxy.ConnPoolSettings)
 
 
 DESCRIPTOR.has_options = True
-DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('Z\002v2'))
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n8io.envoyproxy.envoy.config.filter.network.redis_proxy.v2B\017RedisProxyProtoP\001Z\002v2'))
 _REDISPROXY_CONNPOOLSETTINGS.fields_by_name['op_timeout'].has_options = True
 _REDISPROXY_CONNPOOLSETTINGS.fields_by_name['op_timeout']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\252\001\002\010\001\230\337\037\001'))
 _REDISPROXY.fields_by_name['stat_prefix'].has_options = True

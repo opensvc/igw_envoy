@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='envoy/api/v2/ratelimit/ratelimit.proto',
   package='envoy.api.v2.ratelimit',
   syntax='proto3',
-  serialized_pb=_b('\n&envoy/api/v2/ratelimit/ratelimit.proto\x12\x16\x65nvoy.api.v2.ratelimit\x1a\x17validate/validate.proto\"\xa0\x01\n\x13RateLimitDescriptor\x12N\n\x07\x65ntries\x18\x01 \x03(\x0b\x32\x31.envoy.api.v2.ratelimit.RateLimitDescriptor.EntryB\n\xba\xe9\xc0\x03\x05\x92\x01\x02\x08\x01\x1a\x39\n\x05\x45ntry\x12\x16\n\x03key\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12\x18\n\x05value\x18\x02 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x42\x0bZ\tratelimitb\x06proto3')
+  serialized_pb=_b('\n&envoy/api/v2/ratelimit/ratelimit.proto\x12\x16\x65nvoy.api.v2.ratelimit\x1a\x17validate/validate.proto\"\xa0\x01\n\x13RateLimitDescriptor\x12N\n\x07\x65ntries\x18\x01 \x03(\x0b\x32\x31.envoy.api.v2.ratelimit.RateLimitDescriptor.EntryB\n\xba\xe9\xc0\x03\x05\x92\x01\x02\x08\x01\x1a\x39\n\x05\x45ntry\x12\x16\n\x03key\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12\x18\n\x05value\x18\x02 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x42\x43\n$io.envoyproxy.envoy.api.v2.ratelimitB\x0eRatelimitProtoP\x01Z\tratelimitb\x06proto3')
   ,
   dependencies=[validate_dot_validate__pb2.DESCRIPTOR,])
 
@@ -116,7 +116,7 @@ _sym_db.RegisterMessage(RateLimitDescriptor.Entry)
 
 
 DESCRIPTOR.has_options = True
-DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('Z\tratelimit'))
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n$io.envoyproxy.envoy.api.v2.ratelimitB\016RatelimitProtoP\001Z\tratelimit'))
 _RATELIMITDESCRIPTOR_ENTRY.fields_by_name['key'].has_options = True
 _RATELIMITDESCRIPTOR_ENTRY.fields_by_name['key']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004r\002 \001'))
 _RATELIMITDESCRIPTOR_ENTRY.fields_by_name['value'].has_options = True

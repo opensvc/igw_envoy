@@ -23,7 +23,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='envoy/api/v2/core/protocol.proto',
   package='envoy.api.v2.core',
   syntax='proto3',
-  serialized_pb=_b('\n envoy/api/v2/core/protocol.proto\x12\x11\x65nvoy.api.v2.core\x1a\x1egoogle/protobuf/duration.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x17validate/validate.proto\x1a\x14gogoproto/gogo.proto\"\x14\n\x12TcpProtocolOptions\"L\n\x13HttpProtocolOptions\x12\x35\n\x0cidle_timeout\x18\x01 \x01(\x0b\x32\x19.google.protobuf.DurationB\x04\x98\xdf\x1f\x01\"\x88\x01\n\x14Http1ProtocolOptions\x12\x36\n\x12\x61llow_absolute_url\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.BoolValue\x12\x16\n\x0e\x61\x63\x63\x65pt_http_10\x18\x02 \x01(\x08\x12 \n\x18\x64\x65\x66\x61ult_host_for_http_10\x18\x03 \x01(\t\"\xcb\x02\n\x14Http2ProtocolOptions\x12\x36\n\x10hpack_table_size\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12M\n\x16max_concurrent_streams\x18\x02 \x01(\x0b\x32\x1c.google.protobuf.UInt32ValueB\x0f\xba\xe9\xc0\x03\n*\x08\x18\xff\xff\xff\xff\x07(\x01\x12S\n\x1ainitial_stream_window_size\x18\x03 \x01(\x0b\x32\x1c.google.protobuf.UInt32ValueB\x11\xba\xe9\xc0\x03\x0c*\n\x18\xff\xff\xff\xff\x07(\xff\xff\x03\x12W\n\x1einitial_connection_window_size\x18\x04 \x01(\x0b\x32\x1c.google.protobuf.UInt32ValueB\x11\xba\xe9\xc0\x03\x0c*\n\x18\xff\xff\xff\xff\x07(\xff\xff\x03\"^\n\x13GrpcProtocolOptions\x12G\n\x16http2_protocol_options\x18\x01 \x01(\x0b\x32\'.envoy.api.v2.core.Http2ProtocolOptionsB\x04\xa8\xe2\x1e\x01\x62\x06proto3')
+  serialized_pb=_b('\n envoy/api/v2/core/protocol.proto\x12\x11\x65nvoy.api.v2.core\x1a\x1egoogle/protobuf/duration.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x17validate/validate.proto\x1a\x14gogoproto/gogo.proto\"\x14\n\x12TcpProtocolOptions\"L\n\x13HttpProtocolOptions\x12\x35\n\x0cidle_timeout\x18\x01 \x01(\x0b\x32\x19.google.protobuf.DurationB\x04\x98\xdf\x1f\x01\"\x88\x01\n\x14Http1ProtocolOptions\x12\x36\n\x12\x61llow_absolute_url\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.BoolValue\x12\x16\n\x0e\x61\x63\x63\x65pt_http_10\x18\x02 \x01(\x08\x12 \n\x18\x64\x65\x66\x61ult_host_for_http_10\x18\x03 \x01(\t\"\xfa\x02\n\x14Http2ProtocolOptions\x12\x36\n\x10hpack_table_size\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12M\n\x16max_concurrent_streams\x18\x02 \x01(\x0b\x32\x1c.google.protobuf.UInt32ValueB\x0f\xba\xe9\xc0\x03\n*\x08\x18\xff\xff\xff\xff\x07(\x01\x12S\n\x1ainitial_stream_window_size\x18\x03 \x01(\x0b\x32\x1c.google.protobuf.UInt32ValueB\x11\xba\xe9\xc0\x03\x0c*\n\x18\xff\xff\xff\xff\x07(\xff\xff\x03\x12W\n\x1einitial_connection_window_size\x18\x04 \x01(\x0b\x32\x1c.google.protobuf.UInt32ValueB\x11\xba\xe9\xc0\x03\x0c*\n\x18\xff\xff\xff\xff\x07(\xff\xff\x03\x12\x15\n\rallow_connect\x18\x05 \x01(\x08\x12\x16\n\x0e\x61llow_metadata\x18\x06 \x01(\x08\"^\n\x13GrpcProtocolOptions\x12G\n\x16http2_protocol_options\x18\x01 \x01(\x0b\x32\'.envoy.api.v2.core.Http2ProtocolOptionsB6\n\x1fio.envoyproxy.envoy.api.v2.coreB\rProtocolProtoP\x01\xa8\xe2\x1e\x01\x62\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_duration__pb2.DESCRIPTOR,google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,validate_dot_validate__pb2.DESCRIPTOR,gogoproto_dot_gogo__pb2.DESCRIPTOR,])
 
@@ -165,6 +165,20 @@ _HTTP2PROTOCOLOPTIONS = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\014*\n\030\377\377\377\377\007(\377\377\003'))),
+    _descriptor.FieldDescriptor(
+      name='allow_connect', full_name='envoy.api.v2.core.Http2ProtocolOptions.allow_connect', index=4,
+      number=5, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='allow_metadata', full_name='envoy.api.v2.core.Http2ProtocolOptions.allow_metadata', index=5,
+      number=6, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -178,7 +192,7 @@ _HTTP2PROTOCOLOPTIONS = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=406,
-  serialized_end=737,
+  serialized_end=784,
 )
 
 
@@ -208,8 +222,8 @@ _GRPCPROTOCOLOPTIONS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=739,
-  serialized_end=833,
+  serialized_start=786,
+  serialized_end=880,
 )
 
 _HTTPPROTOCOLOPTIONS.fields_by_name['idle_timeout'].message_type = google_dot_protobuf_dot_duration__pb2._DURATION
@@ -263,7 +277,7 @@ _sym_db.RegisterMessage(GrpcProtocolOptions)
 
 
 DESCRIPTOR.has_options = True
-DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\250\342\036\001'))
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n\037io.envoyproxy.envoy.api.v2.coreB\rProtocolProtoP\001\250\342\036\001'))
 _HTTPPROTOCOLOPTIONS.fields_by_name['idle_timeout'].has_options = True
 _HTTPPROTOCOLOPTIONS.fields_by_name['idle_timeout']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\230\337\037\001'))
 _HTTP2PROTOCOLOPTIONS.fields_by_name['max_concurrent_streams'].has_options = True

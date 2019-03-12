@@ -21,7 +21,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='envoy/service/discovery/v2/sds.proto',
   package='envoy.service.discovery.v2',
   syntax='proto3',
-  serialized_pb=_b('\n$envoy/service/discovery/v2/sds.proto\x12\x1a\x65nvoy.service.discovery.v2\x1a\x1c\x65nvoy/api/v2/discovery.proto\x1a\x1cgoogle/api/annotations.proto\"\n\n\x08SdsDummy2\xe3\x01\n\x16SecretDiscoveryService\x12V\n\rStreamSecrets\x12\x1e.envoy.api.v2.DiscoveryRequest\x1a\x1f.envoy.api.v2.DiscoveryResponse\"\x00(\x01\x30\x01\x12q\n\x0c\x46\x65tchSecrets\x12\x1e.envoy.api.v2.DiscoveryRequest\x1a\x1f.envoy.api.v2.DiscoveryResponse\" \x82\xd3\xe4\x93\x02\x1a\"\x15/v2/discovery:secrets:\x01*b\x06proto3')
+  serialized_pb=_b('\n$envoy/service/discovery/v2/sds.proto\x12\x1a\x65nvoy.service.discovery.v2\x1a\x1c\x65nvoy/api/v2/discovery.proto\x1a\x1cgoogle/api/annotations.proto\"\n\n\x08SdsDummy2\xe3\x01\n\x16SecretDiscoveryService\x12V\n\rStreamSecrets\x12\x1e.envoy.api.v2.DiscoveryRequest\x1a\x1f.envoy.api.v2.DiscoveryResponse\"\x00(\x01\x30\x01\x12q\n\x0c\x46\x65tchSecrets\x12\x1e.envoy.api.v2.DiscoveryRequest\x1a\x1f.envoy.api.v2.DiscoveryResponse\" \x82\xd3\xe4\x93\x02\x1a\"\x15/v2/discovery:secrets:\x01*B6\n(io.envoyproxy.envoy.service.discovery.v2B\x08SdsProtoP\x01\x62\x06proto3')
   ,
   dependencies=[envoy_dot_api_dot_v2_dot_discovery__pb2.DESCRIPTOR,google_dot_api_dot_annotations__pb2.DESCRIPTOR,])
 
@@ -62,6 +62,8 @@ SdsDummy = _reflection.GeneratedProtocolMessageType('SdsDummy', (_message.Messag
 _sym_db.RegisterMessage(SdsDummy)
 
 
+DESCRIPTOR.has_options = True
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n(io.envoyproxy.envoy.service.discovery.v2B\010SdsProtoP\001'))
 
 _SECRETDISCOVERYSERVICE = _descriptor.ServiceDescriptor(
   name='SecretDiscoveryService',

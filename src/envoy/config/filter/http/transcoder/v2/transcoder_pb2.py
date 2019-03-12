@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='envoy/config/filter/http/transcoder/v2/transcoder.proto',
   package='envoy.config.filter.http.transcoder.v2',
   syntax='proto3',
-  serialized_pb=_b('\n7envoy/config/filter/http/transcoder/v2/transcoder.proto\x12&envoy.config.filter.http.transcoder.v2\x1a\x17validate/validate.proto\"\xa5\x03\n\x12GrpcJsonTranscoder\x12\x1a\n\x10proto_descriptor\x18\x01 \x01(\tH\x00\x12\x1e\n\x14proto_descriptor_bin\x18\x04 \x01(\x0cH\x00\x12\x1c\n\x08services\x18\x02 \x03(\tB\n\xba\xe9\xc0\x03\x05\x92\x01\x02\x08\x01\x12^\n\rprint_options\x18\x03 \x01(\x0b\x32G.envoy.config.filter.http.transcoder.v2.GrpcJsonTranscoder.PrintOptions\x12$\n\x1cmatch_incoming_request_route\x18\x05 \x01(\x08\x1a\x95\x01\n\x0cPrintOptions\x12\x16\n\x0e\x61\x64\x64_whitespace\x18\x01 \x01(\x08\x12%\n\x1d\x61lways_print_primitive_fields\x18\x02 \x01(\x08\x12\"\n\x1a\x61lways_print_enums_as_ints\x18\x03 \x01(\x08\x12\"\n\x1apreserve_proto_field_names\x18\x04 \x01(\x08\x42\x17\n\x0e\x64\x65scriptor_set\x12\x05\xb8\xe9\xc0\x03\x01\x42\x04Z\x02v2b\x06proto3')
+  serialized_pb=_b('\n7envoy/config/filter/http/transcoder/v2/transcoder.proto\x12&envoy.config.filter.http.transcoder.v2\x1a\x17validate/validate.proto\"\xc7\x03\n\x12GrpcJsonTranscoder\x12\x1a\n\x10proto_descriptor\x18\x01 \x01(\tH\x00\x12\x1e\n\x14proto_descriptor_bin\x18\x04 \x01(\x0cH\x00\x12\x1c\n\x08services\x18\x02 \x03(\tB\n\xba\xe9\xc0\x03\x05\x92\x01\x02\x08\x01\x12^\n\rprint_options\x18\x03 \x01(\x0b\x32G.envoy.config.filter.http.transcoder.v2.GrpcJsonTranscoder.PrintOptions\x12$\n\x1cmatch_incoming_request_route\x18\x05 \x01(\x08\x12 \n\x18ignored_query_parameters\x18\x06 \x03(\t\x1a\x95\x01\n\x0cPrintOptions\x12\x16\n\x0e\x61\x64\x64_whitespace\x18\x01 \x01(\x08\x12%\n\x1d\x61lways_print_primitive_fields\x18\x02 \x01(\x08\x12\"\n\x1a\x61lways_print_enums_as_ints\x18\x03 \x01(\x08\x12\"\n\x1apreserve_proto_field_names\x18\x04 \x01(\x08\x42\x17\n\x0e\x64\x65scriptor_set\x12\x05\xb8\xe9\xc0\x03\x01\x42M\n4io.envoyproxy.envoy.config.filter.http.transcoder.v2B\x0fTranscoderProtoP\x01Z\x02v2b\x06proto3')
   ,
   dependencies=[validate_dot_validate__pb2.DESCRIPTOR,])
 
@@ -74,8 +74,8 @@ _GRPCJSONTRANSCODER_PRINTOPTIONS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=372,
-  serialized_end=521,
+  serialized_start=406,
+  serialized_end=555,
 )
 
 _GRPCJSONTRANSCODER = _descriptor.Descriptor(
@@ -120,6 +120,13 @@ _GRPCJSONTRANSCODER = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
+    _descriptor.FieldDescriptor(
+      name='ignored_query_parameters', full_name='envoy.config.filter.http.transcoder.v2.GrpcJsonTranscoder.ignored_query_parameters', index=5,
+      number=6, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -136,7 +143,7 @@ _GRPCJSONTRANSCODER = _descriptor.Descriptor(
       index=0, containing_type=None, fields=[], options=_descriptor._ParseOptions(descriptor_pb2.OneofOptions(), _b('\270\351\300\003\001'))),
   ],
   serialized_start=125,
-  serialized_end=546,
+  serialized_end=580,
 )
 
 _GRPCJSONTRANSCODER_PRINTOPTIONS.containing_type = _GRPCJSONTRANSCODER
@@ -167,7 +174,7 @@ _sym_db.RegisterMessage(GrpcJsonTranscoder.PrintOptions)
 
 
 DESCRIPTOR.has_options = True
-DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('Z\002v2'))
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n4io.envoyproxy.envoy.config.filter.http.transcoder.v2B\017TranscoderProtoP\001Z\002v2'))
 _GRPCJSONTRANSCODER.oneofs_by_name['descriptor_set'].has_options = True
 _GRPCJSONTRANSCODER.oneofs_by_name['descriptor_set']._options = _descriptor._ParseOptions(descriptor_pb2.OneofOptions(), _b('\270\351\300\003\001'))
 _GRPCJSONTRANSCODER.fields_by_name['services'].has_options = True

@@ -23,7 +23,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='envoy/config/filter/network/client_ssl_auth/v2/client_ssl_auth.proto',
   package='envoy.config.filter.network.client_ssl_auth.v2',
   syntax='proto3',
-  serialized_pb=_b('\nDenvoy/config/filter/network/client_ssl_auth/v2/client_ssl_auth.proto\x12.envoy.config.filter.network.client_ssl_auth.v2\x1a\x1f\x65nvoy/api/v2/core/address.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x17validate/validate.proto\x1a\x14gogoproto/gogo.proto\"\xc1\x01\n\rClientSSLAuth\x12#\n\x10\x61uth_api_cluster\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12\x1e\n\x0bstat_prefix\x18\x02 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12\x36\n\rrefresh_delay\x18\x03 \x01(\x0b\x32\x19.google.protobuf.DurationB\x04\x98\xdf\x1f\x01\x12\x33\n\rip_white_list\x18\x04 \x03(\x0b\x32\x1c.envoy.api.v2.core.CidrRangeB\x04Z\x02v2b\x06proto3')
+  serialized_pb=_b('\nDenvoy/config/filter/network/client_ssl_auth/v2/client_ssl_auth.proto\x12.envoy.config.filter.network.client_ssl_auth.v2\x1a\x1f\x65nvoy/api/v2/core/address.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x17validate/validate.proto\x1a\x14gogoproto/gogo.proto\"\xc1\x01\n\rClientSSLAuth\x12#\n\x10\x61uth_api_cluster\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12\x1e\n\x0bstat_prefix\x18\x02 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12\x36\n\rrefresh_delay\x18\x03 \x01(\x0b\x32\x19.google.protobuf.DurationB\x04\x98\xdf\x1f\x01\x12\x33\n\rip_white_list\x18\x04 \x03(\x0b\x32\x1c.envoy.api.v2.core.CidrRangeBX\n<io.envoyproxy.envoy.config.filter.network.client_ssl_auth.v2B\x12\x43lientSslAuthProtoP\x01Z\x02v2b\x06proto3')
   ,
   dependencies=[envoy_dot_api_dot_v2_dot_core_dot_address__pb2.DESCRIPTOR,google_dot_protobuf_dot_duration__pb2.DESCRIPTOR,validate_dot_validate__pb2.DESCRIPTOR,gogoproto_dot_gogo__pb2.DESCRIPTOR,])
 
@@ -95,7 +95,7 @@ _sym_db.RegisterMessage(ClientSSLAuth)
 
 
 DESCRIPTOR.has_options = True
-DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('Z\002v2'))
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n<io.envoyproxy.envoy.config.filter.network.client_ssl_auth.v2B\022ClientSslAuthProtoP\001Z\002v2'))
 _CLIENTSSLAUTH.fields_by_name['auth_api_cluster'].has_options = True
 _CLIENTSSLAUTH.fields_by_name['auth_api_cluster']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004r\002 \001'))
 _CLIENTSSLAUTH.fields_by_name['stat_prefix'].has_options = True

@@ -21,7 +21,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='envoy/config/accesslog/v2/als.proto',
   package='envoy.config.accesslog.v2',
   syntax='proto3',
-  serialized_pb=_b('\n#envoy/config/accesslog/v2/als.proto\x12\x19\x65nvoy.config.accesslog.v2\x1a$envoy/api/v2/core/grpc_service.proto\x1a\x17validate/validate.proto\"\xf6\x01\n\x17HttpGrpcAccessLogConfig\x12W\n\rcommon_config\x18\x01 \x01(\x0b\x32\x34.envoy.config.accesslog.v2.CommonGrpcAccessLogConfigB\n\xba\xe9\xc0\x03\x05\x8a\x01\x02\x10\x01\x12)\n!additional_request_headers_to_log\x18\x02 \x03(\t\x12*\n\"additional_response_headers_to_log\x18\x03 \x03(\t\x12+\n#additional_response_trailers_to_log\x18\x04 \x03(\t\"q\n\x16TcpGrpcAccessLogConfig\x12W\n\rcommon_config\x18\x01 \x01(\x0b\x32\x34.envoy.config.accesslog.v2.CommonGrpcAccessLogConfigB\n\xba\xe9\xc0\x03\x05\x8a\x01\x02\x10\x01\"z\n\x19\x43ommonGrpcAccessLogConfig\x12\x1b\n\x08log_name\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12@\n\x0cgrpc_service\x18\x02 \x01(\x0b\x32\x1e.envoy.api.v2.core.GrpcServiceB\n\xba\xe9\xc0\x03\x05\x8a\x01\x02\x10\x01\x42\x04Z\x02v2b\x06proto3')
+  serialized_pb=_b('\n#envoy/config/accesslog/v2/als.proto\x12\x19\x65nvoy.config.accesslog.v2\x1a$envoy/api/v2/core/grpc_service.proto\x1a\x17validate/validate.proto\"\xf6\x01\n\x17HttpGrpcAccessLogConfig\x12W\n\rcommon_config\x18\x01 \x01(\x0b\x32\x34.envoy.config.accesslog.v2.CommonGrpcAccessLogConfigB\n\xba\xe9\xc0\x03\x05\x8a\x01\x02\x10\x01\x12)\n!additional_request_headers_to_log\x18\x02 \x03(\t\x12*\n\"additional_response_headers_to_log\x18\x03 \x03(\t\x12+\n#additional_response_trailers_to_log\x18\x04 \x03(\t\"q\n\x16TcpGrpcAccessLogConfig\x12W\n\rcommon_config\x18\x01 \x01(\x0b\x32\x34.envoy.config.accesslog.v2.CommonGrpcAccessLogConfigB\n\xba\xe9\xc0\x03\x05\x8a\x01\x02\x10\x01\"z\n\x19\x43ommonGrpcAccessLogConfig\x12\x1b\n\x08log_name\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12@\n\x0cgrpc_service\x18\x02 \x01(\x0b\x32\x1e.envoy.api.v2.core.GrpcServiceB\n\xba\xe9\xc0\x03\x05\x8a\x01\x02\x10\x01\x42\x39\n\'io.envoyproxy.envoy.config.accesslog.v2B\x08\x41lsProtoP\x01Z\x02v2b\x06proto3')
   ,
   dependencies=[envoy_dot_api_dot_v2_dot_core_dot_grpc__service__pb2.DESCRIPTOR,validate_dot_validate__pb2.DESCRIPTOR,])
 
@@ -179,7 +179,7 @@ _sym_db.RegisterMessage(CommonGrpcAccessLogConfig)
 
 
 DESCRIPTOR.has_options = True
-DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('Z\002v2'))
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n\'io.envoyproxy.envoy.config.accesslog.v2B\010AlsProtoP\001Z\002v2'))
 _HTTPGRPCACCESSLOGCONFIG.fields_by_name['common_config'].has_options = True
 _HTTPGRPCACCESSLOGCONFIG.fields_by_name['common_config']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\212\001\002\020\001'))
 _TCPGRPCACCESSLOGCONFIG.fields_by_name['common_config'].has_options = True

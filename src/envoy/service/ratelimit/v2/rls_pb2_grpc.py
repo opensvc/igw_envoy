@@ -5,8 +5,9 @@ from envoy.service.ratelimit.v2 import rls_pb2 as envoy_dot_service_dot_ratelimi
 
 
 class RateLimitServiceStub(object):
-  # missing associated documentation comment in .proto file
-  pass
+  """[#protodoc-title: Rate Limit Service (RLS)]
+
+  """
 
   def __init__(self, channel):
     """Constructor.
@@ -22,8 +23,9 @@ class RateLimitServiceStub(object):
 
 
 class RateLimitServiceServicer(object):
-  # missing associated documentation comment in .proto file
-  pass
+  """[#protodoc-title: Rate Limit Service (RLS)]
+
+  """
 
   def ShouldRateLimit(self, request, context):
     """Determine whether rate limiting should take place.

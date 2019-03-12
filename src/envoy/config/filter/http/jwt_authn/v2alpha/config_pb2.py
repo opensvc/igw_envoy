@@ -17,6 +17,7 @@ from envoy.api.v2.core import base_pb2 as envoy_dot_api_dot_v2_dot_core_dot_base
 from envoy.api.v2.core import http_uri_pb2 as envoy_dot_api_dot_v2_dot_core_dot_http__uri__pb2
 from envoy.api.v2.route import route_pb2 as envoy_dot_api_dot_v2_dot_route_dot_route__pb2
 from google.protobuf import duration_pb2 as google_dot_protobuf_dot_duration__pb2
+from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 from google.protobuf import wrappers_pb2 as google_dot_protobuf_dot_wrappers__pb2
 from validate import validate_pb2 as validate_dot_validate__pb2
 
@@ -25,9 +26,9 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='envoy/config/filter/http/jwt_authn/v2alpha/config.proto',
   package='envoy.config.filter.http.jwt_authn.v2alpha',
   syntax='proto3',
-  serialized_pb=_b('\n7envoy/config/filter/http/jwt_authn/v2alpha/config.proto\x12*envoy.config.filter.http.jwt_authn.v2alpha\x1a\x1c\x65nvoy/api/v2/core/base.proto\x1a envoy/api/v2/core/http_uri.proto\x1a\x1e\x65nvoy/api/v2/route/route.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x17validate/validate.proto\"\xf2\x02\n\x0bJwtProvider\x12\x19\n\x06issuer\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12\x11\n\taudiences\x18\x02 \x03(\t\x12M\n\x0bremote_jwks\x18\x03 \x01(\x0b\x32\x36.envoy.config.filter.http.jwt_authn.v2alpha.RemoteJwksH\x00\x12\x33\n\nlocal_jwks\x18\x04 \x01(\x0b\x32\x1d.envoy.api.v2.core.DataSourceH\x00\x12\x0f\n\x07\x66orward\x18\x05 \x01(\x08\x12K\n\x0c\x66rom_headers\x18\x06 \x03(\x0b\x32\x35.envoy.config.filter.http.jwt_authn.v2alpha.JwtHeader\x12\x13\n\x0b\x66rom_params\x18\x07 \x03(\t\x12\x1e\n\x16\x66orward_payload_header\x18\x08 \x01(\tB\x1e\n\x15jwks_source_specifier\x12\x05\xb8\xe9\xc0\x03\x01\"m\n\nRemoteJwks\x12,\n\x08http_uri\x18\x01 \x01(\x0b\x32\x1a.envoy.api.v2.core.HttpUri\x12\x31\n\x0e\x63\x61\x63he_duration\x18\x02 \x01(\x0b\x32\x19.google.protobuf.Duration\":\n\tJwtHeader\x12\x17\n\x04name\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12\x14\n\x0cvalue_prefix\x18\x02 \x01(\t\"A\n\x15ProviderWithAudiences\x12\x15\n\rprovider_name\x18\x01 \x01(\t\x12\x11\n\taudiences\x18\x02 \x03(\t\"\x93\x03\n\x0eJwtRequirement\x12\x17\n\rprovider_name\x18\x01 \x01(\tH\x00\x12\x63\n\x16provider_and_audiences\x18\x02 \x01(\x0b\x32\x41.envoy.config.filter.http.jwt_authn.v2alpha.ProviderWithAudiencesH\x00\x12X\n\x0crequires_any\x18\x03 \x01(\x0b\x32@.envoy.config.filter.http.jwt_authn.v2alpha.JwtRequirementOrListH\x00\x12Y\n\x0crequires_all\x18\x04 \x01(\x0b\x32\x41.envoy.config.filter.http.jwt_authn.v2alpha.JwtRequirementAndListH\x00\x12=\n\x17\x61llow_missing_or_failed\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.BoolValueH\x00\x42\x0f\n\rrequires_type\"t\n\x14JwtRequirementOrList\x12\\\n\x0crequirements\x18\x01 \x03(\x0b\x32:.envoy.config.filter.http.jwt_authn.v2alpha.JwtRequirementB\n\xba\xe9\xc0\x03\x05\x92\x01\x02\x08\x02\"u\n\x15JwtRequirementAndList\x12\\\n\x0crequirements\x18\x01 \x03(\x0b\x32:.envoy.config.filter.http.jwt_authn.v2alpha.JwtRequirementB\n\xba\xe9\xc0\x03\x05\x92\x01\x02\x08\x02\"\x9a\x01\n\x0fRequirementRule\x12\x39\n\x05match\x18\x01 \x01(\x0b\x32\x1e.envoy.api.v2.route.RouteMatchB\n\xba\xe9\xc0\x03\x05\x8a\x01\x02\x10\x01\x12L\n\x08requires\x18\x02 \x01(\x0b\x32:.envoy.config.filter.http.jwt_authn.v2alpha.JwtRequirement\"\xab\x02\n\x11JwtAuthentication\x12_\n\tproviders\x18\x01 \x03(\x0b\x32L.envoy.config.filter.http.jwt_authn.v2alpha.JwtAuthentication.ProvidersEntry\x12J\n\x05rules\x18\x02 \x03(\x0b\x32;.envoy.config.filter.http.jwt_authn.v2alpha.RequirementRule\x1ai\n\x0eProvidersEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x46\n\x05value\x18\x02 \x01(\x0b\x32\x37.envoy.config.filter.http.jwt_authn.v2alpha.JwtProvider:\x02\x38\x01\x62\x06proto3')
+  serialized_pb=_b('\n7envoy/config/filter/http/jwt_authn/v2alpha/config.proto\x12*envoy.config.filter.http.jwt_authn.v2alpha\x1a\x1c\x65nvoy/api/v2/core/base.proto\x1a envoy/api/v2/core/http_uri.proto\x1a\x1e\x65nvoy/api/v2/route/route.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x17validate/validate.proto\"\x8f\x03\n\x0bJwtProvider\x12\x19\n\x06issuer\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12\x11\n\taudiences\x18\x02 \x03(\t\x12M\n\x0bremote_jwks\x18\x03 \x01(\x0b\x32\x36.envoy.config.filter.http.jwt_authn.v2alpha.RemoteJwksH\x00\x12\x33\n\nlocal_jwks\x18\x04 \x01(\x0b\x32\x1d.envoy.api.v2.core.DataSourceH\x00\x12\x0f\n\x07\x66orward\x18\x05 \x01(\x08\x12K\n\x0c\x66rom_headers\x18\x06 \x03(\x0b\x32\x35.envoy.config.filter.http.jwt_authn.v2alpha.JwtHeader\x12\x13\n\x0b\x66rom_params\x18\x07 \x03(\t\x12\x1e\n\x16\x66orward_payload_header\x18\x08 \x01(\t\x12\x1b\n\x13payload_in_metadata\x18\t \x01(\tB\x1e\n\x15jwks_source_specifier\x12\x05\xb8\xe9\xc0\x03\x01\"m\n\nRemoteJwks\x12,\n\x08http_uri\x18\x01 \x01(\x0b\x32\x1a.envoy.api.v2.core.HttpUri\x12\x31\n\x0e\x63\x61\x63he_duration\x18\x02 \x01(\x0b\x32\x19.google.protobuf.Duration\":\n\tJwtHeader\x12\x17\n\x04name\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12\x14\n\x0cvalue_prefix\x18\x02 \x01(\t\"A\n\x15ProviderWithAudiences\x12\x15\n\rprovider_name\x18\x01 \x01(\t\x12\x11\n\taudiences\x18\x02 \x03(\t\"\x8f\x03\n\x0eJwtRequirement\x12\x17\n\rprovider_name\x18\x01 \x01(\tH\x00\x12\x63\n\x16provider_and_audiences\x18\x02 \x01(\x0b\x32\x41.envoy.config.filter.http.jwt_authn.v2alpha.ProviderWithAudiencesH\x00\x12X\n\x0crequires_any\x18\x03 \x01(\x0b\x32@.envoy.config.filter.http.jwt_authn.v2alpha.JwtRequirementOrListH\x00\x12Y\n\x0crequires_all\x18\x04 \x01(\x0b\x32\x41.envoy.config.filter.http.jwt_authn.v2alpha.JwtRequirementAndListH\x00\x12\x39\n\x17\x61llow_missing_or_failed\x18\x05 \x01(\x0b\x32\x16.google.protobuf.EmptyH\x00\x42\x0f\n\rrequires_type\"t\n\x14JwtRequirementOrList\x12\\\n\x0crequirements\x18\x01 \x03(\x0b\x32:.envoy.config.filter.http.jwt_authn.v2alpha.JwtRequirementB\n\xba\xe9\xc0\x03\x05\x92\x01\x02\x08\x02\"u\n\x15JwtRequirementAndList\x12\\\n\x0crequirements\x18\x01 \x03(\x0b\x32:.envoy.config.filter.http.jwt_authn.v2alpha.JwtRequirementB\n\xba\xe9\xc0\x03\x05\x92\x01\x02\x08\x02\"\x9a\x01\n\x0fRequirementRule\x12\x39\n\x05match\x18\x01 \x01(\x0b\x32\x1e.envoy.api.v2.route.RouteMatchB\n\xba\xe9\xc0\x03\x05\x8a\x01\x02\x10\x01\x12L\n\x08requires\x18\x02 \x01(\x0b\x32:.envoy.config.filter.http.jwt_authn.v2alpha.JwtRequirement\"\xab\x02\n\x11JwtAuthentication\x12_\n\tproviders\x18\x01 \x03(\x0b\x32L.envoy.config.filter.http.jwt_authn.v2alpha.JwtAuthentication.ProvidersEntry\x12J\n\x05rules\x18\x02 \x03(\x0b\x32;.envoy.config.filter.http.jwt_authn.v2alpha.RequirementRule\x1ai\n\x0eProvidersEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x46\n\x05value\x18\x02 \x01(\x0b\x32\x37.envoy.config.filter.http.jwt_authn.v2alpha.JwtProvider:\x02\x38\x01\x42I\n8io.envoyproxy.envoy.config.filter.http.jwt_authn.v2alphaB\x0b\x43onfigProtoP\x01\x62\x06proto3')
   ,
-  dependencies=[envoy_dot_api_dot_v2_dot_core_dot_base__pb2.DESCRIPTOR,envoy_dot_api_dot_v2_dot_core_dot_http__uri__pb2.DESCRIPTOR,envoy_dot_api_dot_v2_dot_route_dot_route__pb2.DESCRIPTOR,google_dot_protobuf_dot_duration__pb2.DESCRIPTOR,google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,validate_dot_validate__pb2.DESCRIPTOR,])
+  dependencies=[envoy_dot_api_dot_v2_dot_core_dot_base__pb2.DESCRIPTOR,envoy_dot_api_dot_v2_dot_core_dot_http__uri__pb2.DESCRIPTOR,envoy_dot_api_dot_v2_dot_route_dot_route__pb2.DESCRIPTOR,google_dot_protobuf_dot_duration__pb2.DESCRIPTOR,google_dot_protobuf_dot_empty__pb2.DESCRIPTOR,google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,validate_dot_validate__pb2.DESCRIPTOR,])
 
 
 
@@ -95,6 +96,13 @@ _JWTPROVIDER = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
+    _descriptor.FieldDescriptor(
+      name='payload_in_metadata', full_name='envoy.config.filter.http.jwt_authn.v2alpha.JwtProvider.payload_in_metadata', index=8,
+      number=9, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -110,8 +118,8 @@ _JWTPROVIDER = _descriptor.Descriptor(
       name='jwks_source_specifier', full_name='envoy.config.filter.http.jwt_authn.v2alpha.JwtProvider.jwks_source_specifier',
       index=0, containing_type=None, fields=[], options=_descriptor._ParseOptions(descriptor_pb2.OneofOptions(), _b('\270\351\300\003\001'))),
   ],
-  serialized_start=289,
-  serialized_end=659,
+  serialized_start=318,
+  serialized_end=717,
 )
 
 
@@ -148,8 +156,8 @@ _REMOTEJWKS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=661,
-  serialized_end=770,
+  serialized_start=719,
+  serialized_end=828,
 )
 
 
@@ -186,8 +194,8 @@ _JWTHEADER = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=772,
-  serialized_end=830,
+  serialized_start=830,
+  serialized_end=888,
 )
 
 
@@ -224,8 +232,8 @@ _PROVIDERWITHAUDIENCES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=832,
-  serialized_end=897,
+  serialized_start=890,
+  serialized_end=955,
 )
 
 
@@ -286,8 +294,8 @@ _JWTREQUIREMENT = _descriptor.Descriptor(
       name='requires_type', full_name='envoy.config.filter.http.jwt_authn.v2alpha.JwtRequirement.requires_type',
       index=0, containing_type=None, fields=[]),
   ],
-  serialized_start=900,
-  serialized_end=1303,
+  serialized_start=958,
+  serialized_end=1357,
 )
 
 
@@ -317,8 +325,8 @@ _JWTREQUIREMENTORLIST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1305,
-  serialized_end=1421,
+  serialized_start=1359,
+  serialized_end=1475,
 )
 
 
@@ -348,8 +356,8 @@ _JWTREQUIREMENTANDLIST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1423,
-  serialized_end=1540,
+  serialized_start=1477,
+  serialized_end=1594,
 )
 
 
@@ -386,8 +394,8 @@ _REQUIREMENTRULE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1543,
-  serialized_end=1697,
+  serialized_start=1597,
+  serialized_end=1751,
 )
 
 
@@ -424,8 +432,8 @@ _JWTAUTHENTICATION_PROVIDERSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1894,
-  serialized_end=1999,
+  serialized_start=1948,
+  serialized_end=2053,
 )
 
 _JWTAUTHENTICATION = _descriptor.Descriptor(
@@ -461,8 +469,8 @@ _JWTAUTHENTICATION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1700,
-  serialized_end=1999,
+  serialized_start=1754,
+  serialized_end=2053,
 )
 
 _JWTPROVIDER.fields_by_name['remote_jwks'].message_type = _REMOTEJWKS
@@ -479,7 +487,7 @@ _REMOTEJWKS.fields_by_name['cache_duration'].message_type = google_dot_protobuf_
 _JWTREQUIREMENT.fields_by_name['provider_and_audiences'].message_type = _PROVIDERWITHAUDIENCES
 _JWTREQUIREMENT.fields_by_name['requires_any'].message_type = _JWTREQUIREMENTORLIST
 _JWTREQUIREMENT.fields_by_name['requires_all'].message_type = _JWTREQUIREMENTANDLIST
-_JWTREQUIREMENT.fields_by_name['allow_missing_or_failed'].message_type = google_dot_protobuf_dot_wrappers__pb2._BOOLVALUE
+_JWTREQUIREMENT.fields_by_name['allow_missing_or_failed'].message_type = google_dot_protobuf_dot_empty__pb2._EMPTY
 _JWTREQUIREMENT.oneofs_by_name['requires_type'].fields.append(
   _JWTREQUIREMENT.fields_by_name['provider_name'])
 _JWTREQUIREMENT.fields_by_name['provider_name'].containing_oneof = _JWTREQUIREMENT.oneofs_by_name['requires_type']
@@ -586,6 +594,8 @@ _sym_db.RegisterMessage(JwtAuthentication)
 _sym_db.RegisterMessage(JwtAuthentication.ProvidersEntry)
 
 
+DESCRIPTOR.has_options = True
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n8io.envoyproxy.envoy.config.filter.http.jwt_authn.v2alphaB\013ConfigProtoP\001'))
 _JWTPROVIDER.oneofs_by_name['jwks_source_specifier'].has_options = True
 _JWTPROVIDER.oneofs_by_name['jwks_source_specifier']._options = _descriptor._ParseOptions(descriptor_pb2.OneofOptions(), _b('\270\351\300\003\001'))
 _JWTPROVIDER.fields_by_name['issuer'].has_options = True

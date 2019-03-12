@@ -22,7 +22,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='envoy/config/filter/http/rbac/v2/rbac.proto',
   package='envoy.config.filter.http.rbac.v2',
   syntax='proto3',
-  serialized_pb=_b('\n+envoy/config/filter/http/rbac/v2/rbac.proto\x12 envoy.config.filter.http.rbac.v2\x1a$envoy/config/rbac/v2alpha/rbac.proto\x1a\x17validate/validate.proto\x1a\x14gogoproto/gogo.proto\"m\n\x04RBAC\x12.\n\x05rules\x18\x01 \x01(\x0b\x32\x1f.envoy.config.rbac.v2alpha.RBAC\x12\x35\n\x0cshadow_rules\x18\x02 \x01(\x0b\x32\x1f.envoy.config.rbac.v2alpha.RBAC\"T\n\x0cRBACPerRoute\x12\x34\n\x04rbac\x18\x02 \x01(\x0b\x32&.envoy.config.filter.http.rbac.v2.RBACJ\x04\x08\x01\x10\x02R\x08\x64isabledB\x04Z\x02v2b\x06proto3')
+  serialized_pb=_b('\n+envoy/config/filter/http/rbac/v2/rbac.proto\x12 envoy.config.filter.http.rbac.v2\x1a$envoy/config/rbac/v2alpha/rbac.proto\x1a\x17validate/validate.proto\x1a\x14gogoproto/gogo.proto\"m\n\x04RBAC\x12.\n\x05rules\x18\x01 \x01(\x0b\x32\x1f.envoy.config.rbac.v2alpha.RBAC\x12\x35\n\x0cshadow_rules\x18\x02 \x01(\x0b\x32\x1f.envoy.config.rbac.v2alpha.RBAC\"T\n\x0cRBACPerRoute\x12\x34\n\x04rbac\x18\x02 \x01(\x0b\x32&.envoy.config.filter.http.rbac.v2.RBACJ\x04\x08\x01\x10\x02R\x08\x64isabledBA\n.io.envoyproxy.envoy.config.filter.http.rbac.v2B\tRbacProtoP\x01Z\x02v2b\x06proto3')
   ,
   dependencies=[envoy_dot_config_dot_rbac_dot_v2alpha_dot_rbac__pb2.DESCRIPTOR,validate_dot_validate__pb2.DESCRIPTOR,gogoproto_dot_gogo__pb2.DESCRIPTOR,])
 
@@ -120,7 +120,7 @@ _sym_db.RegisterMessage(RBACPerRoute)
 
 
 DESCRIPTOR.has_options = True
-DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('Z\002v2'))
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n.io.envoyproxy.envoy.config.filter.http.rbac.v2B\tRbacProtoP\001Z\002v2'))
 try:
   # THESE ELEMENTS WILL BE DEPRECATED.
   # Please use the generated *_pb2_grpc.py files instead.

@@ -21,7 +21,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='envoy/config/ratelimit/v2/rls.proto',
   package='envoy.config.ratelimit.v2',
   syntax='proto3',
-  serialized_pb=_b('\n#envoy/config/ratelimit/v2/rls.proto\x12\x19\x65nvoy.config.ratelimit.v2\x1a$envoy/api/v2/core/grpc_service.proto\x1a\x17validate/validate.proto\"\xb3\x01\n\x16RateLimitServiceConfig\x12#\n\x0c\x63luster_name\x18\x01 \x01(\tB\x0b\x18\x01\xba\xe9\xc0\x03\x04r\x02 \x01H\x00\x12\x36\n\x0cgrpc_service\x18\x02 \x01(\x0b\x32\x1e.envoy.api.v2.core.GrpcServiceH\x00\x12 \n\x14use_data_plane_proto\x18\x03 \x01(\x08\x42\x02\x18\x01\x42\x1a\n\x11service_specifier\x12\x05\xb8\xe9\xc0\x03\x01\x42\x04Z\x02v2b\x06proto3')
+  serialized_pb=_b('\n#envoy/config/ratelimit/v2/rls.proto\x12\x19\x65nvoy.config.ratelimit.v2\x1a$envoy/api/v2/core/grpc_service.proto\x1a\x17validate/validate.proto\"f\n\x16RateLimitServiceConfig\x12@\n\x0cgrpc_service\x18\x02 \x01(\x0b\x32\x1e.envoy.api.v2.core.GrpcServiceB\n\xba\xe9\xc0\x03\x05\x8a\x01\x02\x10\x01J\x04\x08\x01\x10\x02J\x04\x08\x03\x10\x04\x42\x39\n\'io.envoyproxy.envoy.config.ratelimit.v2B\x08RlsProtoP\x01Z\x02v2b\x06proto3')
   ,
   dependencies=[envoy_dot_api_dot_v2_dot_core_dot_grpc__service__pb2.DESCRIPTOR,validate_dot_validate__pb2.DESCRIPTOR,])
 
@@ -36,26 +36,12 @@ _RATELIMITSERVICECONFIG = _descriptor.Descriptor(
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='cluster_name', full_name='envoy.config.ratelimit.v2.RateLimitServiceConfig.cluster_name', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\030\001\272\351\300\003\004r\002 \001'))),
-    _descriptor.FieldDescriptor(
-      name='grpc_service', full_name='envoy.config.ratelimit.v2.RateLimitServiceConfig.grpc_service', index=1,
+      name='grpc_service', full_name='envoy.config.ratelimit.v2.RateLimitServiceConfig.grpc_service', index=0,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None),
-    _descriptor.FieldDescriptor(
-      name='use_data_plane_proto', full_name='envoy.config.ratelimit.v2.RateLimitServiceConfig.use_data_plane_proto', index=2,
-      number=3, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\030\001'))),
+      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\212\001\002\020\001'))),
   ],
   extensions=[
   ],
@@ -67,21 +53,12 @@ _RATELIMITSERVICECONFIG = _descriptor.Descriptor(
   syntax='proto3',
   extension_ranges=[],
   oneofs=[
-    _descriptor.OneofDescriptor(
-      name='service_specifier', full_name='envoy.config.ratelimit.v2.RateLimitServiceConfig.service_specifier',
-      index=0, containing_type=None, fields=[], options=_descriptor._ParseOptions(descriptor_pb2.OneofOptions(), _b('\270\351\300\003\001'))),
   ],
-  serialized_start=130,
-  serialized_end=309,
+  serialized_start=129,
+  serialized_end=231,
 )
 
 _RATELIMITSERVICECONFIG.fields_by_name['grpc_service'].message_type = envoy_dot_api_dot_v2_dot_core_dot_grpc__service__pb2._GRPCSERVICE
-_RATELIMITSERVICECONFIG.oneofs_by_name['service_specifier'].fields.append(
-  _RATELIMITSERVICECONFIG.fields_by_name['cluster_name'])
-_RATELIMITSERVICECONFIG.fields_by_name['cluster_name'].containing_oneof = _RATELIMITSERVICECONFIG.oneofs_by_name['service_specifier']
-_RATELIMITSERVICECONFIG.oneofs_by_name['service_specifier'].fields.append(
-  _RATELIMITSERVICECONFIG.fields_by_name['grpc_service'])
-_RATELIMITSERVICECONFIG.fields_by_name['grpc_service'].containing_oneof = _RATELIMITSERVICECONFIG.oneofs_by_name['service_specifier']
 DESCRIPTOR.message_types_by_name['RateLimitServiceConfig'] = _RATELIMITSERVICECONFIG
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
@@ -94,13 +71,9 @@ _sym_db.RegisterMessage(RateLimitServiceConfig)
 
 
 DESCRIPTOR.has_options = True
-DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('Z\002v2'))
-_RATELIMITSERVICECONFIG.oneofs_by_name['service_specifier'].has_options = True
-_RATELIMITSERVICECONFIG.oneofs_by_name['service_specifier']._options = _descriptor._ParseOptions(descriptor_pb2.OneofOptions(), _b('\270\351\300\003\001'))
-_RATELIMITSERVICECONFIG.fields_by_name['cluster_name'].has_options = True
-_RATELIMITSERVICECONFIG.fields_by_name['cluster_name']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\030\001\272\351\300\003\004r\002 \001'))
-_RATELIMITSERVICECONFIG.fields_by_name['use_data_plane_proto'].has_options = True
-_RATELIMITSERVICECONFIG.fields_by_name['use_data_plane_proto']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\030\001'))
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n\'io.envoyproxy.envoy.config.ratelimit.v2B\010RlsProtoP\001Z\002v2'))
+_RATELIMITSERVICECONFIG.fields_by_name['grpc_service'].has_options = True
+_RATELIMITSERVICECONFIG.fields_by_name['grpc_service']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\212\001\002\020\001'))
 try:
   # THESE ELEMENTS WILL BE DEPRECATED.
   # Please use the generated *_pb2_grpc.py files instead.

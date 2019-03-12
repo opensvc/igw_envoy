@@ -15,36 +15,82 @@ _sym_db = _symbol_database.Default()
 
 from envoy.api.v2 import discovery_pb2 as envoy_dot_api_dot_v2_dot_discovery__pb2
 from envoy.api.v2.endpoint import endpoint_pb2 as envoy_dot_api_dot_v2_dot_endpoint_dot_endpoint__pb2
+from envoy.type import percent_pb2 as envoy_dot_type_dot_percent__pb2
 from google.api import annotations_pb2 as google_dot_api_dot_annotations__pb2
 from validate import validate_pb2 as validate_dot_validate__pb2
 from gogoproto import gogo_pb2 as gogoproto_dot_gogo__pb2
+from google.protobuf import wrappers_pb2 as google_dot_protobuf_dot_wrappers__pb2
 
 
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='envoy/api/v2/eds.proto',
   package='envoy.api.v2',
   syntax='proto3',
-  serialized_pb=_b('\n\x16\x65nvoy/api/v2/eds.proto\x12\x0c\x65nvoy.api.v2\x1a\x1c\x65nvoy/api/v2/discovery.proto\x1a$envoy/api/v2/endpoint/endpoint.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x17validate/validate.proto\x1a\x14gogoproto/gogo.proto\"\xf5\x01\n\x15\x43lusterLoadAssignment\x12\x1f\n\x0c\x63luster_name\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12\x43\n\tendpoints\x18\x02 \x03(\x0b\x32*.envoy.api.v2.endpoint.LocalityLbEndpointsB\x04\xc8\xde\x1f\x00\x12:\n\x06policy\x18\x04 \x01(\x0b\x32*.envoy.api.v2.ClusterLoadAssignment.Policy\x1a:\n\x06Policy\x12\x30\n\rdrop_overload\x18\x01 \x01(\x01\x42\x19\xba\xe9\xc0\x03\x14\x12\x12\x19\x00\x00\x00\x00\x00\x00Y@)\x00\x00\x00\x00\x00\x00\x00\x00\x32\xeb\x01\n\x18\x45ndpointDiscoveryService\x12X\n\x0fStreamEndpoints\x12\x1e.envoy.api.v2.DiscoveryRequest\x1a\x1f.envoy.api.v2.DiscoveryResponse\"\x00(\x01\x30\x01\x12u\n\x0e\x46\x65tchEndpoints\x12\x1e.envoy.api.v2.DiscoveryRequest\x1a\x1f.envoy.api.v2.DiscoveryResponse\"\"\x82\xd3\xe4\x93\x02\x1c\"\x17/v2/discovery:endpoints:\x01*B\x07\x88\x01\x01\xa8\xe2\x1e\x01\x62\x06proto3')
+  serialized_pb=_b('\n\x16\x65nvoy/api/v2/eds.proto\x12\x0c\x65nvoy.api.v2\x1a\x1c\x65nvoy/api/v2/discovery.proto\x1a$envoy/api/v2/endpoint/endpoint.proto\x1a\x18\x65nvoy/type/percent.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x17validate/validate.proto\x1a\x14gogoproto/gogo.proto\x1a\x1egoogle/protobuf/wrappers.proto\"\xf4\x04\n\x15\x43lusterLoadAssignment\x12\x1f\n\x0c\x63luster_name\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12\x43\n\tendpoints\x18\x02 \x03(\x0b\x32*.envoy.api.v2.endpoint.LocalityLbEndpointsB\x04\xc8\xde\x1f\x00\x12P\n\x0fnamed_endpoints\x18\x05 \x03(\x0b\x32\x37.envoy.api.v2.ClusterLoadAssignment.NamedEndpointsEntry\x12:\n\x06policy\x18\x04 \x01(\x0b\x32*.envoy.api.v2.ClusterLoadAssignment.Policy\x1aV\n\x13NamedEndpointsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12.\n\x05value\x18\x02 \x01(\x0b\x32\x1f.envoy.api.v2.endpoint.Endpoint:\x02\x38\x01\x1a\x8e\x02\n\x06Policy\x12O\n\x0e\x64rop_overloads\x18\x02 \x03(\x0b\x32\x37.envoy.api.v2.ClusterLoadAssignment.Policy.DropOverload\x12H\n\x17overprovisioning_factor\x18\x03 \x01(\x0b\x32\x1c.google.protobuf.UInt32ValueB\t\xba\xe9\xc0\x03\x04*\x02 \x00\x1a\x63\n\x0c\x44ropOverload\x12\x1b\n\x08\x63\x61tegory\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12\x36\n\x0f\x64rop_percentage\x18\x02 \x01(\x0b\x32\x1d.envoy.type.FractionalPercentJ\x04\x08\x01\x10\x02\x32\xeb\x01\n\x18\x45ndpointDiscoveryService\x12X\n\x0fStreamEndpoints\x12\x1e.envoy.api.v2.DiscoveryRequest\x1a\x1f.envoy.api.v2.DiscoveryResponse\"\x00(\x01\x30\x01\x12u\n\x0e\x46\x65tchEndpoints\x12\x1e.envoy.api.v2.DiscoveryRequest\x1a\x1f.envoy.api.v2.DiscoveryResponse\"\"\x82\xd3\xe4\x93\x02\x1c\"\x17/v2/discovery:endpoints:\x01*B/\n\x1aio.envoyproxy.envoy.api.v2B\x08\x45\x64sProtoP\x01\x88\x01\x01\xa8\xe2\x1e\x01\x62\x06proto3')
   ,
-  dependencies=[envoy_dot_api_dot_v2_dot_discovery__pb2.DESCRIPTOR,envoy_dot_api_dot_v2_dot_endpoint_dot_endpoint__pb2.DESCRIPTOR,google_dot_api_dot_annotations__pb2.DESCRIPTOR,validate_dot_validate__pb2.DESCRIPTOR,gogoproto_dot_gogo__pb2.DESCRIPTOR,])
+  dependencies=[envoy_dot_api_dot_v2_dot_discovery__pb2.DESCRIPTOR,envoy_dot_api_dot_v2_dot_endpoint_dot_endpoint__pb2.DESCRIPTOR,envoy_dot_type_dot_percent__pb2.DESCRIPTOR,google_dot_api_dot_annotations__pb2.DESCRIPTOR,validate_dot_validate__pb2.DESCRIPTOR,gogoproto_dot_gogo__pb2.DESCRIPTOR,google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,])
 
 
 
 
-_CLUSTERLOADASSIGNMENT_POLICY = _descriptor.Descriptor(
-  name='Policy',
-  full_name='envoy.api.v2.ClusterLoadAssignment.Policy',
+_CLUSTERLOADASSIGNMENT_NAMEDENDPOINTSENTRY = _descriptor.Descriptor(
+  name='NamedEndpointsEntry',
+  full_name='envoy.api.v2.ClusterLoadAssignment.NamedEndpointsEntry',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='drop_overload', full_name='envoy.api.v2.ClusterLoadAssignment.Policy.drop_overload', index=0,
-      number=1, type=1, cpp_type=5, label=1,
-      has_default_value=False, default_value=float(0),
+      name='key', full_name='envoy.api.v2.ClusterLoadAssignment.NamedEndpointsEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\024\022\022\031\000\000\000\000\000\000Y@)\000\000\000\000\000\000\000\000'))),
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='envoy.api.v2.ClusterLoadAssignment.NamedEndpointsEntry.value', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=_descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001')),
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=513,
+  serialized_end=599,
+)
+
+_CLUSTERLOADASSIGNMENT_POLICY_DROPOVERLOAD = _descriptor.Descriptor(
+  name='DropOverload',
+  full_name='envoy.api.v2.ClusterLoadAssignment.Policy.DropOverload',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='category', full_name='envoy.api.v2.ClusterLoadAssignment.Policy.DropOverload.category', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004r\002 \001'))),
+    _descriptor.FieldDescriptor(
+      name='drop_percentage', full_name='envoy.api.v2.ClusterLoadAssignment.Policy.DropOverload.drop_percentage', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -57,8 +103,45 @@ _CLUSTERLOADASSIGNMENT_POLICY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=373,
-  serialized_end=431,
+  serialized_start=767,
+  serialized_end=866,
+)
+
+_CLUSTERLOADASSIGNMENT_POLICY = _descriptor.Descriptor(
+  name='Policy',
+  full_name='envoy.api.v2.ClusterLoadAssignment.Policy',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='drop_overloads', full_name='envoy.api.v2.ClusterLoadAssignment.Policy.drop_overloads', index=0,
+      number=2, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='overprovisioning_factor', full_name='envoy.api.v2.ClusterLoadAssignment.Policy.overprovisioning_factor', index=1,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004*\002 \000'))),
+  ],
+  extensions=[
+  ],
+  nested_types=[_CLUSTERLOADASSIGNMENT_POLICY_DROPOVERLOAD, ],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=602,
+  serialized_end=872,
 )
 
 _CLUSTERLOADASSIGNMENT = _descriptor.Descriptor(
@@ -83,7 +166,14 @@ _CLUSTERLOADASSIGNMENT = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\310\336\037\000'))),
     _descriptor.FieldDescriptor(
-      name='policy', full_name='envoy.api.v2.ClusterLoadAssignment.policy', index=2,
+      name='named_endpoints', full_name='envoy.api.v2.ClusterLoadAssignment.named_endpoints', index=2,
+      number=5, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='policy', full_name='envoy.api.v2.ClusterLoadAssignment.policy', index=3,
       number=4, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -92,7 +182,7 @@ _CLUSTERLOADASSIGNMENT = _descriptor.Descriptor(
   ],
   extensions=[
   ],
-  nested_types=[_CLUSTERLOADASSIGNMENT_POLICY, ],
+  nested_types=[_CLUSTERLOADASSIGNMENT_NAMEDENDPOINTSENTRY, _CLUSTERLOADASSIGNMENT_POLICY, ],
   enum_types=[
   ],
   options=None,
@@ -101,19 +191,40 @@ _CLUSTERLOADASSIGNMENT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=186,
-  serialized_end=431,
+  serialized_start=244,
+  serialized_end=872,
 )
 
+_CLUSTERLOADASSIGNMENT_NAMEDENDPOINTSENTRY.fields_by_name['value'].message_type = envoy_dot_api_dot_v2_dot_endpoint_dot_endpoint__pb2._ENDPOINT
+_CLUSTERLOADASSIGNMENT_NAMEDENDPOINTSENTRY.containing_type = _CLUSTERLOADASSIGNMENT
+_CLUSTERLOADASSIGNMENT_POLICY_DROPOVERLOAD.fields_by_name['drop_percentage'].message_type = envoy_dot_type_dot_percent__pb2._FRACTIONALPERCENT
+_CLUSTERLOADASSIGNMENT_POLICY_DROPOVERLOAD.containing_type = _CLUSTERLOADASSIGNMENT_POLICY
+_CLUSTERLOADASSIGNMENT_POLICY.fields_by_name['drop_overloads'].message_type = _CLUSTERLOADASSIGNMENT_POLICY_DROPOVERLOAD
+_CLUSTERLOADASSIGNMENT_POLICY.fields_by_name['overprovisioning_factor'].message_type = google_dot_protobuf_dot_wrappers__pb2._UINT32VALUE
 _CLUSTERLOADASSIGNMENT_POLICY.containing_type = _CLUSTERLOADASSIGNMENT
 _CLUSTERLOADASSIGNMENT.fields_by_name['endpoints'].message_type = envoy_dot_api_dot_v2_dot_endpoint_dot_endpoint__pb2._LOCALITYLBENDPOINTS
+_CLUSTERLOADASSIGNMENT.fields_by_name['named_endpoints'].message_type = _CLUSTERLOADASSIGNMENT_NAMEDENDPOINTSENTRY
 _CLUSTERLOADASSIGNMENT.fields_by_name['policy'].message_type = _CLUSTERLOADASSIGNMENT_POLICY
 DESCRIPTOR.message_types_by_name['ClusterLoadAssignment'] = _CLUSTERLOADASSIGNMENT
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 ClusterLoadAssignment = _reflection.GeneratedProtocolMessageType('ClusterLoadAssignment', (_message.Message,), dict(
 
+  NamedEndpointsEntry = _reflection.GeneratedProtocolMessageType('NamedEndpointsEntry', (_message.Message,), dict(
+    DESCRIPTOR = _CLUSTERLOADASSIGNMENT_NAMEDENDPOINTSENTRY,
+    __module__ = 'envoy.api.v2.eds_pb2'
+    # @@protoc_insertion_point(class_scope:envoy.api.v2.ClusterLoadAssignment.NamedEndpointsEntry)
+    ))
+  ,
+
   Policy = _reflection.GeneratedProtocolMessageType('Policy', (_message.Message,), dict(
+
+    DropOverload = _reflection.GeneratedProtocolMessageType('DropOverload', (_message.Message,), dict(
+      DESCRIPTOR = _CLUSTERLOADASSIGNMENT_POLICY_DROPOVERLOAD,
+      __module__ = 'envoy.api.v2.eds_pb2'
+      # @@protoc_insertion_point(class_scope:envoy.api.v2.ClusterLoadAssignment.Policy.DropOverload)
+      ))
+    ,
     DESCRIPTOR = _CLUSTERLOADASSIGNMENT_POLICY,
     __module__ = 'envoy.api.v2.eds_pb2'
     # @@protoc_insertion_point(class_scope:envoy.api.v2.ClusterLoadAssignment.Policy)
@@ -124,13 +235,19 @@ ClusterLoadAssignment = _reflection.GeneratedProtocolMessageType('ClusterLoadAss
   # @@protoc_insertion_point(class_scope:envoy.api.v2.ClusterLoadAssignment)
   ))
 _sym_db.RegisterMessage(ClusterLoadAssignment)
+_sym_db.RegisterMessage(ClusterLoadAssignment.NamedEndpointsEntry)
 _sym_db.RegisterMessage(ClusterLoadAssignment.Policy)
+_sym_db.RegisterMessage(ClusterLoadAssignment.Policy.DropOverload)
 
 
 DESCRIPTOR.has_options = True
-DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\210\001\001\250\342\036\001'))
-_CLUSTERLOADASSIGNMENT_POLICY.fields_by_name['drop_overload'].has_options = True
-_CLUSTERLOADASSIGNMENT_POLICY.fields_by_name['drop_overload']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\024\022\022\031\000\000\000\000\000\000Y@)\000\000\000\000\000\000\000\000'))
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n\032io.envoyproxy.envoy.api.v2B\010EdsProtoP\001\210\001\001\250\342\036\001'))
+_CLUSTERLOADASSIGNMENT_NAMEDENDPOINTSENTRY.has_options = True
+_CLUSTERLOADASSIGNMENT_NAMEDENDPOINTSENTRY._options = _descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001'))
+_CLUSTERLOADASSIGNMENT_POLICY_DROPOVERLOAD.fields_by_name['category'].has_options = True
+_CLUSTERLOADASSIGNMENT_POLICY_DROPOVERLOAD.fields_by_name['category']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004r\002 \001'))
+_CLUSTERLOADASSIGNMENT_POLICY.fields_by_name['overprovisioning_factor'].has_options = True
+_CLUSTERLOADASSIGNMENT_POLICY.fields_by_name['overprovisioning_factor']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004*\002 \000'))
 _CLUSTERLOADASSIGNMENT.fields_by_name['cluster_name'].has_options = True
 _CLUSTERLOADASSIGNMENT.fields_by_name['cluster_name']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004r\002 \001'))
 _CLUSTERLOADASSIGNMENT.fields_by_name['endpoints'].has_options = True
@@ -142,8 +259,8 @@ _ENDPOINTDISCOVERYSERVICE = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   options=None,
-  serialized_start=434,
-  serialized_end=669,
+  serialized_start=875,
+  serialized_end=1110,
   methods=[
   _descriptor.MethodDescriptor(
     name='StreamEndpoints',
@@ -180,6 +297,7 @@ try:
 
   class EndpointDiscoveryServiceStub(object):
     """[#protodoc-title: EDS]
+    Endpoint discovery :ref:`architecture overview <arch_overview_service_discovery_types_eds>`
 
     """
 
@@ -203,6 +321,7 @@ try:
 
   class EndpointDiscoveryServiceServicer(object):
     """[#protodoc-title: EDS]
+    Endpoint discovery :ref:`architecture overview <arch_overview_service_discovery_types_eds>`
 
     """
 
@@ -247,6 +366,7 @@ try:
     file not marked beta) for all further purposes. This class was generated
     only to ease transition from grpcio<0.15.0 to grpcio>=0.15.0."""
     """[#protodoc-title: EDS]
+    Endpoint discovery :ref:`architecture overview <arch_overview_service_discovery_types_eds>`
 
     """
     def StreamEndpoints(self, request_iterator, context):
@@ -267,6 +387,7 @@ try:
     file not marked beta) for all further purposes. This class was generated
     only to ease transition from grpcio<0.15.0 to grpcio>=0.15.0."""
     """[#protodoc-title: EDS]
+    Endpoint discovery :ref:`architecture overview <arch_overview_service_discovery_types_eds>`
 
     """
     def StreamEndpoints(self, request_iterator, timeout, metadata=None, with_call=False, protocol_options=None):

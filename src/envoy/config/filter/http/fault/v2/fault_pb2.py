@@ -13,8 +13,10 @@ from google.protobuf import descriptor_pb2
 _sym_db = _symbol_database.Default()
 
 
-from envoy.config.filter.fault.v2 import fault_pb2 as envoy_dot_config_dot_filter_dot_fault_dot_v2_dot_fault__pb2
 from envoy.api.v2.route import route_pb2 as envoy_dot_api_dot_v2_dot_route_dot_route__pb2
+from envoy.config.filter.fault.v2 import fault_pb2 as envoy_dot_config_dot_filter_dot_fault_dot_v2_dot_fault__pb2
+from envoy.type import percent_pb2 as envoy_dot_type_dot_percent__pb2
+from google.protobuf import wrappers_pb2 as google_dot_protobuf_dot_wrappers__pb2
 from validate import validate_pb2 as validate_dot_validate__pb2
 
 
@@ -22,9 +24,9 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='envoy/config/filter/http/fault/v2/fault.proto',
   package='envoy.config.filter.http.fault.v2',
   syntax='proto3',
-  serialized_pb=_b('\n-envoy/config/filter/http/fault/v2/fault.proto\x12!envoy.config.filter.http.fault.v2\x1a(envoy/config/filter/fault/v2/fault.proto\x1a\x1e\x65nvoy/api/v2/route/route.proto\x1a\x17validate/validate.proto\"c\n\nFaultAbort\x12\x1a\n\x07percent\x18\x01 \x01(\rB\t\xba\xe9\xc0\x03\x04*\x02\x18\x64\x12$\n\x0bhttp_status\x18\x02 \x01(\rB\r\xba\xe9\xc0\x03\x08*\x06\x10\xd8\x04(\xc8\x01H\x00\x42\x13\n\nerror_type\x12\x05\xb8\xe9\xc0\x03\x01\"\xea\x01\n\tHTTPFault\x12\x37\n\x05\x64\x65lay\x18\x01 \x01(\x0b\x32(.envoy.config.filter.fault.v2.FaultDelay\x12<\n\x05\x61\x62ort\x18\x02 \x01(\x0b\x32-.envoy.config.filter.http.fault.v2.FaultAbort\x12\x18\n\x10upstream_cluster\x18\x03 \x01(\t\x12\x32\n\x07headers\x18\x04 \x03(\x0b\x32!.envoy.api.v2.route.HeaderMatcher\x12\x18\n\x10\x64ownstream_nodes\x18\x05 \x03(\tB\x04Z\x02v2b\x06proto3')
+  serialized_pb=_b('\n-envoy/config/filter/http/fault/v2/fault.proto\x12!envoy.config.filter.http.fault.v2\x1a\x1e\x65nvoy/api/v2/route/route.proto\x1a(envoy/config/filter/fault/v2/fault.proto\x1a\x18\x65nvoy/type/percent.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x17validate/validate.proto\"\x80\x01\n\nFaultAbort\x12$\n\x0bhttp_status\x18\x02 \x01(\rB\r\xba\xe9\xc0\x03\x08*\x06\x10\xd8\x04(\xc8\x01H\x00\x12\x31\n\npercentage\x18\x03 \x01(\x0b\x32\x1d.envoy.type.FractionalPercentB\x13\n\nerror_type\x12\x05\xb8\xe9\xc0\x03\x01J\x04\x08\x01\x10\x02\"\xa3\x02\n\tHTTPFault\x12\x37\n\x05\x64\x65lay\x18\x01 \x01(\x0b\x32(.envoy.config.filter.fault.v2.FaultDelay\x12<\n\x05\x61\x62ort\x18\x02 \x01(\x0b\x32-.envoy.config.filter.http.fault.v2.FaultAbort\x12\x18\n\x10upstream_cluster\x18\x03 \x01(\t\x12\x32\n\x07headers\x18\x04 \x03(\x0b\x32!.envoy.api.v2.route.HeaderMatcher\x12\x18\n\x10\x64ownstream_nodes\x18\x05 \x03(\t\x12\x37\n\x11max_active_faults\x18\x06 \x01(\x0b\x32\x1c.google.protobuf.UInt32ValueBC\n/io.envoyproxy.envoy.config.filter.http.fault.v2B\nFaultProtoP\x01Z\x02v2b\x06proto3')
   ,
-  dependencies=[envoy_dot_config_dot_filter_dot_fault_dot_v2_dot_fault__pb2.DESCRIPTOR,envoy_dot_api_dot_v2_dot_route_dot_route__pb2.DESCRIPTOR,validate_dot_validate__pb2.DESCRIPTOR,])
+  dependencies=[envoy_dot_api_dot_v2_dot_route_dot_route__pb2.DESCRIPTOR,envoy_dot_config_dot_filter_dot_fault_dot_v2_dot_fault__pb2.DESCRIPTOR,envoy_dot_type_dot_percent__pb2.DESCRIPTOR,google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,validate_dot_validate__pb2.DESCRIPTOR,])
 
 
 
@@ -37,19 +39,19 @@ _FAULTABORT = _descriptor.Descriptor(
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='percent', full_name='envoy.config.filter.http.fault.v2.FaultAbort.percent', index=0,
-      number=1, type=13, cpp_type=3, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004*\002\030d'))),
-    _descriptor.FieldDescriptor(
-      name='http_status', full_name='envoy.config.filter.http.fault.v2.FaultAbort.http_status', index=1,
+      name='http_status', full_name='envoy.config.filter.http.fault.v2.FaultAbort.http_status', index=0,
       number=2, type=13, cpp_type=3, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\010*\006\020\330\004(\310\001'))),
+    _descriptor.FieldDescriptor(
+      name='percentage', full_name='envoy.config.filter.http.fault.v2.FaultAbort.percentage', index=1,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -65,8 +67,8 @@ _FAULTABORT = _descriptor.Descriptor(
       name='error_type', full_name='envoy.config.filter.http.fault.v2.FaultAbort.error_type',
       index=0, containing_type=None, fields=[], options=_descriptor._ParseOptions(descriptor_pb2.OneofOptions(), _b('\270\351\300\003\001'))),
   ],
-  serialized_start=183,
-  serialized_end=282,
+  serialized_start=242,
+  serialized_end=370,
 )
 
 
@@ -112,6 +114,13 @@ _HTTPFAULT = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
+    _descriptor.FieldDescriptor(
+      name='max_active_faults', full_name='envoy.config.filter.http.fault.v2.HTTPFault.max_active_faults', index=5,
+      number=6, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -124,16 +133,18 @@ _HTTPFAULT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=285,
-  serialized_end=519,
+  serialized_start=373,
+  serialized_end=664,
 )
 
+_FAULTABORT.fields_by_name['percentage'].message_type = envoy_dot_type_dot_percent__pb2._FRACTIONALPERCENT
 _FAULTABORT.oneofs_by_name['error_type'].fields.append(
   _FAULTABORT.fields_by_name['http_status'])
 _FAULTABORT.fields_by_name['http_status'].containing_oneof = _FAULTABORT.oneofs_by_name['error_type']
 _HTTPFAULT.fields_by_name['delay'].message_type = envoy_dot_config_dot_filter_dot_fault_dot_v2_dot_fault__pb2._FAULTDELAY
 _HTTPFAULT.fields_by_name['abort'].message_type = _FAULTABORT
 _HTTPFAULT.fields_by_name['headers'].message_type = envoy_dot_api_dot_v2_dot_route_dot_route__pb2._HEADERMATCHER
+_HTTPFAULT.fields_by_name['max_active_faults'].message_type = google_dot_protobuf_dot_wrappers__pb2._UINT32VALUE
 DESCRIPTOR.message_types_by_name['FaultAbort'] = _FAULTABORT
 DESCRIPTOR.message_types_by_name['HTTPFault'] = _HTTPFAULT
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
@@ -154,11 +165,9 @@ _sym_db.RegisterMessage(HTTPFault)
 
 
 DESCRIPTOR.has_options = True
-DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('Z\002v2'))
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n/io.envoyproxy.envoy.config.filter.http.fault.v2B\nFaultProtoP\001Z\002v2'))
 _FAULTABORT.oneofs_by_name['error_type'].has_options = True
 _FAULTABORT.oneofs_by_name['error_type']._options = _descriptor._ParseOptions(descriptor_pb2.OneofOptions(), _b('\270\351\300\003\001'))
-_FAULTABORT.fields_by_name['percent'].has_options = True
-_FAULTABORT.fields_by_name['percent']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004*\002\030d'))
 _FAULTABORT.fields_by_name['http_status'].has_options = True
 _FAULTABORT.fields_by_name['http_status']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\010*\006\020\330\004(\310\001'))
 try:

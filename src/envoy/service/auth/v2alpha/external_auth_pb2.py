@@ -13,230 +13,24 @@ from google.protobuf import descriptor_pb2
 _sym_db = _symbol_database.Default()
 
 
-from envoy.api.v2.core import base_pb2 as envoy_dot_api_dot_v2_dot_core_dot_base__pb2
-from envoy.type import http_status_pb2 as envoy_dot_type_dot_http__status__pb2
-from envoy.service.auth.v2alpha import attribute_context_pb2 as envoy_dot_service_dot_auth_dot_v2alpha_dot_attribute__context__pb2
-from google.rpc import status_pb2 as google_dot_rpc_dot_status__pb2
-from validate import validate_pb2 as validate_dot_validate__pb2
+from envoy.service.auth.v2 import external_auth_pb2 as envoy_dot_service_dot_auth_dot_v2_dot_external__auth__pb2
 
 
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='envoy/service/auth/v2alpha/external_auth.proto',
   package='envoy.service.auth.v2alpha',
   syntax='proto3',
-  serialized_pb=_b('\n.envoy/service/auth/v2alpha/external_auth.proto\x12\x1a\x65nvoy.service.auth.v2alpha\x1a\x1c\x65nvoy/api/v2/core/base.proto\x1a\x1c\x65nvoy/type/http_status.proto\x1a\x32\x65nvoy/service/auth/v2alpha/attribute_context.proto\x1a\x17google/rpc/status.proto\x1a\x17validate/validate.proto\"P\n\x0c\x43heckRequest\x12@\n\nattributes\x18\x01 \x01(\x0b\x32,.envoy.service.auth.v2alpha.AttributeContext\"\x8d\x01\n\x12\x44\x65niedHttpResponse\x12\x32\n\x06status\x18\x01 \x01(\x0b\x32\x16.envoy.type.HttpStatusB\n\xba\xe9\xc0\x03\x05\x8a\x01\x02\x10\x01\x12\x35\n\x07headers\x18\x02 \x03(\x0b\x32$.envoy.api.v2.core.HeaderValueOption\x12\x0c\n\x04\x62ody\x18\x03 \x01(\t\"G\n\x0eOkHttpResponse\x12\x35\n\x07headers\x18\x02 \x03(\x0b\x32$.envoy.api.v2.core.HeaderValueOption\"\xd2\x01\n\rCheckResponse\x12\"\n\x06status\x18\x01 \x01(\x0b\x32\x12.google.rpc.Status\x12I\n\x0f\x64\x65nied_response\x18\x02 \x01(\x0b\x32..envoy.service.auth.v2alpha.DeniedHttpResponseH\x00\x12\x41\n\x0bok_response\x18\x03 \x01(\x0b\x32*.envoy.service.auth.v2alpha.OkHttpResponseH\x00\x42\x0f\n\rhttp_response2m\n\rAuthorization\x12\\\n\x05\x43heck\x12(.envoy.service.auth.v2alpha.CheckRequest\x1a).envoy.service.auth.v2alpha.CheckResponseB\x0cZ\x07v2alpha\x88\x01\x01\x62\x06proto3')
+  serialized_pb=_b('\n.envoy/service/auth/v2alpha/external_auth.proto\x12\x1a\x65nvoy.service.auth.v2alpha\x1a)envoy/service/auth/v2/external_auth.proto2c\n\rAuthorization\x12R\n\x05\x43heck\x12#.envoy.service.auth.v2.CheckRequest\x1a$.envoy.service.auth.v2.CheckResponseBD\n(io.envoyproxy.envoy.service.auth.v2alphaB\nCertsProtoP\x01Z\x07v2alpha\x88\x01\x01\x62\x06proto3')
   ,
-  dependencies=[envoy_dot_api_dot_v2_dot_core_dot_base__pb2.DESCRIPTOR,envoy_dot_type_dot_http__status__pb2.DESCRIPTOR,envoy_dot_service_dot_auth_dot_v2alpha_dot_attribute__context__pb2.DESCRIPTOR,google_dot_rpc_dot_status__pb2.DESCRIPTOR,validate_dot_validate__pb2.DESCRIPTOR,])
+  dependencies=[envoy_dot_service_dot_auth_dot_v2_dot_external__auth__pb2.DESCRIPTOR,])
 
 
 
-
-_CHECKREQUEST = _descriptor.Descriptor(
-  name='CheckRequest',
-  full_name='envoy.service.auth.v2alpha.CheckRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='attributes', full_name='envoy.service.auth.v2alpha.CheckRequest.attributes', index=0,
-      number=1, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=240,
-  serialized_end=320,
-)
-
-
-_DENIEDHTTPRESPONSE = _descriptor.Descriptor(
-  name='DeniedHttpResponse',
-  full_name='envoy.service.auth.v2alpha.DeniedHttpResponse',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='status', full_name='envoy.service.auth.v2alpha.DeniedHttpResponse.status', index=0,
-      number=1, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\212\001\002\020\001'))),
-    _descriptor.FieldDescriptor(
-      name='headers', full_name='envoy.service.auth.v2alpha.DeniedHttpResponse.headers', index=1,
-      number=2, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-    _descriptor.FieldDescriptor(
-      name='body', full_name='envoy.service.auth.v2alpha.DeniedHttpResponse.body', index=2,
-      number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=323,
-  serialized_end=464,
-)
-
-
-_OKHTTPRESPONSE = _descriptor.Descriptor(
-  name='OkHttpResponse',
-  full_name='envoy.service.auth.v2alpha.OkHttpResponse',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='headers', full_name='envoy.service.auth.v2alpha.OkHttpResponse.headers', index=0,
-      number=2, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=466,
-  serialized_end=537,
-)
-
-
-_CHECKRESPONSE = _descriptor.Descriptor(
-  name='CheckResponse',
-  full_name='envoy.service.auth.v2alpha.CheckResponse',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='status', full_name='envoy.service.auth.v2alpha.CheckResponse.status', index=0,
-      number=1, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-    _descriptor.FieldDescriptor(
-      name='denied_response', full_name='envoy.service.auth.v2alpha.CheckResponse.denied_response', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-    _descriptor.FieldDescriptor(
-      name='ok_response', full_name='envoy.service.auth.v2alpha.CheckResponse.ok_response', index=2,
-      number=3, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-    _descriptor.OneofDescriptor(
-      name='http_response', full_name='envoy.service.auth.v2alpha.CheckResponse.http_response',
-      index=0, containing_type=None, fields=[]),
-  ],
-  serialized_start=540,
-  serialized_end=750,
-)
-
-_CHECKREQUEST.fields_by_name['attributes'].message_type = envoy_dot_service_dot_auth_dot_v2alpha_dot_attribute__context__pb2._ATTRIBUTECONTEXT
-_DENIEDHTTPRESPONSE.fields_by_name['status'].message_type = envoy_dot_type_dot_http__status__pb2._HTTPSTATUS
-_DENIEDHTTPRESPONSE.fields_by_name['headers'].message_type = envoy_dot_api_dot_v2_dot_core_dot_base__pb2._HEADERVALUEOPTION
-_OKHTTPRESPONSE.fields_by_name['headers'].message_type = envoy_dot_api_dot_v2_dot_core_dot_base__pb2._HEADERVALUEOPTION
-_CHECKRESPONSE.fields_by_name['status'].message_type = google_dot_rpc_dot_status__pb2._STATUS
-_CHECKRESPONSE.fields_by_name['denied_response'].message_type = _DENIEDHTTPRESPONSE
-_CHECKRESPONSE.fields_by_name['ok_response'].message_type = _OKHTTPRESPONSE
-_CHECKRESPONSE.oneofs_by_name['http_response'].fields.append(
-  _CHECKRESPONSE.fields_by_name['denied_response'])
-_CHECKRESPONSE.fields_by_name['denied_response'].containing_oneof = _CHECKRESPONSE.oneofs_by_name['http_response']
-_CHECKRESPONSE.oneofs_by_name['http_response'].fields.append(
-  _CHECKRESPONSE.fields_by_name['ok_response'])
-_CHECKRESPONSE.fields_by_name['ok_response'].containing_oneof = _CHECKRESPONSE.oneofs_by_name['http_response']
-DESCRIPTOR.message_types_by_name['CheckRequest'] = _CHECKREQUEST
-DESCRIPTOR.message_types_by_name['DeniedHttpResponse'] = _DENIEDHTTPRESPONSE
-DESCRIPTOR.message_types_by_name['OkHttpResponse'] = _OKHTTPRESPONSE
-DESCRIPTOR.message_types_by_name['CheckResponse'] = _CHECKRESPONSE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
-
-CheckRequest = _reflection.GeneratedProtocolMessageType('CheckRequest', (_message.Message,), dict(
-  DESCRIPTOR = _CHECKREQUEST,
-  __module__ = 'envoy.service.auth.v2alpha.external_auth_pb2'
-  # @@protoc_insertion_point(class_scope:envoy.service.auth.v2alpha.CheckRequest)
-  ))
-_sym_db.RegisterMessage(CheckRequest)
-
-DeniedHttpResponse = _reflection.GeneratedProtocolMessageType('DeniedHttpResponse', (_message.Message,), dict(
-  DESCRIPTOR = _DENIEDHTTPRESPONSE,
-  __module__ = 'envoy.service.auth.v2alpha.external_auth_pb2'
-  # @@protoc_insertion_point(class_scope:envoy.service.auth.v2alpha.DeniedHttpResponse)
-  ))
-_sym_db.RegisterMessage(DeniedHttpResponse)
-
-OkHttpResponse = _reflection.GeneratedProtocolMessageType('OkHttpResponse', (_message.Message,), dict(
-  DESCRIPTOR = _OKHTTPRESPONSE,
-  __module__ = 'envoy.service.auth.v2alpha.external_auth_pb2'
-  # @@protoc_insertion_point(class_scope:envoy.service.auth.v2alpha.OkHttpResponse)
-  ))
-_sym_db.RegisterMessage(OkHttpResponse)
-
-CheckResponse = _reflection.GeneratedProtocolMessageType('CheckResponse', (_message.Message,), dict(
-  DESCRIPTOR = _CHECKRESPONSE,
-  __module__ = 'envoy.service.auth.v2alpha.external_auth_pb2'
-  # @@protoc_insertion_point(class_scope:envoy.service.auth.v2alpha.CheckResponse)
-  ))
-_sym_db.RegisterMessage(CheckResponse)
 
 
 DESCRIPTOR.has_options = True
-DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('Z\007v2alpha\210\001\001'))
-_DENIEDHTTPRESPONSE.fields_by_name['status'].has_options = True
-_DENIEDHTTPRESPONSE.fields_by_name['status']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\212\001\002\020\001'))
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n(io.envoyproxy.envoy.service.auth.v2alphaB\nCertsProtoP\001Z\007v2alpha\210\001\001'))
 
 _AUTHORIZATION = _descriptor.ServiceDescriptor(
   name='Authorization',
@@ -244,16 +38,16 @@ _AUTHORIZATION = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   options=None,
-  serialized_start=752,
-  serialized_end=861,
+  serialized_start=121,
+  serialized_end=220,
   methods=[
   _descriptor.MethodDescriptor(
     name='Check',
     full_name='envoy.service.auth.v2alpha.Authorization.Check',
     index=0,
     containing_service=None,
-    input_type=_CHECKREQUEST,
-    output_type=_CHECKRESPONSE,
+    input_type=envoy_dot_service_dot_auth_dot_v2_dot_external__auth__pb2._CHECKREQUEST,
+    output_type=envoy_dot_service_dot_auth_dot_v2_dot_external__auth__pb2._CHECKRESPONSE,
     options=None,
   ),
 ])
@@ -289,8 +83,8 @@ try:
       """
       self.Check = channel.unary_unary(
           '/envoy.service.auth.v2alpha.Authorization/Check',
-          request_serializer=CheckRequest.SerializeToString,
-          response_deserializer=CheckResponse.FromString,
+          request_serializer=envoy_dot_service_dot_auth_dot_v2_dot_external__auth__pb2.CheckRequest.SerializeToString,
+          response_deserializer=envoy_dot_service_dot_auth_dot_v2_dot_external__auth__pb2.CheckResponse.FromString,
           )
 
 
@@ -317,8 +111,8 @@ try:
     rpc_method_handlers = {
         'Check': grpc.unary_unary_rpc_method_handler(
             servicer.Check,
-            request_deserializer=CheckRequest.FromString,
-            response_serializer=CheckResponse.SerializeToString,
+            request_deserializer=envoy_dot_service_dot_auth_dot_v2_dot_external__auth__pb2.CheckRequest.FromString,
+            response_serializer=envoy_dot_service_dot_auth_dot_v2_dot_external__auth__pb2.CheckResponse.SerializeToString,
         ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -376,10 +170,10 @@ try:
     file not marked beta) for all further purposes. This function was
     generated only to ease transition from grpcio<0.15.0 to grpcio>=0.15.0"""
     request_deserializers = {
-      ('envoy.service.auth.v2alpha.Authorization', 'Check'): CheckRequest.FromString,
+      ('envoy.service.auth.v2alpha.Authorization', 'Check'): envoy_dot_service_dot_auth_dot_v2_dot_external__auth__pb2.CheckRequest.FromString,
     }
     response_serializers = {
-      ('envoy.service.auth.v2alpha.Authorization', 'Check'): CheckResponse.SerializeToString,
+      ('envoy.service.auth.v2alpha.Authorization', 'Check'): envoy_dot_service_dot_auth_dot_v2_dot_external__auth__pb2.CheckResponse.SerializeToString,
     }
     method_implementations = {
       ('envoy.service.auth.v2alpha.Authorization', 'Check'): face_utilities.unary_unary_inline(servicer.Check),
@@ -395,10 +189,10 @@ try:
     file not marked beta) for all further purposes. This function was
     generated only to ease transition from grpcio<0.15.0 to grpcio>=0.15.0"""
     request_serializers = {
-      ('envoy.service.auth.v2alpha.Authorization', 'Check'): CheckRequest.SerializeToString,
+      ('envoy.service.auth.v2alpha.Authorization', 'Check'): envoy_dot_service_dot_auth_dot_v2_dot_external__auth__pb2.CheckRequest.SerializeToString,
     }
     response_deserializers = {
-      ('envoy.service.auth.v2alpha.Authorization', 'Check'): CheckResponse.FromString,
+      ('envoy.service.auth.v2alpha.Authorization', 'Check'): envoy_dot_service_dot_auth_dot_v2_dot_external__auth__pb2.CheckResponse.FromString,
     }
     cardinalities = {
       'Check': cardinality.Cardinality.UNARY_UNARY,

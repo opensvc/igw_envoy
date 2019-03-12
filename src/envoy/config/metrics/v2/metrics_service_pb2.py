@@ -21,7 +21,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='envoy/config/metrics/v2/metrics_service.proto',
   package='envoy.config.metrics.v2',
   syntax='proto3',
-  serialized_pb=_b('\n-envoy/config/metrics/v2/metrics_service.proto\x12\x17\x65nvoy.config.metrics.v2\x1a$envoy/api/v2/core/grpc_service.proto\x1a\x17validate/validate.proto\"X\n\x14MetricsServiceConfig\x12@\n\x0cgrpc_service\x18\x01 \x01(\x0b\x32\x1e.envoy.api.v2.core.GrpcServiceB\n\xba\xe9\xc0\x03\x05\x8a\x01\x02\x10\x01\x62\x06proto3')
+  serialized_pb=_b('\n-envoy/config/metrics/v2/metrics_service.proto\x12\x17\x65nvoy.config.metrics.v2\x1a$envoy/api/v2/core/grpc_service.proto\x1a\x17validate/validate.proto\"X\n\x14MetricsServiceConfig\x12@\n\x0cgrpc_service\x18\x01 \x01(\x0b\x32\x1e.envoy.api.v2.core.GrpcServiceB\n\xba\xe9\xc0\x03\x05\x8a\x01\x02\x10\x01\x42>\n%io.envoyproxy.envoy.config.metrics.v2B\x13MetricsServiceProtoP\x01\x62\x06proto3')
   ,
   dependencies=[envoy_dot_api_dot_v2_dot_core_dot_grpc__service__pb2.DESCRIPTOR,validate_dot_validate__pb2.DESCRIPTOR,])
 
@@ -70,6 +70,8 @@ MetricsServiceConfig = _reflection.GeneratedProtocolMessageType('MetricsServiceC
 _sym_db.RegisterMessage(MetricsServiceConfig)
 
 
+DESCRIPTOR.has_options = True
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n%io.envoyproxy.envoy.config.metrics.v2B\023MetricsServiceProtoP\001'))
 _METRICSSERVICECONFIG.fields_by_name['grpc_service'].has_options = True
 _METRICSSERVICECONFIG.fields_by_name['grpc_service']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\212\001\002\020\001'))
 try:

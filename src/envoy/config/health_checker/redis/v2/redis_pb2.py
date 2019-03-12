@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='envoy/config/health_checker/redis/v2/redis.proto',
   package='envoy.config.health_checker.redis.v2',
   syntax='proto3',
-  serialized_pb=_b('\n0envoy/config/health_checker/redis/v2/redis.proto\x12$envoy.config.health_checker.redis.v2\"\x14\n\x05Redis\x12\x0b\n\x03key\x18\x01 \x01(\tB\x04Z\x02v2b\x06proto3')
+  serialized_pb=_b('\n0envoy/config/health_checker/redis/v2/redis.proto\x12$envoy.config.health_checker.redis.v2\"\x14\n\x05Redis\x12\x0b\n\x03key\x18\x01 \x01(\tBF\n2io.envoyproxy.envoy.config.health_checker.redis.v2B\nRedisProtoP\x01Z\x02v2b\x06proto3')
 )
 
 
@@ -67,7 +67,7 @@ _sym_db.RegisterMessage(Redis)
 
 
 DESCRIPTOR.has_options = True
-DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('Z\002v2'))
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n2io.envoyproxy.envoy.config.health_checker.redis.v2B\nRedisProtoP\001Z\002v2'))
 try:
   # THESE ELEMENTS WILL BE DEPRECATED.
   # Please use the generated *_pb2_grpc.py files instead.

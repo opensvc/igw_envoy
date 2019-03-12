@@ -14,6 +14,8 @@ _sym_db = _symbol_database.Default()
 
 
 from envoy.api.v2.core import address_pb2 as envoy_dot_api_dot_v2_dot_core_dot_address__pb2
+from envoy.type.matcher import string_pb2 as envoy_dot_type_dot_matcher_dot_string__pb2
+from google.protobuf import any_pb2 as google_dot_protobuf_dot_any__pb2
 from google.protobuf import struct_pb2 as google_dot_protobuf_dot_struct__pb2
 from google.protobuf import wrappers_pb2 as google_dot_protobuf_dot_wrappers__pb2
 from validate import validate_pb2 as validate_dot_validate__pb2
@@ -23,9 +25,9 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='envoy/config/metrics/v2/stats.proto',
   package='envoy.config.metrics.v2',
   syntax='proto3',
-  serialized_pb=_b('\n#envoy/config/metrics/v2/stats.proto\x12\x17\x65nvoy.config.metrics.v2\x1a\x1f\x65nvoy/api/v2/core/address.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x17validate/validate.proto\"B\n\tStatsSink\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\'\n\x06\x63onfig\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\"\x82\x01\n\x0bStatsConfig\x12\x39\n\nstats_tags\x18\x01 \x03(\x0b\x32%.envoy.config.metrics.v2.TagSpecifier\x12\x38\n\x14use_all_default_tags\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.BoolValue\"U\n\x0cTagSpecifier\x12\x10\n\x08tag_name\x18\x01 \x01(\t\x12\x0f\n\x05regex\x18\x02 \x01(\tH\x00\x12\x15\n\x0b\x66ixed_value\x18\x03 \x01(\tH\x00\x42\x0b\n\ttag_value\"\x82\x01\n\nStatsdSink\x12-\n\x07\x61\x64\x64ress\x18\x01 \x01(\x0b\x32\x1a.envoy.api.v2.core.AddressH\x00\x12\x1a\n\x10tcp_cluster_name\x18\x02 \x01(\tH\x00\x12\x0e\n\x06prefix\x18\x03 \x01(\tB\x19\n\x10statsd_specifier\x12\x05\xb8\xe9\xc0\x03\x01\"c\n\rDogStatsdSink\x12-\n\x07\x61\x64\x64ress\x18\x01 \x01(\x0b\x32\x1a.envoy.api.v2.core.AddressH\x00\x42\x1d\n\x14\x64og_statsd_specifier\x12\x05\xb8\xe9\xc0\x03\x01J\x04\x08\x02\x10\x03\"\"\n\x0bHystrixSink\x12\x13\n\x0bnum_buckets\x18\x01 \x01(\x03\x42\x04Z\x02v2b\x06proto3')
+  serialized_pb=_b('\n#envoy/config/metrics/v2/stats.proto\x12\x17\x65nvoy.config.metrics.v2\x1a\x1f\x65nvoy/api/v2/core/address.proto\x1a\x1f\x65nvoy/type/matcher/string.proto\x1a\x19google/protobuf/any.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x17validate/validate.proto\"\x85\x01\n\tStatsSink\x12\x0c\n\x04name\x18\x01 \x01(\t\x12-\n\x06\x63onfig\x18\x02 \x01(\x0b\x32\x17.google.protobuf.StructB\x02\x18\x01H\x00\x12,\n\x0ctyped_config\x18\x03 \x01(\x0b\x32\x14.google.protobuf.AnyH\x00\x42\r\n\x0b\x63onfig_type\"\xc0\x01\n\x0bStatsConfig\x12\x39\n\nstats_tags\x18\x01 \x03(\x0b\x32%.envoy.config.metrics.v2.TagSpecifier\x12\x38\n\x14use_all_default_tags\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.BoolValue\x12<\n\rstats_matcher\x18\x03 \x01(\x0b\x32%.envoy.config.metrics.v2.StatsMatcher\"\xbe\x01\n\x0cStatsMatcher\x12\x14\n\nreject_all\x18\x01 \x01(\x08H\x00\x12?\n\x0e\x65xclusion_list\x18\x02 \x01(\x0b\x32%.envoy.type.matcher.ListStringMatcherH\x00\x12?\n\x0einclusion_list\x18\x03 \x01(\x0b\x32%.envoy.type.matcher.ListStringMatcherH\x00\x42\x16\n\rstats_matcher\x12\x05\xb8\xe9\xc0\x03\x01\"a\n\x0cTagSpecifier\x12\x10\n\x08tag_name\x18\x01 \x01(\t\x12\x1b\n\x05regex\x18\x02 \x01(\tB\n\xba\xe9\xc0\x03\x05r\x03(\x80\x08H\x00\x12\x15\n\x0b\x66ixed_value\x18\x03 \x01(\tH\x00\x42\x0b\n\ttag_value\"\x82\x01\n\nStatsdSink\x12-\n\x07\x61\x64\x64ress\x18\x01 \x01(\x0b\x32\x1a.envoy.api.v2.core.AddressH\x00\x12\x1a\n\x10tcp_cluster_name\x18\x02 \x01(\tH\x00\x12\x0e\n\x06prefix\x18\x03 \x01(\tB\x19\n\x10statsd_specifier\x12\x05\xb8\xe9\xc0\x03\x01\"s\n\rDogStatsdSink\x12-\n\x07\x61\x64\x64ress\x18\x01 \x01(\x0b\x32\x1a.envoy.api.v2.core.AddressH\x00\x12\x0e\n\x06prefix\x18\x03 \x01(\tB\x1d\n\x14\x64og_statsd_specifier\x12\x05\xb8\xe9\xc0\x03\x01J\x04\x08\x02\x10\x03\"\"\n\x0bHystrixSink\x12\x13\n\x0bnum_buckets\x18\x01 \x01(\x03\x42\x39\n%io.envoyproxy.envoy.config.metrics.v2B\nStatsProtoP\x01Z\x02v2b\x06proto3')
   ,
-  dependencies=[envoy_dot_api_dot_v2_dot_core_dot_address__pb2.DESCRIPTOR,google_dot_protobuf_dot_struct__pb2.DESCRIPTOR,google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,validate_dot_validate__pb2.DESCRIPTOR,])
+  dependencies=[envoy_dot_api_dot_v2_dot_core_dot_address__pb2.DESCRIPTOR,envoy_dot_type_dot_matcher_dot_string__pb2.DESCRIPTOR,google_dot_protobuf_dot_any__pb2.DESCRIPTOR,google_dot_protobuf_dot_struct__pb2.DESCRIPTOR,google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,validate_dot_validate__pb2.DESCRIPTOR,])
 
 
 
@@ -50,6 +52,13 @@ _STATSSINK = _descriptor.Descriptor(
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
+      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\030\001'))),
+    _descriptor.FieldDescriptor(
+      name='typed_config', full_name='envoy.config.metrics.v2.StatsSink.typed_config', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
       options=None),
   ],
   extensions=[
@@ -62,9 +71,12 @@ _STATSSINK = _descriptor.Descriptor(
   syntax='proto3',
   extension_ranges=[],
   oneofs=[
+    _descriptor.OneofDescriptor(
+      name='config_type', full_name='envoy.config.metrics.v2.StatsSink.config_type',
+      index=0, containing_type=None, fields=[]),
   ],
-  serialized_start=184,
-  serialized_end=250,
+  serialized_start=245,
+  serialized_end=378,
 )
 
 
@@ -89,6 +101,13 @@ _STATSCONFIG = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
+    _descriptor.FieldDescriptor(
+      name='stats_matcher', full_name='envoy.config.metrics.v2.StatsConfig.stats_matcher', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -101,8 +120,56 @@ _STATSCONFIG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=253,
-  serialized_end=383,
+  serialized_start=381,
+  serialized_end=573,
+)
+
+
+_STATSMATCHER = _descriptor.Descriptor(
+  name='StatsMatcher',
+  full_name='envoy.config.metrics.v2.StatsMatcher',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='reject_all', full_name='envoy.config.metrics.v2.StatsMatcher.reject_all', index=0,
+      number=1, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='exclusion_list', full_name='envoy.config.metrics.v2.StatsMatcher.exclusion_list', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='inclusion_list', full_name='envoy.config.metrics.v2.StatsMatcher.inclusion_list', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+    _descriptor.OneofDescriptor(
+      name='stats_matcher', full_name='envoy.config.metrics.v2.StatsMatcher.stats_matcher',
+      index=0, containing_type=None, fields=[], options=_descriptor._ParseOptions(descriptor_pb2.OneofOptions(), _b('\270\351\300\003\001'))),
+  ],
+  serialized_start=576,
+  serialized_end=766,
 )
 
 
@@ -126,7 +193,7 @@ _TAGSPECIFIER = _descriptor.Descriptor(
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None),
+      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005r\003(\200\010'))),
     _descriptor.FieldDescriptor(
       name='fixed_value', full_name='envoy.config.metrics.v2.TagSpecifier.fixed_value', index=2,
       number=3, type=9, cpp_type=9, label=1,
@@ -149,8 +216,8 @@ _TAGSPECIFIER = _descriptor.Descriptor(
       name='tag_value', full_name='envoy.config.metrics.v2.TagSpecifier.tag_value',
       index=0, containing_type=None, fields=[]),
   ],
-  serialized_start=385,
-  serialized_end=470,
+  serialized_start=768,
+  serialized_end=865,
 )
 
 
@@ -197,8 +264,8 @@ _STATSDSINK = _descriptor.Descriptor(
       name='statsd_specifier', full_name='envoy.config.metrics.v2.StatsdSink.statsd_specifier',
       index=0, containing_type=None, fields=[], options=_descriptor._ParseOptions(descriptor_pb2.OneofOptions(), _b('\270\351\300\003\001'))),
   ],
-  serialized_start=473,
-  serialized_end=603,
+  serialized_start=868,
+  serialized_end=998,
 )
 
 
@@ -213,6 +280,13 @@ _DOGSTATSDSINK = _descriptor.Descriptor(
       name='address', full_name='envoy.config.metrics.v2.DogStatsdSink.address', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='prefix', full_name='envoy.config.metrics.v2.DogStatsdSink.prefix', index=1,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -231,8 +305,8 @@ _DOGSTATSDSINK = _descriptor.Descriptor(
       name='dog_statsd_specifier', full_name='envoy.config.metrics.v2.DogStatsdSink.dog_statsd_specifier',
       index=0, containing_type=None, fields=[], options=_descriptor._ParseOptions(descriptor_pb2.OneofOptions(), _b('\270\351\300\003\001'))),
   ],
-  serialized_start=605,
-  serialized_end=704,
+  serialized_start=1000,
+  serialized_end=1115,
 )
 
 
@@ -262,13 +336,32 @@ _HYSTRIXSINK = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=706,
-  serialized_end=740,
+  serialized_start=1117,
+  serialized_end=1151,
 )
 
 _STATSSINK.fields_by_name['config'].message_type = google_dot_protobuf_dot_struct__pb2._STRUCT
+_STATSSINK.fields_by_name['typed_config'].message_type = google_dot_protobuf_dot_any__pb2._ANY
+_STATSSINK.oneofs_by_name['config_type'].fields.append(
+  _STATSSINK.fields_by_name['config'])
+_STATSSINK.fields_by_name['config'].containing_oneof = _STATSSINK.oneofs_by_name['config_type']
+_STATSSINK.oneofs_by_name['config_type'].fields.append(
+  _STATSSINK.fields_by_name['typed_config'])
+_STATSSINK.fields_by_name['typed_config'].containing_oneof = _STATSSINK.oneofs_by_name['config_type']
 _STATSCONFIG.fields_by_name['stats_tags'].message_type = _TAGSPECIFIER
 _STATSCONFIG.fields_by_name['use_all_default_tags'].message_type = google_dot_protobuf_dot_wrappers__pb2._BOOLVALUE
+_STATSCONFIG.fields_by_name['stats_matcher'].message_type = _STATSMATCHER
+_STATSMATCHER.fields_by_name['exclusion_list'].message_type = envoy_dot_type_dot_matcher_dot_string__pb2._LISTSTRINGMATCHER
+_STATSMATCHER.fields_by_name['inclusion_list'].message_type = envoy_dot_type_dot_matcher_dot_string__pb2._LISTSTRINGMATCHER
+_STATSMATCHER.oneofs_by_name['stats_matcher'].fields.append(
+  _STATSMATCHER.fields_by_name['reject_all'])
+_STATSMATCHER.fields_by_name['reject_all'].containing_oneof = _STATSMATCHER.oneofs_by_name['stats_matcher']
+_STATSMATCHER.oneofs_by_name['stats_matcher'].fields.append(
+  _STATSMATCHER.fields_by_name['exclusion_list'])
+_STATSMATCHER.fields_by_name['exclusion_list'].containing_oneof = _STATSMATCHER.oneofs_by_name['stats_matcher']
+_STATSMATCHER.oneofs_by_name['stats_matcher'].fields.append(
+  _STATSMATCHER.fields_by_name['inclusion_list'])
+_STATSMATCHER.fields_by_name['inclusion_list'].containing_oneof = _STATSMATCHER.oneofs_by_name['stats_matcher']
 _TAGSPECIFIER.oneofs_by_name['tag_value'].fields.append(
   _TAGSPECIFIER.fields_by_name['regex'])
 _TAGSPECIFIER.fields_by_name['regex'].containing_oneof = _TAGSPECIFIER.oneofs_by_name['tag_value']
@@ -288,6 +381,7 @@ _DOGSTATSDSINK.oneofs_by_name['dog_statsd_specifier'].fields.append(
 _DOGSTATSDSINK.fields_by_name['address'].containing_oneof = _DOGSTATSDSINK.oneofs_by_name['dog_statsd_specifier']
 DESCRIPTOR.message_types_by_name['StatsSink'] = _STATSSINK
 DESCRIPTOR.message_types_by_name['StatsConfig'] = _STATSCONFIG
+DESCRIPTOR.message_types_by_name['StatsMatcher'] = _STATSMATCHER
 DESCRIPTOR.message_types_by_name['TagSpecifier'] = _TAGSPECIFIER
 DESCRIPTOR.message_types_by_name['StatsdSink'] = _STATSDSINK
 DESCRIPTOR.message_types_by_name['DogStatsdSink'] = _DOGSTATSDSINK
@@ -307,6 +401,13 @@ StatsConfig = _reflection.GeneratedProtocolMessageType('StatsConfig', (_message.
   # @@protoc_insertion_point(class_scope:envoy.config.metrics.v2.StatsConfig)
   ))
 _sym_db.RegisterMessage(StatsConfig)
+
+StatsMatcher = _reflection.GeneratedProtocolMessageType('StatsMatcher', (_message.Message,), dict(
+  DESCRIPTOR = _STATSMATCHER,
+  __module__ = 'envoy.config.metrics.v2.stats_pb2'
+  # @@protoc_insertion_point(class_scope:envoy.config.metrics.v2.StatsMatcher)
+  ))
+_sym_db.RegisterMessage(StatsMatcher)
 
 TagSpecifier = _reflection.GeneratedProtocolMessageType('TagSpecifier', (_message.Message,), dict(
   DESCRIPTOR = _TAGSPECIFIER,
@@ -338,7 +439,13 @@ _sym_db.RegisterMessage(HystrixSink)
 
 
 DESCRIPTOR.has_options = True
-DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('Z\002v2'))
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n%io.envoyproxy.envoy.config.metrics.v2B\nStatsProtoP\001Z\002v2'))
+_STATSSINK.fields_by_name['config'].has_options = True
+_STATSSINK.fields_by_name['config']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\030\001'))
+_STATSMATCHER.oneofs_by_name['stats_matcher'].has_options = True
+_STATSMATCHER.oneofs_by_name['stats_matcher']._options = _descriptor._ParseOptions(descriptor_pb2.OneofOptions(), _b('\270\351\300\003\001'))
+_TAGSPECIFIER.fields_by_name['regex'].has_options = True
+_TAGSPECIFIER.fields_by_name['regex']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005r\003(\200\010'))
 _STATSDSINK.oneofs_by_name['statsd_specifier'].has_options = True
 _STATSDSINK.oneofs_by_name['statsd_specifier']._options = _descriptor._ParseOptions(descriptor_pb2.OneofOptions(), _b('\270\351\300\003\001'))
 _DOGSTATSDSINK.oneofs_by_name['dog_statsd_specifier'].has_options = True

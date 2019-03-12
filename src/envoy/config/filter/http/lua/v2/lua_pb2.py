@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='envoy/config/filter/http/lua/v2/lua.proto',
   package='envoy.config.filter.http.lua.v2',
   syntax='proto3',
-  serialized_pb=_b('\n)envoy/config/filter/http/lua/v2/lua.proto\x12\x1f\x65nvoy.config.filter.http.lua.v2\x1a\x17validate/validate.proto\"%\n\x03Lua\x12\x1e\n\x0binline_code\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x42\x04Z\x02v2b\x06proto3')
+  serialized_pb=_b('\n)envoy/config/filter/http/lua/v2/lua.proto\x12\x1f\x65nvoy.config.filter.http.lua.v2\x1a\x17validate/validate.proto\"%\n\x03Lua\x12\x1e\n\x0binline_code\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x42?\n-io.envoyproxy.envoy.config.filter.http.lua.v2B\x08LuaProtoP\x01Z\x02v2b\x06proto3')
   ,
   dependencies=[validate_dot_validate__pb2.DESCRIPTOR,])
 
@@ -69,7 +69,7 @@ _sym_db.RegisterMessage(Lua)
 
 
 DESCRIPTOR.has_options = True
-DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('Z\002v2'))
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n-io.envoyproxy.envoy.config.filter.http.lua.v2B\010LuaProtoP\001Z\002v2'))
 _LUA.fields_by_name['inline_code'].has_options = True
 _LUA.fields_by_name['inline_code']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004r\002 \001'))
 try:

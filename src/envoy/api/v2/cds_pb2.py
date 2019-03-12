@@ -25,6 +25,7 @@ from envoy.api.v2.cluster import outlier_detection_pb2 as envoy_dot_api_dot_v2_d
 from envoy.api.v2 import eds_pb2 as envoy_dot_api_dot_v2_dot_eds__pb2
 from envoy.type import percent_pb2 as envoy_dot_type_dot_percent__pb2
 from google.api import annotations_pb2 as google_dot_api_dot_annotations__pb2
+from google.protobuf import any_pb2 as google_dot_protobuf_dot_any__pb2
 from google.protobuf import duration_pb2 as google_dot_protobuf_dot_duration__pb2
 from google.protobuf import struct_pb2 as google_dot_protobuf_dot_struct__pb2
 from google.protobuf import wrappers_pb2 as google_dot_protobuf_dot_wrappers__pb2
@@ -36,9 +37,9 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='envoy/api/v2/cds.proto',
   package='envoy.api.v2',
   syntax='proto3',
-  serialized_pb=_b('\n\x16\x65nvoy/api/v2/cds.proto\x12\x0c\x65nvoy.api.v2\x1a\x1f\x65nvoy/api/v2/core/address.proto\x1a\x1c\x65nvoy/api/v2/auth/cert.proto\x1a\x1c\x65nvoy/api/v2/core/base.proto\x1a%envoy/api/v2/core/config_source.proto\x1a\x1c\x65nvoy/api/v2/discovery.proto\x1a$envoy/api/v2/core/health_check.proto\x1a envoy/api/v2/core/protocol.proto\x1a*envoy/api/v2/cluster/circuit_breaker.proto\x1a,envoy/api/v2/cluster/outlier_detection.proto\x1a\x16\x65nvoy/api/v2/eds.proto\x1a\x18\x65nvoy/type/percent.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x17validate/validate.proto\x1a\x14gogoproto/gogo.proto\"\xfd\x1a\n\x07\x43luster\x12\x17\n\x04name\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12\x15\n\ralt_stat_name\x18\x1c \x01(\t\x12=\n\x04type\x18\x02 \x01(\x0e\x32#.envoy.api.v2.Cluster.DiscoveryTypeB\n\xba\xe9\xc0\x03\x05\x82\x01\x02\x10\x01\x12\x42\n\x12\x65\x64s_cluster_config\x18\x03 \x01(\x0b\x32&.envoy.api.v2.Cluster.EdsClusterConfig\x12\x46\n\x0f\x63onnect_timeout\x18\x04 \x01(\x0b\x32\x19.google.protobuf.DurationB\x12\xba\xe9\xc0\x03\x05\xaa\x01\x02*\x00\x98\xdf\x1f\x01\xc8\xde\x1f\x00\x12G\n!per_connection_buffer_limit_bytes\x18\x05 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12=\n\tlb_policy\x18\x06 \x01(\x0e\x32\x1e.envoy.api.v2.Cluster.LbPolicyB\n\xba\xe9\xc0\x03\x05\x82\x01\x02\x10\x01\x12)\n\x05hosts\x18\x07 \x03(\x0b\x32\x1a.envoy.api.v2.core.Address\x12<\n\x0fload_assignment\x18! \x01(\x0b\x32#.envoy.api.v2.ClusterLoadAssignment\x12\x35\n\rhealth_checks\x18\x08 \x03(\x0b\x32\x1e.envoy.api.v2.core.HealthCheck\x12\x41\n\x1bmax_requests_per_connection\x18\t \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12?\n\x10\x63ircuit_breakers\x18\n \x01(\x0b\x32%.envoy.api.v2.cluster.CircuitBreakers\x12:\n\x0btls_context\x18\x0b \x01(\x0b\x32%.envoy.api.v2.auth.UpstreamTlsContext\x12L\n\x1c\x63ommon_http_protocol_options\x18\x1d \x01(\x0b\x32&.envoy.api.v2.core.HttpProtocolOptions\x12\x46\n\x15http_protocol_options\x18\r \x01(\x0b\x32\'.envoy.api.v2.core.Http1ProtocolOptions\x12G\n\x16http2_protocol_options\x18\x0e \x01(\x0b\x32\'.envoy.api.v2.core.Http2ProtocolOptions\x12\x43\n\x10\x64ns_refresh_rate\x18\x10 \x01(\x0b\x32\x19.google.protobuf.DurationB\x0e\xba\xe9\xc0\x03\x05\xaa\x01\x02*\x00\x98\xdf\x1f\x01\x12L\n\x11\x64ns_lookup_family\x18\x11 \x01(\x0e\x32%.envoy.api.v2.Cluster.DnsLookupFamilyB\n\xba\xe9\xc0\x03\x05\x82\x01\x02\x10\x01\x12\x31\n\rdns_resolvers\x18\x12 \x03(\x0b\x32\x1a.envoy.api.v2.core.Address\x12\x41\n\x11outlier_detection\x18\x13 \x01(\x0b\x32&.envoy.api.v2.cluster.OutlierDetection\x12\x43\n\x10\x63leanup_interval\x18\x14 \x01(\x0b\x32\x19.google.protobuf.DurationB\x0e\xba\xe9\xc0\x03\x05\xaa\x01\x02*\x00\x98\xdf\x1f\x01\x12;\n\x14upstream_bind_config\x18\x15 \x01(\x0b\x32\x1d.envoy.api.v2.core.BindConfig\x12>\n\x10lb_subset_config\x18\x16 \x01(\x0b\x32$.envoy.api.v2.Cluster.LbSubsetConfig\x12\x45\n\x13ring_hash_lb_config\x18\x17 \x01(\x0b\x32&.envoy.api.v2.Cluster.RingHashLbConfigH\x00\x12>\n\x10\x63ommon_lb_config\x18\x1b \x01(\x0b\x32$.envoy.api.v2.Cluster.CommonLbConfig\x12<\n\x10transport_socket\x18\x18 \x01(\x0b\x32\".envoy.api.v2.core.TransportSocket\x12-\n\x08metadata\x18\x19 \x01(\x0b\x32\x1b.envoy.api.v2.core.Metadata\x12J\n\x12protocol_selection\x18\x1a \x01(\x0e\x32..envoy.api.v2.Cluster.ClusterProtocolSelection\x12L\n\x1bupstream_connection_options\x18\x1e \x01(\x0b\x32\'.envoy.api.v2.UpstreamConnectionOptions\x12\x30\n(close_connections_on_host_health_failure\x18\x1f \x01(\x08\x12)\n!drain_connections_on_host_removal\x18  \x01(\x08\x1a]\n\x10\x45\x64sClusterConfig\x12\x33\n\neds_config\x18\x01 \x01(\x0b\x32\x1f.envoy.api.v2.core.ConfigSource\x12\x14\n\x0cservice_name\x18\x02 \x01(\t\x1a\x86\x03\n\x0eLbSubsetConfig\x12`\n\x0f\x66\x61llback_policy\x18\x01 \x01(\x0e\x32;.envoy.api.v2.Cluster.LbSubsetConfig.LbSubsetFallbackPolicyB\n\xba\xe9\xc0\x03\x05\x82\x01\x02\x10\x01\x12/\n\x0e\x64\x65\x66\x61ult_subset\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x12O\n\x10subset_selectors\x18\x03 \x03(\x0b\x32\x35.envoy.api.v2.Cluster.LbSubsetConfig.LbSubsetSelector\x12\x1d\n\x15locality_weight_aware\x18\x04 \x01(\x08\x1a \n\x10LbSubsetSelector\x12\x0c\n\x04keys\x18\x01 \x03(\t\"O\n\x16LbSubsetFallbackPolicy\x12\x0f\n\x0bNO_FALLBACK\x10\x00\x12\x10\n\x0c\x41NY_ENDPOINT\x10\x01\x12\x12\n\x0e\x44\x45\x46\x41ULT_SUBSET\x10\x02\x1a\xeb\x01\n\x10RingHashLbConfig\x12\x45\n\x11minimum_ring_size\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.UInt64ValueB\x0c\xba\xe9\xc0\x03\x07\x32\x05\x18\x80\x80\x80\x04\x12N\n\rdeprecated_v1\x18\x02 \x01(\x0b\x32\x33.envoy.api.v2.Cluster.RingHashLbConfig.DeprecatedV1B\x02\x18\x01\x1a@\n\x0c\x44\x65precatedV1\x12\x30\n\x0cuse_std_hash\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.BoolValue\x1a\xb8\x03\n\x0e\x43ommonLbConfig\x12\x34\n\x17healthy_panic_threshold\x18\x01 \x01(\x0b\x32\x13.envoy.type.Percent\x12V\n\x14zone_aware_lb_config\x18\x02 \x01(\x0b\x32\x36.envoy.api.v2.Cluster.CommonLbConfig.ZoneAwareLbConfigH\x00\x12\x64\n\x1blocality_weighted_lb_config\x18\x03 \x01(\x0b\x32=.envoy.api.v2.Cluster.CommonLbConfig.LocalityWeightedLbConfigH\x00\x1ay\n\x11ZoneAwareLbConfig\x12,\n\x0frouting_enabled\x18\x01 \x01(\x0b\x32\x13.envoy.type.Percent\x12\x36\n\x10min_cluster_size\x18\x02 \x01(\x0b\x32\x1c.google.protobuf.UInt64Value\x1a\x1a\n\x18LocalityWeightedLbConfigB\x1b\n\x19locality_config_specifier\"W\n\rDiscoveryType\x12\n\n\x06STATIC\x10\x00\x12\x0e\n\nSTRICT_DNS\x10\x01\x12\x0f\n\x0bLOGICAL_DNS\x10\x02\x12\x07\n\x03\x45\x44S\x10\x03\x12\x10\n\x0cORIGINAL_DST\x10\x04\"j\n\x08LbPolicy\x12\x0f\n\x0bROUND_ROBIN\x10\x00\x12\x11\n\rLEAST_REQUEST\x10\x01\x12\r\n\tRING_HASH\x10\x02\x12\n\n\x06RANDOM\x10\x03\x12\x13\n\x0fORIGINAL_DST_LB\x10\x04\x12\n\n\x06MAGLEV\x10\x05\"5\n\x0f\x44nsLookupFamily\x12\x08\n\x04\x41UTO\x10\x00\x12\x0b\n\x07V4_ONLY\x10\x01\x12\x0b\n\x07V6_ONLY\x10\x02\"T\n\x18\x43lusterProtocolSelection\x12\x1b\n\x17USE_CONFIGURED_PROTOCOL\x10\x00\x12\x1b\n\x17USE_DOWNSTREAM_PROTOCOL\x10\x01\x42\x0b\n\tlb_configJ\x04\x08\x0c\x10\rJ\x04\x08\x0f\x10\x10\"H\n\x12UpstreamBindConfig\x12\x32\n\x0esource_address\x18\x01 \x01(\x0b\x32\x1a.envoy.api.v2.core.Address\"S\n\x19UpstreamConnectionOptions\x12\x36\n\rtcp_keepalive\x18\x01 \x01(\x0b\x32\x1f.envoy.api.v2.core.TcpKeepalive2\xdb\x02\n\x17\x43lusterDiscoveryService\x12W\n\x0eStreamClusters\x12\x1e.envoy.api.v2.DiscoveryRequest\x1a\x1f.envoy.api.v2.DiscoveryResponse\"\x00(\x01\x30\x01\x12r\n\x13IncrementalClusters\x12).envoy.api.v2.IncrementalDiscoveryRequest\x1a*.envoy.api.v2.IncrementalDiscoveryResponse\"\x00(\x01\x30\x01\x12s\n\rFetchClusters\x12\x1e.envoy.api.v2.DiscoveryRequest\x1a\x1f.envoy.api.v2.DiscoveryResponse\"!\x82\xd3\xe4\x93\x02\x1b\"\x16/v2/discovery:clusters:\x01*B\x07\x88\x01\x01\xa8\xe2\x1e\x01\x62\x06proto3')
+  serialized_pb=_b('\n\x16\x65nvoy/api/v2/cds.proto\x12\x0c\x65nvoy.api.v2\x1a\x1f\x65nvoy/api/v2/core/address.proto\x1a\x1c\x65nvoy/api/v2/auth/cert.proto\x1a\x1c\x65nvoy/api/v2/core/base.proto\x1a%envoy/api/v2/core/config_source.proto\x1a\x1c\x65nvoy/api/v2/discovery.proto\x1a$envoy/api/v2/core/health_check.proto\x1a envoy/api/v2/core/protocol.proto\x1a*envoy/api/v2/cluster/circuit_breaker.proto\x1a,envoy/api/v2/cluster/outlier_detection.proto\x1a\x16\x65nvoy/api/v2/eds.proto\x1a\x18\x65nvoy/type/percent.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x19google/protobuf/any.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x17validate/validate.proto\x1a\x14gogoproto/gogo.proto\"\x90$\n\x07\x43luster\x12\x17\n\x04name\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12\x15\n\ralt_stat_name\x18\x1c \x01(\t\x12?\n\x04type\x18\x02 \x01(\x0e\x32#.envoy.api.v2.Cluster.DiscoveryTypeB\n\xba\xe9\xc0\x03\x05\x82\x01\x02\x10\x01H\x00\x12?\n\x0c\x63luster_type\x18& \x01(\x0b\x32\'.envoy.api.v2.Cluster.CustomClusterTypeH\x00\x12\x42\n\x12\x65\x64s_cluster_config\x18\x03 \x01(\x0b\x32&.envoy.api.v2.Cluster.EdsClusterConfig\x12\x46\n\x0f\x63onnect_timeout\x18\x04 \x01(\x0b\x32\x19.google.protobuf.DurationB\x12\xba\xe9\xc0\x03\x05\xaa\x01\x02*\x00\x98\xdf\x1f\x01\xc8\xde\x1f\x00\x12G\n!per_connection_buffer_limit_bytes\x18\x05 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12=\n\tlb_policy\x18\x06 \x01(\x0e\x32\x1e.envoy.api.v2.Cluster.LbPolicyB\n\xba\xe9\xc0\x03\x05\x82\x01\x02\x10\x01\x12-\n\x05hosts\x18\x07 \x03(\x0b\x32\x1a.envoy.api.v2.core.AddressB\x02\x18\x01\x12<\n\x0fload_assignment\x18! \x01(\x0b\x32#.envoy.api.v2.ClusterLoadAssignment\x12\x35\n\rhealth_checks\x18\x08 \x03(\x0b\x32\x1e.envoy.api.v2.core.HealthCheck\x12\x41\n\x1bmax_requests_per_connection\x18\t \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12?\n\x10\x63ircuit_breakers\x18\n \x01(\x0b\x32%.envoy.api.v2.cluster.CircuitBreakers\x12:\n\x0btls_context\x18\x0b \x01(\x0b\x32%.envoy.api.v2.auth.UpstreamTlsContext\x12L\n\x1c\x63ommon_http_protocol_options\x18\x1d \x01(\x0b\x32&.envoy.api.v2.core.HttpProtocolOptions\x12\x46\n\x15http_protocol_options\x18\r \x01(\x0b\x32\'.envoy.api.v2.core.Http1ProtocolOptions\x12G\n\x16http2_protocol_options\x18\x0e \x01(\x0b\x32\'.envoy.api.v2.core.Http2ProtocolOptions\x12[\n\x1a\x65xtension_protocol_options\x18# \x03(\x0b\x32\x33.envoy.api.v2.Cluster.ExtensionProtocolOptionsEntryB\x02\x18\x01\x12\x62\n typed_extension_protocol_options\x18$ \x03(\x0b\x32\x38.envoy.api.v2.Cluster.TypedExtensionProtocolOptionsEntry\x12\x43\n\x10\x64ns_refresh_rate\x18\x10 \x01(\x0b\x32\x19.google.protobuf.DurationB\x0e\xba\xe9\xc0\x03\x05\xaa\x01\x02*\x00\x98\xdf\x1f\x01\x12L\n\x11\x64ns_lookup_family\x18\x11 \x01(\x0e\x32%.envoy.api.v2.Cluster.DnsLookupFamilyB\n\xba\xe9\xc0\x03\x05\x82\x01\x02\x10\x01\x12\x31\n\rdns_resolvers\x18\x12 \x03(\x0b\x32\x1a.envoy.api.v2.core.Address\x12\x41\n\x11outlier_detection\x18\x13 \x01(\x0b\x32&.envoy.api.v2.cluster.OutlierDetection\x12\x43\n\x10\x63leanup_interval\x18\x14 \x01(\x0b\x32\x19.google.protobuf.DurationB\x0e\xba\xe9\xc0\x03\x05\xaa\x01\x02*\x00\x98\xdf\x1f\x01\x12;\n\x14upstream_bind_config\x18\x15 \x01(\x0b\x32\x1d.envoy.api.v2.core.BindConfig\x12>\n\x10lb_subset_config\x18\x16 \x01(\x0b\x32$.envoy.api.v2.Cluster.LbSubsetConfig\x12\x45\n\x13ring_hash_lb_config\x18\x17 \x01(\x0b\x32&.envoy.api.v2.Cluster.RingHashLbConfigH\x01\x12K\n\x16original_dst_lb_config\x18\" \x01(\x0b\x32).envoy.api.v2.Cluster.OriginalDstLbConfigH\x01\x12M\n\x17least_request_lb_config\x18% \x01(\x0b\x32*.envoy.api.v2.Cluster.LeastRequestLbConfigH\x01\x12>\n\x10\x63ommon_lb_config\x18\x1b \x01(\x0b\x32$.envoy.api.v2.Cluster.CommonLbConfig\x12<\n\x10transport_socket\x18\x18 \x01(\x0b\x32\".envoy.api.v2.core.TransportSocket\x12-\n\x08metadata\x18\x19 \x01(\x0b\x32\x1b.envoy.api.v2.core.Metadata\x12J\n\x12protocol_selection\x18\x1a \x01(\x0e\x32..envoy.api.v2.Cluster.ClusterProtocolSelection\x12L\n\x1bupstream_connection_options\x18\x1e \x01(\x0b\x32\'.envoy.api.v2.UpstreamConnectionOptions\x12\x30\n(close_connections_on_host_health_failure\x18\x1f \x01(\x08\x12)\n!drain_connections_on_host_removal\x18  \x01(\x08\x1aX\n\x11\x43ustomClusterType\x12\x17\n\x04name\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12*\n\x0ctyped_config\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any\x1a]\n\x10\x45\x64sClusterConfig\x12\x33\n\neds_config\x18\x01 \x01(\x0b\x32\x1f.envoy.api.v2.core.ConfigSource\x12\x14\n\x0cservice_name\x18\x02 \x01(\t\x1aX\n\x1d\x45xtensionProtocolOptionsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12&\n\x05value\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct:\x02\x38\x01\x1aZ\n\"TypedExtensionProtocolOptionsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12#\n\x05value\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any:\x02\x38\x01\x1a\xbd\x03\n\x0eLbSubsetConfig\x12`\n\x0f\x66\x61llback_policy\x18\x01 \x01(\x0e\x32;.envoy.api.v2.Cluster.LbSubsetConfig.LbSubsetFallbackPolicyB\n\xba\xe9\xc0\x03\x05\x82\x01\x02\x10\x01\x12/\n\x0e\x64\x65\x66\x61ult_subset\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x12O\n\x10subset_selectors\x18\x03 \x03(\x0b\x32\x35.envoy.api.v2.Cluster.LbSubsetConfig.LbSubsetSelector\x12\x1d\n\x15locality_weight_aware\x18\x04 \x01(\x08\x12\x1d\n\x15scale_locality_weight\x18\x05 \x01(\x08\x12\x16\n\x0epanic_mode_any\x18\x06 \x01(\x08\x1a \n\x10LbSubsetSelector\x12\x0c\n\x04keys\x18\x01 \x03(\t\"O\n\x16LbSubsetFallbackPolicy\x12\x0f\n\x0bNO_FALLBACK\x10\x00\x12\x10\n\x0c\x41NY_ENDPOINT\x10\x01\x12\x12\n\x0e\x44\x45\x46\x41ULT_SUBSET\x10\x02\x1aU\n\x14LeastRequestLbConfig\x12=\n\x0c\x63hoice_count\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.UInt32ValueB\t\xba\xe9\xc0\x03\x04*\x02(\x02\x1a\xba\x03\n\x10RingHashLbConfig\x12\x45\n\x11minimum_ring_size\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.UInt64ValueB\x0c\xba\xe9\xc0\x03\x07\x32\x05\x18\x80\x80\x80\x04\x12N\n\rdeprecated_v1\x18\x02 \x01(\x0b\x32\x33.envoy.api.v2.Cluster.RingHashLbConfig.DeprecatedV1B\x02\x18\x01\x12V\n\rhash_function\x18\x03 \x01(\x0e\x32\x33.envoy.api.v2.Cluster.RingHashLbConfig.HashFunctionB\n\xba\xe9\xc0\x03\x05\x82\x01\x02\x10\x01\x12\x45\n\x11maximum_ring_size\x18\x04 \x01(\x0b\x32\x1c.google.protobuf.UInt64ValueB\x0c\xba\xe9\xc0\x03\x07\x32\x05\x18\x80\x80\x80\x04\x1a@\n\x0c\x44\x65precatedV1\x12\x30\n\x0cuse_std_hash\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.BoolValue\".\n\x0cHashFunction\x12\x0b\n\x07XX_HASH\x10\x00\x12\x11\n\rMURMUR_HASH_2\x10\x01\x1a.\n\x13OriginalDstLbConfig\x12\x17\n\x0fuse_http_header\x18\x01 \x01(\x08\x1a\xf0\x03\n\x0e\x43ommonLbConfig\x12\x34\n\x17healthy_panic_threshold\x18\x01 \x01(\x0b\x32\x13.envoy.type.Percent\x12V\n\x14zone_aware_lb_config\x18\x02 \x01(\x0b\x32\x36.envoy.api.v2.Cluster.CommonLbConfig.ZoneAwareLbConfigH\x00\x12\x64\n\x1blocality_weighted_lb_config\x18\x03 \x01(\x0b\x32=.envoy.api.v2.Cluster.CommonLbConfig.LocalityWeightedLbConfigH\x00\x12\x36\n\x13update_merge_window\x18\x04 \x01(\x0b\x32\x19.google.protobuf.Duration\x1ay\n\x11ZoneAwareLbConfig\x12,\n\x0frouting_enabled\x18\x01 \x01(\x0b\x32\x13.envoy.type.Percent\x12\x36\n\x10min_cluster_size\x18\x02 \x01(\x0b\x32\x1c.google.protobuf.UInt64Value\x1a\x1a\n\x18LocalityWeightedLbConfigB\x1b\n\x19locality_config_specifier\"W\n\rDiscoveryType\x12\n\n\x06STATIC\x10\x00\x12\x0e\n\nSTRICT_DNS\x10\x01\x12\x0f\n\x0bLOGICAL_DNS\x10\x02\x12\x07\n\x03\x45\x44S\x10\x03\x12\x10\n\x0cORIGINAL_DST\x10\x04\"j\n\x08LbPolicy\x12\x0f\n\x0bROUND_ROBIN\x10\x00\x12\x11\n\rLEAST_REQUEST\x10\x01\x12\r\n\tRING_HASH\x10\x02\x12\n\n\x06RANDOM\x10\x03\x12\x13\n\x0fORIGINAL_DST_LB\x10\x04\x12\n\n\x06MAGLEV\x10\x05\"5\n\x0f\x44nsLookupFamily\x12\x08\n\x04\x41UTO\x10\x00\x12\x0b\n\x07V4_ONLY\x10\x01\x12\x0b\n\x07V6_ONLY\x10\x02\"T\n\x18\x43lusterProtocolSelection\x12\x1b\n\x17USE_CONFIGURED_PROTOCOL\x10\x00\x12\x1b\n\x17USE_DOWNSTREAM_PROTOCOL\x10\x01\x42\x18\n\x16\x63luster_discovery_typeB\x0b\n\tlb_configJ\x04\x08\x0c\x10\rJ\x04\x08\x0f\x10\x10\"H\n\x12UpstreamBindConfig\x12\x32\n\x0esource_address\x18\x01 \x01(\x0b\x32\x1a.envoy.api.v2.core.Address\"S\n\x19UpstreamConnectionOptions\x12\x36\n\rtcp_keepalive\x18\x01 \x01(\x0b\x32\x1f.envoy.api.v2.core.TcpKeepalive2\xc9\x02\n\x17\x43lusterDiscoveryService\x12W\n\x0eStreamClusters\x12\x1e.envoy.api.v2.DiscoveryRequest\x1a\x1f.envoy.api.v2.DiscoveryResponse\"\x00(\x01\x30\x01\x12`\n\rDeltaClusters\x12#.envoy.api.v2.DeltaDiscoveryRequest\x1a$.envoy.api.v2.DeltaDiscoveryResponse\"\x00(\x01\x30\x01\x12s\n\rFetchClusters\x12\x1e.envoy.api.v2.DiscoveryRequest\x1a\x1f.envoy.api.v2.DiscoveryResponse\"!\x82\xd3\xe4\x93\x02\x1b\"\x16/v2/discovery:clusters:\x01*B/\n\x1aio.envoyproxy.envoy.api.v2B\x08\x43\x64sProtoP\x01\x88\x01\x01\xa8\xe2\x1e\x01\x62\x06proto3')
   ,
-  dependencies=[envoy_dot_api_dot_v2_dot_core_dot_address__pb2.DESCRIPTOR,envoy_dot_api_dot_v2_dot_auth_dot_cert__pb2.DESCRIPTOR,envoy_dot_api_dot_v2_dot_core_dot_base__pb2.DESCRIPTOR,envoy_dot_api_dot_v2_dot_core_dot_config__source__pb2.DESCRIPTOR,envoy_dot_api_dot_v2_dot_discovery__pb2.DESCRIPTOR,envoy_dot_api_dot_v2_dot_core_dot_health__check__pb2.DESCRIPTOR,envoy_dot_api_dot_v2_dot_core_dot_protocol__pb2.DESCRIPTOR,envoy_dot_api_dot_v2_dot_cluster_dot_circuit__breaker__pb2.DESCRIPTOR,envoy_dot_api_dot_v2_dot_cluster_dot_outlier__detection__pb2.DESCRIPTOR,envoy_dot_api_dot_v2_dot_eds__pb2.DESCRIPTOR,envoy_dot_type_dot_percent__pb2.DESCRIPTOR,google_dot_api_dot_annotations__pb2.DESCRIPTOR,google_dot_protobuf_dot_duration__pb2.DESCRIPTOR,google_dot_protobuf_dot_struct__pb2.DESCRIPTOR,google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,validate_dot_validate__pb2.DESCRIPTOR,gogoproto_dot_gogo__pb2.DESCRIPTOR,])
+  dependencies=[envoy_dot_api_dot_v2_dot_core_dot_address__pb2.DESCRIPTOR,envoy_dot_api_dot_v2_dot_auth_dot_cert__pb2.DESCRIPTOR,envoy_dot_api_dot_v2_dot_core_dot_base__pb2.DESCRIPTOR,envoy_dot_api_dot_v2_dot_core_dot_config__source__pb2.DESCRIPTOR,envoy_dot_api_dot_v2_dot_discovery__pb2.DESCRIPTOR,envoy_dot_api_dot_v2_dot_core_dot_health__check__pb2.DESCRIPTOR,envoy_dot_api_dot_v2_dot_core_dot_protocol__pb2.DESCRIPTOR,envoy_dot_api_dot_v2_dot_cluster_dot_circuit__breaker__pb2.DESCRIPTOR,envoy_dot_api_dot_v2_dot_cluster_dot_outlier__detection__pb2.DESCRIPTOR,envoy_dot_api_dot_v2_dot_eds__pb2.DESCRIPTOR,envoy_dot_type_dot_percent__pb2.DESCRIPTOR,google_dot_api_dot_annotations__pb2.DESCRIPTOR,google_dot_protobuf_dot_any__pb2.DESCRIPTOR,google_dot_protobuf_dot_duration__pb2.DESCRIPTOR,google_dot_protobuf_dot_struct__pb2.DESCRIPTOR,google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,validate_dot_validate__pb2.DESCRIPTOR,gogoproto_dot_gogo__pb2.DESCRIPTOR,])
 
 
 
@@ -63,10 +64,32 @@ _CLUSTER_LBSUBSETCONFIG_LBSUBSETFALLBACKPOLICY = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=2916,
-  serialized_end=2995,
+  serialized_start=3690,
+  serialized_end=3769,
 )
 _sym_db.RegisterEnumDescriptor(_CLUSTER_LBSUBSETCONFIG_LBSUBSETFALLBACKPOLICY)
+
+_CLUSTER_RINGHASHLBCONFIG_HASHFUNCTION = _descriptor.EnumDescriptor(
+  name='HashFunction',
+  full_name='envoy.api.v2.Cluster.RingHashLbConfig.HashFunction',
+  filename=None,
+  file=DESCRIPTOR,
+  values=[
+    _descriptor.EnumValueDescriptor(
+      name='XX_HASH', index=0, number=0,
+      options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='MURMUR_HASH_2', index=1, number=1,
+      options=None,
+      type=None),
+  ],
+  containing_type=None,
+  options=None,
+  serialized_start=4255,
+  serialized_end=4301,
+)
+_sym_db.RegisterEnumDescriptor(_CLUSTER_RINGHASHLBCONFIG_HASHFUNCTION)
 
 _CLUSTER_DISCOVERYTYPE = _descriptor.EnumDescriptor(
   name='DiscoveryType',
@@ -97,8 +120,8 @@ _CLUSTER_DISCOVERYTYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=3678,
-  serialized_end=3765,
+  serialized_start=4850,
+  serialized_end=4937,
 )
 _sym_db.RegisterEnumDescriptor(_CLUSTER_DISCOVERYTYPE)
 
@@ -135,8 +158,8 @@ _CLUSTER_LBPOLICY = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=3767,
-  serialized_end=3873,
+  serialized_start=4939,
+  serialized_end=5045,
 )
 _sym_db.RegisterEnumDescriptor(_CLUSTER_LBPOLICY)
 
@@ -161,8 +184,8 @@ _CLUSTER_DNSLOOKUPFAMILY = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=3875,
-  serialized_end=3928,
+  serialized_start=5047,
+  serialized_end=5100,
 )
 _sym_db.RegisterEnumDescriptor(_CLUSTER_DNSLOOKUPFAMILY)
 
@@ -183,11 +206,48 @@ _CLUSTER_CLUSTERPROTOCOLSELECTION = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=3930,
-  serialized_end=4014,
+  serialized_start=5102,
+  serialized_end=5186,
 )
 _sym_db.RegisterEnumDescriptor(_CLUSTER_CLUSTERPROTOCOLSELECTION)
 
+
+_CLUSTER_CUSTOMCLUSTERTYPE = _descriptor.Descriptor(
+  name='CustomClusterType',
+  full_name='envoy.api.v2.Cluster.CustomClusterType',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='name', full_name='envoy.api.v2.Cluster.CustomClusterType.name', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004r\002 \001'))),
+    _descriptor.FieldDescriptor(
+      name='typed_config', full_name='envoy.api.v2.Cluster.CustomClusterType.typed_config', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2956,
+  serialized_end=3044,
+)
 
 _CLUSTER_EDSCLUSTERCONFIG = _descriptor.Descriptor(
   name='EdsClusterConfig',
@@ -222,8 +282,82 @@ _CLUSTER_EDSCLUSTERCONFIG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2509,
-  serialized_end=2602,
+  serialized_start=3046,
+  serialized_end=3139,
+)
+
+_CLUSTER_EXTENSIONPROTOCOLOPTIONSENTRY = _descriptor.Descriptor(
+  name='ExtensionProtocolOptionsEntry',
+  full_name='envoy.api.v2.Cluster.ExtensionProtocolOptionsEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='envoy.api.v2.Cluster.ExtensionProtocolOptionsEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='envoy.api.v2.Cluster.ExtensionProtocolOptionsEntry.value', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=_descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001')),
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=3141,
+  serialized_end=3229,
+)
+
+_CLUSTER_TYPEDEXTENSIONPROTOCOLOPTIONSENTRY = _descriptor.Descriptor(
+  name='TypedExtensionProtocolOptionsEntry',
+  full_name='envoy.api.v2.Cluster.TypedExtensionProtocolOptionsEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='envoy.api.v2.Cluster.TypedExtensionProtocolOptionsEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='envoy.api.v2.Cluster.TypedExtensionProtocolOptionsEntry.value', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=_descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001')),
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=3231,
+  serialized_end=3321,
 )
 
 _CLUSTER_LBSUBSETCONFIG_LBSUBSETSELECTOR = _descriptor.Descriptor(
@@ -252,8 +386,8 @@ _CLUSTER_LBSUBSETCONFIG_LBSUBSETSELECTOR = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2882,
-  serialized_end=2914,
+  serialized_start=3656,
+  serialized_end=3688,
 )
 
 _CLUSTER_LBSUBSETCONFIG = _descriptor.Descriptor(
@@ -291,6 +425,20 @@ _CLUSTER_LBSUBSETCONFIG = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
+    _descriptor.FieldDescriptor(
+      name='scale_locality_weight', full_name='envoy.api.v2.Cluster.LbSubsetConfig.scale_locality_weight', index=4,
+      number=5, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='panic_mode_any', full_name='envoy.api.v2.Cluster.LbSubsetConfig.panic_mode_any', index=5,
+      number=6, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -304,8 +452,38 @@ _CLUSTER_LBSUBSETCONFIG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2605,
-  serialized_end=2995,
+  serialized_start=3324,
+  serialized_end=3769,
+)
+
+_CLUSTER_LEASTREQUESTLBCONFIG = _descriptor.Descriptor(
+  name='LeastRequestLbConfig',
+  full_name='envoy.api.v2.Cluster.LeastRequestLbConfig',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='choice_count', full_name='envoy.api.v2.Cluster.LeastRequestLbConfig.choice_count', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004*\002(\002'))),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=3771,
+  serialized_end=3856,
 )
 
 _CLUSTER_RINGHASHLBCONFIG_DEPRECATEDV1 = _descriptor.Descriptor(
@@ -334,8 +512,8 @@ _CLUSTER_RINGHASHLBCONFIG_DEPRECATEDV1 = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3169,
-  serialized_end=3233,
+  serialized_start=4189,
+  serialized_end=4253,
 )
 
 _CLUSTER_RINGHASHLBCONFIG = _descriptor.Descriptor(
@@ -359,10 +537,55 @@ _CLUSTER_RINGHASHLBCONFIG = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\030\001'))),
+    _descriptor.FieldDescriptor(
+      name='hash_function', full_name='envoy.api.v2.Cluster.RingHashLbConfig.hash_function', index=2,
+      number=3, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\202\001\002\020\001'))),
+    _descriptor.FieldDescriptor(
+      name='maximum_ring_size', full_name='envoy.api.v2.Cluster.RingHashLbConfig.maximum_ring_size', index=3,
+      number=4, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\0072\005\030\200\200\200\004'))),
   ],
   extensions=[
   ],
   nested_types=[_CLUSTER_RINGHASHLBCONFIG_DEPRECATEDV1, ],
+  enum_types=[
+    _CLUSTER_RINGHASHLBCONFIG_HASHFUNCTION,
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=3859,
+  serialized_end=4301,
+)
+
+_CLUSTER_ORIGINALDSTLBCONFIG = _descriptor.Descriptor(
+  name='OriginalDstLbConfig',
+  full_name='envoy.api.v2.Cluster.OriginalDstLbConfig',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='use_http_header', full_name='envoy.api.v2.Cluster.OriginalDstLbConfig.use_http_header', index=0,
+      number=1, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
   enum_types=[
   ],
   options=None,
@@ -371,8 +594,8 @@ _CLUSTER_RINGHASHLBCONFIG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2998,
-  serialized_end=3233,
+  serialized_start=4303,
+  serialized_end=4349,
 )
 
 _CLUSTER_COMMONLBCONFIG_ZONEAWARELBCONFIG = _descriptor.Descriptor(
@@ -408,8 +631,8 @@ _CLUSTER_COMMONLBCONFIG_ZONEAWARELBCONFIG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3498,
-  serialized_end=3619,
+  serialized_start=4670,
+  serialized_end=4791,
 )
 
 _CLUSTER_COMMONLBCONFIG_LOCALITYWEIGHTEDLBCONFIG = _descriptor.Descriptor(
@@ -431,8 +654,8 @@ _CLUSTER_COMMONLBCONFIG_LOCALITYWEIGHTEDLBCONFIG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3621,
-  serialized_end=3647,
+  serialized_start=4793,
+  serialized_end=4819,
 )
 
 _CLUSTER_COMMONLBCONFIG = _descriptor.Descriptor(
@@ -463,6 +686,13 @@ _CLUSTER_COMMONLBCONFIG = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
+    _descriptor.FieldDescriptor(
+      name='update_merge_window', full_name='envoy.api.v2.Cluster.CommonLbConfig.update_merge_window', index=3,
+      number=4, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -478,8 +708,8 @@ _CLUSTER_COMMONLBCONFIG = _descriptor.Descriptor(
       name='locality_config_specifier', full_name='envoy.api.v2.Cluster.CommonLbConfig.locality_config_specifier',
       index=0, containing_type=None, fields=[]),
   ],
-  serialized_start=3236,
-  serialized_end=3676,
+  serialized_start=4352,
+  serialized_end=4848,
 )
 
 _CLUSTER = _descriptor.Descriptor(
@@ -511,196 +741,231 @@ _CLUSTER = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\202\001\002\020\001'))),
     _descriptor.FieldDescriptor(
-      name='eds_cluster_config', full_name='envoy.api.v2.Cluster.eds_cluster_config', index=3,
+      name='cluster_type', full_name='envoy.api.v2.Cluster.cluster_type', index=3,
+      number=38, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='eds_cluster_config', full_name='envoy.api.v2.Cluster.eds_cluster_config', index=4,
       number=3, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='connect_timeout', full_name='envoy.api.v2.Cluster.connect_timeout', index=4,
+      name='connect_timeout', full_name='envoy.api.v2.Cluster.connect_timeout', index=5,
       number=4, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\252\001\002*\000\230\337\037\001\310\336\037\000'))),
     _descriptor.FieldDescriptor(
-      name='per_connection_buffer_limit_bytes', full_name='envoy.api.v2.Cluster.per_connection_buffer_limit_bytes', index=5,
+      name='per_connection_buffer_limit_bytes', full_name='envoy.api.v2.Cluster.per_connection_buffer_limit_bytes', index=6,
       number=5, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='lb_policy', full_name='envoy.api.v2.Cluster.lb_policy', index=6,
+      name='lb_policy', full_name='envoy.api.v2.Cluster.lb_policy', index=7,
       number=6, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\202\001\002\020\001'))),
     _descriptor.FieldDescriptor(
-      name='hosts', full_name='envoy.api.v2.Cluster.hosts', index=7,
+      name='hosts', full_name='envoy.api.v2.Cluster.hosts', index=8,
       number=7, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None),
+      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\030\001'))),
     _descriptor.FieldDescriptor(
-      name='load_assignment', full_name='envoy.api.v2.Cluster.load_assignment', index=8,
+      name='load_assignment', full_name='envoy.api.v2.Cluster.load_assignment', index=9,
       number=33, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='health_checks', full_name='envoy.api.v2.Cluster.health_checks', index=9,
+      name='health_checks', full_name='envoy.api.v2.Cluster.health_checks', index=10,
       number=8, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='max_requests_per_connection', full_name='envoy.api.v2.Cluster.max_requests_per_connection', index=10,
+      name='max_requests_per_connection', full_name='envoy.api.v2.Cluster.max_requests_per_connection', index=11,
       number=9, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='circuit_breakers', full_name='envoy.api.v2.Cluster.circuit_breakers', index=11,
+      name='circuit_breakers', full_name='envoy.api.v2.Cluster.circuit_breakers', index=12,
       number=10, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='tls_context', full_name='envoy.api.v2.Cluster.tls_context', index=12,
+      name='tls_context', full_name='envoy.api.v2.Cluster.tls_context', index=13,
       number=11, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='common_http_protocol_options', full_name='envoy.api.v2.Cluster.common_http_protocol_options', index=13,
+      name='common_http_protocol_options', full_name='envoy.api.v2.Cluster.common_http_protocol_options', index=14,
       number=29, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='http_protocol_options', full_name='envoy.api.v2.Cluster.http_protocol_options', index=14,
+      name='http_protocol_options', full_name='envoy.api.v2.Cluster.http_protocol_options', index=15,
       number=13, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='http2_protocol_options', full_name='envoy.api.v2.Cluster.http2_protocol_options', index=15,
+      name='http2_protocol_options', full_name='envoy.api.v2.Cluster.http2_protocol_options', index=16,
       number=14, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='dns_refresh_rate', full_name='envoy.api.v2.Cluster.dns_refresh_rate', index=16,
+      name='extension_protocol_options', full_name='envoy.api.v2.Cluster.extension_protocol_options', index=17,
+      number=35, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\030\001'))),
+    _descriptor.FieldDescriptor(
+      name='typed_extension_protocol_options', full_name='envoy.api.v2.Cluster.typed_extension_protocol_options', index=18,
+      number=36, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='dns_refresh_rate', full_name='envoy.api.v2.Cluster.dns_refresh_rate', index=19,
       number=16, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\252\001\002*\000\230\337\037\001'))),
     _descriptor.FieldDescriptor(
-      name='dns_lookup_family', full_name='envoy.api.v2.Cluster.dns_lookup_family', index=17,
+      name='dns_lookup_family', full_name='envoy.api.v2.Cluster.dns_lookup_family', index=20,
       number=17, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\202\001\002\020\001'))),
     _descriptor.FieldDescriptor(
-      name='dns_resolvers', full_name='envoy.api.v2.Cluster.dns_resolvers', index=18,
+      name='dns_resolvers', full_name='envoy.api.v2.Cluster.dns_resolvers', index=21,
       number=18, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='outlier_detection', full_name='envoy.api.v2.Cluster.outlier_detection', index=19,
+      name='outlier_detection', full_name='envoy.api.v2.Cluster.outlier_detection', index=22,
       number=19, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='cleanup_interval', full_name='envoy.api.v2.Cluster.cleanup_interval', index=20,
+      name='cleanup_interval', full_name='envoy.api.v2.Cluster.cleanup_interval', index=23,
       number=20, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\252\001\002*\000\230\337\037\001'))),
     _descriptor.FieldDescriptor(
-      name='upstream_bind_config', full_name='envoy.api.v2.Cluster.upstream_bind_config', index=21,
+      name='upstream_bind_config', full_name='envoy.api.v2.Cluster.upstream_bind_config', index=24,
       number=21, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='lb_subset_config', full_name='envoy.api.v2.Cluster.lb_subset_config', index=22,
+      name='lb_subset_config', full_name='envoy.api.v2.Cluster.lb_subset_config', index=25,
       number=22, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='ring_hash_lb_config', full_name='envoy.api.v2.Cluster.ring_hash_lb_config', index=23,
+      name='ring_hash_lb_config', full_name='envoy.api.v2.Cluster.ring_hash_lb_config', index=26,
       number=23, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='common_lb_config', full_name='envoy.api.v2.Cluster.common_lb_config', index=24,
+      name='original_dst_lb_config', full_name='envoy.api.v2.Cluster.original_dst_lb_config', index=27,
+      number=34, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='least_request_lb_config', full_name='envoy.api.v2.Cluster.least_request_lb_config', index=28,
+      number=37, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='common_lb_config', full_name='envoy.api.v2.Cluster.common_lb_config', index=29,
       number=27, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='transport_socket', full_name='envoy.api.v2.Cluster.transport_socket', index=25,
+      name='transport_socket', full_name='envoy.api.v2.Cluster.transport_socket', index=30,
       number=24, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='metadata', full_name='envoy.api.v2.Cluster.metadata', index=26,
+      name='metadata', full_name='envoy.api.v2.Cluster.metadata', index=31,
       number=25, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='protocol_selection', full_name='envoy.api.v2.Cluster.protocol_selection', index=27,
+      name='protocol_selection', full_name='envoy.api.v2.Cluster.protocol_selection', index=32,
       number=26, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='upstream_connection_options', full_name='envoy.api.v2.Cluster.upstream_connection_options', index=28,
+      name='upstream_connection_options', full_name='envoy.api.v2.Cluster.upstream_connection_options', index=33,
       number=30, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='close_connections_on_host_health_failure', full_name='envoy.api.v2.Cluster.close_connections_on_host_health_failure', index=29,
+      name='close_connections_on_host_health_failure', full_name='envoy.api.v2.Cluster.close_connections_on_host_health_failure', index=34,
       number=31, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='drain_connections_on_host_removal', full_name='envoy.api.v2.Cluster.drain_connections_on_host_removal', index=30,
+      name='drain_connections_on_host_removal', full_name='envoy.api.v2.Cluster.drain_connections_on_host_removal', index=35,
       number=32, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
@@ -709,7 +974,7 @@ _CLUSTER = _descriptor.Descriptor(
   ],
   extensions=[
   ],
-  nested_types=[_CLUSTER_EDSCLUSTERCONFIG, _CLUSTER_LBSUBSETCONFIG, _CLUSTER_RINGHASHLBCONFIG, _CLUSTER_COMMONLBCONFIG, ],
+  nested_types=[_CLUSTER_CUSTOMCLUSTERTYPE, _CLUSTER_EDSCLUSTERCONFIG, _CLUSTER_EXTENSIONPROTOCOLOPTIONSENTRY, _CLUSTER_TYPEDEXTENSIONPROTOCOLOPTIONSENTRY, _CLUSTER_LBSUBSETCONFIG, _CLUSTER_LEASTREQUESTLBCONFIG, _CLUSTER_RINGHASHLBCONFIG, _CLUSTER_ORIGINALDSTLBCONFIG, _CLUSTER_COMMONLBCONFIG, ],
   enum_types=[
     _CLUSTER_DISCOVERYTYPE,
     _CLUSTER_LBPOLICY,
@@ -722,11 +987,14 @@ _CLUSTER = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
     _descriptor.OneofDescriptor(
-      name='lb_config', full_name='envoy.api.v2.Cluster.lb_config',
+      name='cluster_discovery_type', full_name='envoy.api.v2.Cluster.cluster_discovery_type',
       index=0, containing_type=None, fields=[]),
+    _descriptor.OneofDescriptor(
+      name='lb_config', full_name='envoy.api.v2.Cluster.lb_config',
+      index=1, containing_type=None, fields=[]),
   ],
-  serialized_start=586,
-  serialized_end=4039,
+  serialized_start=613,
+  serialized_end=5237,
 )
 
 
@@ -756,8 +1024,8 @@ _UPSTREAMBINDCONFIG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4041,
-  serialized_end=4113,
+  serialized_start=5239,
+  serialized_end=5311,
 )
 
 
@@ -787,23 +1055,35 @@ _UPSTREAMCONNECTIONOPTIONS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4115,
-  serialized_end=4198,
+  serialized_start=5313,
+  serialized_end=5396,
 )
 
+_CLUSTER_CUSTOMCLUSTERTYPE.fields_by_name['typed_config'].message_type = google_dot_protobuf_dot_any__pb2._ANY
+_CLUSTER_CUSTOMCLUSTERTYPE.containing_type = _CLUSTER
 _CLUSTER_EDSCLUSTERCONFIG.fields_by_name['eds_config'].message_type = envoy_dot_api_dot_v2_dot_core_dot_config__source__pb2._CONFIGSOURCE
 _CLUSTER_EDSCLUSTERCONFIG.containing_type = _CLUSTER
+_CLUSTER_EXTENSIONPROTOCOLOPTIONSENTRY.fields_by_name['value'].message_type = google_dot_protobuf_dot_struct__pb2._STRUCT
+_CLUSTER_EXTENSIONPROTOCOLOPTIONSENTRY.containing_type = _CLUSTER
+_CLUSTER_TYPEDEXTENSIONPROTOCOLOPTIONSENTRY.fields_by_name['value'].message_type = google_dot_protobuf_dot_any__pb2._ANY
+_CLUSTER_TYPEDEXTENSIONPROTOCOLOPTIONSENTRY.containing_type = _CLUSTER
 _CLUSTER_LBSUBSETCONFIG_LBSUBSETSELECTOR.containing_type = _CLUSTER_LBSUBSETCONFIG
 _CLUSTER_LBSUBSETCONFIG.fields_by_name['fallback_policy'].enum_type = _CLUSTER_LBSUBSETCONFIG_LBSUBSETFALLBACKPOLICY
 _CLUSTER_LBSUBSETCONFIG.fields_by_name['default_subset'].message_type = google_dot_protobuf_dot_struct__pb2._STRUCT
 _CLUSTER_LBSUBSETCONFIG.fields_by_name['subset_selectors'].message_type = _CLUSTER_LBSUBSETCONFIG_LBSUBSETSELECTOR
 _CLUSTER_LBSUBSETCONFIG.containing_type = _CLUSTER
 _CLUSTER_LBSUBSETCONFIG_LBSUBSETFALLBACKPOLICY.containing_type = _CLUSTER_LBSUBSETCONFIG
+_CLUSTER_LEASTREQUESTLBCONFIG.fields_by_name['choice_count'].message_type = google_dot_protobuf_dot_wrappers__pb2._UINT32VALUE
+_CLUSTER_LEASTREQUESTLBCONFIG.containing_type = _CLUSTER
 _CLUSTER_RINGHASHLBCONFIG_DEPRECATEDV1.fields_by_name['use_std_hash'].message_type = google_dot_protobuf_dot_wrappers__pb2._BOOLVALUE
 _CLUSTER_RINGHASHLBCONFIG_DEPRECATEDV1.containing_type = _CLUSTER_RINGHASHLBCONFIG
 _CLUSTER_RINGHASHLBCONFIG.fields_by_name['minimum_ring_size'].message_type = google_dot_protobuf_dot_wrappers__pb2._UINT64VALUE
 _CLUSTER_RINGHASHLBCONFIG.fields_by_name['deprecated_v1'].message_type = _CLUSTER_RINGHASHLBCONFIG_DEPRECATEDV1
+_CLUSTER_RINGHASHLBCONFIG.fields_by_name['hash_function'].enum_type = _CLUSTER_RINGHASHLBCONFIG_HASHFUNCTION
+_CLUSTER_RINGHASHLBCONFIG.fields_by_name['maximum_ring_size'].message_type = google_dot_protobuf_dot_wrappers__pb2._UINT64VALUE
 _CLUSTER_RINGHASHLBCONFIG.containing_type = _CLUSTER
+_CLUSTER_RINGHASHLBCONFIG_HASHFUNCTION.containing_type = _CLUSTER_RINGHASHLBCONFIG
+_CLUSTER_ORIGINALDSTLBCONFIG.containing_type = _CLUSTER
 _CLUSTER_COMMONLBCONFIG_ZONEAWARELBCONFIG.fields_by_name['routing_enabled'].message_type = envoy_dot_type_dot_percent__pb2._PERCENT
 _CLUSTER_COMMONLBCONFIG_ZONEAWARELBCONFIG.fields_by_name['min_cluster_size'].message_type = google_dot_protobuf_dot_wrappers__pb2._UINT64VALUE
 _CLUSTER_COMMONLBCONFIG_ZONEAWARELBCONFIG.containing_type = _CLUSTER_COMMONLBCONFIG
@@ -811,6 +1091,7 @@ _CLUSTER_COMMONLBCONFIG_LOCALITYWEIGHTEDLBCONFIG.containing_type = _CLUSTER_COMM
 _CLUSTER_COMMONLBCONFIG.fields_by_name['healthy_panic_threshold'].message_type = envoy_dot_type_dot_percent__pb2._PERCENT
 _CLUSTER_COMMONLBCONFIG.fields_by_name['zone_aware_lb_config'].message_type = _CLUSTER_COMMONLBCONFIG_ZONEAWARELBCONFIG
 _CLUSTER_COMMONLBCONFIG.fields_by_name['locality_weighted_lb_config'].message_type = _CLUSTER_COMMONLBCONFIG_LOCALITYWEIGHTEDLBCONFIG
+_CLUSTER_COMMONLBCONFIG.fields_by_name['update_merge_window'].message_type = google_dot_protobuf_dot_duration__pb2._DURATION
 _CLUSTER_COMMONLBCONFIG.containing_type = _CLUSTER
 _CLUSTER_COMMONLBCONFIG.oneofs_by_name['locality_config_specifier'].fields.append(
   _CLUSTER_COMMONLBCONFIG.fields_by_name['zone_aware_lb_config'])
@@ -819,6 +1100,7 @@ _CLUSTER_COMMONLBCONFIG.oneofs_by_name['locality_config_specifier'].fields.appen
   _CLUSTER_COMMONLBCONFIG.fields_by_name['locality_weighted_lb_config'])
 _CLUSTER_COMMONLBCONFIG.fields_by_name['locality_weighted_lb_config'].containing_oneof = _CLUSTER_COMMONLBCONFIG.oneofs_by_name['locality_config_specifier']
 _CLUSTER.fields_by_name['type'].enum_type = _CLUSTER_DISCOVERYTYPE
+_CLUSTER.fields_by_name['cluster_type'].message_type = _CLUSTER_CUSTOMCLUSTERTYPE
 _CLUSTER.fields_by_name['eds_cluster_config'].message_type = _CLUSTER_EDSCLUSTERCONFIG
 _CLUSTER.fields_by_name['connect_timeout'].message_type = google_dot_protobuf_dot_duration__pb2._DURATION
 _CLUSTER.fields_by_name['per_connection_buffer_limit_bytes'].message_type = google_dot_protobuf_dot_wrappers__pb2._UINT32VALUE
@@ -832,6 +1114,8 @@ _CLUSTER.fields_by_name['tls_context'].message_type = envoy_dot_api_dot_v2_dot_a
 _CLUSTER.fields_by_name['common_http_protocol_options'].message_type = envoy_dot_api_dot_v2_dot_core_dot_protocol__pb2._HTTPPROTOCOLOPTIONS
 _CLUSTER.fields_by_name['http_protocol_options'].message_type = envoy_dot_api_dot_v2_dot_core_dot_protocol__pb2._HTTP1PROTOCOLOPTIONS
 _CLUSTER.fields_by_name['http2_protocol_options'].message_type = envoy_dot_api_dot_v2_dot_core_dot_protocol__pb2._HTTP2PROTOCOLOPTIONS
+_CLUSTER.fields_by_name['extension_protocol_options'].message_type = _CLUSTER_EXTENSIONPROTOCOLOPTIONSENTRY
+_CLUSTER.fields_by_name['typed_extension_protocol_options'].message_type = _CLUSTER_TYPEDEXTENSIONPROTOCOLOPTIONSENTRY
 _CLUSTER.fields_by_name['dns_refresh_rate'].message_type = google_dot_protobuf_dot_duration__pb2._DURATION
 _CLUSTER.fields_by_name['dns_lookup_family'].enum_type = _CLUSTER_DNSLOOKUPFAMILY
 _CLUSTER.fields_by_name['dns_resolvers'].message_type = envoy_dot_api_dot_v2_dot_core_dot_address__pb2._ADDRESS
@@ -840,6 +1124,8 @@ _CLUSTER.fields_by_name['cleanup_interval'].message_type = google_dot_protobuf_d
 _CLUSTER.fields_by_name['upstream_bind_config'].message_type = envoy_dot_api_dot_v2_dot_core_dot_address__pb2._BINDCONFIG
 _CLUSTER.fields_by_name['lb_subset_config'].message_type = _CLUSTER_LBSUBSETCONFIG
 _CLUSTER.fields_by_name['ring_hash_lb_config'].message_type = _CLUSTER_RINGHASHLBCONFIG
+_CLUSTER.fields_by_name['original_dst_lb_config'].message_type = _CLUSTER_ORIGINALDSTLBCONFIG
+_CLUSTER.fields_by_name['least_request_lb_config'].message_type = _CLUSTER_LEASTREQUESTLBCONFIG
 _CLUSTER.fields_by_name['common_lb_config'].message_type = _CLUSTER_COMMONLBCONFIG
 _CLUSTER.fields_by_name['transport_socket'].message_type = envoy_dot_api_dot_v2_dot_core_dot_base__pb2._TRANSPORTSOCKET
 _CLUSTER.fields_by_name['metadata'].message_type = envoy_dot_api_dot_v2_dot_core_dot_base__pb2._METADATA
@@ -849,9 +1135,21 @@ _CLUSTER_DISCOVERYTYPE.containing_type = _CLUSTER
 _CLUSTER_LBPOLICY.containing_type = _CLUSTER
 _CLUSTER_DNSLOOKUPFAMILY.containing_type = _CLUSTER
 _CLUSTER_CLUSTERPROTOCOLSELECTION.containing_type = _CLUSTER
+_CLUSTER.oneofs_by_name['cluster_discovery_type'].fields.append(
+  _CLUSTER.fields_by_name['type'])
+_CLUSTER.fields_by_name['type'].containing_oneof = _CLUSTER.oneofs_by_name['cluster_discovery_type']
+_CLUSTER.oneofs_by_name['cluster_discovery_type'].fields.append(
+  _CLUSTER.fields_by_name['cluster_type'])
+_CLUSTER.fields_by_name['cluster_type'].containing_oneof = _CLUSTER.oneofs_by_name['cluster_discovery_type']
 _CLUSTER.oneofs_by_name['lb_config'].fields.append(
   _CLUSTER.fields_by_name['ring_hash_lb_config'])
 _CLUSTER.fields_by_name['ring_hash_lb_config'].containing_oneof = _CLUSTER.oneofs_by_name['lb_config']
+_CLUSTER.oneofs_by_name['lb_config'].fields.append(
+  _CLUSTER.fields_by_name['original_dst_lb_config'])
+_CLUSTER.fields_by_name['original_dst_lb_config'].containing_oneof = _CLUSTER.oneofs_by_name['lb_config']
+_CLUSTER.oneofs_by_name['lb_config'].fields.append(
+  _CLUSTER.fields_by_name['least_request_lb_config'])
+_CLUSTER.fields_by_name['least_request_lb_config'].containing_oneof = _CLUSTER.oneofs_by_name['lb_config']
 _UPSTREAMBINDCONFIG.fields_by_name['source_address'].message_type = envoy_dot_api_dot_v2_dot_core_dot_address__pb2._ADDRESS
 _UPSTREAMCONNECTIONOPTIONS.fields_by_name['tcp_keepalive'].message_type = envoy_dot_api_dot_v2_dot_core_dot_address__pb2._TCPKEEPALIVE
 DESCRIPTOR.message_types_by_name['Cluster'] = _CLUSTER
@@ -861,10 +1159,31 @@ _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 Cluster = _reflection.GeneratedProtocolMessageType('Cluster', (_message.Message,), dict(
 
+  CustomClusterType = _reflection.GeneratedProtocolMessageType('CustomClusterType', (_message.Message,), dict(
+    DESCRIPTOR = _CLUSTER_CUSTOMCLUSTERTYPE,
+    __module__ = 'envoy.api.v2.cds_pb2'
+    # @@protoc_insertion_point(class_scope:envoy.api.v2.Cluster.CustomClusterType)
+    ))
+  ,
+
   EdsClusterConfig = _reflection.GeneratedProtocolMessageType('EdsClusterConfig', (_message.Message,), dict(
     DESCRIPTOR = _CLUSTER_EDSCLUSTERCONFIG,
     __module__ = 'envoy.api.v2.cds_pb2'
     # @@protoc_insertion_point(class_scope:envoy.api.v2.Cluster.EdsClusterConfig)
+    ))
+  ,
+
+  ExtensionProtocolOptionsEntry = _reflection.GeneratedProtocolMessageType('ExtensionProtocolOptionsEntry', (_message.Message,), dict(
+    DESCRIPTOR = _CLUSTER_EXTENSIONPROTOCOLOPTIONSENTRY,
+    __module__ = 'envoy.api.v2.cds_pb2'
+    # @@protoc_insertion_point(class_scope:envoy.api.v2.Cluster.ExtensionProtocolOptionsEntry)
+    ))
+  ,
+
+  TypedExtensionProtocolOptionsEntry = _reflection.GeneratedProtocolMessageType('TypedExtensionProtocolOptionsEntry', (_message.Message,), dict(
+    DESCRIPTOR = _CLUSTER_TYPEDEXTENSIONPROTOCOLOPTIONSENTRY,
+    __module__ = 'envoy.api.v2.cds_pb2'
+    # @@protoc_insertion_point(class_scope:envoy.api.v2.Cluster.TypedExtensionProtocolOptionsEntry)
     ))
   ,
 
@@ -882,6 +1201,13 @@ Cluster = _reflection.GeneratedProtocolMessageType('Cluster', (_message.Message,
     ))
   ,
 
+  LeastRequestLbConfig = _reflection.GeneratedProtocolMessageType('LeastRequestLbConfig', (_message.Message,), dict(
+    DESCRIPTOR = _CLUSTER_LEASTREQUESTLBCONFIG,
+    __module__ = 'envoy.api.v2.cds_pb2'
+    # @@protoc_insertion_point(class_scope:envoy.api.v2.Cluster.LeastRequestLbConfig)
+    ))
+  ,
+
   RingHashLbConfig = _reflection.GeneratedProtocolMessageType('RingHashLbConfig', (_message.Message,), dict(
 
     DeprecatedV1 = _reflection.GeneratedProtocolMessageType('DeprecatedV1', (_message.Message,), dict(
@@ -893,6 +1219,13 @@ Cluster = _reflection.GeneratedProtocolMessageType('Cluster', (_message.Message,
     DESCRIPTOR = _CLUSTER_RINGHASHLBCONFIG,
     __module__ = 'envoy.api.v2.cds_pb2'
     # @@protoc_insertion_point(class_scope:envoy.api.v2.Cluster.RingHashLbConfig)
+    ))
+  ,
+
+  OriginalDstLbConfig = _reflection.GeneratedProtocolMessageType('OriginalDstLbConfig', (_message.Message,), dict(
+    DESCRIPTOR = _CLUSTER_ORIGINALDSTLBCONFIG,
+    __module__ = 'envoy.api.v2.cds_pb2'
+    # @@protoc_insertion_point(class_scope:envoy.api.v2.Cluster.OriginalDstLbConfig)
     ))
   ,
 
@@ -921,11 +1254,16 @@ Cluster = _reflection.GeneratedProtocolMessageType('Cluster', (_message.Message,
   # @@protoc_insertion_point(class_scope:envoy.api.v2.Cluster)
   ))
 _sym_db.RegisterMessage(Cluster)
+_sym_db.RegisterMessage(Cluster.CustomClusterType)
 _sym_db.RegisterMessage(Cluster.EdsClusterConfig)
+_sym_db.RegisterMessage(Cluster.ExtensionProtocolOptionsEntry)
+_sym_db.RegisterMessage(Cluster.TypedExtensionProtocolOptionsEntry)
 _sym_db.RegisterMessage(Cluster.LbSubsetConfig)
 _sym_db.RegisterMessage(Cluster.LbSubsetConfig.LbSubsetSelector)
+_sym_db.RegisterMessage(Cluster.LeastRequestLbConfig)
 _sym_db.RegisterMessage(Cluster.RingHashLbConfig)
 _sym_db.RegisterMessage(Cluster.RingHashLbConfig.DeprecatedV1)
+_sym_db.RegisterMessage(Cluster.OriginalDstLbConfig)
 _sym_db.RegisterMessage(Cluster.CommonLbConfig)
 _sym_db.RegisterMessage(Cluster.CommonLbConfig.ZoneAwareLbConfig)
 _sym_db.RegisterMessage(Cluster.CommonLbConfig.LocalityWeightedLbConfig)
@@ -946,13 +1284,25 @@ _sym_db.RegisterMessage(UpstreamConnectionOptions)
 
 
 DESCRIPTOR.has_options = True
-DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\210\001\001\250\342\036\001'))
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n\032io.envoyproxy.envoy.api.v2B\010CdsProtoP\001\210\001\001\250\342\036\001'))
+_CLUSTER_CUSTOMCLUSTERTYPE.fields_by_name['name'].has_options = True
+_CLUSTER_CUSTOMCLUSTERTYPE.fields_by_name['name']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004r\002 \001'))
+_CLUSTER_EXTENSIONPROTOCOLOPTIONSENTRY.has_options = True
+_CLUSTER_EXTENSIONPROTOCOLOPTIONSENTRY._options = _descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001'))
+_CLUSTER_TYPEDEXTENSIONPROTOCOLOPTIONSENTRY.has_options = True
+_CLUSTER_TYPEDEXTENSIONPROTOCOLOPTIONSENTRY._options = _descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001'))
 _CLUSTER_LBSUBSETCONFIG.fields_by_name['fallback_policy'].has_options = True
 _CLUSTER_LBSUBSETCONFIG.fields_by_name['fallback_policy']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\202\001\002\020\001'))
+_CLUSTER_LEASTREQUESTLBCONFIG.fields_by_name['choice_count'].has_options = True
+_CLUSTER_LEASTREQUESTLBCONFIG.fields_by_name['choice_count']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004*\002(\002'))
 _CLUSTER_RINGHASHLBCONFIG.fields_by_name['minimum_ring_size'].has_options = True
 _CLUSTER_RINGHASHLBCONFIG.fields_by_name['minimum_ring_size']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\0072\005\030\200\200\200\004'))
 _CLUSTER_RINGHASHLBCONFIG.fields_by_name['deprecated_v1'].has_options = True
 _CLUSTER_RINGHASHLBCONFIG.fields_by_name['deprecated_v1']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\030\001'))
+_CLUSTER_RINGHASHLBCONFIG.fields_by_name['hash_function'].has_options = True
+_CLUSTER_RINGHASHLBCONFIG.fields_by_name['hash_function']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\202\001\002\020\001'))
+_CLUSTER_RINGHASHLBCONFIG.fields_by_name['maximum_ring_size'].has_options = True
+_CLUSTER_RINGHASHLBCONFIG.fields_by_name['maximum_ring_size']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\0072\005\030\200\200\200\004'))
 _CLUSTER.fields_by_name['name'].has_options = True
 _CLUSTER.fields_by_name['name']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004r\002 \001'))
 _CLUSTER.fields_by_name['type'].has_options = True
@@ -961,6 +1311,10 @@ _CLUSTER.fields_by_name['connect_timeout'].has_options = True
 _CLUSTER.fields_by_name['connect_timeout']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\252\001\002*\000\230\337\037\001\310\336\037\000'))
 _CLUSTER.fields_by_name['lb_policy'].has_options = True
 _CLUSTER.fields_by_name['lb_policy']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\202\001\002\020\001'))
+_CLUSTER.fields_by_name['hosts'].has_options = True
+_CLUSTER.fields_by_name['hosts']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\030\001'))
+_CLUSTER.fields_by_name['extension_protocol_options'].has_options = True
+_CLUSTER.fields_by_name['extension_protocol_options']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\030\001'))
 _CLUSTER.fields_by_name['dns_refresh_rate'].has_options = True
 _CLUSTER.fields_by_name['dns_refresh_rate']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\252\001\002*\000\230\337\037\001'))
 _CLUSTER.fields_by_name['dns_lookup_family'].has_options = True
@@ -974,8 +1328,8 @@ _CLUSTERDISCOVERYSERVICE = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   options=None,
-  serialized_start=4201,
-  serialized_end=4548,
+  serialized_start=5399,
+  serialized_end=5728,
   methods=[
   _descriptor.MethodDescriptor(
     name='StreamClusters',
@@ -987,12 +1341,12 @@ _CLUSTERDISCOVERYSERVICE = _descriptor.ServiceDescriptor(
     options=None,
   ),
   _descriptor.MethodDescriptor(
-    name='IncrementalClusters',
-    full_name='envoy.api.v2.ClusterDiscoveryService.IncrementalClusters',
+    name='DeltaClusters',
+    full_name='envoy.api.v2.ClusterDiscoveryService.DeltaClusters',
     index=1,
     containing_service=None,
-    input_type=envoy_dot_api_dot_v2_dot_discovery__pb2._INCREMENTALDISCOVERYREQUEST,
-    output_type=envoy_dot_api_dot_v2_dot_discovery__pb2._INCREMENTALDISCOVERYRESPONSE,
+    input_type=envoy_dot_api_dot_v2_dot_discovery__pb2._DELTADISCOVERYREQUEST,
+    output_type=envoy_dot_api_dot_v2_dot_discovery__pb2._DELTADISCOVERYRESPONSE,
     options=None,
   ),
   _descriptor.MethodDescriptor(
@@ -1034,10 +1388,10 @@ try:
           request_serializer=envoy_dot_api_dot_v2_dot_discovery__pb2.DiscoveryRequest.SerializeToString,
           response_deserializer=envoy_dot_api_dot_v2_dot_discovery__pb2.DiscoveryResponse.FromString,
           )
-      self.IncrementalClusters = channel.stream_stream(
-          '/envoy.api.v2.ClusterDiscoveryService/IncrementalClusters',
-          request_serializer=envoy_dot_api_dot_v2_dot_discovery__pb2.IncrementalDiscoveryRequest.SerializeToString,
-          response_deserializer=envoy_dot_api_dot_v2_dot_discovery__pb2.IncrementalDiscoveryResponse.FromString,
+      self.DeltaClusters = channel.stream_stream(
+          '/envoy.api.v2.ClusterDiscoveryService/DeltaClusters',
+          request_serializer=envoy_dot_api_dot_v2_dot_discovery__pb2.DeltaDiscoveryRequest.SerializeToString,
+          response_deserializer=envoy_dot_api_dot_v2_dot_discovery__pb2.DeltaDiscoveryResponse.FromString,
           )
       self.FetchClusters = channel.unary_unary(
           '/envoy.api.v2.ClusterDiscoveryService/FetchClusters',
@@ -1057,7 +1411,7 @@ try:
       context.set_details('Method not implemented!')
       raise NotImplementedError('Method not implemented!')
 
-    def IncrementalClusters(self, request_iterator, context):
+    def DeltaClusters(self, request_iterator, context):
       # missing associated documentation comment in .proto file
       pass
       context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -1079,10 +1433,10 @@ try:
             request_deserializer=envoy_dot_api_dot_v2_dot_discovery__pb2.DiscoveryRequest.FromString,
             response_serializer=envoy_dot_api_dot_v2_dot_discovery__pb2.DiscoveryResponse.SerializeToString,
         ),
-        'IncrementalClusters': grpc.stream_stream_rpc_method_handler(
-            servicer.IncrementalClusters,
-            request_deserializer=envoy_dot_api_dot_v2_dot_discovery__pb2.IncrementalDiscoveryRequest.FromString,
-            response_serializer=envoy_dot_api_dot_v2_dot_discovery__pb2.IncrementalDiscoveryResponse.SerializeToString,
+        'DeltaClusters': grpc.stream_stream_rpc_method_handler(
+            servicer.DeltaClusters,
+            request_deserializer=envoy_dot_api_dot_v2_dot_discovery__pb2.DeltaDiscoveryRequest.FromString,
+            response_serializer=envoy_dot_api_dot_v2_dot_discovery__pb2.DeltaDiscoveryResponse.SerializeToString,
         ),
         'FetchClusters': grpc.unary_unary_rpc_method_handler(
             servicer.FetchClusters,
@@ -1107,7 +1461,7 @@ try:
       # missing associated documentation comment in .proto file
       pass
       context.code(beta_interfaces.StatusCode.UNIMPLEMENTED)
-    def IncrementalClusters(self, request_iterator, context):
+    def DeltaClusters(self, request_iterator, context):
       # missing associated documentation comment in .proto file
       pass
       context.code(beta_interfaces.StatusCode.UNIMPLEMENTED)
@@ -1129,7 +1483,7 @@ try:
       # missing associated documentation comment in .proto file
       pass
       raise NotImplementedError()
-    def IncrementalClusters(self, request_iterator, timeout, metadata=None, with_call=False, protocol_options=None):
+    def DeltaClusters(self, request_iterator, timeout, metadata=None, with_call=False, protocol_options=None):
       # missing associated documentation comment in .proto file
       pass
       raise NotImplementedError()
@@ -1147,18 +1501,18 @@ try:
     file not marked beta) for all further purposes. This function was
     generated only to ease transition from grpcio<0.15.0 to grpcio>=0.15.0"""
     request_deserializers = {
+      ('envoy.api.v2.ClusterDiscoveryService', 'DeltaClusters'): envoy_dot_api_dot_v2_dot_discovery__pb2.DeltaDiscoveryRequest.FromString,
       ('envoy.api.v2.ClusterDiscoveryService', 'FetchClusters'): envoy_dot_api_dot_v2_dot_discovery__pb2.DiscoveryRequest.FromString,
-      ('envoy.api.v2.ClusterDiscoveryService', 'IncrementalClusters'): envoy_dot_api_dot_v2_dot_discovery__pb2.IncrementalDiscoveryRequest.FromString,
       ('envoy.api.v2.ClusterDiscoveryService', 'StreamClusters'): envoy_dot_api_dot_v2_dot_discovery__pb2.DiscoveryRequest.FromString,
     }
     response_serializers = {
+      ('envoy.api.v2.ClusterDiscoveryService', 'DeltaClusters'): envoy_dot_api_dot_v2_dot_discovery__pb2.DeltaDiscoveryResponse.SerializeToString,
       ('envoy.api.v2.ClusterDiscoveryService', 'FetchClusters'): envoy_dot_api_dot_v2_dot_discovery__pb2.DiscoveryResponse.SerializeToString,
-      ('envoy.api.v2.ClusterDiscoveryService', 'IncrementalClusters'): envoy_dot_api_dot_v2_dot_discovery__pb2.IncrementalDiscoveryResponse.SerializeToString,
       ('envoy.api.v2.ClusterDiscoveryService', 'StreamClusters'): envoy_dot_api_dot_v2_dot_discovery__pb2.DiscoveryResponse.SerializeToString,
     }
     method_implementations = {
+      ('envoy.api.v2.ClusterDiscoveryService', 'DeltaClusters'): face_utilities.stream_stream_inline(servicer.DeltaClusters),
       ('envoy.api.v2.ClusterDiscoveryService', 'FetchClusters'): face_utilities.unary_unary_inline(servicer.FetchClusters),
-      ('envoy.api.v2.ClusterDiscoveryService', 'IncrementalClusters'): face_utilities.stream_stream_inline(servicer.IncrementalClusters),
       ('envoy.api.v2.ClusterDiscoveryService', 'StreamClusters'): face_utilities.stream_stream_inline(servicer.StreamClusters),
     }
     server_options = beta_implementations.server_options(request_deserializers=request_deserializers, response_serializers=response_serializers, thread_pool=pool, thread_pool_size=pool_size, default_timeout=default_timeout, maximum_timeout=maximum_timeout)
@@ -1172,18 +1526,18 @@ try:
     file not marked beta) for all further purposes. This function was
     generated only to ease transition from grpcio<0.15.0 to grpcio>=0.15.0"""
     request_serializers = {
+      ('envoy.api.v2.ClusterDiscoveryService', 'DeltaClusters'): envoy_dot_api_dot_v2_dot_discovery__pb2.DeltaDiscoveryRequest.SerializeToString,
       ('envoy.api.v2.ClusterDiscoveryService', 'FetchClusters'): envoy_dot_api_dot_v2_dot_discovery__pb2.DiscoveryRequest.SerializeToString,
-      ('envoy.api.v2.ClusterDiscoveryService', 'IncrementalClusters'): envoy_dot_api_dot_v2_dot_discovery__pb2.IncrementalDiscoveryRequest.SerializeToString,
       ('envoy.api.v2.ClusterDiscoveryService', 'StreamClusters'): envoy_dot_api_dot_v2_dot_discovery__pb2.DiscoveryRequest.SerializeToString,
     }
     response_deserializers = {
+      ('envoy.api.v2.ClusterDiscoveryService', 'DeltaClusters'): envoy_dot_api_dot_v2_dot_discovery__pb2.DeltaDiscoveryResponse.FromString,
       ('envoy.api.v2.ClusterDiscoveryService', 'FetchClusters'): envoy_dot_api_dot_v2_dot_discovery__pb2.DiscoveryResponse.FromString,
-      ('envoy.api.v2.ClusterDiscoveryService', 'IncrementalClusters'): envoy_dot_api_dot_v2_dot_discovery__pb2.IncrementalDiscoveryResponse.FromString,
       ('envoy.api.v2.ClusterDiscoveryService', 'StreamClusters'): envoy_dot_api_dot_v2_dot_discovery__pb2.DiscoveryResponse.FromString,
     }
     cardinalities = {
+      'DeltaClusters': cardinality.Cardinality.STREAM_STREAM,
       'FetchClusters': cardinality.Cardinality.UNARY_UNARY,
-      'IncrementalClusters': cardinality.Cardinality.STREAM_STREAM,
       'StreamClusters': cardinality.Cardinality.STREAM_STREAM,
     }
     stub_options = beta_implementations.stub_options(host=host, metadata_transformer=metadata_transformer, request_serializers=request_serializers, response_deserializers=response_deserializers, thread_pool=pool, thread_pool_size=pool_size)

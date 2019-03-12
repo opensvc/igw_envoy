@@ -14,6 +14,7 @@ _sym_db = _symbol_database.Default()
 
 
 from envoy.api.v2.core import base_pb2 as envoy_dot_api_dot_v2_dot_core_dot_base__pb2
+from google.protobuf import any_pb2 as google_dot_protobuf_dot_any__pb2
 from google.protobuf import duration_pb2 as google_dot_protobuf_dot_duration__pb2
 from google.protobuf import struct_pb2 as google_dot_protobuf_dot_struct__pb2
 from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
@@ -25,9 +26,9 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='envoy/api/v2/core/grpc_service.proto',
   package='envoy.api.v2.core',
   syntax='proto3',
-  serialized_pb=_b('\n$envoy/api/v2/core/grpc_service.proto\x12\x11\x65nvoy.api.v2.core\x1a\x1c\x65nvoy/api/v2/core/base.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x17validate/validate.proto\x1a\x14gogoproto/gogo.proto\"\xf7\r\n\x0bGrpcService\x12>\n\nenvoy_grpc\x18\x01 \x01(\x0b\x32(.envoy.api.v2.core.GrpcService.EnvoyGrpcH\x00\x12@\n\x0bgoogle_grpc\x18\x02 \x01(\x0b\x32).envoy.api.v2.core.GrpcService.GoogleGrpcH\x00\x12*\n\x07timeout\x18\x03 \x01(\x0b\x32\x19.google.protobuf.Duration\x12\x38\n\x10initial_metadata\x18\x05 \x03(\x0b\x32\x1e.envoy.api.v2.core.HeaderValue\x1a,\n\tEnvoyGrpc\x12\x1f\n\x0c\x63luster_name\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x1a\xb0\x0b\n\nGoogleGrpc\x12\x1d\n\ntarget_uri\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12Y\n\x13\x63hannel_credentials\x18\x02 \x01(\x0b\x32<.envoy.api.v2.core.GrpcService.GoogleGrpc.ChannelCredentials\x12S\n\x10\x63\x61ll_credentials\x18\x03 \x03(\x0b\x32\x39.envoy.api.v2.core.GrpcService.GoogleGrpc.CallCredentials\x12\x1e\n\x0bstat_prefix\x18\x04 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12 \n\x18\x63redentials_factory_name\x18\x05 \x01(\t\x12\'\n\x06\x63onfig\x18\x06 \x01(\x0b\x32\x17.google.protobuf.Struct\x1a\xaa\x01\n\x0eSslCredentials\x12\x31\n\nroot_certs\x18\x01 \x01(\x0b\x32\x1d.envoy.api.v2.core.DataSource\x12\x32\n\x0bprivate_key\x18\x02 \x01(\x0b\x32\x1d.envoy.api.v2.core.DataSource\x12\x31\n\ncert_chain\x18\x03 \x01(\x0b\x32\x1d.envoy.api.v2.core.DataSource\x1a\xba\x01\n\x12\x43hannelCredentials\x12S\n\x0fssl_credentials\x18\x01 \x01(\x0b\x32\x38.envoy.api.v2.core.GrpcService.GoogleGrpc.SslCredentialsH\x00\x12\x30\n\x0egoogle_default\x18\x02 \x01(\x0b\x32\x16.google.protobuf.EmptyH\x00\x42\x1d\n\x14\x63redential_specifier\x12\x05\xb8\xe9\xc0\x03\x01\x1a\xfd\x05\n\x0f\x43\x61llCredentials\x12\x16\n\x0c\x61\x63\x63\x65ss_token\x18\x01 \x01(\tH\x00\x12\x37\n\x15google_compute_engine\x18\x02 \x01(\x0b\x32\x16.google.protobuf.EmptyH\x00\x12\x1e\n\x14google_refresh_token\x18\x03 \x01(\tH\x00\x12\x82\x01\n\x1aservice_account_jwt_access\x18\x04 \x01(\x0b\x32\\.envoy.api.v2.core.GrpcService.GoogleGrpc.CallCredentials.ServiceAccountJWTAccessCredentialsH\x00\x12\x64\n\ngoogle_iam\x18\x05 \x01(\x0b\x32N.envoy.api.v2.core.GrpcService.GoogleGrpc.CallCredentials.GoogleIAMCredentialsH\x00\x12n\n\x0b\x66rom_plugin\x18\x06 \x01(\x0b\x32W.envoy.api.v2.core.GrpcService.GoogleGrpc.CallCredentials.MetadataCredentialsFromPluginH\x00\x1aV\n\"ServiceAccountJWTAccessCredentials\x12\x10\n\x08json_key\x18\x01 \x01(\t\x12\x1e\n\x16token_lifetime_seconds\x18\x02 \x01(\x04\x1aO\n\x14GoogleIAMCredentials\x12\x1b\n\x13\x61uthorization_token\x18\x01 \x01(\t\x12\x1a\n\x12\x61uthority_selector\x18\x02 \x01(\t\x1aV\n\x1dMetadataCredentialsFromPlugin\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\'\n\x06\x63onfig\x18\x02 \x01(\x0b\x32\x17.google.protobuf.StructB\x1d\n\x14\x63redential_specifier\x12\x05\xb8\xe9\xc0\x03\x01\x42\x19\n\x10target_specifier\x12\x05\xb8\xe9\xc0\x03\x01J\x04\x08\x04\x10\x05\x42\x04\xa8\xe2\x1e\x01\x62\x06proto3')
+  serialized_pb=_b('\n$envoy/api/v2/core/grpc_service.proto\x12\x11\x65nvoy.api.v2.core\x1a\x1c\x65nvoy/api/v2/core/base.proto\x1a\x19google/protobuf/any.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x17validate/validate.proto\x1a\x14gogoproto/gogo.proto\"\xb4\x0f\n\x0bGrpcService\x12>\n\nenvoy_grpc\x18\x01 \x01(\x0b\x32(.envoy.api.v2.core.GrpcService.EnvoyGrpcH\x00\x12@\n\x0bgoogle_grpc\x18\x02 \x01(\x0b\x32).envoy.api.v2.core.GrpcService.GoogleGrpcH\x00\x12*\n\x07timeout\x18\x03 \x01(\x0b\x32\x19.google.protobuf.Duration\x12\x38\n\x10initial_metadata\x18\x05 \x03(\x0b\x32\x1e.envoy.api.v2.core.HeaderValue\x1a,\n\tEnvoyGrpc\x12\x1f\n\x0c\x63luster_name\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x1a\xed\x0c\n\nGoogleGrpc\x12\x1d\n\ntarget_uri\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12Y\n\x13\x63hannel_credentials\x18\x02 \x01(\x0b\x32<.envoy.api.v2.core.GrpcService.GoogleGrpc.ChannelCredentials\x12S\n\x10\x63\x61ll_credentials\x18\x03 \x03(\x0b\x32\x39.envoy.api.v2.core.GrpcService.GoogleGrpc.CallCredentials\x12\x1e\n\x0bstat_prefix\x18\x04 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12 \n\x18\x63redentials_factory_name\x18\x05 \x01(\t\x12\'\n\x06\x63onfig\x18\x06 \x01(\x0b\x32\x17.google.protobuf.Struct\x1a\xaa\x01\n\x0eSslCredentials\x12\x31\n\nroot_certs\x18\x01 \x01(\x0b\x32\x1d.envoy.api.v2.core.DataSource\x12\x32\n\x0bprivate_key\x18\x02 \x01(\x0b\x32\x1d.envoy.api.v2.core.DataSource\x12\x31\n\ncert_chain\x18\x03 \x01(\x0b\x32\x1d.envoy.api.v2.core.DataSource\x1a\x18\n\x16GoogleLocalCredentials\x1a\x99\x02\n\x12\x43hannelCredentials\x12S\n\x0fssl_credentials\x18\x01 \x01(\x0b\x32\x38.envoy.api.v2.core.GrpcService.GoogleGrpc.SslCredentialsH\x00\x12\x30\n\x0egoogle_default\x18\x02 \x01(\x0b\x32\x16.google.protobuf.EmptyH\x00\x12]\n\x11local_credentials\x18\x03 \x01(\x0b\x32@.envoy.api.v2.core.GrpcService.GoogleGrpc.GoogleLocalCredentialsH\x00\x42\x1d\n\x14\x63redential_specifier\x12\x05\xb8\xe9\xc0\x03\x01\x1a\xc1\x06\n\x0f\x43\x61llCredentials\x12\x16\n\x0c\x61\x63\x63\x65ss_token\x18\x01 \x01(\tH\x00\x12\x37\n\x15google_compute_engine\x18\x02 \x01(\x0b\x32\x16.google.protobuf.EmptyH\x00\x12\x1e\n\x14google_refresh_token\x18\x03 \x01(\tH\x00\x12\x82\x01\n\x1aservice_account_jwt_access\x18\x04 \x01(\x0b\x32\\.envoy.api.v2.core.GrpcService.GoogleGrpc.CallCredentials.ServiceAccountJWTAccessCredentialsH\x00\x12\x64\n\ngoogle_iam\x18\x05 \x01(\x0b\x32N.envoy.api.v2.core.GrpcService.GoogleGrpc.CallCredentials.GoogleIAMCredentialsH\x00\x12n\n\x0b\x66rom_plugin\x18\x06 \x01(\x0b\x32W.envoy.api.v2.core.GrpcService.GoogleGrpc.CallCredentials.MetadataCredentialsFromPluginH\x00\x1aV\n\"ServiceAccountJWTAccessCredentials\x12\x10\n\x08json_key\x18\x01 \x01(\t\x12\x1e\n\x16token_lifetime_seconds\x18\x02 \x01(\x04\x1aO\n\x14GoogleIAMCredentials\x12\x1b\n\x13\x61uthorization_token\x18\x01 \x01(\t\x12\x1a\n\x12\x61uthority_selector\x18\x02 \x01(\t\x1a\x99\x01\n\x1dMetadataCredentialsFromPlugin\x12\x0c\n\x04name\x18\x01 \x01(\t\x12-\n\x06\x63onfig\x18\x02 \x01(\x0b\x32\x17.google.protobuf.StructB\x02\x18\x01H\x00\x12,\n\x0ctyped_config\x18\x03 \x01(\x0b\x32\x14.google.protobuf.AnyH\x00\x42\r\n\x0b\x63onfig_typeB\x1d\n\x14\x63redential_specifier\x12\x05\xb8\xe9\xc0\x03\x01\x42\x19\n\x10target_specifier\x12\x05\xb8\xe9\xc0\x03\x01J\x04\x08\x04\x10\x05\x42\x39\n\x1fio.envoyproxy.envoy.api.v2.coreB\x10GrpcServiceProtoP\x01\xa8\xe2\x1e\x01\x62\x06proto3')
   ,
-  dependencies=[envoy_dot_api_dot_v2_dot_core_dot_base__pb2.DESCRIPTOR,google_dot_protobuf_dot_duration__pb2.DESCRIPTOR,google_dot_protobuf_dot_struct__pb2.DESCRIPTOR,google_dot_protobuf_dot_empty__pb2.DESCRIPTOR,validate_dot_validate__pb2.DESCRIPTOR,gogoproto_dot_gogo__pb2.DESCRIPTOR,])
+  dependencies=[envoy_dot_api_dot_v2_dot_core_dot_base__pb2.DESCRIPTOR,google_dot_protobuf_dot_any__pb2.DESCRIPTOR,google_dot_protobuf_dot_duration__pb2.DESCRIPTOR,google_dot_protobuf_dot_struct__pb2.DESCRIPTOR,google_dot_protobuf_dot_empty__pb2.DESCRIPTOR,validate_dot_validate__pb2.DESCRIPTOR,gogoproto_dot_gogo__pb2.DESCRIPTOR,])
 
 
 
@@ -58,8 +59,8 @@ _GRPCSERVICE_ENVOYGRPC = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=475,
-  serialized_end=519,
+  serialized_start=502,
+  serialized_end=546,
 )
 
 _GRPCSERVICE_GOOGLEGRPC_SSLCREDENTIALS = _descriptor.Descriptor(
@@ -102,8 +103,31 @@ _GRPCSERVICE_GOOGLEGRPC_SSLCREDENTIALS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=851,
-  serialized_end=1021,
+  serialized_start=878,
+  serialized_end=1048,
+)
+
+_GRPCSERVICE_GOOGLEGRPC_GOOGLELOCALCREDENTIALS = _descriptor.Descriptor(
+  name='GoogleLocalCredentials',
+  full_name='envoy.api.v2.core.GrpcService.GoogleGrpc.GoogleLocalCredentials',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1050,
+  serialized_end=1074,
 )
 
 _GRPCSERVICE_GOOGLEGRPC_CHANNELCREDENTIALS = _descriptor.Descriptor(
@@ -127,6 +151,13 @@ _GRPCSERVICE_GOOGLEGRPC_CHANNELCREDENTIALS = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
+    _descriptor.FieldDescriptor(
+      name='local_credentials', full_name='envoy.api.v2.core.GrpcService.GoogleGrpc.ChannelCredentials.local_credentials', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -142,8 +173,8 @@ _GRPCSERVICE_GOOGLEGRPC_CHANNELCREDENTIALS = _descriptor.Descriptor(
       name='credential_specifier', full_name='envoy.api.v2.core.GrpcService.GoogleGrpc.ChannelCredentials.credential_specifier',
       index=0, containing_type=None, fields=[], options=_descriptor._ParseOptions(descriptor_pb2.OneofOptions(), _b('\270\351\300\003\001'))),
   ],
-  serialized_start=1024,
-  serialized_end=1210,
+  serialized_start=1077,
+  serialized_end=1358,
 )
 
 _GRPCSERVICE_GOOGLEGRPC_CALLCREDENTIALS_SERVICEACCOUNTJWTACCESSCREDENTIALS = _descriptor.Descriptor(
@@ -179,8 +210,8 @@ _GRPCSERVICE_GOOGLEGRPC_CALLCREDENTIALS_SERVICEACCOUNTJWTACCESSCREDENTIALS = _de
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1692,
-  serialized_end=1778,
+  serialized_start=1840,
+  serialized_end=1926,
 )
 
 _GRPCSERVICE_GOOGLEGRPC_CALLCREDENTIALS_GOOGLEIAMCREDENTIALS = _descriptor.Descriptor(
@@ -216,8 +247,8 @@ _GRPCSERVICE_GOOGLEGRPC_CALLCREDENTIALS_GOOGLEIAMCREDENTIALS = _descriptor.Descr
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1780,
-  serialized_end=1859,
+  serialized_start=1928,
+  serialized_end=2007,
 )
 
 _GRPCSERVICE_GOOGLEGRPC_CALLCREDENTIALS_METADATACREDENTIALSFROMPLUGIN = _descriptor.Descriptor(
@@ -240,6 +271,13 @@ _GRPCSERVICE_GOOGLEGRPC_CALLCREDENTIALS_METADATACREDENTIALSFROMPLUGIN = _descrip
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
+      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\030\001'))),
+    _descriptor.FieldDescriptor(
+      name='typed_config', full_name='envoy.api.v2.core.GrpcService.GoogleGrpc.CallCredentials.MetadataCredentialsFromPlugin.typed_config', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
       options=None),
   ],
   extensions=[
@@ -252,9 +290,12 @@ _GRPCSERVICE_GOOGLEGRPC_CALLCREDENTIALS_METADATACREDENTIALSFROMPLUGIN = _descrip
   syntax='proto3',
   extension_ranges=[],
   oneofs=[
+    _descriptor.OneofDescriptor(
+      name='config_type', full_name='envoy.api.v2.core.GrpcService.GoogleGrpc.CallCredentials.MetadataCredentialsFromPlugin.config_type',
+      index=0, containing_type=None, fields=[]),
   ],
-  serialized_start=1861,
-  serialized_end=1947,
+  serialized_start=2010,
+  serialized_end=2163,
 )
 
 _GRPCSERVICE_GOOGLEGRPC_CALLCREDENTIALS = _descriptor.Descriptor(
@@ -321,8 +362,8 @@ _GRPCSERVICE_GOOGLEGRPC_CALLCREDENTIALS = _descriptor.Descriptor(
       name='credential_specifier', full_name='envoy.api.v2.core.GrpcService.GoogleGrpc.CallCredentials.credential_specifier',
       index=0, containing_type=None, fields=[], options=_descriptor._ParseOptions(descriptor_pb2.OneofOptions(), _b('\270\351\300\003\001'))),
   ],
-  serialized_start=1213,
-  serialized_end=1978,
+  serialized_start=1361,
+  serialized_end=2194,
 )
 
 _GRPCSERVICE_GOOGLEGRPC = _descriptor.Descriptor(
@@ -377,7 +418,7 @@ _GRPCSERVICE_GOOGLEGRPC = _descriptor.Descriptor(
   ],
   extensions=[
   ],
-  nested_types=[_GRPCSERVICE_GOOGLEGRPC_SSLCREDENTIALS, _GRPCSERVICE_GOOGLEGRPC_CHANNELCREDENTIALS, _GRPCSERVICE_GOOGLEGRPC_CALLCREDENTIALS, ],
+  nested_types=[_GRPCSERVICE_GOOGLEGRPC_SSLCREDENTIALS, _GRPCSERVICE_GOOGLEGRPC_GOOGLELOCALCREDENTIALS, _GRPCSERVICE_GOOGLEGRPC_CHANNELCREDENTIALS, _GRPCSERVICE_GOOGLEGRPC_CALLCREDENTIALS, ],
   enum_types=[
   ],
   options=None,
@@ -386,8 +427,8 @@ _GRPCSERVICE_GOOGLEGRPC = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=522,
-  serialized_end=1978,
+  serialized_start=549,
+  serialized_end=2194,
 )
 
 _GRPCSERVICE = _descriptor.Descriptor(
@@ -440,8 +481,8 @@ _GRPCSERVICE = _descriptor.Descriptor(
       name='target_specifier', full_name='envoy.api.v2.core.GrpcService.target_specifier',
       index=0, containing_type=None, fields=[], options=_descriptor._ParseOptions(descriptor_pb2.OneofOptions(), _b('\270\351\300\003\001'))),
   ],
-  serialized_start=228,
-  serialized_end=2011,
+  serialized_start=255,
+  serialized_end=2227,
 )
 
 _GRPCSERVICE_ENVOYGRPC.containing_type = _GRPCSERVICE
@@ -449,8 +490,10 @@ _GRPCSERVICE_GOOGLEGRPC_SSLCREDENTIALS.fields_by_name['root_certs'].message_type
 _GRPCSERVICE_GOOGLEGRPC_SSLCREDENTIALS.fields_by_name['private_key'].message_type = envoy_dot_api_dot_v2_dot_core_dot_base__pb2._DATASOURCE
 _GRPCSERVICE_GOOGLEGRPC_SSLCREDENTIALS.fields_by_name['cert_chain'].message_type = envoy_dot_api_dot_v2_dot_core_dot_base__pb2._DATASOURCE
 _GRPCSERVICE_GOOGLEGRPC_SSLCREDENTIALS.containing_type = _GRPCSERVICE_GOOGLEGRPC
+_GRPCSERVICE_GOOGLEGRPC_GOOGLELOCALCREDENTIALS.containing_type = _GRPCSERVICE_GOOGLEGRPC
 _GRPCSERVICE_GOOGLEGRPC_CHANNELCREDENTIALS.fields_by_name['ssl_credentials'].message_type = _GRPCSERVICE_GOOGLEGRPC_SSLCREDENTIALS
 _GRPCSERVICE_GOOGLEGRPC_CHANNELCREDENTIALS.fields_by_name['google_default'].message_type = google_dot_protobuf_dot_empty__pb2._EMPTY
+_GRPCSERVICE_GOOGLEGRPC_CHANNELCREDENTIALS.fields_by_name['local_credentials'].message_type = _GRPCSERVICE_GOOGLEGRPC_GOOGLELOCALCREDENTIALS
 _GRPCSERVICE_GOOGLEGRPC_CHANNELCREDENTIALS.containing_type = _GRPCSERVICE_GOOGLEGRPC
 _GRPCSERVICE_GOOGLEGRPC_CHANNELCREDENTIALS.oneofs_by_name['credential_specifier'].fields.append(
   _GRPCSERVICE_GOOGLEGRPC_CHANNELCREDENTIALS.fields_by_name['ssl_credentials'])
@@ -458,10 +501,20 @@ _GRPCSERVICE_GOOGLEGRPC_CHANNELCREDENTIALS.fields_by_name['ssl_credentials'].con
 _GRPCSERVICE_GOOGLEGRPC_CHANNELCREDENTIALS.oneofs_by_name['credential_specifier'].fields.append(
   _GRPCSERVICE_GOOGLEGRPC_CHANNELCREDENTIALS.fields_by_name['google_default'])
 _GRPCSERVICE_GOOGLEGRPC_CHANNELCREDENTIALS.fields_by_name['google_default'].containing_oneof = _GRPCSERVICE_GOOGLEGRPC_CHANNELCREDENTIALS.oneofs_by_name['credential_specifier']
+_GRPCSERVICE_GOOGLEGRPC_CHANNELCREDENTIALS.oneofs_by_name['credential_specifier'].fields.append(
+  _GRPCSERVICE_GOOGLEGRPC_CHANNELCREDENTIALS.fields_by_name['local_credentials'])
+_GRPCSERVICE_GOOGLEGRPC_CHANNELCREDENTIALS.fields_by_name['local_credentials'].containing_oneof = _GRPCSERVICE_GOOGLEGRPC_CHANNELCREDENTIALS.oneofs_by_name['credential_specifier']
 _GRPCSERVICE_GOOGLEGRPC_CALLCREDENTIALS_SERVICEACCOUNTJWTACCESSCREDENTIALS.containing_type = _GRPCSERVICE_GOOGLEGRPC_CALLCREDENTIALS
 _GRPCSERVICE_GOOGLEGRPC_CALLCREDENTIALS_GOOGLEIAMCREDENTIALS.containing_type = _GRPCSERVICE_GOOGLEGRPC_CALLCREDENTIALS
 _GRPCSERVICE_GOOGLEGRPC_CALLCREDENTIALS_METADATACREDENTIALSFROMPLUGIN.fields_by_name['config'].message_type = google_dot_protobuf_dot_struct__pb2._STRUCT
+_GRPCSERVICE_GOOGLEGRPC_CALLCREDENTIALS_METADATACREDENTIALSFROMPLUGIN.fields_by_name['typed_config'].message_type = google_dot_protobuf_dot_any__pb2._ANY
 _GRPCSERVICE_GOOGLEGRPC_CALLCREDENTIALS_METADATACREDENTIALSFROMPLUGIN.containing_type = _GRPCSERVICE_GOOGLEGRPC_CALLCREDENTIALS
+_GRPCSERVICE_GOOGLEGRPC_CALLCREDENTIALS_METADATACREDENTIALSFROMPLUGIN.oneofs_by_name['config_type'].fields.append(
+  _GRPCSERVICE_GOOGLEGRPC_CALLCREDENTIALS_METADATACREDENTIALSFROMPLUGIN.fields_by_name['config'])
+_GRPCSERVICE_GOOGLEGRPC_CALLCREDENTIALS_METADATACREDENTIALSFROMPLUGIN.fields_by_name['config'].containing_oneof = _GRPCSERVICE_GOOGLEGRPC_CALLCREDENTIALS_METADATACREDENTIALSFROMPLUGIN.oneofs_by_name['config_type']
+_GRPCSERVICE_GOOGLEGRPC_CALLCREDENTIALS_METADATACREDENTIALSFROMPLUGIN.oneofs_by_name['config_type'].fields.append(
+  _GRPCSERVICE_GOOGLEGRPC_CALLCREDENTIALS_METADATACREDENTIALSFROMPLUGIN.fields_by_name['typed_config'])
+_GRPCSERVICE_GOOGLEGRPC_CALLCREDENTIALS_METADATACREDENTIALSFROMPLUGIN.fields_by_name['typed_config'].containing_oneof = _GRPCSERVICE_GOOGLEGRPC_CALLCREDENTIALS_METADATACREDENTIALSFROMPLUGIN.oneofs_by_name['config_type']
 _GRPCSERVICE_GOOGLEGRPC_CALLCREDENTIALS.fields_by_name['google_compute_engine'].message_type = google_dot_protobuf_dot_empty__pb2._EMPTY
 _GRPCSERVICE_GOOGLEGRPC_CALLCREDENTIALS.fields_by_name['service_account_jwt_access'].message_type = _GRPCSERVICE_GOOGLEGRPC_CALLCREDENTIALS_SERVICEACCOUNTJWTACCESSCREDENTIALS
 _GRPCSERVICE_GOOGLEGRPC_CALLCREDENTIALS.fields_by_name['google_iam'].message_type = _GRPCSERVICE_GOOGLEGRPC_CALLCREDENTIALS_GOOGLEIAMCREDENTIALS
@@ -520,6 +573,13 @@ GrpcService = _reflection.GeneratedProtocolMessageType('GrpcService', (_message.
       ))
     ,
 
+    GoogleLocalCredentials = _reflection.GeneratedProtocolMessageType('GoogleLocalCredentials', (_message.Message,), dict(
+      DESCRIPTOR = _GRPCSERVICE_GOOGLEGRPC_GOOGLELOCALCREDENTIALS,
+      __module__ = 'envoy.api.v2.core.grpc_service_pb2'
+      # @@protoc_insertion_point(class_scope:envoy.api.v2.core.GrpcService.GoogleGrpc.GoogleLocalCredentials)
+      ))
+    ,
+
     ChannelCredentials = _reflection.GeneratedProtocolMessageType('ChannelCredentials', (_message.Message,), dict(
       DESCRIPTOR = _GRPCSERVICE_GOOGLEGRPC_CHANNELCREDENTIALS,
       __module__ = 'envoy.api.v2.core.grpc_service_pb2'
@@ -567,6 +627,7 @@ _sym_db.RegisterMessage(GrpcService)
 _sym_db.RegisterMessage(GrpcService.EnvoyGrpc)
 _sym_db.RegisterMessage(GrpcService.GoogleGrpc)
 _sym_db.RegisterMessage(GrpcService.GoogleGrpc.SslCredentials)
+_sym_db.RegisterMessage(GrpcService.GoogleGrpc.GoogleLocalCredentials)
 _sym_db.RegisterMessage(GrpcService.GoogleGrpc.ChannelCredentials)
 _sym_db.RegisterMessage(GrpcService.GoogleGrpc.CallCredentials)
 _sym_db.RegisterMessage(GrpcService.GoogleGrpc.CallCredentials.ServiceAccountJWTAccessCredentials)
@@ -575,11 +636,13 @@ _sym_db.RegisterMessage(GrpcService.GoogleGrpc.CallCredentials.MetadataCredentia
 
 
 DESCRIPTOR.has_options = True
-DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\250\342\036\001'))
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n\037io.envoyproxy.envoy.api.v2.coreB\020GrpcServiceProtoP\001\250\342\036\001'))
 _GRPCSERVICE_ENVOYGRPC.fields_by_name['cluster_name'].has_options = True
 _GRPCSERVICE_ENVOYGRPC.fields_by_name['cluster_name']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004r\002 \001'))
 _GRPCSERVICE_GOOGLEGRPC_CHANNELCREDENTIALS.oneofs_by_name['credential_specifier'].has_options = True
 _GRPCSERVICE_GOOGLEGRPC_CHANNELCREDENTIALS.oneofs_by_name['credential_specifier']._options = _descriptor._ParseOptions(descriptor_pb2.OneofOptions(), _b('\270\351\300\003\001'))
+_GRPCSERVICE_GOOGLEGRPC_CALLCREDENTIALS_METADATACREDENTIALSFROMPLUGIN.fields_by_name['config'].has_options = True
+_GRPCSERVICE_GOOGLEGRPC_CALLCREDENTIALS_METADATACREDENTIALSFROMPLUGIN.fields_by_name['config']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\030\001'))
 _GRPCSERVICE_GOOGLEGRPC_CALLCREDENTIALS.oneofs_by_name['credential_specifier'].has_options = True
 _GRPCSERVICE_GOOGLEGRPC_CALLCREDENTIALS.oneofs_by_name['credential_specifier']._options = _descriptor._ParseOptions(descriptor_pb2.OneofOptions(), _b('\270\351\300\003\001'))
 _GRPCSERVICE_GOOGLEGRPC.fields_by_name['target_uri'].has_options = True

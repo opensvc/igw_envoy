@@ -23,7 +23,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='envoy/config/filter/http/buffer/v2/buffer.proto',
   package='envoy.config.filter.http.buffer.v2',
   syntax='proto3',
-  serialized_pb=_b('\n/envoy/config/filter/http/buffer/v2/buffer.proto\x12\"envoy.config.filter.http.buffer.v2\x1a\x1egoogle/protobuf/duration.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x17validate/validate.proto\x1a\x14gogoproto/gogo.proto\"\x93\x01\n\x06\x42uffer\x12\x42\n\x11max_request_bytes\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.UInt32ValueB\t\xba\xe9\xc0\x03\x04*\x02 \x00\x12\x45\n\x10max_request_time\x18\x02 \x01(\x0b\x32\x19.google.protobuf.DurationB\x10\xba\xe9\xc0\x03\x07\xaa\x01\x04\x08\x01*\x00\x98\xdf\x1f\x01\"\x8c\x01\n\x0e\x42ufferPerRoute\x12\x1d\n\x08\x64isabled\x18\x01 \x01(\x08\x42\t\xba\xe9\xc0\x03\x04j\x02\x08\x01H\x00\x12H\n\x06\x62uffer\x18\x02 \x01(\x0b\x32*.envoy.config.filter.http.buffer.v2.BufferB\n\xba\xe9\xc0\x03\x05\x8a\x01\x02\x10\x01H\x00\x42\x11\n\x08override\x12\x05\xb8\xe9\xc0\x03\x01\x42\x04Z\x02v2b\x06proto3')
+  serialized_pb=_b('\n/envoy/config/filter/http/buffer/v2/buffer.proto\x12\"envoy.config.filter.http.buffer.v2\x1a\x1egoogle/protobuf/duration.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x17validate/validate.proto\x1a\x14gogoproto/gogo.proto\"R\n\x06\x42uffer\x12\x42\n\x11max_request_bytes\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.UInt32ValueB\t\xba\xe9\xc0\x03\x04*\x02 \x00J\x04\x08\x02\x10\x03\"\x8c\x01\n\x0e\x42ufferPerRoute\x12\x1d\n\x08\x64isabled\x18\x01 \x01(\x08\x42\t\xba\xe9\xc0\x03\x04j\x02\x08\x01H\x00\x12H\n\x06\x62uffer\x18\x02 \x01(\x0b\x32*.envoy.config.filter.http.buffer.v2.BufferB\n\xba\xe9\xc0\x03\x05\x8a\x01\x02\x10\x01H\x00\x42\x11\n\x08override\x12\x05\xb8\xe9\xc0\x03\x01\x42\x45\n0io.envoyproxy.envoy.config.filter.http.buffer.v2B\x0b\x42ufferProtoP\x01Z\x02v2b\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_duration__pb2.DESCRIPTOR,google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,validate_dot_validate__pb2.DESCRIPTOR,gogoproto_dot_gogo__pb2.DESCRIPTOR,])
 
@@ -44,13 +44,6 @@ _BUFFER = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004*\002 \000'))),
-    _descriptor.FieldDescriptor(
-      name='max_request_time', full_name='envoy.config.filter.http.buffer.v2.Buffer.max_request_time', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\007\252\001\004\010\001*\000\230\337\037\001'))),
   ],
   extensions=[
   ],
@@ -63,8 +56,8 @@ _BUFFER = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=199,
-  serialized_end=346,
+  serialized_start=198,
+  serialized_end=280,
 )
 
 
@@ -104,12 +97,11 @@ _BUFFERPERROUTE = _descriptor.Descriptor(
       name='override', full_name='envoy.config.filter.http.buffer.v2.BufferPerRoute.override',
       index=0, containing_type=None, fields=[], options=_descriptor._ParseOptions(descriptor_pb2.OneofOptions(), _b('\270\351\300\003\001'))),
   ],
-  serialized_start=349,
-  serialized_end=489,
+  serialized_start=283,
+  serialized_end=423,
 )
 
 _BUFFER.fields_by_name['max_request_bytes'].message_type = google_dot_protobuf_dot_wrappers__pb2._UINT32VALUE
-_BUFFER.fields_by_name['max_request_time'].message_type = google_dot_protobuf_dot_duration__pb2._DURATION
 _BUFFERPERROUTE.fields_by_name['buffer'].message_type = _BUFFER
 _BUFFERPERROUTE.oneofs_by_name['override'].fields.append(
   _BUFFERPERROUTE.fields_by_name['disabled'])
@@ -137,11 +129,9 @@ _sym_db.RegisterMessage(BufferPerRoute)
 
 
 DESCRIPTOR.has_options = True
-DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('Z\002v2'))
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n0io.envoyproxy.envoy.config.filter.http.buffer.v2B\013BufferProtoP\001Z\002v2'))
 _BUFFER.fields_by_name['max_request_bytes'].has_options = True
 _BUFFER.fields_by_name['max_request_bytes']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004*\002 \000'))
-_BUFFER.fields_by_name['max_request_time'].has_options = True
-_BUFFER.fields_by_name['max_request_time']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\007\252\001\004\010\001*\000\230\337\037\001'))
 _BUFFERPERROUTE.oneofs_by_name['override'].has_options = True
 _BUFFERPERROUTE.oneofs_by_name['override']._options = _descriptor._ParseOptions(descriptor_pb2.OneofOptions(), _b('\270\351\300\003\001'))
 _BUFFERPERROUTE.fields_by_name['disabled'].has_options = True

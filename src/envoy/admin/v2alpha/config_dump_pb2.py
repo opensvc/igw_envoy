@@ -26,49 +26,12 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='envoy/admin/v2alpha/config_dump.proto',
   package='envoy.admin.v2alpha',
   syntax='proto3',
-  serialized_pb=_b('\n%envoy/admin/v2alpha/config_dump.proto\x12\x13\x65nvoy.admin.v2alpha\x1a\x16\x65nvoy/api/v2/cds.proto\x1a\x16\x65nvoy/api/v2/lds.proto\x1a\x16\x65nvoy/api/v2/rds.proto\x1a)envoy/config/bootstrap/v2/bootstrap.proto\x1a\x19google/protobuf/any.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x14gogoproto/gogo.proto\"\x97\x01\n\nConfigDump\x12\x43\n\x07\x63onfigs\x18\x01 \x03(\x0b\x32,.envoy.admin.v2alpha.ConfigDump.ConfigsEntryB\x04\xc8\xde\x1f\x00\x1a\x44\n\x0c\x43onfigsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12#\n\x05value\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any:\x02\x38\x01\"\x86\x01\n\x13\x42ootstrapConfigDump\x12=\n\tbootstrap\x18\x01 \x01(\x0b\x32$.envoy.config.bootstrap.v2.BootstrapB\x04\xc8\xde\x1f\x00\x12\x30\n\x0clast_updated\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"\xa1\x05\n\x13ListenersConfigDump\x12\x14\n\x0cversion_info\x18\x01 \x01(\t\x12W\n\x10static_listeners\x18\x02 \x03(\x0b\x32\x37.envoy.admin.v2alpha.ListenersConfigDump.StaticListenerB\x04\xc8\xde\x1f\x00\x12`\n\x18\x64ynamic_active_listeners\x18\x03 \x03(\x0b\x32\x38.envoy.admin.v2alpha.ListenersConfigDump.DynamicListenerB\x04\xc8\xde\x1f\x00\x12\x61\n\x19\x64ynamic_warming_listeners\x18\x04 \x03(\x0b\x32\x38.envoy.admin.v2alpha.ListenersConfigDump.DynamicListenerB\x04\xc8\xde\x1f\x00\x12\x62\n\x1a\x64ynamic_draining_listeners\x18\x05 \x03(\x0b\x32\x38.envoy.admin.v2alpha.ListenersConfigDump.DynamicListenerB\x04\xc8\xde\x1f\x00\x1al\n\x0eStaticListener\x12(\n\x08listener\x18\x01 \x01(\x0b\x32\x16.envoy.api.v2.Listener\x12\x30\n\x0clast_updated\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\x83\x01\n\x0f\x44ynamicListener\x12\x14\n\x0cversion_info\x18\x01 \x01(\t\x12(\n\x08listener\x18\x02 \x01(\x0b\x32\x16.envoy.api.v2.Listener\x12\x30\n\x0clast_updated\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"\xad\x04\n\x12\x43lustersConfigDump\x12\x14\n\x0cversion_info\x18\x01 \x01(\t\x12T\n\x0fstatic_clusters\x18\x02 \x03(\x0b\x32\x35.envoy.admin.v2alpha.ClustersConfigDump.StaticClusterB\x04\xc8\xde\x1f\x00\x12]\n\x17\x64ynamic_active_clusters\x18\x03 \x03(\x0b\x32\x36.envoy.admin.v2alpha.ClustersConfigDump.DynamicClusterB\x04\xc8\xde\x1f\x00\x12^\n\x18\x64ynamic_warming_clusters\x18\x04 \x03(\x0b\x32\x36.envoy.admin.v2alpha.ClustersConfigDump.DynamicClusterB\x04\xc8\xde\x1f\x00\x1ai\n\rStaticCluster\x12&\n\x07\x63luster\x18\x01 \x01(\x0b\x32\x15.envoy.api.v2.Cluster\x12\x30\n\x0clast_updated\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\x80\x01\n\x0e\x44ynamicCluster\x12\x14\n\x0cversion_info\x18\x01 \x01(\t\x12&\n\x07\x63luster\x18\x02 \x01(\x0b\x32\x15.envoy.api.v2.Cluster\x12\x30\n\x0clast_updated\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"\xe4\x03\n\x10RoutesConfigDump\x12[\n\x14static_route_configs\x18\x02 \x03(\x0b\x32\x37.envoy.admin.v2alpha.RoutesConfigDump.StaticRouteConfigB\x04\xc8\xde\x1f\x00\x12]\n\x15\x64ynamic_route_configs\x18\x03 \x03(\x0b\x32\x38.envoy.admin.v2alpha.RoutesConfigDump.DynamicRouteConfigB\x04\xc8\xde\x1f\x00\x1a}\n\x11StaticRouteConfig\x12\x36\n\x0croute_config\x18\x01 \x01(\x0b\x32 .envoy.api.v2.RouteConfiguration\x12\x30\n\x0clast_updated\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\x94\x01\n\x12\x44ynamicRouteConfig\x12\x14\n\x0cversion_info\x18\x01 \x01(\t\x12\x36\n\x0croute_config\x18\x02 \x01(\x0b\x32 .envoy.api.v2.RouteConfiguration\x12\x30\n\x0clast_updated\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestampb\x06proto3')
+  serialized_pb=_b('\n%envoy/admin/v2alpha/config_dump.proto\x12\x13\x65nvoy.admin.v2alpha\x1a\x16\x65nvoy/api/v2/cds.proto\x1a\x16\x65nvoy/api/v2/lds.proto\x1a\x16\x65nvoy/api/v2/rds.proto\x1a)envoy/config/bootstrap/v2/bootstrap.proto\x1a\x19google/protobuf/any.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x14gogoproto/gogo.proto\"9\n\nConfigDump\x12+\n\x07\x63onfigs\x18\x01 \x03(\x0b\x32\x14.google.protobuf.AnyB\x04\xc8\xde\x1f\x00\"\x86\x01\n\x13\x42ootstrapConfigDump\x12=\n\tbootstrap\x18\x01 \x01(\x0b\x32$.envoy.config.bootstrap.v2.BootstrapB\x04\xc8\xde\x1f\x00\x12\x30\n\x0clast_updated\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"\xa1\x05\n\x13ListenersConfigDump\x12\x14\n\x0cversion_info\x18\x01 \x01(\t\x12W\n\x10static_listeners\x18\x02 \x03(\x0b\x32\x37.envoy.admin.v2alpha.ListenersConfigDump.StaticListenerB\x04\xc8\xde\x1f\x00\x12`\n\x18\x64ynamic_active_listeners\x18\x03 \x03(\x0b\x32\x38.envoy.admin.v2alpha.ListenersConfigDump.DynamicListenerB\x04\xc8\xde\x1f\x00\x12\x61\n\x19\x64ynamic_warming_listeners\x18\x04 \x03(\x0b\x32\x38.envoy.admin.v2alpha.ListenersConfigDump.DynamicListenerB\x04\xc8\xde\x1f\x00\x12\x62\n\x1a\x64ynamic_draining_listeners\x18\x05 \x03(\x0b\x32\x38.envoy.admin.v2alpha.ListenersConfigDump.DynamicListenerB\x04\xc8\xde\x1f\x00\x1al\n\x0eStaticListener\x12(\n\x08listener\x18\x01 \x01(\x0b\x32\x16.envoy.api.v2.Listener\x12\x30\n\x0clast_updated\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\x83\x01\n\x0f\x44ynamicListener\x12\x14\n\x0cversion_info\x18\x01 \x01(\t\x12(\n\x08listener\x18\x02 \x01(\x0b\x32\x16.envoy.api.v2.Listener\x12\x30\n\x0clast_updated\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"\xad\x04\n\x12\x43lustersConfigDump\x12\x14\n\x0cversion_info\x18\x01 \x01(\t\x12T\n\x0fstatic_clusters\x18\x02 \x03(\x0b\x32\x35.envoy.admin.v2alpha.ClustersConfigDump.StaticClusterB\x04\xc8\xde\x1f\x00\x12]\n\x17\x64ynamic_active_clusters\x18\x03 \x03(\x0b\x32\x36.envoy.admin.v2alpha.ClustersConfigDump.DynamicClusterB\x04\xc8\xde\x1f\x00\x12^\n\x18\x64ynamic_warming_clusters\x18\x04 \x03(\x0b\x32\x36.envoy.admin.v2alpha.ClustersConfigDump.DynamicClusterB\x04\xc8\xde\x1f\x00\x1ai\n\rStaticCluster\x12&\n\x07\x63luster\x18\x01 \x01(\x0b\x32\x15.envoy.api.v2.Cluster\x12\x30\n\x0clast_updated\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\x80\x01\n\x0e\x44ynamicCluster\x12\x14\n\x0cversion_info\x18\x01 \x01(\t\x12&\n\x07\x63luster\x18\x02 \x01(\x0b\x32\x15.envoy.api.v2.Cluster\x12\x30\n\x0clast_updated\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"\xe4\x03\n\x10RoutesConfigDump\x12[\n\x14static_route_configs\x18\x02 \x03(\x0b\x32\x37.envoy.admin.v2alpha.RoutesConfigDump.StaticRouteConfigB\x04\xc8\xde\x1f\x00\x12]\n\x15\x64ynamic_route_configs\x18\x03 \x03(\x0b\x32\x38.envoy.admin.v2alpha.RoutesConfigDump.DynamicRouteConfigB\x04\xc8\xde\x1f\x00\x1a}\n\x11StaticRouteConfig\x12\x36\n\x0croute_config\x18\x01 \x01(\x0b\x32 .envoy.api.v2.RouteConfiguration\x12\x30\n\x0clast_updated\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\x94\x01\n\x12\x44ynamicRouteConfig\x12\x14\n\x0cversion_info\x18\x01 \x01(\t\x12\x36\n\x0croute_config\x18\x02 \x01(\x0b\x32 .envoy.api.v2.RouteConfiguration\x12\x30\n\x0clast_updated\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.TimestampB6\n!io.envoyproxy.envoy.admin.v2alphaB\x0f\x43onfigDumpProtoP\x01\x62\x06proto3')
   ,
   dependencies=[envoy_dot_api_dot_v2_dot_cds__pb2.DESCRIPTOR,envoy_dot_api_dot_v2_dot_lds__pb2.DESCRIPTOR,envoy_dot_api_dot_v2_dot_rds__pb2.DESCRIPTOR,envoy_dot_config_dot_bootstrap_dot_v2_dot_bootstrap__pb2.DESCRIPTOR,google_dot_protobuf_dot_any__pb2.DESCRIPTOR,google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,gogoproto_dot_gogo__pb2.DESCRIPTOR,])
 
 
 
-
-_CONFIGDUMP_CONFIGSENTRY = _descriptor.Descriptor(
-  name='ConfigsEntry',
-  full_name='envoy.admin.v2alpha.ConfigDump.ConfigsEntry',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='key', full_name='envoy.admin.v2alpha.ConfigDump.ConfigsEntry.key', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-    _descriptor.FieldDescriptor(
-      name='value', full_name='envoy.admin.v2alpha.ConfigDump.ConfigsEntry.value', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  options=_descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001')),
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=343,
-  serialized_end=411,
-)
 
 _CONFIGDUMP = _descriptor.Descriptor(
   name='ConfigDump',
@@ -87,7 +50,7 @@ _CONFIGDUMP = _descriptor.Descriptor(
   ],
   extensions=[
   ],
-  nested_types=[_CONFIGDUMP_CONFIGSENTRY, ],
+  nested_types=[],
   enum_types=[
   ],
   options=None,
@@ -96,8 +59,8 @@ _CONFIGDUMP = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=260,
-  serialized_end=411,
+  serialized_start=259,
+  serialized_end=316,
 )
 
 
@@ -134,8 +97,8 @@ _BOOTSTRAPCONFIGDUMP = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=414,
-  serialized_end=548,
+  serialized_start=319,
+  serialized_end=453,
 )
 
 
@@ -172,8 +135,8 @@ _LISTENERSCONFIGDUMP_STATICLISTENER = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=982,
-  serialized_end=1090,
+  serialized_start=887,
+  serialized_end=995,
 )
 
 _LISTENERSCONFIGDUMP_DYNAMICLISTENER = _descriptor.Descriptor(
@@ -216,8 +179,8 @@ _LISTENERSCONFIGDUMP_DYNAMICLISTENER = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1093,
-  serialized_end=1224,
+  serialized_start=998,
+  serialized_end=1129,
 )
 
 _LISTENERSCONFIGDUMP = _descriptor.Descriptor(
@@ -274,8 +237,8 @@ _LISTENERSCONFIGDUMP = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=551,
-  serialized_end=1224,
+  serialized_start=456,
+  serialized_end=1129,
 )
 
 
@@ -312,8 +275,8 @@ _CLUSTERSCONFIGDUMP_STATICCLUSTER = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1548,
-  serialized_end=1653,
+  serialized_start=1453,
+  serialized_end=1558,
 )
 
 _CLUSTERSCONFIGDUMP_DYNAMICCLUSTER = _descriptor.Descriptor(
@@ -356,8 +319,8 @@ _CLUSTERSCONFIGDUMP_DYNAMICCLUSTER = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1656,
-  serialized_end=1784,
+  serialized_start=1561,
+  serialized_end=1689,
 )
 
 _CLUSTERSCONFIGDUMP = _descriptor.Descriptor(
@@ -407,8 +370,8 @@ _CLUSTERSCONFIGDUMP = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1227,
-  serialized_end=1784,
+  serialized_start=1132,
+  serialized_end=1689,
 )
 
 
@@ -445,8 +408,8 @@ _ROUTESCONFIGDUMP_STATICROUTECONFIG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1995,
-  serialized_end=2120,
+  serialized_start=1900,
+  serialized_end=2025,
 )
 
 _ROUTESCONFIGDUMP_DYNAMICROUTECONFIG = _descriptor.Descriptor(
@@ -489,8 +452,8 @@ _ROUTESCONFIGDUMP_DYNAMICROUTECONFIG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2123,
-  serialized_end=2271,
+  serialized_start=2028,
+  serialized_end=2176,
 )
 
 _ROUTESCONFIGDUMP = _descriptor.Descriptor(
@@ -526,13 +489,11 @@ _ROUTESCONFIGDUMP = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1787,
-  serialized_end=2271,
+  serialized_start=1692,
+  serialized_end=2176,
 )
 
-_CONFIGDUMP_CONFIGSENTRY.fields_by_name['value'].message_type = google_dot_protobuf_dot_any__pb2._ANY
-_CONFIGDUMP_CONFIGSENTRY.containing_type = _CONFIGDUMP
-_CONFIGDUMP.fields_by_name['configs'].message_type = _CONFIGDUMP_CONFIGSENTRY
+_CONFIGDUMP.fields_by_name['configs'].message_type = google_dot_protobuf_dot_any__pb2._ANY
 _BOOTSTRAPCONFIGDUMP.fields_by_name['bootstrap'].message_type = envoy_dot_config_dot_bootstrap_dot_v2_dot_bootstrap__pb2._BOOTSTRAP
 _BOOTSTRAPCONFIGDUMP.fields_by_name['last_updated'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 _LISTENERSCONFIGDUMP_STATICLISTENER.fields_by_name['listener'].message_type = envoy_dot_api_dot_v2_dot_lds__pb2._LISTENER
@@ -570,19 +531,11 @@ DESCRIPTOR.message_types_by_name['RoutesConfigDump'] = _ROUTESCONFIGDUMP
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 ConfigDump = _reflection.GeneratedProtocolMessageType('ConfigDump', (_message.Message,), dict(
-
-  ConfigsEntry = _reflection.GeneratedProtocolMessageType('ConfigsEntry', (_message.Message,), dict(
-    DESCRIPTOR = _CONFIGDUMP_CONFIGSENTRY,
-    __module__ = 'envoy.admin.v2alpha.config_dump_pb2'
-    # @@protoc_insertion_point(class_scope:envoy.admin.v2alpha.ConfigDump.ConfigsEntry)
-    ))
-  ,
   DESCRIPTOR = _CONFIGDUMP,
   __module__ = 'envoy.admin.v2alpha.config_dump_pb2'
   # @@protoc_insertion_point(class_scope:envoy.admin.v2alpha.ConfigDump)
   ))
 _sym_db.RegisterMessage(ConfigDump)
-_sym_db.RegisterMessage(ConfigDump.ConfigsEntry)
 
 BootstrapConfigDump = _reflection.GeneratedProtocolMessageType('BootstrapConfigDump', (_message.Message,), dict(
   DESCRIPTOR = _BOOTSTRAPCONFIGDUMP,
@@ -661,8 +614,8 @@ _sym_db.RegisterMessage(RoutesConfigDump.StaticRouteConfig)
 _sym_db.RegisterMessage(RoutesConfigDump.DynamicRouteConfig)
 
 
-_CONFIGDUMP_CONFIGSENTRY.has_options = True
-_CONFIGDUMP_CONFIGSENTRY._options = _descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001'))
+DESCRIPTOR.has_options = True
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n!io.envoyproxy.envoy.admin.v2alphaB\017ConfigDumpProtoP\001'))
 _CONFIGDUMP.fields_by_name['configs'].has_options = True
 _CONFIGDUMP.fields_by_name['configs']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\310\336\037\000'))
 _BOOTSTRAPCONFIGDUMP.fields_by_name['bootstrap'].has_options = True

@@ -21,7 +21,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='envoy/config/filter/network/ext_authz/v2/ext_authz.proto',
   package='envoy.config.filter.network.ext_authz.v2',
   syntax='proto3',
-  serialized_pb=_b('\n8envoy/config/filter/network/ext_authz/v2/ext_authz.proto\x12(envoy.config.filter.network.ext_authz.v2\x1a$envoy/api/v2/core/grpc_service.proto\x1a\x17validate/validate.proto\"|\n\x08\x45xtAuthz\x12\x1e\n\x0bstat_prefix\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12\x34\n\x0cgrpc_service\x18\x02 \x01(\x0b\x32\x1e.envoy.api.v2.core.GrpcService\x12\x1a\n\x12\x66\x61ilure_mode_allow\x18\x03 \x01(\x08\x42\x04Z\x02v2b\x06proto3')
+  serialized_pb=_b('\n8envoy/config/filter/network/ext_authz/v2/ext_authz.proto\x12(envoy.config.filter.network.ext_authz.v2\x1a$envoy/api/v2/core/grpc_service.proto\x1a\x17validate/validate.proto\"|\n\x08\x45xtAuthz\x12\x1e\n\x0bstat_prefix\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12\x34\n\x0cgrpc_service\x18\x02 \x01(\x0b\x32\x1e.envoy.api.v2.core.GrpcService\x12\x1a\n\x12\x66\x61ilure_mode_allow\x18\x03 \x01(\x08\x42M\n6io.envoyproxy.envoy.config.filter.network.ext_authz.v2B\rExtAuthzProtoP\x01Z\x02v2b\x06proto3')
   ,
   dependencies=[envoy_dot_api_dot_v2_dot_core_dot_grpc__service__pb2.DESCRIPTOR,validate_dot_validate__pb2.DESCRIPTOR,])
 
@@ -85,7 +85,7 @@ _sym_db.RegisterMessage(ExtAuthz)
 
 
 DESCRIPTOR.has_options = True
-DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('Z\002v2'))
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n6io.envoyproxy.envoy.config.filter.network.ext_authz.v2B\rExtAuthzProtoP\001Z\002v2'))
 _EXTAUTHZ.fields_by_name['stat_prefix'].has_options = True
 _EXTAUTHZ.fields_by_name['stat_prefix']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004r\002 \001'))
 try:

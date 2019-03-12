@@ -23,7 +23,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='envoy/admin/v2alpha/clusters.proto',
   package='envoy.admin.v2alpha',
   syntax='proto3',
-  serialized_pb=_b('\n\"envoy/admin/v2alpha/clusters.proto\x12\x13\x65nvoy.admin.v2alpha\x1a!envoy/admin/v2alpha/metrics.proto\x1a\x1f\x65nvoy/api/v2/core/address.proto\x1a$envoy/api/v2/core/health_check.proto\x1a\x18\x65nvoy/type/percent.proto\"H\n\x08\x43lusters\x12<\n\x10\x63luster_statuses\x18\x01 \x03(\x0b\x32\".envoy.admin.v2alpha.ClusterStatus\"\xaa\x01\n\rClusterStatus\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x15\n\radded_via_api\x18\x02 \x01(\x08\x12<\n\x1fsuccess_rate_ejection_threshold\x18\x03 \x01(\x0b\x32\x13.envoy.type.Percent\x12\x36\n\rhost_statuses\x18\x04 \x03(\x0b\x32\x1f.envoy.admin.v2alpha.HostStatus\"\xae\x02\n\nHostStatus\x12+\n\x07\x61\x64\x64ress\x18\x01 \x01(\x0b\x32\x1a.envoy.api.v2.core.Address\x12\x39\n\x05stats\x18\x02 \x03(\x0b\x32*.envoy.admin.v2alpha.HostStatus.StatsEntry\x12<\n\rhealth_status\x18\x03 \x01(\x0b\x32%.envoy.admin.v2alpha.HostHealthStatus\x12)\n\x0csuccess_rate\x18\x04 \x01(\x0b\x32\x13.envoy.type.Percent\x1aO\n\nStatsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x30\n\x05value\x18\x02 \x01(\x0b\x32!.envoy.admin.v2alpha.SimpleMetric:\x02\x38\x01\"\x90\x01\n\x10HostHealthStatus\x12\"\n\x1a\x66\x61iled_active_health_check\x18\x01 \x01(\x08\x12\x1c\n\x14\x66\x61iled_outlier_check\x18\x02 \x01(\x08\x12:\n\x11\x65\x64s_health_status\x18\x03 \x01(\x0e\x32\x1f.envoy.api.v2.core.HealthStatusb\x06proto3')
+  serialized_pb=_b('\n\"envoy/admin/v2alpha/clusters.proto\x12\x13\x65nvoy.admin.v2alpha\x1a!envoy/admin/v2alpha/metrics.proto\x1a\x1f\x65nvoy/api/v2/core/address.proto\x1a$envoy/api/v2/core/health_check.proto\x1a\x18\x65nvoy/type/percent.proto\"H\n\x08\x43lusters\x12<\n\x10\x63luster_statuses\x18\x01 \x03(\x0b\x32\".envoy.admin.v2alpha.ClusterStatus\"\xaa\x01\n\rClusterStatus\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x15\n\radded_via_api\x18\x02 \x01(\x08\x12<\n\x1fsuccess_rate_ejection_threshold\x18\x03 \x01(\x0b\x32\x13.envoy.type.Percent\x12\x36\n\rhost_statuses\x18\x04 \x03(\x0b\x32\x1f.envoy.admin.v2alpha.HostStatus\"\xe4\x01\n\nHostStatus\x12+\n\x07\x61\x64\x64ress\x18\x01 \x01(\x0b\x32\x1a.envoy.api.v2.core.Address\x12\x30\n\x05stats\x18\x02 \x03(\x0b\x32!.envoy.admin.v2alpha.SimpleMetric\x12<\n\rhealth_status\x18\x03 \x01(\x0b\x32%.envoy.admin.v2alpha.HostHealthStatus\x12)\n\x0csuccess_rate\x18\x04 \x01(\x0b\x32\x13.envoy.type.Percent\x12\x0e\n\x06weight\x18\x05 \x01(\r\"\xb6\x01\n\x10HostHealthStatus\x12\"\n\x1a\x66\x61iled_active_health_check\x18\x01 \x01(\x08\x12\x1c\n\x14\x66\x61iled_outlier_check\x18\x02 \x01(\x08\x12$\n\x1c\x66\x61iled_active_degraded_check\x18\x04 \x01(\x08\x12:\n\x11\x65\x64s_health_status\x18\x03 \x01(\x0e\x32\x1f.envoy.api.v2.core.HealthStatusB4\n!io.envoyproxy.envoy.admin.v2alphaB\rClustersProtoP\x01\x62\x06proto3')
   ,
   dependencies=[envoy_dot_admin_dot_v2alpha_dot_metrics__pb2.DESCRIPTOR,envoy_dot_api_dot_v2_dot_core_dot_address__pb2.DESCRIPTOR,envoy_dot_api_dot_v2_dot_core_dot_health__check__pb2.DESCRIPTOR,envoy_dot_type_dot_percent__pb2.DESCRIPTOR,])
 
@@ -113,43 +113,6 @@ _CLUSTERSTATUS = _descriptor.Descriptor(
 )
 
 
-_HOSTSTATUS_STATSENTRY = _descriptor.Descriptor(
-  name='StatsEntry',
-  full_name='envoy.admin.v2alpha.HostStatus.StatsEntry',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='key', full_name='envoy.admin.v2alpha.HostStatus.StatsEntry.key', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-    _descriptor.FieldDescriptor(
-      name='value', full_name='envoy.admin.v2alpha.HostStatus.StatsEntry.value', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  options=_descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001')),
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=662,
-  serialized_end=741,
-)
-
 _HOSTSTATUS = _descriptor.Descriptor(
   name='HostStatus',
   full_name='envoy.admin.v2alpha.HostStatus',
@@ -185,10 +148,17 @@ _HOSTSTATUS = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
+    _descriptor.FieldDescriptor(
+      name='weight', full_name='envoy.admin.v2alpha.HostStatus.weight', index=4,
+      number=5, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
-  nested_types=[_HOSTSTATUS_STATSENTRY, ],
+  nested_types=[],
   enum_types=[
   ],
   options=None,
@@ -198,7 +168,7 @@ _HOSTSTATUS = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=439,
-  serialized_end=741,
+  serialized_end=667,
 )
 
 
@@ -224,7 +194,14 @@ _HOSTHEALTHSTATUS = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='eds_health_status', full_name='envoy.admin.v2alpha.HostHealthStatus.eds_health_status', index=2,
+      name='failed_active_degraded_check', full_name='envoy.admin.v2alpha.HostHealthStatus.failed_active_degraded_check', index=2,
+      number=4, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='eds_health_status', full_name='envoy.admin.v2alpha.HostHealthStatus.eds_health_status', index=3,
       number=3, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -242,17 +219,15 @@ _HOSTHEALTHSTATUS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=744,
-  serialized_end=888,
+  serialized_start=670,
+  serialized_end=852,
 )
 
 _CLUSTERS.fields_by_name['cluster_statuses'].message_type = _CLUSTERSTATUS
 _CLUSTERSTATUS.fields_by_name['success_rate_ejection_threshold'].message_type = envoy_dot_type_dot_percent__pb2._PERCENT
 _CLUSTERSTATUS.fields_by_name['host_statuses'].message_type = _HOSTSTATUS
-_HOSTSTATUS_STATSENTRY.fields_by_name['value'].message_type = envoy_dot_admin_dot_v2alpha_dot_metrics__pb2._SIMPLEMETRIC
-_HOSTSTATUS_STATSENTRY.containing_type = _HOSTSTATUS
 _HOSTSTATUS.fields_by_name['address'].message_type = envoy_dot_api_dot_v2_dot_core_dot_address__pb2._ADDRESS
-_HOSTSTATUS.fields_by_name['stats'].message_type = _HOSTSTATUS_STATSENTRY
+_HOSTSTATUS.fields_by_name['stats'].message_type = envoy_dot_admin_dot_v2alpha_dot_metrics__pb2._SIMPLEMETRIC
 _HOSTSTATUS.fields_by_name['health_status'].message_type = _HOSTHEALTHSTATUS
 _HOSTSTATUS.fields_by_name['success_rate'].message_type = envoy_dot_type_dot_percent__pb2._PERCENT
 _HOSTHEALTHSTATUS.fields_by_name['eds_health_status'].enum_type = envoy_dot_api_dot_v2_dot_core_dot_health__check__pb2._HEALTHSTATUS
@@ -277,19 +252,11 @@ ClusterStatus = _reflection.GeneratedProtocolMessageType('ClusterStatus', (_mess
 _sym_db.RegisterMessage(ClusterStatus)
 
 HostStatus = _reflection.GeneratedProtocolMessageType('HostStatus', (_message.Message,), dict(
-
-  StatsEntry = _reflection.GeneratedProtocolMessageType('StatsEntry', (_message.Message,), dict(
-    DESCRIPTOR = _HOSTSTATUS_STATSENTRY,
-    __module__ = 'envoy.admin.v2alpha.clusters_pb2'
-    # @@protoc_insertion_point(class_scope:envoy.admin.v2alpha.HostStatus.StatsEntry)
-    ))
-  ,
   DESCRIPTOR = _HOSTSTATUS,
   __module__ = 'envoy.admin.v2alpha.clusters_pb2'
   # @@protoc_insertion_point(class_scope:envoy.admin.v2alpha.HostStatus)
   ))
 _sym_db.RegisterMessage(HostStatus)
-_sym_db.RegisterMessage(HostStatus.StatsEntry)
 
 HostHealthStatus = _reflection.GeneratedProtocolMessageType('HostHealthStatus', (_message.Message,), dict(
   DESCRIPTOR = _HOSTHEALTHSTATUS,
@@ -299,8 +266,8 @@ HostHealthStatus = _reflection.GeneratedProtocolMessageType('HostHealthStatus', 
 _sym_db.RegisterMessage(HostHealthStatus)
 
 
-_HOSTSTATUS_STATSENTRY.has_options = True
-_HOSTSTATUS_STATSENTRY._options = _descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001'))
+DESCRIPTOR.has_options = True
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n!io.envoyproxy.envoy.admin.v2alphaB\rClustersProtoP\001'))
 try:
   # THESE ELEMENTS WILL BE DEPRECATED.
   # Please use the generated *_pb2_grpc.py files instead.

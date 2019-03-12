@@ -23,7 +23,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='envoy/api/v2/discovery.proto',
   package='envoy.api.v2',
   syntax='proto3',
-  serialized_pb=_b('\n\x1c\x65nvoy/api/v2/discovery.proto\x12\x0c\x65nvoy.api.v2\x1a\x1c\x65nvoy/api/v2/core/base.proto\x1a\x19google/protobuf/any.proto\x1a\x17google/rpc/status.proto\x1a\x14gogoproto/gogo.proto\"\xbb\x01\n\x10\x44iscoveryRequest\x12\x14\n\x0cversion_info\x18\x01 \x01(\t\x12%\n\x04node\x18\x02 \x01(\x0b\x32\x17.envoy.api.v2.core.Node\x12\x16\n\x0eresource_names\x18\x03 \x03(\t\x12\x10\n\x08type_url\x18\x04 \x01(\t\x12\x16\n\x0eresponse_nonce\x18\x05 \x01(\t\x12(\n\x0c\x65rror_detail\x18\x06 \x01(\x0b\x32\x12.google.rpc.Status\"\x89\x01\n\x11\x44iscoveryResponse\x12\x14\n\x0cversion_info\x18\x01 \x01(\t\x12-\n\tresources\x18\x02 \x03(\x0b\x32\x14.google.protobuf.AnyB\x04\xc8\xde\x1f\x00\x12\x0e\n\x06\x63\x61nary\x18\x03 \x01(\x08\x12\x10\n\x08type_url\x18\x04 \x01(\t\x12\r\n\x05nonce\x18\x05 \x01(\t\"\x89\x03\n\x1bIncrementalDiscoveryRequest\x12%\n\x04node\x18\x01 \x01(\x0b\x32\x17.envoy.api.v2.core.Node\x12\x10\n\x08type_url\x18\x02 \x01(\t\x12 \n\x18resource_names_subscribe\x18\x03 \x03(\t\x12\"\n\x1aresource_names_unsubscribe\x18\x04 \x03(\t\x12i\n\x19initial_resource_versions\x18\x05 \x03(\x0b\x32\x46.envoy.api.v2.IncrementalDiscoveryRequest.InitialResourceVersionsEntry\x12\x16\n\x0eresponse_nonce\x18\x06 \x01(\t\x12(\n\x0c\x65rror_detail\x18\x07 \x01(\x0b\x32\x12.google.rpc.Status\x1a>\n\x1cInitialResourceVersionsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\x96\x01\n\x1cIncrementalDiscoveryResponse\x12\x1b\n\x13system_version_info\x18\x01 \x01(\t\x12/\n\tresources\x18\x02 \x03(\x0b\x32\x16.envoy.api.v2.ResourceB\x04\xc8\xde\x1f\x00\x12\x19\n\x11removed_resources\x18\x06 \x03(\t\x12\r\n\x05nonce\x18\x05 \x01(\t\"C\n\x08Resource\x12\x0f\n\x07version\x18\x01 \x01(\t\x12&\n\x08resource\x18\x02 \x01(\x0b\x32\x14.google.protobuf.AnyB\x08Z\x02v2\xa8\xe2\x1e\x01\x62\x06proto3')
+  serialized_pb=_b('\n\x1c\x65nvoy/api/v2/discovery.proto\x12\x0c\x65nvoy.api.v2\x1a\x1c\x65nvoy/api/v2/core/base.proto\x1a\x19google/protobuf/any.proto\x1a\x17google/rpc/status.proto\x1a\x14gogoproto/gogo.proto\"\xbb\x01\n\x10\x44iscoveryRequest\x12\x14\n\x0cversion_info\x18\x01 \x01(\t\x12%\n\x04node\x18\x02 \x01(\x0b\x32\x17.envoy.api.v2.core.Node\x12\x16\n\x0eresource_names\x18\x03 \x03(\t\x12\x10\n\x08type_url\x18\x04 \x01(\t\x12\x16\n\x0eresponse_nonce\x18\x05 \x01(\t\x12(\n\x0c\x65rror_detail\x18\x06 \x01(\x0b\x32\x12.google.rpc.Status\"\xc1\x01\n\x11\x44iscoveryResponse\x12\x14\n\x0cversion_info\x18\x01 \x01(\t\x12-\n\tresources\x18\x02 \x03(\x0b\x32\x14.google.protobuf.AnyB\x04\xc8\xde\x1f\x00\x12\x0e\n\x06\x63\x61nary\x18\x03 \x01(\x08\x12\x10\n\x08type_url\x18\x04 \x01(\t\x12\r\n\x05nonce\x18\x05 \x01(\t\x12\x36\n\rcontrol_plane\x18\x06 \x01(\x0b\x32\x1f.envoy.api.v2.core.ControlPlane\"\xfd\x02\n\x15\x44\x65ltaDiscoveryRequest\x12%\n\x04node\x18\x01 \x01(\x0b\x32\x17.envoy.api.v2.core.Node\x12\x10\n\x08type_url\x18\x02 \x01(\t\x12 \n\x18resource_names_subscribe\x18\x03 \x03(\t\x12\"\n\x1aresource_names_unsubscribe\x18\x04 \x03(\t\x12\x63\n\x19initial_resource_versions\x18\x05 \x03(\x0b\x32@.envoy.api.v2.DeltaDiscoveryRequest.InitialResourceVersionsEntry\x12\x16\n\x0eresponse_nonce\x18\x06 \x01(\t\x12(\n\x0c\x65rror_detail\x18\x07 \x01(\x0b\x32\x12.google.rpc.Status\x1a>\n\x1cInitialResourceVersionsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\x90\x01\n\x16\x44\x65ltaDiscoveryResponse\x12\x1b\n\x13system_version_info\x18\x01 \x01(\t\x12/\n\tresources\x18\x02 \x03(\x0b\x32\x16.envoy.api.v2.ResourceB\x04\xc8\xde\x1f\x00\x12\x19\n\x11removed_resources\x18\x06 \x03(\t\x12\r\n\x05nonce\x18\x05 \x01(\t\"Q\n\x08Resource\x12\x0c\n\x04name\x18\x03 \x01(\t\x12\x0f\n\x07version\x18\x01 \x01(\t\x12&\n\x08resource\x18\x02 \x01(\x0b\x32\x14.google.protobuf.AnyB6\n\x1aio.envoyproxy.envoy.api.v2B\x0e\x44iscoveryProtoP\x01Z\x02v2\xa8\xe2\x1e\x01\x62\x06proto3')
   ,
   dependencies=[envoy_dot_api_dot_v2_dot_core_dot_base__pb2.DESCRIPTOR,google_dot_protobuf_dot_any__pb2.DESCRIPTOR,google_dot_rpc_dot_status__pb2.DESCRIPTOR,gogoproto_dot_gogo__pb2.DESCRIPTOR,])
 
@@ -138,6 +138,13 @@ _DISCOVERYRESPONSE = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
+    _descriptor.FieldDescriptor(
+      name='control_plane', full_name='envoy.api.v2.DiscoveryResponse.control_plane', index=5,
+      number=6, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -151,26 +158,26 @@ _DISCOVERYRESPONSE = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=341,
-  serialized_end=478,
+  serialized_end=534,
 )
 
 
-_INCREMENTALDISCOVERYREQUEST_INITIALRESOURCEVERSIONSENTRY = _descriptor.Descriptor(
+_DELTADISCOVERYREQUEST_INITIALRESOURCEVERSIONSENTRY = _descriptor.Descriptor(
   name='InitialResourceVersionsEntry',
-  full_name='envoy.api.v2.IncrementalDiscoveryRequest.InitialResourceVersionsEntry',
+  full_name='envoy.api.v2.DeltaDiscoveryRequest.InitialResourceVersionsEntry',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='key', full_name='envoy.api.v2.IncrementalDiscoveryRequest.InitialResourceVersionsEntry.key', index=0,
+      name='key', full_name='envoy.api.v2.DeltaDiscoveryRequest.InitialResourceVersionsEntry.key', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='value', full_name='envoy.api.v2.IncrementalDiscoveryRequest.InitialResourceVersionsEntry.value', index=1,
+      name='value', full_name='envoy.api.v2.DeltaDiscoveryRequest.InitialResourceVersionsEntry.value', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -188,61 +195,61 @@ _INCREMENTALDISCOVERYREQUEST_INITIALRESOURCEVERSIONSENTRY = _descriptor.Descript
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=812,
-  serialized_end=874,
+  serialized_start=856,
+  serialized_end=918,
 )
 
-_INCREMENTALDISCOVERYREQUEST = _descriptor.Descriptor(
-  name='IncrementalDiscoveryRequest',
-  full_name='envoy.api.v2.IncrementalDiscoveryRequest',
+_DELTADISCOVERYREQUEST = _descriptor.Descriptor(
+  name='DeltaDiscoveryRequest',
+  full_name='envoy.api.v2.DeltaDiscoveryRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='node', full_name='envoy.api.v2.IncrementalDiscoveryRequest.node', index=0,
+      name='node', full_name='envoy.api.v2.DeltaDiscoveryRequest.node', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='type_url', full_name='envoy.api.v2.IncrementalDiscoveryRequest.type_url', index=1,
+      name='type_url', full_name='envoy.api.v2.DeltaDiscoveryRequest.type_url', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='resource_names_subscribe', full_name='envoy.api.v2.IncrementalDiscoveryRequest.resource_names_subscribe', index=2,
+      name='resource_names_subscribe', full_name='envoy.api.v2.DeltaDiscoveryRequest.resource_names_subscribe', index=2,
       number=3, type=9, cpp_type=9, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='resource_names_unsubscribe', full_name='envoy.api.v2.IncrementalDiscoveryRequest.resource_names_unsubscribe', index=3,
+      name='resource_names_unsubscribe', full_name='envoy.api.v2.DeltaDiscoveryRequest.resource_names_unsubscribe', index=3,
       number=4, type=9, cpp_type=9, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='initial_resource_versions', full_name='envoy.api.v2.IncrementalDiscoveryRequest.initial_resource_versions', index=4,
+      name='initial_resource_versions', full_name='envoy.api.v2.DeltaDiscoveryRequest.initial_resource_versions', index=4,
       number=5, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='response_nonce', full_name='envoy.api.v2.IncrementalDiscoveryRequest.response_nonce', index=5,
+      name='response_nonce', full_name='envoy.api.v2.DeltaDiscoveryRequest.response_nonce', index=5,
       number=6, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='error_detail', full_name='envoy.api.v2.IncrementalDiscoveryRequest.error_detail', index=6,
+      name='error_detail', full_name='envoy.api.v2.DeltaDiscoveryRequest.error_detail', index=6,
       number=7, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -251,7 +258,7 @@ _INCREMENTALDISCOVERYREQUEST = _descriptor.Descriptor(
   ],
   extensions=[
   ],
-  nested_types=[_INCREMENTALDISCOVERYREQUEST_INITIALRESOURCEVERSIONSENTRY, ],
+  nested_types=[_DELTADISCOVERYREQUEST_INITIALRESOURCEVERSIONSENTRY, ],
   enum_types=[
   ],
   options=None,
@@ -260,41 +267,41 @@ _INCREMENTALDISCOVERYREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=481,
-  serialized_end=874,
+  serialized_start=537,
+  serialized_end=918,
 )
 
 
-_INCREMENTALDISCOVERYRESPONSE = _descriptor.Descriptor(
-  name='IncrementalDiscoveryResponse',
-  full_name='envoy.api.v2.IncrementalDiscoveryResponse',
+_DELTADISCOVERYRESPONSE = _descriptor.Descriptor(
+  name='DeltaDiscoveryResponse',
+  full_name='envoy.api.v2.DeltaDiscoveryResponse',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='system_version_info', full_name='envoy.api.v2.IncrementalDiscoveryResponse.system_version_info', index=0,
+      name='system_version_info', full_name='envoy.api.v2.DeltaDiscoveryResponse.system_version_info', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='resources', full_name='envoy.api.v2.IncrementalDiscoveryResponse.resources', index=1,
+      name='resources', full_name='envoy.api.v2.DeltaDiscoveryResponse.resources', index=1,
       number=2, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\310\336\037\000'))),
     _descriptor.FieldDescriptor(
-      name='removed_resources', full_name='envoy.api.v2.IncrementalDiscoveryResponse.removed_resources', index=2,
+      name='removed_resources', full_name='envoy.api.v2.DeltaDiscoveryResponse.removed_resources', index=2,
       number=6, type=9, cpp_type=9, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='nonce', full_name='envoy.api.v2.IncrementalDiscoveryResponse.nonce', index=3,
+      name='nonce', full_name='envoy.api.v2.DeltaDiscoveryResponse.nonce', index=3,
       number=5, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -312,8 +319,8 @@ _INCREMENTALDISCOVERYRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=877,
-  serialized_end=1027,
+  serialized_start=921,
+  serialized_end=1065,
 )
 
 
@@ -325,14 +332,21 @@ _RESOURCE = _descriptor.Descriptor(
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='version', full_name='envoy.api.v2.Resource.version', index=0,
+      name='name', full_name='envoy.api.v2.Resource.name', index=0,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='version', full_name='envoy.api.v2.Resource.version', index=1,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='resource', full_name='envoy.api.v2.Resource.resource', index=1,
+      name='resource', full_name='envoy.api.v2.Resource.resource', index=2,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -350,23 +364,24 @@ _RESOURCE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1029,
-  serialized_end=1096,
+  serialized_start=1067,
+  serialized_end=1148,
 )
 
 _DISCOVERYREQUEST.fields_by_name['node'].message_type = envoy_dot_api_dot_v2_dot_core_dot_base__pb2._NODE
 _DISCOVERYREQUEST.fields_by_name['error_detail'].message_type = google_dot_rpc_dot_status__pb2._STATUS
 _DISCOVERYRESPONSE.fields_by_name['resources'].message_type = google_dot_protobuf_dot_any__pb2._ANY
-_INCREMENTALDISCOVERYREQUEST_INITIALRESOURCEVERSIONSENTRY.containing_type = _INCREMENTALDISCOVERYREQUEST
-_INCREMENTALDISCOVERYREQUEST.fields_by_name['node'].message_type = envoy_dot_api_dot_v2_dot_core_dot_base__pb2._NODE
-_INCREMENTALDISCOVERYREQUEST.fields_by_name['initial_resource_versions'].message_type = _INCREMENTALDISCOVERYREQUEST_INITIALRESOURCEVERSIONSENTRY
-_INCREMENTALDISCOVERYREQUEST.fields_by_name['error_detail'].message_type = google_dot_rpc_dot_status__pb2._STATUS
-_INCREMENTALDISCOVERYRESPONSE.fields_by_name['resources'].message_type = _RESOURCE
+_DISCOVERYRESPONSE.fields_by_name['control_plane'].message_type = envoy_dot_api_dot_v2_dot_core_dot_base__pb2._CONTROLPLANE
+_DELTADISCOVERYREQUEST_INITIALRESOURCEVERSIONSENTRY.containing_type = _DELTADISCOVERYREQUEST
+_DELTADISCOVERYREQUEST.fields_by_name['node'].message_type = envoy_dot_api_dot_v2_dot_core_dot_base__pb2._NODE
+_DELTADISCOVERYREQUEST.fields_by_name['initial_resource_versions'].message_type = _DELTADISCOVERYREQUEST_INITIALRESOURCEVERSIONSENTRY
+_DELTADISCOVERYREQUEST.fields_by_name['error_detail'].message_type = google_dot_rpc_dot_status__pb2._STATUS
+_DELTADISCOVERYRESPONSE.fields_by_name['resources'].message_type = _RESOURCE
 _RESOURCE.fields_by_name['resource'].message_type = google_dot_protobuf_dot_any__pb2._ANY
 DESCRIPTOR.message_types_by_name['DiscoveryRequest'] = _DISCOVERYREQUEST
 DESCRIPTOR.message_types_by_name['DiscoveryResponse'] = _DISCOVERYRESPONSE
-DESCRIPTOR.message_types_by_name['IncrementalDiscoveryRequest'] = _INCREMENTALDISCOVERYREQUEST
-DESCRIPTOR.message_types_by_name['IncrementalDiscoveryResponse'] = _INCREMENTALDISCOVERYRESPONSE
+DESCRIPTOR.message_types_by_name['DeltaDiscoveryRequest'] = _DELTADISCOVERYREQUEST
+DESCRIPTOR.message_types_by_name['DeltaDiscoveryResponse'] = _DELTADISCOVERYRESPONSE
 DESCRIPTOR.message_types_by_name['Resource'] = _RESOURCE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
@@ -384,27 +399,27 @@ DiscoveryResponse = _reflection.GeneratedProtocolMessageType('DiscoveryResponse'
   ))
 _sym_db.RegisterMessage(DiscoveryResponse)
 
-IncrementalDiscoveryRequest = _reflection.GeneratedProtocolMessageType('IncrementalDiscoveryRequest', (_message.Message,), dict(
+DeltaDiscoveryRequest = _reflection.GeneratedProtocolMessageType('DeltaDiscoveryRequest', (_message.Message,), dict(
 
   InitialResourceVersionsEntry = _reflection.GeneratedProtocolMessageType('InitialResourceVersionsEntry', (_message.Message,), dict(
-    DESCRIPTOR = _INCREMENTALDISCOVERYREQUEST_INITIALRESOURCEVERSIONSENTRY,
+    DESCRIPTOR = _DELTADISCOVERYREQUEST_INITIALRESOURCEVERSIONSENTRY,
     __module__ = 'envoy.api.v2.discovery_pb2'
-    # @@protoc_insertion_point(class_scope:envoy.api.v2.IncrementalDiscoveryRequest.InitialResourceVersionsEntry)
+    # @@protoc_insertion_point(class_scope:envoy.api.v2.DeltaDiscoveryRequest.InitialResourceVersionsEntry)
     ))
   ,
-  DESCRIPTOR = _INCREMENTALDISCOVERYREQUEST,
+  DESCRIPTOR = _DELTADISCOVERYREQUEST,
   __module__ = 'envoy.api.v2.discovery_pb2'
-  # @@protoc_insertion_point(class_scope:envoy.api.v2.IncrementalDiscoveryRequest)
+  # @@protoc_insertion_point(class_scope:envoy.api.v2.DeltaDiscoveryRequest)
   ))
-_sym_db.RegisterMessage(IncrementalDiscoveryRequest)
-_sym_db.RegisterMessage(IncrementalDiscoveryRequest.InitialResourceVersionsEntry)
+_sym_db.RegisterMessage(DeltaDiscoveryRequest)
+_sym_db.RegisterMessage(DeltaDiscoveryRequest.InitialResourceVersionsEntry)
 
-IncrementalDiscoveryResponse = _reflection.GeneratedProtocolMessageType('IncrementalDiscoveryResponse', (_message.Message,), dict(
-  DESCRIPTOR = _INCREMENTALDISCOVERYRESPONSE,
+DeltaDiscoveryResponse = _reflection.GeneratedProtocolMessageType('DeltaDiscoveryResponse', (_message.Message,), dict(
+  DESCRIPTOR = _DELTADISCOVERYRESPONSE,
   __module__ = 'envoy.api.v2.discovery_pb2'
-  # @@protoc_insertion_point(class_scope:envoy.api.v2.IncrementalDiscoveryResponse)
+  # @@protoc_insertion_point(class_scope:envoy.api.v2.DeltaDiscoveryResponse)
   ))
-_sym_db.RegisterMessage(IncrementalDiscoveryResponse)
+_sym_db.RegisterMessage(DeltaDiscoveryResponse)
 
 Resource = _reflection.GeneratedProtocolMessageType('Resource', (_message.Message,), dict(
   DESCRIPTOR = _RESOURCE,
@@ -415,13 +430,13 @@ _sym_db.RegisterMessage(Resource)
 
 
 DESCRIPTOR.has_options = True
-DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('Z\002v2\250\342\036\001'))
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n\032io.envoyproxy.envoy.api.v2B\016DiscoveryProtoP\001Z\002v2\250\342\036\001'))
 _DISCOVERYRESPONSE.fields_by_name['resources'].has_options = True
 _DISCOVERYRESPONSE.fields_by_name['resources']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\310\336\037\000'))
-_INCREMENTALDISCOVERYREQUEST_INITIALRESOURCEVERSIONSENTRY.has_options = True
-_INCREMENTALDISCOVERYREQUEST_INITIALRESOURCEVERSIONSENTRY._options = _descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001'))
-_INCREMENTALDISCOVERYRESPONSE.fields_by_name['resources'].has_options = True
-_INCREMENTALDISCOVERYRESPONSE.fields_by_name['resources']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\310\336\037\000'))
+_DELTADISCOVERYREQUEST_INITIALRESOURCEVERSIONSENTRY.has_options = True
+_DELTADISCOVERYREQUEST_INITIALRESOURCEVERSIONSENTRY._options = _descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001'))
+_DELTADISCOVERYRESPONSE.fields_by_name['resources'].has_options = True
+_DELTADISCOVERYRESPONSE.fields_by_name['resources']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\310\336\037\000'))
 try:
   # THESE ELEMENTS WILL BE DEPRECATED.
   # Please use the generated *_pb2_grpc.py files instead.

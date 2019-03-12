@@ -14,15 +14,16 @@ _sym_db = _symbol_database.Default()
 
 
 from validate import validate_pb2 as validate_dot_validate__pb2
+from google.protobuf import struct_pb2 as google_dot_protobuf_dot_struct__pb2
 
 
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='envoy/config/accesslog/v2/file.proto',
   package='envoy.config.accesslog.v2',
   syntax='proto3',
-  serialized_pb=_b('\n$envoy/config/accesslog/v2/file.proto\x12\x19\x65nvoy.config.accesslog.v2\x1a\x17validate/validate.proto\"8\n\rFileAccessLog\x12\x17\n\x04path\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12\x0e\n\x06\x66ormat\x18\x02 \x01(\tB\x04Z\x02v2b\x06proto3')
+  serialized_pb=_b('\n$envoy/config/accesslog/v2/file.proto\x12\x19\x65nvoy.config.accesslog.v2\x1a\x17validate/validate.proto\x1a\x1cgoogle/protobuf/struct.proto\"\x7f\n\rFileAccessLog\x12\x17\n\x04path\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12\x10\n\x06\x66ormat\x18\x02 \x01(\tH\x00\x12.\n\x0bjson_format\x18\x03 \x01(\x0b\x32\x17.google.protobuf.StructH\x00\x42\x13\n\x11\x61\x63\x63\x65ss_log_formatB:\n\'io.envoyproxy.envoy.config.accesslog.v2B\tFileProtoP\x01Z\x02v2b\x06proto3')
   ,
-  dependencies=[validate_dot_validate__pb2.DESCRIPTOR,])
+  dependencies=[validate_dot_validate__pb2.DESCRIPTOR,google_dot_protobuf_dot_struct__pb2.DESCRIPTOR,])
 
 
 
@@ -48,6 +49,13 @@ _FILEACCESSLOG = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
+    _descriptor.FieldDescriptor(
+      name='json_format', full_name='envoy.config.accesslog.v2.FileAccessLog.json_format', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -59,11 +67,21 @@ _FILEACCESSLOG = _descriptor.Descriptor(
   syntax='proto3',
   extension_ranges=[],
   oneofs=[
+    _descriptor.OneofDescriptor(
+      name='access_log_format', full_name='envoy.config.accesslog.v2.FileAccessLog.access_log_format',
+      index=0, containing_type=None, fields=[]),
   ],
-  serialized_start=92,
-  serialized_end=148,
+  serialized_start=122,
+  serialized_end=249,
 )
 
+_FILEACCESSLOG.fields_by_name['json_format'].message_type = google_dot_protobuf_dot_struct__pb2._STRUCT
+_FILEACCESSLOG.oneofs_by_name['access_log_format'].fields.append(
+  _FILEACCESSLOG.fields_by_name['format'])
+_FILEACCESSLOG.fields_by_name['format'].containing_oneof = _FILEACCESSLOG.oneofs_by_name['access_log_format']
+_FILEACCESSLOG.oneofs_by_name['access_log_format'].fields.append(
+  _FILEACCESSLOG.fields_by_name['json_format'])
+_FILEACCESSLOG.fields_by_name['json_format'].containing_oneof = _FILEACCESSLOG.oneofs_by_name['access_log_format']
 DESCRIPTOR.message_types_by_name['FileAccessLog'] = _FILEACCESSLOG
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
@@ -76,7 +94,7 @@ _sym_db.RegisterMessage(FileAccessLog)
 
 
 DESCRIPTOR.has_options = True
-DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('Z\002v2'))
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n\'io.envoyproxy.envoy.config.accesslog.v2B\tFileProtoP\001Z\002v2'))
 _FILEACCESSLOG.fields_by_name['path'].has_options = True
 _FILEACCESSLOG.fields_by_name['path']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004r\002 \001'))
 try:

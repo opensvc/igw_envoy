@@ -18,6 +18,7 @@ from envoy.api.v2 import discovery_pb2 as envoy_dot_api_dot_v2_dot_discovery__pb
 from envoy.api.v2.route import route_pb2 as envoy_dot_api_dot_v2_dot_route_dot_route__pb2
 from google.api import annotations_pb2 as google_dot_api_dot_annotations__pb2
 from google.protobuf import wrappers_pb2 as google_dot_protobuf_dot_wrappers__pb2
+from validate import validate_pb2 as validate_dot_validate__pb2
 from gogoproto import gogo_pb2 as gogoproto_dot_gogo__pb2
 
 
@@ -25,9 +26,9 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='envoy/api/v2/rds.proto',
   package='envoy.api.v2',
   syntax='proto3',
-  serialized_pb=_b('\n\x16\x65nvoy/api/v2/rds.proto\x12\x0c\x65nvoy.api.v2\x1a\x1c\x65nvoy/api/v2/core/base.proto\x1a\x1c\x65nvoy/api/v2/discovery.proto\x1a\x1e\x65nvoy/api/v2/route/route.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x14gogoproto/gogo.proto\"\xe7\x02\n\x12RouteConfiguration\x12\x0c\n\x04name\x18\x01 \x01(\t\x12<\n\rvirtual_hosts\x18\x02 \x03(\x0b\x32\x1f.envoy.api.v2.route.VirtualHostB\x04\xc8\xde\x1f\x00\x12\x1d\n\x15internal_only_headers\x18\x03 \x03(\t\x12\x45\n\x17response_headers_to_add\x18\x04 \x03(\x0b\x32$.envoy.api.v2.core.HeaderValueOption\x12\"\n\x1aresponse_headers_to_remove\x18\x05 \x03(\t\x12\x44\n\x16request_headers_to_add\x18\x06 \x03(\x0b\x32$.envoy.api.v2.core.HeaderValueOption\x12\x35\n\x11validate_clusters\x18\x07 \x01(\x0b\x32\x1a.google.protobuf.BoolValue2\xd1\x02\n\x15RouteDiscoveryService\x12U\n\x0cStreamRoutes\x12\x1e.envoy.api.v2.DiscoveryRequest\x1a\x1f.envoy.api.v2.DiscoveryResponse\"\x00(\x01\x30\x01\x12p\n\x11IncrementalRoutes\x12).envoy.api.v2.IncrementalDiscoveryRequest\x1a*.envoy.api.v2.IncrementalDiscoveryResponse\"\x00(\x01\x30\x01\x12o\n\x0b\x46\x65tchRoutes\x12\x1e.envoy.api.v2.DiscoveryRequest\x1a\x1f.envoy.api.v2.DiscoveryResponse\"\x1f\x82\xd3\xe4\x93\x02\x19\"\x14/v2/discovery:routes:\x01*B\x07\x88\x01\x01\xa8\xe2\x1e\x01\x62\x06proto3')
+  serialized_pb=_b('\n\x16\x65nvoy/api/v2/rds.proto\x12\x0c\x65nvoy.api.v2\x1a\x1c\x65nvoy/api/v2/core/base.proto\x1a\x1c\x65nvoy/api/v2/discovery.proto\x1a\x1e\x65nvoy/api/v2/route/route.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x17validate/validate.proto\x1a\x14gogoproto/gogo.proto\"\xa4\x03\n\x12RouteConfiguration\x12\x0c\n\x04name\x18\x01 \x01(\t\x12<\n\rvirtual_hosts\x18\x02 \x03(\x0b\x32\x1f.envoy.api.v2.route.VirtualHostB\x04\xc8\xde\x1f\x00\x12\x1d\n\x15internal_only_headers\x18\x03 \x03(\t\x12R\n\x17response_headers_to_add\x18\x04 \x03(\x0b\x32$.envoy.api.v2.core.HeaderValueOptionB\x0b\xba\xe9\xc0\x03\x06\x92\x01\x03\x10\xe8\x07\x12\"\n\x1aresponse_headers_to_remove\x18\x05 \x03(\t\x12Q\n\x16request_headers_to_add\x18\x06 \x03(\x0b\x32$.envoy.api.v2.core.HeaderValueOptionB\x0b\xba\xe9\xc0\x03\x06\x92\x01\x03\x10\xe8\x07\x12!\n\x19request_headers_to_remove\x18\x08 \x03(\t\x12\x35\n\x11validate_clusters\x18\x07 \x01(\x0b\x32\x1a.google.protobuf.BoolValue2\xbf\x02\n\x15RouteDiscoveryService\x12U\n\x0cStreamRoutes\x12\x1e.envoy.api.v2.DiscoveryRequest\x1a\x1f.envoy.api.v2.DiscoveryResponse\"\x00(\x01\x30\x01\x12^\n\x0b\x44\x65ltaRoutes\x12#.envoy.api.v2.DeltaDiscoveryRequest\x1a$.envoy.api.v2.DeltaDiscoveryResponse\"\x00(\x01\x30\x01\x12o\n\x0b\x46\x65tchRoutes\x12\x1e.envoy.api.v2.DiscoveryRequest\x1a\x1f.envoy.api.v2.DiscoveryResponse\"\x1f\x82\xd3\xe4\x93\x02\x19\"\x14/v2/discovery:routes:\x01*B/\n\x1aio.envoyproxy.envoy.api.v2B\x08RdsProtoP\x01\x88\x01\x01\xa8\xe2\x1e\x01\x62\x06proto3')
   ,
-  dependencies=[envoy_dot_api_dot_v2_dot_core_dot_base__pb2.DESCRIPTOR,envoy_dot_api_dot_v2_dot_discovery__pb2.DESCRIPTOR,envoy_dot_api_dot_v2_dot_route_dot_route__pb2.DESCRIPTOR,google_dot_api_dot_annotations__pb2.DESCRIPTOR,google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,gogoproto_dot_gogo__pb2.DESCRIPTOR,])
+  dependencies=[envoy_dot_api_dot_v2_dot_core_dot_base__pb2.DESCRIPTOR,envoy_dot_api_dot_v2_dot_discovery__pb2.DESCRIPTOR,envoy_dot_api_dot_v2_dot_route_dot_route__pb2.DESCRIPTOR,google_dot_api_dot_annotations__pb2.DESCRIPTOR,google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,validate_dot_validate__pb2.DESCRIPTOR,gogoproto_dot_gogo__pb2.DESCRIPTOR,])
 
 
 
@@ -66,7 +67,7 @@ _ROUTECONFIGURATION = _descriptor.Descriptor(
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None),
+      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\006\222\001\003\020\350\007'))),
     _descriptor.FieldDescriptor(
       name='response_headers_to_remove', full_name='envoy.api.v2.RouteConfiguration.response_headers_to_remove', index=4,
       number=5, type=9, cpp_type=9, label=3,
@@ -80,9 +81,16 @@ _ROUTECONFIGURATION = _descriptor.Descriptor(
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
+      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\006\222\001\003\020\350\007'))),
+    _descriptor.FieldDescriptor(
+      name='request_headers_to_remove', full_name='envoy.api.v2.RouteConfiguration.request_headers_to_remove', index=6,
+      number=8, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='validate_clusters', full_name='envoy.api.v2.RouteConfiguration.validate_clusters', index=6,
+      name='validate_clusters', full_name='envoy.api.v2.RouteConfiguration.validate_clusters', index=7,
       number=7, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -100,8 +108,8 @@ _ROUTECONFIGURATION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=217,
-  serialized_end=576,
+  serialized_start=242,
+  serialized_end=662,
 )
 
 _ROUTECONFIGURATION.fields_by_name['virtual_hosts'].message_type = envoy_dot_api_dot_v2_dot_route_dot_route__pb2._VIRTUALHOST
@@ -120,9 +128,13 @@ _sym_db.RegisterMessage(RouteConfiguration)
 
 
 DESCRIPTOR.has_options = True
-DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\210\001\001\250\342\036\001'))
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n\032io.envoyproxy.envoy.api.v2B\010RdsProtoP\001\210\001\001\250\342\036\001'))
 _ROUTECONFIGURATION.fields_by_name['virtual_hosts'].has_options = True
 _ROUTECONFIGURATION.fields_by_name['virtual_hosts']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\310\336\037\000'))
+_ROUTECONFIGURATION.fields_by_name['response_headers_to_add'].has_options = True
+_ROUTECONFIGURATION.fields_by_name['response_headers_to_add']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\006\222\001\003\020\350\007'))
+_ROUTECONFIGURATION.fields_by_name['request_headers_to_add'].has_options = True
+_ROUTECONFIGURATION.fields_by_name['request_headers_to_add']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\006\222\001\003\020\350\007'))
 
 _ROUTEDISCOVERYSERVICE = _descriptor.ServiceDescriptor(
   name='RouteDiscoveryService',
@@ -130,8 +142,8 @@ _ROUTEDISCOVERYSERVICE = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   options=None,
-  serialized_start=579,
-  serialized_end=916,
+  serialized_start=665,
+  serialized_end=984,
   methods=[
   _descriptor.MethodDescriptor(
     name='StreamRoutes',
@@ -143,12 +155,12 @@ _ROUTEDISCOVERYSERVICE = _descriptor.ServiceDescriptor(
     options=None,
   ),
   _descriptor.MethodDescriptor(
-    name='IncrementalRoutes',
-    full_name='envoy.api.v2.RouteDiscoveryService.IncrementalRoutes',
+    name='DeltaRoutes',
+    full_name='envoy.api.v2.RouteDiscoveryService.DeltaRoutes',
     index=1,
     containing_service=None,
-    input_type=envoy_dot_api_dot_v2_dot_discovery__pb2._INCREMENTALDISCOVERYREQUEST,
-    output_type=envoy_dot_api_dot_v2_dot_discovery__pb2._INCREMENTALDISCOVERYRESPONSE,
+    input_type=envoy_dot_api_dot_v2_dot_discovery__pb2._DELTADISCOVERYREQUEST,
+    output_type=envoy_dot_api_dot_v2_dot_discovery__pb2._DELTADISCOVERYRESPONSE,
     options=None,
   ),
   _descriptor.MethodDescriptor(
@@ -198,10 +210,10 @@ try:
           request_serializer=envoy_dot_api_dot_v2_dot_discovery__pb2.DiscoveryRequest.SerializeToString,
           response_deserializer=envoy_dot_api_dot_v2_dot_discovery__pb2.DiscoveryResponse.FromString,
           )
-      self.IncrementalRoutes = channel.stream_stream(
-          '/envoy.api.v2.RouteDiscoveryService/IncrementalRoutes',
-          request_serializer=envoy_dot_api_dot_v2_dot_discovery__pb2.IncrementalDiscoveryRequest.SerializeToString,
-          response_deserializer=envoy_dot_api_dot_v2_dot_discovery__pb2.IncrementalDiscoveryResponse.FromString,
+      self.DeltaRoutes = channel.stream_stream(
+          '/envoy.api.v2.RouteDiscoveryService/DeltaRoutes',
+          request_serializer=envoy_dot_api_dot_v2_dot_discovery__pb2.DeltaDiscoveryRequest.SerializeToString,
+          response_deserializer=envoy_dot_api_dot_v2_dot_discovery__pb2.DeltaDiscoveryResponse.FromString,
           )
       self.FetchRoutes = channel.unary_unary(
           '/envoy.api.v2.RouteDiscoveryService/FetchRoutes',
@@ -229,7 +241,7 @@ try:
       context.set_details('Method not implemented!')
       raise NotImplementedError('Method not implemented!')
 
-    def IncrementalRoutes(self, request_iterator, context):
+    def DeltaRoutes(self, request_iterator, context):
       # missing associated documentation comment in .proto file
       pass
       context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -251,10 +263,10 @@ try:
             request_deserializer=envoy_dot_api_dot_v2_dot_discovery__pb2.DiscoveryRequest.FromString,
             response_serializer=envoy_dot_api_dot_v2_dot_discovery__pb2.DiscoveryResponse.SerializeToString,
         ),
-        'IncrementalRoutes': grpc.stream_stream_rpc_method_handler(
-            servicer.IncrementalRoutes,
-            request_deserializer=envoy_dot_api_dot_v2_dot_discovery__pb2.IncrementalDiscoveryRequest.FromString,
-            response_serializer=envoy_dot_api_dot_v2_dot_discovery__pb2.IncrementalDiscoveryResponse.SerializeToString,
+        'DeltaRoutes': grpc.stream_stream_rpc_method_handler(
+            servicer.DeltaRoutes,
+            request_deserializer=envoy_dot_api_dot_v2_dot_discovery__pb2.DeltaDiscoveryRequest.FromString,
+            response_serializer=envoy_dot_api_dot_v2_dot_discovery__pb2.DeltaDiscoveryResponse.SerializeToString,
         ),
         'FetchRoutes': grpc.unary_unary_rpc_method_handler(
             servicer.FetchRoutes,
@@ -287,7 +299,7 @@ try:
       # missing associated documentation comment in .proto file
       pass
       context.code(beta_interfaces.StatusCode.UNIMPLEMENTED)
-    def IncrementalRoutes(self, request_iterator, context):
+    def DeltaRoutes(self, request_iterator, context):
       # missing associated documentation comment in .proto file
       pass
       context.code(beta_interfaces.StatusCode.UNIMPLEMENTED)
@@ -317,7 +329,7 @@ try:
       # missing associated documentation comment in .proto file
       pass
       raise NotImplementedError()
-    def IncrementalRoutes(self, request_iterator, timeout, metadata=None, with_call=False, protocol_options=None):
+    def DeltaRoutes(self, request_iterator, timeout, metadata=None, with_call=False, protocol_options=None):
       # missing associated documentation comment in .proto file
       pass
       raise NotImplementedError()
@@ -335,18 +347,18 @@ try:
     file not marked beta) for all further purposes. This function was
     generated only to ease transition from grpcio<0.15.0 to grpcio>=0.15.0"""
     request_deserializers = {
+      ('envoy.api.v2.RouteDiscoveryService', 'DeltaRoutes'): envoy_dot_api_dot_v2_dot_discovery__pb2.DeltaDiscoveryRequest.FromString,
       ('envoy.api.v2.RouteDiscoveryService', 'FetchRoutes'): envoy_dot_api_dot_v2_dot_discovery__pb2.DiscoveryRequest.FromString,
-      ('envoy.api.v2.RouteDiscoveryService', 'IncrementalRoutes'): envoy_dot_api_dot_v2_dot_discovery__pb2.IncrementalDiscoveryRequest.FromString,
       ('envoy.api.v2.RouteDiscoveryService', 'StreamRoutes'): envoy_dot_api_dot_v2_dot_discovery__pb2.DiscoveryRequest.FromString,
     }
     response_serializers = {
+      ('envoy.api.v2.RouteDiscoveryService', 'DeltaRoutes'): envoy_dot_api_dot_v2_dot_discovery__pb2.DeltaDiscoveryResponse.SerializeToString,
       ('envoy.api.v2.RouteDiscoveryService', 'FetchRoutes'): envoy_dot_api_dot_v2_dot_discovery__pb2.DiscoveryResponse.SerializeToString,
-      ('envoy.api.v2.RouteDiscoveryService', 'IncrementalRoutes'): envoy_dot_api_dot_v2_dot_discovery__pb2.IncrementalDiscoveryResponse.SerializeToString,
       ('envoy.api.v2.RouteDiscoveryService', 'StreamRoutes'): envoy_dot_api_dot_v2_dot_discovery__pb2.DiscoveryResponse.SerializeToString,
     }
     method_implementations = {
+      ('envoy.api.v2.RouteDiscoveryService', 'DeltaRoutes'): face_utilities.stream_stream_inline(servicer.DeltaRoutes),
       ('envoy.api.v2.RouteDiscoveryService', 'FetchRoutes'): face_utilities.unary_unary_inline(servicer.FetchRoutes),
-      ('envoy.api.v2.RouteDiscoveryService', 'IncrementalRoutes'): face_utilities.stream_stream_inline(servicer.IncrementalRoutes),
       ('envoy.api.v2.RouteDiscoveryService', 'StreamRoutes'): face_utilities.stream_stream_inline(servicer.StreamRoutes),
     }
     server_options = beta_implementations.server_options(request_deserializers=request_deserializers, response_serializers=response_serializers, thread_pool=pool, thread_pool_size=pool_size, default_timeout=default_timeout, maximum_timeout=maximum_timeout)
@@ -360,18 +372,18 @@ try:
     file not marked beta) for all further purposes. This function was
     generated only to ease transition from grpcio<0.15.0 to grpcio>=0.15.0"""
     request_serializers = {
+      ('envoy.api.v2.RouteDiscoveryService', 'DeltaRoutes'): envoy_dot_api_dot_v2_dot_discovery__pb2.DeltaDiscoveryRequest.SerializeToString,
       ('envoy.api.v2.RouteDiscoveryService', 'FetchRoutes'): envoy_dot_api_dot_v2_dot_discovery__pb2.DiscoveryRequest.SerializeToString,
-      ('envoy.api.v2.RouteDiscoveryService', 'IncrementalRoutes'): envoy_dot_api_dot_v2_dot_discovery__pb2.IncrementalDiscoveryRequest.SerializeToString,
       ('envoy.api.v2.RouteDiscoveryService', 'StreamRoutes'): envoy_dot_api_dot_v2_dot_discovery__pb2.DiscoveryRequest.SerializeToString,
     }
     response_deserializers = {
+      ('envoy.api.v2.RouteDiscoveryService', 'DeltaRoutes'): envoy_dot_api_dot_v2_dot_discovery__pb2.DeltaDiscoveryResponse.FromString,
       ('envoy.api.v2.RouteDiscoveryService', 'FetchRoutes'): envoy_dot_api_dot_v2_dot_discovery__pb2.DiscoveryResponse.FromString,
-      ('envoy.api.v2.RouteDiscoveryService', 'IncrementalRoutes'): envoy_dot_api_dot_v2_dot_discovery__pb2.IncrementalDiscoveryResponse.FromString,
       ('envoy.api.v2.RouteDiscoveryService', 'StreamRoutes'): envoy_dot_api_dot_v2_dot_discovery__pb2.DiscoveryResponse.FromString,
     }
     cardinalities = {
+      'DeltaRoutes': cardinality.Cardinality.STREAM_STREAM,
       'FetchRoutes': cardinality.Cardinality.UNARY_UNARY,
-      'IncrementalRoutes': cardinality.Cardinality.STREAM_STREAM,
       'StreamRoutes': cardinality.Cardinality.STREAM_STREAM,
     }
     stub_options = beta_implementations.stub_options(host=host, metadata_transformer=metadata_transformer, request_serializers=request_serializers, response_deserializers=response_deserializers, thread_pool=pool, thread_pool_size=pool_size)

@@ -29,10 +29,10 @@ class AggregatedDiscoveryServiceStub(object):
         request_serializer=envoy_dot_api_dot_v2_dot_discovery__pb2.DiscoveryRequest.SerializeToString,
         response_deserializer=envoy_dot_api_dot_v2_dot_discovery__pb2.DiscoveryResponse.FromString,
         )
-    self.IncrementalAggregatedResources = channel.stream_stream(
-        '/envoy.service.discovery.v2.AggregatedDiscoveryService/IncrementalAggregatedResources',
-        request_serializer=envoy_dot_api_dot_v2_dot_discovery__pb2.IncrementalDiscoveryRequest.SerializeToString,
-        response_deserializer=envoy_dot_api_dot_v2_dot_discovery__pb2.IncrementalDiscoveryResponse.FromString,
+    self.DeltaAggregatedResources = channel.stream_stream(
+        '/envoy.service.discovery.v2.AggregatedDiscoveryService/DeltaAggregatedResources',
+        request_serializer=envoy_dot_api_dot_v2_dot_discovery__pb2.DeltaDiscoveryRequest.SerializeToString,
+        response_deserializer=envoy_dot_api_dot_v2_dot_discovery__pb2.DeltaDiscoveryResponse.FromString,
         )
 
 
@@ -57,7 +57,7 @@ class AggregatedDiscoveryServiceServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def IncrementalAggregatedResources(self, request_iterator, context):
+  def DeltaAggregatedResources(self, request_iterator, context):
     # missing associated documentation comment in .proto file
     pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -72,10 +72,10 @@ def add_AggregatedDiscoveryServiceServicer_to_server(servicer, server):
           request_deserializer=envoy_dot_api_dot_v2_dot_discovery__pb2.DiscoveryRequest.FromString,
           response_serializer=envoy_dot_api_dot_v2_dot_discovery__pb2.DiscoveryResponse.SerializeToString,
       ),
-      'IncrementalAggregatedResources': grpc.stream_stream_rpc_method_handler(
-          servicer.IncrementalAggregatedResources,
-          request_deserializer=envoy_dot_api_dot_v2_dot_discovery__pb2.IncrementalDiscoveryRequest.FromString,
-          response_serializer=envoy_dot_api_dot_v2_dot_discovery__pb2.IncrementalDiscoveryResponse.SerializeToString,
+      'DeltaAggregatedResources': grpc.stream_stream_rpc_method_handler(
+          servicer.DeltaAggregatedResources,
+          request_deserializer=envoy_dot_api_dot_v2_dot_discovery__pb2.DeltaDiscoveryRequest.FromString,
+          response_serializer=envoy_dot_api_dot_v2_dot_discovery__pb2.DeltaDiscoveryResponse.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(

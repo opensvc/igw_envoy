@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='envoy/admin/v2alpha/metrics.proto',
   package='envoy.admin.v2alpha',
   syntax='proto3',
-  serialized_pb=_b('\n!envoy/admin/v2alpha/metrics.proto\x12\x13\x65nvoy.admin.v2alpha\"s\n\x0cSimpleMetric\x12\x34\n\x04type\x18\x01 \x01(\x0e\x32&.envoy.admin.v2alpha.SimpleMetric.Type\x12\r\n\x05value\x18\x02 \x01(\x04\"\x1e\n\x04Type\x12\x0b\n\x07\x43OUNTER\x10\x00\x12\t\n\x05GAUGE\x10\x01\x62\x06proto3')
+  serialized_pb=_b('\n!envoy/admin/v2alpha/metrics.proto\x12\x13\x65nvoy.admin.v2alpha\"\x81\x01\n\x0cSimpleMetric\x12\x34\n\x04type\x18\x01 \x01(\x0e\x32&.envoy.admin.v2alpha.SimpleMetric.Type\x12\r\n\x05value\x18\x02 \x01(\x04\x12\x0c\n\x04name\x18\x03 \x01(\t\"\x1e\n\x04Type\x12\x0b\n\x07\x43OUNTER\x10\x00\x12\t\n\x05GAUGE\x10\x01\x42\x33\n!io.envoyproxy.envoy.admin.v2alphaB\x0cMetricsProtoP\x01\x62\x06proto3')
 )
 
 
@@ -41,8 +41,8 @@ _SIMPLEMETRIC_TYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=143,
-  serialized_end=173,
+  serialized_start=158,
+  serialized_end=188,
 )
 _sym_db.RegisterEnumDescriptor(_SIMPLEMETRIC_TYPE)
 
@@ -68,6 +68,13 @@ _SIMPLEMETRIC = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
+    _descriptor.FieldDescriptor(
+      name='name', full_name='envoy.admin.v2alpha.SimpleMetric.name', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -81,8 +88,8 @@ _SIMPLEMETRIC = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=58,
-  serialized_end=173,
+  serialized_start=59,
+  serialized_end=188,
 )
 
 _SIMPLEMETRIC.fields_by_name['type'].enum_type = _SIMPLEMETRIC_TYPE
@@ -98,6 +105,8 @@ SimpleMetric = _reflection.GeneratedProtocolMessageType('SimpleMetric', (_messag
 _sym_db.RegisterMessage(SimpleMetric)
 
 
+DESCRIPTOR.has_options = True
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n!io.envoyproxy.envoy.admin.v2alphaB\014MetricsProtoP\001'))
 try:
   # THESE ELEMENTS WILL BE DEPRECATED.
   # Please use the generated *_pb2_grpc.py files instead.

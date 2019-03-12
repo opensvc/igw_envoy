@@ -22,7 +22,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='envoy/config/filter/http/ip_tagging/v2/ip_tagging.proto',
   package='envoy.config.filter.http.ip_tagging.v2',
   syntax='proto3',
-  serialized_pb=_b('\n7envoy/config/filter/http/ip_tagging/v2/ip_tagging.proto\x12&envoy.config.filter.http.ip_tagging.v2\x1a\x1f\x65nvoy/api/v2/core/address.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x17validate/validate.proto\"\xc4\x02\n\tIPTagging\x12_\n\x0crequest_type\x18\x01 \x01(\x0e\x32=.envoy.config.filter.http.ip_tagging.v2.IPTagging.RequestTypeB\n\xba\xe9\xc0\x03\x05\x82\x01\x02\x10\x01\x12T\n\x07ip_tags\x18\x04 \x03(\x0b\x32\x37.envoy.config.filter.http.ip_tagging.v2.IPTagging.IPTagB\n\xba\xe9\xc0\x03\x05\x92\x01\x02\x08\x01\x1aK\n\x05IPTag\x12\x13\n\x0bip_tag_name\x18\x01 \x01(\t\x12-\n\x07ip_list\x18\x02 \x03(\x0b\x32\x1c.envoy.api.v2.core.CidrRange\"3\n\x0bRequestType\x12\x08\n\x04\x42OTH\x10\x00\x12\x0c\n\x08INTERNAL\x10\x01\x12\x0c\n\x08\x45XTERNAL\x10\x02\x42\x04Z\x02v2b\x06proto3')
+  serialized_pb=_b('\n7envoy/config/filter/http/ip_tagging/v2/ip_tagging.proto\x12&envoy.config.filter.http.ip_tagging.v2\x1a\x1f\x65nvoy/api/v2/core/address.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x17validate/validate.proto\"\xc4\x02\n\tIPTagging\x12_\n\x0crequest_type\x18\x01 \x01(\x0e\x32=.envoy.config.filter.http.ip_tagging.v2.IPTagging.RequestTypeB\n\xba\xe9\xc0\x03\x05\x82\x01\x02\x10\x01\x12T\n\x07ip_tags\x18\x04 \x03(\x0b\x32\x37.envoy.config.filter.http.ip_tagging.v2.IPTagging.IPTagB\n\xba\xe9\xc0\x03\x05\x92\x01\x02\x08\x01\x1aK\n\x05IPTag\x12\x13\n\x0bip_tag_name\x18\x01 \x01(\t\x12-\n\x07ip_list\x18\x02 \x03(\x0b\x32\x1c.envoy.api.v2.core.CidrRange\"3\n\x0bRequestType\x12\x08\n\x04\x42OTH\x10\x00\x12\x0c\n\x08INTERNAL\x10\x01\x12\x0c\n\x08\x45XTERNAL\x10\x02\x42L\n4io.envoyproxy.envoy.config.filter.http.ip_tagging.v2B\x0eIpTaggingProtoP\x01Z\x02v2b\x06proto3')
   ,
   dependencies=[envoy_dot_api_dot_v2_dot_core_dot_address__pb2.DESCRIPTOR,google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,validate_dot_validate__pb2.DESCRIPTOR,])
 
@@ -155,7 +155,7 @@ _sym_db.RegisterMessage(IPTagging.IPTag)
 
 
 DESCRIPTOR.has_options = True
-DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('Z\002v2'))
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n4io.envoyproxy.envoy.config.filter.http.ip_tagging.v2B\016IpTaggingProtoP\001Z\002v2'))
 _IPTAGGING.fields_by_name['request_type'].has_options = True
 _IPTAGGING.fields_by_name['request_type']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\202\001\002\020\001'))
 _IPTAGGING.fields_by_name['ip_tags'].has_options = True

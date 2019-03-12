@@ -15,6 +15,7 @@ _sym_db = _symbol_database.Default()
 
 from envoy.api.v2.core import grpc_service_pb2 as envoy_dot_api_dot_v2_dot_core_dot_grpc__service__pb2
 from google.protobuf import duration_pb2 as google_dot_protobuf_dot_duration__pb2
+from google.protobuf import wrappers_pb2 as google_dot_protobuf_dot_wrappers__pb2
 from validate import validate_pb2 as validate_dot_validate__pb2
 from gogoproto import gogo_pb2 as gogoproto_dot_gogo__pb2
 
@@ -23,9 +24,9 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='envoy/api/v2/core/config_source.proto',
   package='envoy.api.v2.core',
   syntax='proto3',
-  serialized_pb=_b('\n%envoy/api/v2/core/config_source.proto\x12\x11\x65nvoy.api.v2.core\x1a$envoy/api/v2/core/grpc_service.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x17validate/validate.proto\x1a\x14gogoproto/gogo.proto\"\x91\x02\n\x0f\x41piConfigSource\x12H\n\x08\x61pi_type\x18\x01 \x01(\x0e\x32*.envoy.api.v2.core.ApiConfigSource.ApiTypeB\n\xba\xe9\xc0\x03\x05\x82\x01\x02\x10\x01\x12\x15\n\rcluster_names\x18\x02 \x03(\t\x12\x35\n\rgrpc_services\x18\x04 \x03(\x0b\x32\x1e.envoy.api.v2.core.GrpcService\x12\x36\n\rrefresh_delay\x18\x03 \x01(\x0b\x32\x19.google.protobuf.DurationB\x04\x98\xdf\x1f\x01\".\n\x07\x41piType\x12\x0f\n\x0bREST_LEGACY\x10\x00\x12\x08\n\x04REST\x10\x01\x12\x08\n\x04GRPC\x10\x02\"\x18\n\x16\x41ggregatedConfigSource\"\xbb\x01\n\x0c\x43onfigSource\x12\x0e\n\x04path\x18\x01 \x01(\tH\x00\x12?\n\x11\x61pi_config_source\x18\x02 \x01(\x0b\x32\".envoy.api.v2.core.ApiConfigSourceH\x00\x12\x38\n\x03\x61\x64s\x18\x03 \x01(\x0b\x32).envoy.api.v2.core.AggregatedConfigSourceH\x00\x42 \n\x17\x63onfig_source_specifier\x12\x05\xb8\xe9\xc0\x03\x01\x42\x04\xa8\xe2\x1e\x01\x62\x06proto3')
+  serialized_pb=_b('\n%envoy/api/v2/core/config_source.proto\x12\x11\x65nvoy.api.v2.core\x1a$envoy/api/v2/core/grpc_service.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x17validate/validate.proto\x1a\x14gogoproto/gogo.proto\"\xba\x03\n\x0f\x41piConfigSource\x12H\n\x08\x61pi_type\x18\x01 \x01(\x0e\x32*.envoy.api.v2.core.ApiConfigSource.ApiTypeB\n\xba\xe9\xc0\x03\x05\x82\x01\x02\x10\x01\x12\x15\n\rcluster_names\x18\x02 \x03(\t\x12\x35\n\rgrpc_services\x18\x04 \x03(\x0b\x32\x1e.envoy.api.v2.core.GrpcService\x12\x36\n\rrefresh_delay\x18\x03 \x01(\x0b\x32\x19.google.protobuf.DurationB\x04\x98\xdf\x1f\x01\x12\x44\n\x0frequest_timeout\x18\x05 \x01(\x0b\x32\x19.google.protobuf.DurationB\x10\xba\xe9\xc0\x03\x07\xaa\x01\x04*\x02\x08\x00\x98\xdf\x1f\x01\x12\x41\n\x13rate_limit_settings\x18\x06 \x01(\x0b\x32$.envoy.api.v2.core.RateLimitSettings\"N\n\x07\x41piType\x12\x1f\n\x17UNSUPPORTED_REST_LEGACY\x10\x00\x1a\x02\x08\x01\x12\x08\n\x04REST\x10\x01\x12\x08\n\x04GRPC\x10\x02\x12\x0e\n\nDELTA_GRPC\x10\x03\"\x18\n\x16\x41ggregatedConfigSource\"\x88\x01\n\x11RateLimitSettings\x12\x30\n\nmax_tokens\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x41\n\tfill_rate\x18\x02 \x01(\x0b\x32\x1c.google.protobuf.DoubleValueB\x10\xba\xe9\xc0\x03\x0b\x12\t!\x00\x00\x00\x00\x00\x00\x00\x00\"\xbb\x01\n\x0c\x43onfigSource\x12\x0e\n\x04path\x18\x01 \x01(\tH\x00\x12?\n\x11\x61pi_config_source\x18\x02 \x01(\x0b\x32\".envoy.api.v2.core.ApiConfigSourceH\x00\x12\x38\n\x03\x61\x64s\x18\x03 \x01(\x0b\x32).envoy.api.v2.core.AggregatedConfigSourceH\x00\x42 \n\x17\x63onfig_source_specifier\x12\x05\xb8\xe9\xc0\x03\x01\x42:\n\x1fio.envoyproxy.envoy.api.v2.coreB\x11\x43onfigSourceProtoP\x01\xa8\xe2\x1e\x01\x62\x06proto3')
   ,
-  dependencies=[envoy_dot_api_dot_v2_dot_core_dot_grpc__service__pb2.DESCRIPTOR,google_dot_protobuf_dot_duration__pb2.DESCRIPTOR,validate_dot_validate__pb2.DESCRIPTOR,gogoproto_dot_gogo__pb2.DESCRIPTOR,])
+  dependencies=[envoy_dot_api_dot_v2_dot_core_dot_grpc__service__pb2.DESCRIPTOR,google_dot_protobuf_dot_duration__pb2.DESCRIPTOR,google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,validate_dot_validate__pb2.DESCRIPTOR,gogoproto_dot_gogo__pb2.DESCRIPTOR,])
 
 
 
@@ -36,8 +37,8 @@ _APICONFIGSOURCE_APITYPE = _descriptor.EnumDescriptor(
   file=DESCRIPTOR,
   values=[
     _descriptor.EnumValueDescriptor(
-      name='REST_LEGACY', index=0, number=0,
-      options=None,
+      name='UNSUPPORTED_REST_LEGACY', index=0, number=0,
+      options=_descriptor._ParseOptions(descriptor_pb2.EnumValueOptions(), _b('\010\001')),
       type=None),
     _descriptor.EnumValueDescriptor(
       name='REST', index=1, number=1,
@@ -47,11 +48,15 @@ _APICONFIGSOURCE_APITYPE = _descriptor.EnumDescriptor(
       name='GRPC', index=2, number=2,
       options=None,
       type=None),
+    _descriptor.EnumValueDescriptor(
+      name='DELTA_GRPC', index=3, number=3,
+      options=None,
+      type=None),
   ],
   containing_type=None,
   options=None,
-  serialized_start=405,
-  serialized_end=451,
+  serialized_start=574,
+  serialized_end=652,
 )
 _sym_db.RegisterEnumDescriptor(_APICONFIGSOURCE_APITYPE)
 
@@ -91,6 +96,20 @@ _APICONFIGSOURCE = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\230\337\037\001'))),
+    _descriptor.FieldDescriptor(
+      name='request_timeout', full_name='envoy.api.v2.core.ApiConfigSource.request_timeout', index=4,
+      number=5, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\007\252\001\004*\002\010\000\230\337\037\001'))),
+    _descriptor.FieldDescriptor(
+      name='rate_limit_settings', full_name='envoy.api.v2.core.ApiConfigSource.rate_limit_settings', index=5,
+      number=6, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -104,8 +123,8 @@ _APICONFIGSOURCE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=178,
-  serialized_end=451,
+  serialized_start=210,
+  serialized_end=652,
 )
 
 
@@ -128,8 +147,46 @@ _AGGREGATEDCONFIGSOURCE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=453,
-  serialized_end=477,
+  serialized_start=654,
+  serialized_end=678,
+)
+
+
+_RATELIMITSETTINGS = _descriptor.Descriptor(
+  name='RateLimitSettings',
+  full_name='envoy.api.v2.core.RateLimitSettings',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='max_tokens', full_name='envoy.api.v2.core.RateLimitSettings.max_tokens', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='fill_rate', full_name='envoy.api.v2.core.RateLimitSettings.fill_rate', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\013\022\t!\000\000\000\000\000\000\000\000'))),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=681,
+  serialized_end=817,
 )
 
 
@@ -176,14 +233,18 @@ _CONFIGSOURCE = _descriptor.Descriptor(
       name='config_source_specifier', full_name='envoy.api.v2.core.ConfigSource.config_source_specifier',
       index=0, containing_type=None, fields=[], options=_descriptor._ParseOptions(descriptor_pb2.OneofOptions(), _b('\270\351\300\003\001'))),
   ],
-  serialized_start=480,
-  serialized_end=667,
+  serialized_start=820,
+  serialized_end=1007,
 )
 
 _APICONFIGSOURCE.fields_by_name['api_type'].enum_type = _APICONFIGSOURCE_APITYPE
 _APICONFIGSOURCE.fields_by_name['grpc_services'].message_type = envoy_dot_api_dot_v2_dot_core_dot_grpc__service__pb2._GRPCSERVICE
 _APICONFIGSOURCE.fields_by_name['refresh_delay'].message_type = google_dot_protobuf_dot_duration__pb2._DURATION
+_APICONFIGSOURCE.fields_by_name['request_timeout'].message_type = google_dot_protobuf_dot_duration__pb2._DURATION
+_APICONFIGSOURCE.fields_by_name['rate_limit_settings'].message_type = _RATELIMITSETTINGS
 _APICONFIGSOURCE_APITYPE.containing_type = _APICONFIGSOURCE
+_RATELIMITSETTINGS.fields_by_name['max_tokens'].message_type = google_dot_protobuf_dot_wrappers__pb2._UINT32VALUE
+_RATELIMITSETTINGS.fields_by_name['fill_rate'].message_type = google_dot_protobuf_dot_wrappers__pb2._DOUBLEVALUE
 _CONFIGSOURCE.fields_by_name['api_config_source'].message_type = _APICONFIGSOURCE
 _CONFIGSOURCE.fields_by_name['ads'].message_type = _AGGREGATEDCONFIGSOURCE
 _CONFIGSOURCE.oneofs_by_name['config_source_specifier'].fields.append(
@@ -197,6 +258,7 @@ _CONFIGSOURCE.oneofs_by_name['config_source_specifier'].fields.append(
 _CONFIGSOURCE.fields_by_name['ads'].containing_oneof = _CONFIGSOURCE.oneofs_by_name['config_source_specifier']
 DESCRIPTOR.message_types_by_name['ApiConfigSource'] = _APICONFIGSOURCE
 DESCRIPTOR.message_types_by_name['AggregatedConfigSource'] = _AGGREGATEDCONFIGSOURCE
+DESCRIPTOR.message_types_by_name['RateLimitSettings'] = _RATELIMITSETTINGS
 DESCRIPTOR.message_types_by_name['ConfigSource'] = _CONFIGSOURCE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
@@ -214,6 +276,13 @@ AggregatedConfigSource = _reflection.GeneratedProtocolMessageType('AggregatedCon
   ))
 _sym_db.RegisterMessage(AggregatedConfigSource)
 
+RateLimitSettings = _reflection.GeneratedProtocolMessageType('RateLimitSettings', (_message.Message,), dict(
+  DESCRIPTOR = _RATELIMITSETTINGS,
+  __module__ = 'envoy.api.v2.core.config_source_pb2'
+  # @@protoc_insertion_point(class_scope:envoy.api.v2.core.RateLimitSettings)
+  ))
+_sym_db.RegisterMessage(RateLimitSettings)
+
 ConfigSource = _reflection.GeneratedProtocolMessageType('ConfigSource', (_message.Message,), dict(
   DESCRIPTOR = _CONFIGSOURCE,
   __module__ = 'envoy.api.v2.core.config_source_pb2'
@@ -223,11 +292,17 @@ _sym_db.RegisterMessage(ConfigSource)
 
 
 DESCRIPTOR.has_options = True
-DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\250\342\036\001'))
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n\037io.envoyproxy.envoy.api.v2.coreB\021ConfigSourceProtoP\001\250\342\036\001'))
+_APICONFIGSOURCE_APITYPE.values_by_name["UNSUPPORTED_REST_LEGACY"].has_options = True
+_APICONFIGSOURCE_APITYPE.values_by_name["UNSUPPORTED_REST_LEGACY"]._options = _descriptor._ParseOptions(descriptor_pb2.EnumValueOptions(), _b('\010\001'))
 _APICONFIGSOURCE.fields_by_name['api_type'].has_options = True
 _APICONFIGSOURCE.fields_by_name['api_type']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\202\001\002\020\001'))
 _APICONFIGSOURCE.fields_by_name['refresh_delay'].has_options = True
 _APICONFIGSOURCE.fields_by_name['refresh_delay']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\230\337\037\001'))
+_APICONFIGSOURCE.fields_by_name['request_timeout'].has_options = True
+_APICONFIGSOURCE.fields_by_name['request_timeout']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\007\252\001\004*\002\010\000\230\337\037\001'))
+_RATELIMITSETTINGS.fields_by_name['fill_rate'].has_options = True
+_RATELIMITSETTINGS.fields_by_name['fill_rate']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\013\022\t!\000\000\000\000\000\000\000\000'))
 _CONFIGSOURCE.oneofs_by_name['config_source_specifier'].has_options = True
 _CONFIGSOURCE.oneofs_by_name['config_source_specifier']._options = _descriptor._ParseOptions(descriptor_pb2.OneofOptions(), _b('\270\351\300\003\001'))
 try:

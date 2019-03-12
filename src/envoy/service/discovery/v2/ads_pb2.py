@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='envoy/service/discovery/v2/ads.proto',
   package='envoy.service.discovery.v2',
   syntax='proto3',
-  serialized_pb=_b('\n$envoy/service/discovery/v2/ads.proto\x12\x1a\x65nvoy.service.discovery.v2\x1a\x1c\x65nvoy/api/v2/discovery.proto\"\n\n\x08\x41\x64sDummy2\xff\x01\n\x1a\x41ggregatedDiscoveryService\x12\x62\n\x19StreamAggregatedResources\x12\x1e.envoy.api.v2.DiscoveryRequest\x1a\x1f.envoy.api.v2.DiscoveryResponse\"\x00(\x01\x30\x01\x12}\n\x1eIncrementalAggregatedResources\x12).envoy.api.v2.IncrementalDiscoveryRequest\x1a*.envoy.api.v2.IncrementalDiscoveryResponse\"\x00(\x01\x30\x01\x42\x07Z\x02v2\x88\x01\x01\x62\x06proto3')
+  serialized_pb=_b('\n$envoy/service/discovery/v2/ads.proto\x12\x1a\x65nvoy.service.discovery.v2\x1a\x1c\x65nvoy/api/v2/discovery.proto\"\n\n\x08\x41\x64sDummy2\xed\x01\n\x1a\x41ggregatedDiscoveryService\x12\x62\n\x19StreamAggregatedResources\x12\x1e.envoy.api.v2.DiscoveryRequest\x1a\x1f.envoy.api.v2.DiscoveryResponse\"\x00(\x01\x30\x01\x12k\n\x18\x44\x65ltaAggregatedResources\x12#.envoy.api.v2.DeltaDiscoveryRequest\x1a$.envoy.api.v2.DeltaDiscoveryResponse\"\x00(\x01\x30\x01\x42=\n(io.envoyproxy.envoy.service.discovery.v2B\x08\x41\x64sProtoP\x01Z\x02v2\x88\x01\x01\x62\x06proto3')
   ,
   dependencies=[envoy_dot_api_dot_v2_dot_discovery__pb2.DESCRIPTOR,])
 
@@ -62,7 +62,7 @@ _sym_db.RegisterMessage(AdsDummy)
 
 
 DESCRIPTOR.has_options = True
-DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('Z\002v2\210\001\001'))
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n(io.envoyproxy.envoy.service.discovery.v2B\010AdsProtoP\001Z\002v2\210\001\001'))
 
 _AGGREGATEDDISCOVERYSERVICE = _descriptor.ServiceDescriptor(
   name='AggregatedDiscoveryService',
@@ -71,7 +71,7 @@ _AGGREGATEDDISCOVERYSERVICE = _descriptor.ServiceDescriptor(
   index=0,
   options=None,
   serialized_start=111,
-  serialized_end=366,
+  serialized_end=348,
   methods=[
   _descriptor.MethodDescriptor(
     name='StreamAggregatedResources',
@@ -83,12 +83,12 @@ _AGGREGATEDDISCOVERYSERVICE = _descriptor.ServiceDescriptor(
     options=None,
   ),
   _descriptor.MethodDescriptor(
-    name='IncrementalAggregatedResources',
-    full_name='envoy.service.discovery.v2.AggregatedDiscoveryService.IncrementalAggregatedResources',
+    name='DeltaAggregatedResources',
+    full_name='envoy.service.discovery.v2.AggregatedDiscoveryService.DeltaAggregatedResources',
     index=1,
     containing_service=None,
-    input_type=envoy_dot_api_dot_v2_dot_discovery__pb2._INCREMENTALDISCOVERYREQUEST,
-    output_type=envoy_dot_api_dot_v2_dot_discovery__pb2._INCREMENTALDISCOVERYRESPONSE,
+    input_type=envoy_dot_api_dot_v2_dot_discovery__pb2._DELTADISCOVERYREQUEST,
+    output_type=envoy_dot_api_dot_v2_dot_discovery__pb2._DELTADISCOVERYRESPONSE,
     options=None,
   ),
 ])
@@ -131,10 +131,10 @@ try:
           request_serializer=envoy_dot_api_dot_v2_dot_discovery__pb2.DiscoveryRequest.SerializeToString,
           response_deserializer=envoy_dot_api_dot_v2_dot_discovery__pb2.DiscoveryResponse.FromString,
           )
-      self.IncrementalAggregatedResources = channel.stream_stream(
-          '/envoy.service.discovery.v2.AggregatedDiscoveryService/IncrementalAggregatedResources',
-          request_serializer=envoy_dot_api_dot_v2_dot_discovery__pb2.IncrementalDiscoveryRequest.SerializeToString,
-          response_deserializer=envoy_dot_api_dot_v2_dot_discovery__pb2.IncrementalDiscoveryResponse.FromString,
+      self.DeltaAggregatedResources = channel.stream_stream(
+          '/envoy.service.discovery.v2.AggregatedDiscoveryService/DeltaAggregatedResources',
+          request_serializer=envoy_dot_api_dot_v2_dot_discovery__pb2.DeltaDiscoveryRequest.SerializeToString,
+          response_deserializer=envoy_dot_api_dot_v2_dot_discovery__pb2.DeltaDiscoveryResponse.FromString,
           )
 
 
@@ -159,7 +159,7 @@ try:
       context.set_details('Method not implemented!')
       raise NotImplementedError('Method not implemented!')
 
-    def IncrementalAggregatedResources(self, request_iterator, context):
+    def DeltaAggregatedResources(self, request_iterator, context):
       # missing associated documentation comment in .proto file
       pass
       context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -174,10 +174,10 @@ try:
             request_deserializer=envoy_dot_api_dot_v2_dot_discovery__pb2.DiscoveryRequest.FromString,
             response_serializer=envoy_dot_api_dot_v2_dot_discovery__pb2.DiscoveryResponse.SerializeToString,
         ),
-        'IncrementalAggregatedResources': grpc.stream_stream_rpc_method_handler(
-            servicer.IncrementalAggregatedResources,
-            request_deserializer=envoy_dot_api_dot_v2_dot_discovery__pb2.IncrementalDiscoveryRequest.FromString,
-            response_serializer=envoy_dot_api_dot_v2_dot_discovery__pb2.IncrementalDiscoveryResponse.SerializeToString,
+        'DeltaAggregatedResources': grpc.stream_stream_rpc_method_handler(
+            servicer.DeltaAggregatedResources,
+            request_deserializer=envoy_dot_api_dot_v2_dot_discovery__pb2.DeltaDiscoveryRequest.FromString,
+            response_serializer=envoy_dot_api_dot_v2_dot_discovery__pb2.DeltaDiscoveryResponse.SerializeToString,
         ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -207,7 +207,7 @@ try:
       """This is a gRPC-only API.
       """
       context.code(beta_interfaces.StatusCode.UNIMPLEMENTED)
-    def IncrementalAggregatedResources(self, request_iterator, context):
+    def DeltaAggregatedResources(self, request_iterator, context):
       # missing associated documentation comment in .proto file
       pass
       context.code(beta_interfaces.StatusCode.UNIMPLEMENTED)
@@ -235,7 +235,7 @@ try:
       """This is a gRPC-only API.
       """
       raise NotImplementedError()
-    def IncrementalAggregatedResources(self, request_iterator, timeout, metadata=None, with_call=False, protocol_options=None):
+    def DeltaAggregatedResources(self, request_iterator, timeout, metadata=None, with_call=False, protocol_options=None):
       # missing associated documentation comment in .proto file
       pass
       raise NotImplementedError()
@@ -248,15 +248,15 @@ try:
     file not marked beta) for all further purposes. This function was
     generated only to ease transition from grpcio<0.15.0 to grpcio>=0.15.0"""
     request_deserializers = {
-      ('envoy.service.discovery.v2.AggregatedDiscoveryService', 'IncrementalAggregatedResources'): envoy_dot_api_dot_v2_dot_discovery__pb2.IncrementalDiscoveryRequest.FromString,
+      ('envoy.service.discovery.v2.AggregatedDiscoveryService', 'DeltaAggregatedResources'): envoy_dot_api_dot_v2_dot_discovery__pb2.DeltaDiscoveryRequest.FromString,
       ('envoy.service.discovery.v2.AggregatedDiscoveryService', 'StreamAggregatedResources'): envoy_dot_api_dot_v2_dot_discovery__pb2.DiscoveryRequest.FromString,
     }
     response_serializers = {
-      ('envoy.service.discovery.v2.AggregatedDiscoveryService', 'IncrementalAggregatedResources'): envoy_dot_api_dot_v2_dot_discovery__pb2.IncrementalDiscoveryResponse.SerializeToString,
+      ('envoy.service.discovery.v2.AggregatedDiscoveryService', 'DeltaAggregatedResources'): envoy_dot_api_dot_v2_dot_discovery__pb2.DeltaDiscoveryResponse.SerializeToString,
       ('envoy.service.discovery.v2.AggregatedDiscoveryService', 'StreamAggregatedResources'): envoy_dot_api_dot_v2_dot_discovery__pb2.DiscoveryResponse.SerializeToString,
     }
     method_implementations = {
-      ('envoy.service.discovery.v2.AggregatedDiscoveryService', 'IncrementalAggregatedResources'): face_utilities.stream_stream_inline(servicer.IncrementalAggregatedResources),
+      ('envoy.service.discovery.v2.AggregatedDiscoveryService', 'DeltaAggregatedResources'): face_utilities.stream_stream_inline(servicer.DeltaAggregatedResources),
       ('envoy.service.discovery.v2.AggregatedDiscoveryService', 'StreamAggregatedResources'): face_utilities.stream_stream_inline(servicer.StreamAggregatedResources),
     }
     server_options = beta_implementations.server_options(request_deserializers=request_deserializers, response_serializers=response_serializers, thread_pool=pool, thread_pool_size=pool_size, default_timeout=default_timeout, maximum_timeout=maximum_timeout)
@@ -270,15 +270,15 @@ try:
     file not marked beta) for all further purposes. This function was
     generated only to ease transition from grpcio<0.15.0 to grpcio>=0.15.0"""
     request_serializers = {
-      ('envoy.service.discovery.v2.AggregatedDiscoveryService', 'IncrementalAggregatedResources'): envoy_dot_api_dot_v2_dot_discovery__pb2.IncrementalDiscoveryRequest.SerializeToString,
+      ('envoy.service.discovery.v2.AggregatedDiscoveryService', 'DeltaAggregatedResources'): envoy_dot_api_dot_v2_dot_discovery__pb2.DeltaDiscoveryRequest.SerializeToString,
       ('envoy.service.discovery.v2.AggregatedDiscoveryService', 'StreamAggregatedResources'): envoy_dot_api_dot_v2_dot_discovery__pb2.DiscoveryRequest.SerializeToString,
     }
     response_deserializers = {
-      ('envoy.service.discovery.v2.AggregatedDiscoveryService', 'IncrementalAggregatedResources'): envoy_dot_api_dot_v2_dot_discovery__pb2.IncrementalDiscoveryResponse.FromString,
+      ('envoy.service.discovery.v2.AggregatedDiscoveryService', 'DeltaAggregatedResources'): envoy_dot_api_dot_v2_dot_discovery__pb2.DeltaDiscoveryResponse.FromString,
       ('envoy.service.discovery.v2.AggregatedDiscoveryService', 'StreamAggregatedResources'): envoy_dot_api_dot_v2_dot_discovery__pb2.DiscoveryResponse.FromString,
     }
     cardinalities = {
-      'IncrementalAggregatedResources': cardinality.Cardinality.STREAM_STREAM,
+      'DeltaAggregatedResources': cardinality.Cardinality.STREAM_STREAM,
       'StreamAggregatedResources': cardinality.Cardinality.STREAM_STREAM,
     }
     stub_options = beta_implementations.stub_options(host=host, metadata_transformer=metadata_transformer, request_serializers=request_serializers, response_deserializers=response_deserializers, thread_pool=pool, thread_pool_size=pool_size)

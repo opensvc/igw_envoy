@@ -14,7 +14,9 @@ _sym_db = _symbol_database.Default()
 
 
 from envoy.api.v2.core import grpc_service_pb2 as envoy_dot_api_dot_v2_dot_core_dot_grpc__service__pb2
+from google.protobuf import any_pb2 as google_dot_protobuf_dot_any__pb2
 from google.protobuf import struct_pb2 as google_dot_protobuf_dot_struct__pb2
+from google.protobuf import wrappers_pb2 as google_dot_protobuf_dot_wrappers__pb2
 from validate import validate_pb2 as validate_dot_validate__pb2
 
 
@@ -22,9 +24,9 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='envoy/config/trace/v2/trace.proto',
   package='envoy.config.trace.v2',
   syntax='proto3',
-  serialized_pb=_b('\n!envoy/config/trace/v2/trace.proto\x12\x15\x65nvoy.config.trace.v2\x1a$envoy/api/v2/core/grpc_service.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x17validate/validate.proto\"\x86\x01\n\x07Tracing\x12\x31\n\x04http\x18\x01 \x01(\x0b\x32#.envoy.config.trace.v2.Tracing.Http\x1aH\n\x04Http\x12\x17\n\x04name\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12\'\n\x06\x63onfig\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\"]\n\x0fLightstepConfig\x12$\n\x11\x63ollector_cluster\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12$\n\x11\x61\x63\x63\x65ss_token_file\x18\x02 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\"t\n\x0cZipkinConfig\x12$\n\x11\x63ollector_cluster\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12%\n\x12\x63ollector_endpoint\x18\x02 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12\x17\n\x0ftrace_id_128bit\x18\x03 \x01(\x08\"V\n\x0f\x44ynamicOtConfig\x12\x1a\n\x07library\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12\'\n\x06\x63onfig\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\"V\n\x12TraceServiceConfig\x12@\n\x0cgrpc_service\x18\x01 \x01(\x0b\x32\x1e.envoy.api.v2.core.GrpcServiceB\n\xba\xe9\xc0\x03\x05\x8a\x01\x02\x10\x01\x42\x04Z\x02v2b\x06proto3')
+  serialized_pb=_b('\n!envoy/config/trace/v2/trace.proto\x12\x15\x65nvoy.config.trace.v2\x1a$envoy/api/v2/core/grpc_service.proto\x1a\x19google/protobuf/any.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x17validate/validate.proto\"\xca\x01\n\x07Tracing\x12\x31\n\x04http\x18\x01 \x01(\x0b\x32#.envoy.config.trace.v2.Tracing.Http\x1a\x8b\x01\n\x04Http\x12\x17\n\x04name\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12-\n\x06\x63onfig\x18\x02 \x01(\x0b\x32\x17.google.protobuf.StructB\x02\x18\x01H\x00\x12,\n\x0ctyped_config\x18\x03 \x01(\x0b\x32\x14.google.protobuf.AnyH\x00\x42\r\n\x0b\x63onfig_type\"]\n\x0fLightstepConfig\x12$\n\x11\x63ollector_cluster\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12$\n\x11\x61\x63\x63\x65ss_token_file\x18\x02 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\"\xad\x01\n\x0cZipkinConfig\x12$\n\x11\x63ollector_cluster\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12%\n\x12\x63ollector_endpoint\x18\x02 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12\x17\n\x0ftrace_id_128bit\x18\x03 \x01(\x08\x12\x37\n\x13shared_span_context\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.BoolValue\"V\n\x0f\x44ynamicOtConfig\x12\x1a\n\x07library\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12\'\n\x06\x63onfig\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\"V\n\rDatadogConfig\x12$\n\x11\x63ollector_cluster\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12\x1f\n\x0cservice_name\x18\x02 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\"V\n\x12TraceServiceConfig\x12@\n\x0cgrpc_service\x18\x01 \x01(\x0b\x32\x1e.envoy.api.v2.core.GrpcServiceB\n\xba\xe9\xc0\x03\x05\x8a\x01\x02\x10\x01\x42\x37\n#io.envoyproxy.envoy.config.trace.v2B\nTraceProtoP\x01Z\x02v2b\x06proto3')
   ,
-  dependencies=[envoy_dot_api_dot_v2_dot_core_dot_grpc__service__pb2.DESCRIPTOR,google_dot_protobuf_dot_struct__pb2.DESCRIPTOR,validate_dot_validate__pb2.DESCRIPTOR,])
+  dependencies=[envoy_dot_api_dot_v2_dot_core_dot_grpc__service__pb2.DESCRIPTOR,google_dot_protobuf_dot_any__pb2.DESCRIPTOR,google_dot_protobuf_dot_struct__pb2.DESCRIPTOR,google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,validate_dot_validate__pb2.DESCRIPTOR,])
 
 
 
@@ -49,6 +51,13 @@ _TRACING_HTTP = _descriptor.Descriptor(
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
+      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\030\001'))),
+    _descriptor.FieldDescriptor(
+      name='typed_config', full_name='envoy.config.trace.v2.Tracing.Http.typed_config', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
       options=None),
   ],
   extensions=[
@@ -61,9 +70,12 @@ _TRACING_HTTP = _descriptor.Descriptor(
   syntax='proto3',
   extension_ranges=[],
   oneofs=[
+    _descriptor.OneofDescriptor(
+      name='config_type', full_name='envoy.config.trace.v2.Tracing.Http.config_type',
+      index=0, containing_type=None, fields=[]),
   ],
-  serialized_start=216,
-  serialized_end=288,
+  serialized_start=276,
+  serialized_end=415,
 )
 
 _TRACING = _descriptor.Descriptor(
@@ -92,8 +104,8 @@ _TRACING = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=154,
-  serialized_end=288,
+  serialized_start=213,
+  serialized_end=415,
 )
 
 
@@ -130,8 +142,8 @@ _LIGHTSTEPCONFIG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=290,
-  serialized_end=383,
+  serialized_start=417,
+  serialized_end=510,
 )
 
 
@@ -163,6 +175,13 @@ _ZIPKINCONFIG = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
+    _descriptor.FieldDescriptor(
+      name='shared_span_context', full_name='envoy.config.trace.v2.ZipkinConfig.shared_span_context', index=3,
+      number=4, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -175,8 +194,8 @@ _ZIPKINCONFIG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=385,
-  serialized_end=501,
+  serialized_start=513,
+  serialized_end=686,
 )
 
 
@@ -213,8 +232,46 @@ _DYNAMICOTCONFIG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=503,
-  serialized_end=589,
+  serialized_start=688,
+  serialized_end=774,
+)
+
+
+_DATADOGCONFIG = _descriptor.Descriptor(
+  name='DatadogConfig',
+  full_name='envoy.config.trace.v2.DatadogConfig',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='collector_cluster', full_name='envoy.config.trace.v2.DatadogConfig.collector_cluster', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004r\002 \001'))),
+    _descriptor.FieldDescriptor(
+      name='service_name', full_name='envoy.config.trace.v2.DatadogConfig.service_name', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004r\002 \001'))),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=776,
+  serialized_end=862,
 )
 
 
@@ -244,19 +301,28 @@ _TRACESERVICECONFIG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=591,
-  serialized_end=677,
+  serialized_start=864,
+  serialized_end=950,
 )
 
 _TRACING_HTTP.fields_by_name['config'].message_type = google_dot_protobuf_dot_struct__pb2._STRUCT
+_TRACING_HTTP.fields_by_name['typed_config'].message_type = google_dot_protobuf_dot_any__pb2._ANY
 _TRACING_HTTP.containing_type = _TRACING
+_TRACING_HTTP.oneofs_by_name['config_type'].fields.append(
+  _TRACING_HTTP.fields_by_name['config'])
+_TRACING_HTTP.fields_by_name['config'].containing_oneof = _TRACING_HTTP.oneofs_by_name['config_type']
+_TRACING_HTTP.oneofs_by_name['config_type'].fields.append(
+  _TRACING_HTTP.fields_by_name['typed_config'])
+_TRACING_HTTP.fields_by_name['typed_config'].containing_oneof = _TRACING_HTTP.oneofs_by_name['config_type']
 _TRACING.fields_by_name['http'].message_type = _TRACING_HTTP
+_ZIPKINCONFIG.fields_by_name['shared_span_context'].message_type = google_dot_protobuf_dot_wrappers__pb2._BOOLVALUE
 _DYNAMICOTCONFIG.fields_by_name['config'].message_type = google_dot_protobuf_dot_struct__pb2._STRUCT
 _TRACESERVICECONFIG.fields_by_name['grpc_service'].message_type = envoy_dot_api_dot_v2_dot_core_dot_grpc__service__pb2._GRPCSERVICE
 DESCRIPTOR.message_types_by_name['Tracing'] = _TRACING
 DESCRIPTOR.message_types_by_name['LightstepConfig'] = _LIGHTSTEPCONFIG
 DESCRIPTOR.message_types_by_name['ZipkinConfig'] = _ZIPKINCONFIG
 DESCRIPTOR.message_types_by_name['DynamicOtConfig'] = _DYNAMICOTCONFIG
+DESCRIPTOR.message_types_by_name['DatadogConfig'] = _DATADOGCONFIG
 DESCRIPTOR.message_types_by_name['TraceServiceConfig'] = _TRACESERVICECONFIG
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
@@ -296,6 +362,13 @@ DynamicOtConfig = _reflection.GeneratedProtocolMessageType('DynamicOtConfig', (_
   ))
 _sym_db.RegisterMessage(DynamicOtConfig)
 
+DatadogConfig = _reflection.GeneratedProtocolMessageType('DatadogConfig', (_message.Message,), dict(
+  DESCRIPTOR = _DATADOGCONFIG,
+  __module__ = 'envoy.config.trace.v2.trace_pb2'
+  # @@protoc_insertion_point(class_scope:envoy.config.trace.v2.DatadogConfig)
+  ))
+_sym_db.RegisterMessage(DatadogConfig)
+
 TraceServiceConfig = _reflection.GeneratedProtocolMessageType('TraceServiceConfig', (_message.Message,), dict(
   DESCRIPTOR = _TRACESERVICECONFIG,
   __module__ = 'envoy.config.trace.v2.trace_pb2'
@@ -305,9 +378,11 @@ _sym_db.RegisterMessage(TraceServiceConfig)
 
 
 DESCRIPTOR.has_options = True
-DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('Z\002v2'))
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n#io.envoyproxy.envoy.config.trace.v2B\nTraceProtoP\001Z\002v2'))
 _TRACING_HTTP.fields_by_name['name'].has_options = True
 _TRACING_HTTP.fields_by_name['name']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004r\002 \001'))
+_TRACING_HTTP.fields_by_name['config'].has_options = True
+_TRACING_HTTP.fields_by_name['config']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\030\001'))
 _LIGHTSTEPCONFIG.fields_by_name['collector_cluster'].has_options = True
 _LIGHTSTEPCONFIG.fields_by_name['collector_cluster']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004r\002 \001'))
 _LIGHTSTEPCONFIG.fields_by_name['access_token_file'].has_options = True
@@ -318,6 +393,10 @@ _ZIPKINCONFIG.fields_by_name['collector_endpoint'].has_options = True
 _ZIPKINCONFIG.fields_by_name['collector_endpoint']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004r\002 \001'))
 _DYNAMICOTCONFIG.fields_by_name['library'].has_options = True
 _DYNAMICOTCONFIG.fields_by_name['library']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004r\002 \001'))
+_DATADOGCONFIG.fields_by_name['collector_cluster'].has_options = True
+_DATADOGCONFIG.fields_by_name['collector_cluster']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004r\002 \001'))
+_DATADOGCONFIG.fields_by_name['service_name'].has_options = True
+_DATADOGCONFIG.fields_by_name['service_name']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004r\002 \001'))
 _TRACESERVICECONFIG.fields_by_name['grpc_service'].has_options = True
 _TRACESERVICECONFIG.fields_by_name['grpc_service']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\212\001\002\020\001'))
 try:

@@ -13,6 +13,7 @@ from google.protobuf import descriptor_pb2
 _sym_db = _symbol_database.Default()
 
 
+from envoy.api.v2.core import base_pb2 as envoy_dot_api_dot_v2_dot_core_dot_base__pb2
 from envoy.api.v2.ratelimit import ratelimit_pb2 as envoy_dot_api_dot_v2_dot_ratelimit_dot_ratelimit__pb2
 from validate import validate_pb2 as validate_dot_validate__pb2
 
@@ -21,9 +22,9 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='envoy/service/ratelimit/v2/rls.proto',
   package='envoy.service.ratelimit.v2',
   syntax='proto3',
-  serialized_pb=_b('\n$envoy/service/ratelimit/v2/rls.proto\x12\x1a\x65nvoy.service.ratelimit.v2\x1a&envoy/api/v2/ratelimit/ratelimit.proto\x1a\x17validate/validate.proto\"y\n\x10RateLimitRequest\x12\x0e\n\x06\x64omain\x18\x01 \x01(\t\x12@\n\x0b\x64\x65scriptors\x18\x02 \x03(\x0b\x32+.envoy.api.v2.ratelimit.RateLimitDescriptor\x12\x13\n\x0bhits_addend\x18\x03 \x01(\r\"\xd1\x04\n\x11RateLimitResponse\x12H\n\x0coverall_code\x18\x01 \x01(\x0e\x32\x32.envoy.service.ratelimit.v2.RateLimitResponse.Code\x12P\n\x08statuses\x18\x02 \x03(\x0b\x32>.envoy.service.ratelimit.v2.RateLimitResponse.DescriptorStatus\x1a\xb2\x01\n\tRateLimit\x12\x19\n\x11requests_per_unit\x18\x01 \x01(\r\x12J\n\x04unit\x18\x02 \x01(\x0e\x32<.envoy.service.ratelimit.v2.RateLimitResponse.RateLimit.Unit\">\n\x04Unit\x12\x0b\n\x07UNKNOWN\x10\x00\x12\n\n\x06SECOND\x10\x01\x12\n\n\x06MINUTE\x10\x02\x12\x08\n\x04HOUR\x10\x03\x12\x07\n\x03\x44\x41Y\x10\x04\x1a\xbd\x01\n\x10\x44\x65scriptorStatus\x12@\n\x04\x63ode\x18\x01 \x01(\x0e\x32\x32.envoy.service.ratelimit.v2.RateLimitResponse.Code\x12N\n\rcurrent_limit\x18\x02 \x01(\x0b\x32\x37.envoy.service.ratelimit.v2.RateLimitResponse.RateLimit\x12\x17\n\x0flimit_remaining\x18\x03 \x01(\r\"+\n\x04\x43ode\x12\x0b\n\x07UNKNOWN\x10\x00\x12\x06\n\x02OK\x10\x01\x12\x0e\n\nOVER_LIMIT\x10\x02\x32\x84\x01\n\x10RateLimitService\x12p\n\x0fShouldRateLimit\x12,.envoy.service.ratelimit.v2.RateLimitRequest\x1a-.envoy.service.ratelimit.v2.RateLimitResponse\"\x00\x42\x04Z\x02v2b\x06proto3')
+  serialized_pb=_b('\n$envoy/service/ratelimit/v2/rls.proto\x12\x1a\x65nvoy.service.ratelimit.v2\x1a\x1c\x65nvoy/api/v2/core/base.proto\x1a&envoy/api/v2/ratelimit/ratelimit.proto\x1a\x17validate/validate.proto\"y\n\x10RateLimitRequest\x12\x0e\n\x06\x64omain\x18\x01 \x01(\t\x12@\n\x0b\x64\x65scriptors\x18\x02 \x03(\x0b\x32+.envoy.api.v2.ratelimit.RateLimitDescriptor\x12\x13\n\x0bhits_addend\x18\x03 \x01(\r\"\x82\x05\n\x11RateLimitResponse\x12H\n\x0coverall_code\x18\x01 \x01(\x0e\x32\x32.envoy.service.ratelimit.v2.RateLimitResponse.Code\x12P\n\x08statuses\x18\x02 \x03(\x0b\x32>.envoy.service.ratelimit.v2.RateLimitResponse.DescriptorStatus\x12/\n\x07headers\x18\x03 \x03(\x0b\x32\x1e.envoy.api.v2.core.HeaderValue\x1a\xb2\x01\n\tRateLimit\x12\x19\n\x11requests_per_unit\x18\x01 \x01(\r\x12J\n\x04unit\x18\x02 \x01(\x0e\x32<.envoy.service.ratelimit.v2.RateLimitResponse.RateLimit.Unit\">\n\x04Unit\x12\x0b\n\x07UNKNOWN\x10\x00\x12\n\n\x06SECOND\x10\x01\x12\n\n\x06MINUTE\x10\x02\x12\x08\n\x04HOUR\x10\x03\x12\x07\n\x03\x44\x41Y\x10\x04\x1a\xbd\x01\n\x10\x44\x65scriptorStatus\x12@\n\x04\x63ode\x18\x01 \x01(\x0e\x32\x32.envoy.service.ratelimit.v2.RateLimitResponse.Code\x12N\n\rcurrent_limit\x18\x02 \x01(\x0b\x32\x37.envoy.service.ratelimit.v2.RateLimitResponse.RateLimit\x12\x17\n\x0flimit_remaining\x18\x03 \x01(\r\"+\n\x04\x43ode\x12\x0b\n\x07UNKNOWN\x10\x00\x12\x06\n\x02OK\x10\x01\x12\x0e\n\nOVER_LIMIT\x10\x02\x32\x84\x01\n\x10RateLimitService\x12p\n\x0fShouldRateLimit\x12,.envoy.service.ratelimit.v2.RateLimitRequest\x1a-.envoy.service.ratelimit.v2.RateLimitResponse\"\x00\x42:\n(io.envoyproxy.envoy.service.ratelimit.v2B\x08RlsProtoP\x01Z\x02v2b\x06proto3')
   ,
-  dependencies=[envoy_dot_api_dot_v2_dot_ratelimit_dot_ratelimit__pb2.DESCRIPTOR,validate_dot_validate__pb2.DESCRIPTOR,])
+  dependencies=[envoy_dot_api_dot_v2_dot_core_dot_base__pb2.DESCRIPTOR,envoy_dot_api_dot_v2_dot_ratelimit_dot_ratelimit__pb2.DESCRIPTOR,validate_dot_validate__pb2.DESCRIPTOR,])
 
 
 
@@ -56,8 +57,8 @@ _RATELIMITRESPONSE_RATELIMIT_UNIT = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=551,
-  serialized_end=613,
+  serialized_start=630,
+  serialized_end=692,
 )
 _sym_db.RegisterEnumDescriptor(_RATELIMITRESPONSE_RATELIMIT_UNIT)
 
@@ -82,8 +83,8 @@ _RATELIMITRESPONSE_CODE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=807,
-  serialized_end=850,
+  serialized_start=886,
+  serialized_end=929,
 )
 _sym_db.RegisterEnumDescriptor(_RATELIMITRESPONSE_CODE)
 
@@ -128,8 +129,8 @@ _RATELIMITREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=133,
-  serialized_end=254,
+  serialized_start=163,
+  serialized_end=284,
 )
 
 
@@ -167,8 +168,8 @@ _RATELIMITRESPONSE_RATELIMIT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=435,
-  serialized_end=613,
+  serialized_start=514,
+  serialized_end=692,
 )
 
 _RATELIMITRESPONSE_DESCRIPTORSTATUS = _descriptor.Descriptor(
@@ -211,8 +212,8 @@ _RATELIMITRESPONSE_DESCRIPTORSTATUS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=616,
-  serialized_end=805,
+  serialized_start=695,
+  serialized_end=884,
 )
 
 _RATELIMITRESPONSE = _descriptor.Descriptor(
@@ -236,6 +237,13 @@ _RATELIMITRESPONSE = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
+    _descriptor.FieldDescriptor(
+      name='headers', full_name='envoy.service.ratelimit.v2.RateLimitResponse.headers', index=2,
+      number=3, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -249,8 +257,8 @@ _RATELIMITRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=257,
-  serialized_end=850,
+  serialized_start=287,
+  serialized_end=929,
 )
 
 _RATELIMITREQUEST.fields_by_name['descriptors'].message_type = envoy_dot_api_dot_v2_dot_ratelimit_dot_ratelimit__pb2._RATELIMITDESCRIPTOR
@@ -262,6 +270,7 @@ _RATELIMITRESPONSE_DESCRIPTORSTATUS.fields_by_name['current_limit'].message_type
 _RATELIMITRESPONSE_DESCRIPTORSTATUS.containing_type = _RATELIMITRESPONSE
 _RATELIMITRESPONSE.fields_by_name['overall_code'].enum_type = _RATELIMITRESPONSE_CODE
 _RATELIMITRESPONSE.fields_by_name['statuses'].message_type = _RATELIMITRESPONSE_DESCRIPTORSTATUS
+_RATELIMITRESPONSE.fields_by_name['headers'].message_type = envoy_dot_api_dot_v2_dot_core_dot_base__pb2._HEADERVALUE
 _RATELIMITRESPONSE_CODE.containing_type = _RATELIMITRESPONSE
 DESCRIPTOR.message_types_by_name['RateLimitRequest'] = _RATELIMITREQUEST
 DESCRIPTOR.message_types_by_name['RateLimitResponse'] = _RATELIMITRESPONSE
@@ -299,7 +308,7 @@ _sym_db.RegisterMessage(RateLimitResponse.DescriptorStatus)
 
 
 DESCRIPTOR.has_options = True
-DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('Z\002v2'))
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n(io.envoyproxy.envoy.service.ratelimit.v2B\010RlsProtoP\001Z\002v2'))
 
 _RATELIMITSERVICE = _descriptor.ServiceDescriptor(
   name='RateLimitService',
@@ -307,8 +316,8 @@ _RATELIMITSERVICE = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   options=None,
-  serialized_start=853,
-  serialized_end=985,
+  serialized_start=932,
+  serialized_end=1064,
   methods=[
   _descriptor.MethodDescriptor(
     name='ShouldRateLimit',
@@ -335,8 +344,9 @@ try:
 
 
   class RateLimitServiceStub(object):
-    # missing associated documentation comment in .proto file
-    pass
+    """[#protodoc-title: Rate Limit Service (RLS)]
+
+    """
 
     def __init__(self, channel):
       """Constructor.
@@ -352,8 +362,9 @@ try:
 
 
   class RateLimitServiceServicer(object):
-    # missing associated documentation comment in .proto file
-    pass
+    """[#protodoc-title: Rate Limit Service (RLS)]
+
+    """
 
     def ShouldRateLimit(self, request, context):
       """Determine whether rate limiting should take place.
@@ -382,8 +393,9 @@ try:
     It is recommended to use the GA API (classes and functions in this
     file not marked beta) for all further purposes. This class was generated
     only to ease transition from grpcio<0.15.0 to grpcio>=0.15.0."""
-    # missing associated documentation comment in .proto file
-    pass
+    """[#protodoc-title: Rate Limit Service (RLS)]
+
+    """
     def ShouldRateLimit(self, request, context):
       """Determine whether rate limiting should take place.
       """
@@ -396,8 +408,9 @@ try:
     It is recommended to use the GA API (classes and functions in this
     file not marked beta) for all further purposes. This class was generated
     only to ease transition from grpcio<0.15.0 to grpcio>=0.15.0."""
-    # missing associated documentation comment in .proto file
-    pass
+    """[#protodoc-title: Rate Limit Service (RLS)]
+
+    """
     def ShouldRateLimit(self, request, timeout, metadata=None, with_call=False, protocol_options=None):
       """Determine whether rate limiting should take place.
       """

@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='envoy/type/matcher/string.proto',
   package='envoy.type.matcher',
   syntax='proto3',
-  serialized_pb=_b('\n\x1f\x65nvoy/type/matcher/string.proto\x12\x12\x65nvoy.type.matcher\x1a\x17validate/validate.proto\"\x83\x01\n\rStringMatcher\x12\x0f\n\x05\x65xact\x18\x01 \x01(\tH\x00\x12\x1b\n\x06prefix\x18\x02 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01H\x00\x12\x1b\n\x06suffix\x18\x03 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01H\x00\x12\x0f\n\x05regex\x18\x04 \x01(\tH\x00\x42\x16\n\rmatch_pattern\x12\x05\xb8\xe9\xc0\x03\x01\x42\tZ\x07matcherb\x06proto3')
+  serialized_pb=_b('\n\x1f\x65nvoy/type/matcher/string.proto\x12\x12\x65nvoy.type.matcher\x1a\x17validate/validate.proto\"\x8f\x01\n\rStringMatcher\x12\x0f\n\x05\x65xact\x18\x01 \x01(\tH\x00\x12\x1b\n\x06prefix\x18\x02 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01H\x00\x12\x1b\n\x06suffix\x18\x03 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01H\x00\x12\x1b\n\x05regex\x18\x04 \x01(\tB\n\xba\xe9\xc0\x03\x05r\x03(\x80\x08H\x00\x42\x16\n\rmatch_pattern\x12\x05\xb8\xe9\xc0\x03\x01\"T\n\x11ListStringMatcher\x12?\n\x08patterns\x18\x01 \x03(\x0b\x32!.envoy.type.matcher.StringMatcherB\n\xba\xe9\xc0\x03\x05\x92\x01\x02\x08\x01\x42:\n io.envoyproxy.envoy.type.matcherB\x0bStringProtoP\x01Z\x07matcherb\x06proto3')
   ,
   dependencies=[validate_dot_validate__pb2.DESCRIPTOR,])
 
@@ -61,7 +61,7 @@ _STRINGMATCHER = _descriptor.Descriptor(
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None),
+      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005r\003(\200\010'))),
   ],
   extensions=[
   ],
@@ -78,7 +78,38 @@ _STRINGMATCHER = _descriptor.Descriptor(
       index=0, containing_type=None, fields=[], options=_descriptor._ParseOptions(descriptor_pb2.OneofOptions(), _b('\270\351\300\003\001'))),
   ],
   serialized_start=81,
-  serialized_end=212,
+  serialized_end=224,
+)
+
+
+_LISTSTRINGMATCHER = _descriptor.Descriptor(
+  name='ListStringMatcher',
+  full_name='envoy.type.matcher.ListStringMatcher',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='patterns', full_name='envoy.type.matcher.ListStringMatcher.patterns', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\222\001\002\010\001'))),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=226,
+  serialized_end=310,
 )
 
 _STRINGMATCHER.oneofs_by_name['match_pattern'].fields.append(
@@ -93,7 +124,9 @@ _STRINGMATCHER.fields_by_name['suffix'].containing_oneof = _STRINGMATCHER.oneofs
 _STRINGMATCHER.oneofs_by_name['match_pattern'].fields.append(
   _STRINGMATCHER.fields_by_name['regex'])
 _STRINGMATCHER.fields_by_name['regex'].containing_oneof = _STRINGMATCHER.oneofs_by_name['match_pattern']
+_LISTSTRINGMATCHER.fields_by_name['patterns'].message_type = _STRINGMATCHER
 DESCRIPTOR.message_types_by_name['StringMatcher'] = _STRINGMATCHER
+DESCRIPTOR.message_types_by_name['ListStringMatcher'] = _LISTSTRINGMATCHER
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 StringMatcher = _reflection.GeneratedProtocolMessageType('StringMatcher', (_message.Message,), dict(
@@ -103,15 +136,26 @@ StringMatcher = _reflection.GeneratedProtocolMessageType('StringMatcher', (_mess
   ))
 _sym_db.RegisterMessage(StringMatcher)
 
+ListStringMatcher = _reflection.GeneratedProtocolMessageType('ListStringMatcher', (_message.Message,), dict(
+  DESCRIPTOR = _LISTSTRINGMATCHER,
+  __module__ = 'envoy.type.matcher.string_pb2'
+  # @@protoc_insertion_point(class_scope:envoy.type.matcher.ListStringMatcher)
+  ))
+_sym_db.RegisterMessage(ListStringMatcher)
+
 
 DESCRIPTOR.has_options = True
-DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('Z\007matcher'))
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n io.envoyproxy.envoy.type.matcherB\013StringProtoP\001Z\007matcher'))
 _STRINGMATCHER.oneofs_by_name['match_pattern'].has_options = True
 _STRINGMATCHER.oneofs_by_name['match_pattern']._options = _descriptor._ParseOptions(descriptor_pb2.OneofOptions(), _b('\270\351\300\003\001'))
 _STRINGMATCHER.fields_by_name['prefix'].has_options = True
 _STRINGMATCHER.fields_by_name['prefix']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004r\002 \001'))
 _STRINGMATCHER.fields_by_name['suffix'].has_options = True
 _STRINGMATCHER.fields_by_name['suffix']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004r\002 \001'))
+_STRINGMATCHER.fields_by_name['regex'].has_options = True
+_STRINGMATCHER.fields_by_name['regex']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005r\003(\200\010'))
+_LISTSTRINGMATCHER.fields_by_name['patterns'].has_options = True
+_LISTSTRINGMATCHER.fields_by_name['patterns']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\222\001\002\010\001'))
 try:
   # THESE ELEMENTS WILL BE DEPRECATED.
   # Please use the generated *_pb2_grpc.py files instead.

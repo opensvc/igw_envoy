@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='envoy/type/range.proto',
   package='envoy.type',
   syntax='proto3',
-  serialized_pb=_b('\n\x16\x65nvoy/type/range.proto\x12\nenvoy.type\x1a\x14gogoproto/gogo.proto\"(\n\nInt64Range\x12\r\n\x05start\x18\x01 \x01(\x03\x12\x0b\n\x03\x65nd\x18\x02 \x01(\x03\")\n\x0b\x44oubleRange\x12\r\n\x05start\x18\x01 \x01(\x01\x12\x0b\n\x03\x65nd\x18\x02 \x01(\x01\x42\x10Z\nenvoy_type\xa8\xe2\x1e\x01\x62\x06proto3')
+  serialized_pb=_b('\n\x16\x65nvoy/type/range.proto\x12\nenvoy.type\x1a\x14gogoproto/gogo.proto\"(\n\nInt64Range\x12\r\n\x05start\x18\x01 \x01(\x03\x12\x0b\n\x03\x65nd\x18\x02 \x01(\x03\")\n\x0b\x44oubleRange\x12\r\n\x05start\x18\x01 \x01(\x01\x12\x0b\n\x03\x65nd\x18\x02 \x01(\x01\x42\x38\n\x18io.envoyproxy.envoy.typeB\nRangeProtoP\x01Z\nenvoy_type\xa8\xe2\x1e\x01\x62\x06proto3')
   ,
   dependencies=[gogoproto_dot_gogo__pb2.DESCRIPTOR,])
 
@@ -122,7 +122,7 @@ _sym_db.RegisterMessage(DoubleRange)
 
 
 DESCRIPTOR.has_options = True
-DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('Z\nenvoy_type\250\342\036\001'))
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n\030io.envoyproxy.envoy.typeB\nRangeProtoP\001Z\nenvoy_type\250\342\036\001'))
 try:
   # THESE ELEMENTS WILL BE DEPRECATED.
   # Please use the generated *_pb2_grpc.py files instead.

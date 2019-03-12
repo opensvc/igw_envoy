@@ -25,7 +25,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='envoy/config/filter/http/health_check/v2/health_check.proto',
   package='envoy.config.filter.http.health_check.v2',
   syntax='proto3',
-  serialized_pb=_b('\n;envoy/config/filter/http/health_check/v2/health_check.proto\x12(envoy.config.filter.http.health_check.v2\x1a\x1egoogle/protobuf/duration.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x1e\x65nvoy/api/v2/route/route.proto\x1a\x18\x65nvoy/type/percent.proto\x1a\x17validate/validate.proto\x1a\x14gogoproto/gogo.proto\"\xac\x03\n\x0bHealthCheck\x12\x41\n\x11pass_through_mode\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.BoolValueB\n\xba\xe9\xc0\x03\x05\x8a\x01\x02\x10\x01\x12\x14\n\x08\x65ndpoint\x18\x02 \x01(\tB\x02\x18\x01\x12\x33\n\ncache_time\x18\x03 \x01(\x0b\x32\x19.google.protobuf.DurationB\x04\x98\xdf\x1f\x01\x12\x80\x01\n\x1f\x63luster_min_healthy_percentages\x18\x04 \x03(\x0b\x32W.envoy.config.filter.http.health_check.v2.HealthCheck.ClusterMinHealthyPercentagesEntry\x12\x32\n\x07headers\x18\x05 \x03(\x0b\x32!.envoy.api.v2.route.HeaderMatcher\x1aX\n!ClusterMinHealthyPercentagesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\"\n\x05value\x18\x02 \x01(\x0b\x32\x13.envoy.type.Percent:\x02\x38\x01\x42\x04Z\x02v2b\x06proto3')
+  serialized_pb=_b('\n;envoy/config/filter/http/health_check/v2/health_check.proto\x12(envoy.config.filter.http.health_check.v2\x1a\x1egoogle/protobuf/duration.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x1e\x65nvoy/api/v2/route/route.proto\x1a\x18\x65nvoy/type/percent.proto\x1a\x17validate/validate.proto\x1a\x14gogoproto/gogo.proto\"\xa6\x03\n\x0bHealthCheck\x12\x41\n\x11pass_through_mode\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.BoolValueB\n\xba\xe9\xc0\x03\x05\x8a\x01\x02\x10\x01\x12\x33\n\ncache_time\x18\x03 \x01(\x0b\x32\x19.google.protobuf.DurationB\x04\x98\xdf\x1f\x01\x12\x80\x01\n\x1f\x63luster_min_healthy_percentages\x18\x04 \x03(\x0b\x32W.envoy.config.filter.http.health_check.v2.HealthCheck.ClusterMinHealthyPercentagesEntry\x12\x32\n\x07headers\x18\x05 \x03(\x0b\x32!.envoy.api.v2.route.HeaderMatcher\x1aX\n!ClusterMinHealthyPercentagesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\"\n\x05value\x18\x02 \x01(\x0b\x32\x13.envoy.type.Percent:\x02\x38\x01J\x04\x08\x02\x10\x03R\x08\x65ndpointBP\n6io.envoyproxy.envoy.config.filter.http.health_check.v2B\x10HealthCheckProtoP\x01Z\x02v2b\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_duration__pb2.DESCRIPTOR,google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,envoy_dot_api_dot_v2_dot_route_dot_route__pb2.DESCRIPTOR,envoy_dot_type_dot_percent__pb2.DESCRIPTOR,validate_dot_validate__pb2.DESCRIPTOR,gogoproto_dot_gogo__pb2.DESCRIPTOR,])
 
@@ -65,8 +65,8 @@ _HEALTHCHECK_CLUSTERMINHEALTHYPERCENTAGESENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=615,
-  serialized_end=703,
+  serialized_start=593,
+  serialized_end=681,
 )
 
 _HEALTHCHECK = _descriptor.Descriptor(
@@ -84,28 +84,21 @@ _HEALTHCHECK = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\212\001\002\020\001'))),
     _descriptor.FieldDescriptor(
-      name='endpoint', full_name='envoy.config.filter.http.health_check.v2.HealthCheck.endpoint', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\030\001'))),
-    _descriptor.FieldDescriptor(
-      name='cache_time', full_name='envoy.config.filter.http.health_check.v2.HealthCheck.cache_time', index=2,
+      name='cache_time', full_name='envoy.config.filter.http.health_check.v2.HealthCheck.cache_time', index=1,
       number=3, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\230\337\037\001'))),
     _descriptor.FieldDescriptor(
-      name='cluster_min_healthy_percentages', full_name='envoy.config.filter.http.health_check.v2.HealthCheck.cluster_min_healthy_percentages', index=3,
+      name='cluster_min_healthy_percentages', full_name='envoy.config.filter.http.health_check.v2.HealthCheck.cluster_min_healthy_percentages', index=2,
       number=4, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='headers', full_name='envoy.config.filter.http.health_check.v2.HealthCheck.headers', index=4,
+      name='headers', full_name='envoy.config.filter.http.health_check.v2.HealthCheck.headers', index=3,
       number=5, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -124,7 +117,7 @@ _HEALTHCHECK = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=275,
-  serialized_end=703,
+  serialized_end=697,
 )
 
 _HEALTHCHECK_CLUSTERMINHEALTHYPERCENTAGESENTRY.fields_by_name['value'].message_type = envoy_dot_type_dot_percent__pb2._PERCENT
@@ -153,13 +146,11 @@ _sym_db.RegisterMessage(HealthCheck.ClusterMinHealthyPercentagesEntry)
 
 
 DESCRIPTOR.has_options = True
-DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('Z\002v2'))
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n6io.envoyproxy.envoy.config.filter.http.health_check.v2B\020HealthCheckProtoP\001Z\002v2'))
 _HEALTHCHECK_CLUSTERMINHEALTHYPERCENTAGESENTRY.has_options = True
 _HEALTHCHECK_CLUSTERMINHEALTHYPERCENTAGESENTRY._options = _descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001'))
 _HEALTHCHECK.fields_by_name['pass_through_mode'].has_options = True
 _HEALTHCHECK.fields_by_name['pass_through_mode']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\212\001\002\020\001'))
-_HEALTHCHECK.fields_by_name['endpoint'].has_options = True
-_HEALTHCHECK.fields_by_name['endpoint']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\030\001'))
 _HEALTHCHECK.fields_by_name['cache_time'].has_options = True
 _HEALTHCHECK.fields_by_name['cache_time']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\230\337\037\001'))
 try:

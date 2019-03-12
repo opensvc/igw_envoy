@@ -25,7 +25,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='envoy/api/v2/endpoint/endpoint.proto',
   package='envoy.api.v2.endpoint',
   syntax='proto3',
-  serialized_pb=_b('\n$envoy/api/v2/endpoint/endpoint.proto\x12\x15\x65nvoy.api.v2.endpoint\x1a\x1f\x65nvoy/api/v2/core/address.proto\x1a\x1c\x65nvoy/api/v2/core/base.proto\x1a$envoy/api/v2/core/health_check.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x17validate/validate.proto\x1a\x14gogoproto/gogo.proto\"\xb0\x01\n\x08\x45ndpoint\x12+\n\x07\x61\x64\x64ress\x18\x01 \x01(\x0b\x32\x1a.envoy.api.v2.core.Address\x12N\n\x13health_check_config\x18\x02 \x01(\x0b\x32\x31.envoy.api.v2.endpoint.Endpoint.HealthCheckConfig\x1a\'\n\x11HealthCheckConfig\x12\x12\n\nport_value\x18\x01 \x01(\r\"\xf1\x01\n\nLbEndpoint\x12\x31\n\x08\x65ndpoint\x18\x01 \x01(\x0b\x32\x1f.envoy.api.v2.endpoint.Endpoint\x12\x36\n\rhealth_status\x18\x02 \x01(\x0e\x32\x1f.envoy.api.v2.core.HealthStatus\x12-\n\x08metadata\x18\x03 \x01(\x0b\x32\x1b.envoy.api.v2.core.Metadata\x12I\n\x15load_balancing_weight\x18\x04 \x01(\x0b\x32\x1c.google.protobuf.UInt32ValueB\x0c\xba\xe9\xc0\x03\x07*\x05\x18\x80\x01(\x01\"\xe0\x01\n\x13LocalityLbEndpoints\x12-\n\x08locality\x18\x01 \x01(\x0b\x32\x1b.envoy.api.v2.core.Locality\x12=\n\x0clb_endpoints\x18\x02 \x03(\x0b\x32!.envoy.api.v2.endpoint.LbEndpointB\x04\xc8\xde\x1f\x00\x12I\n\x15load_balancing_weight\x18\x03 \x01(\x0b\x32\x1c.google.protobuf.UInt32ValueB\x0c\xba\xe9\xc0\x03\x07*\x05\x18\x80\x01(\x01\x12\x10\n\x08priority\x18\x05 \x01(\rB\x0eZ\x08\x65ndpoint\xa8\xe2\x1e\x01\x62\x06proto3')
+  serialized_pb=_b('\n$envoy/api/v2/endpoint/endpoint.proto\x12\x15\x65nvoy.api.v2.endpoint\x1a\x1f\x65nvoy/api/v2/core/address.proto\x1a\x1c\x65nvoy/api/v2/core/base.proto\x1a$envoy/api/v2/core/health_check.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x17validate/validate.proto\x1a\x14gogoproto/gogo.proto\"\xbd\x01\n\x08\x45ndpoint\x12+\n\x07\x61\x64\x64ress\x18\x01 \x01(\x0b\x32\x1a.envoy.api.v2.core.Address\x12N\n\x13health_check_config\x18\x02 \x01(\x0b\x32\x31.envoy.api.v2.endpoint.Endpoint.HealthCheckConfig\x1a\x34\n\x11HealthCheckConfig\x12\x1f\n\nport_value\x18\x01 \x01(\rB\x0b\xba\xe9\xc0\x03\x06*\x04\x18\xff\xff\x03\"\x9f\x02\n\nLbEndpoint\x12\x33\n\x08\x65ndpoint\x18\x01 \x01(\x0b\x32\x1f.envoy.api.v2.endpoint.EndpointH\x00\x12\x17\n\rendpoint_name\x18\x05 \x01(\tH\x00\x12\x36\n\rhealth_status\x18\x02 \x01(\x0e\x32\x1f.envoy.api.v2.core.HealthStatus\x12-\n\x08metadata\x18\x03 \x01(\x0b\x32\x1b.envoy.api.v2.core.Metadata\x12I\n\x15load_balancing_weight\x18\x04 \x01(\x0b\x32\x1c.google.protobuf.UInt32ValueB\x0c\xba\xe9\xc0\x03\x07*\x05\x18\x80\x01(\x01\x42\x11\n\x0fhost_identifier\"\xec\x01\n\x13LocalityLbEndpoints\x12-\n\x08locality\x18\x01 \x01(\x0b\x32\x1b.envoy.api.v2.core.Locality\x12=\n\x0clb_endpoints\x18\x02 \x03(\x0b\x32!.envoy.api.v2.endpoint.LbEndpointB\x04\xc8\xde\x1f\x00\x12I\n\x15load_balancing_weight\x18\x03 \x01(\x0b\x32\x1c.google.protobuf.UInt32ValueB\x0c\xba\xe9\xc0\x03\x07*\x05\x18\x80\x01(\x01\x12\x1c\n\x08priority\x18\x05 \x01(\rB\n\xba\xe9\xc0\x03\x05*\x03\x18\x80\x01\x42\x44\n#io.envoyproxy.envoy.api.v2.endpointB\rEndpointProtoP\x01Z\x08\x65ndpoint\xa8\xe2\x1e\x01\x62\x06proto3')
   ,
   dependencies=[envoy_dot_api_dot_v2_dot_core_dot_address__pb2.DESCRIPTOR,envoy_dot_api_dot_v2_dot_core_dot_base__pb2.DESCRIPTOR,envoy_dot_api_dot_v2_dot_core_dot_health__check__pb2.DESCRIPTOR,google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,validate_dot_validate__pb2.DESCRIPTOR,gogoproto_dot_gogo__pb2.DESCRIPTOR,])
 
@@ -45,7 +45,7 @@ _ENDPOINT_HEALTHCHECKCONFIG = _descriptor.Descriptor(
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None),
+      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\006*\004\030\377\377\003'))),
   ],
   extensions=[
   ],
@@ -59,7 +59,7 @@ _ENDPOINT_HEALTHCHECKCONFIG = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=381,
-  serialized_end=420,
+  serialized_end=433,
 )
 
 _ENDPOINT = _descriptor.Descriptor(
@@ -96,7 +96,7 @@ _ENDPOINT = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=244,
-  serialized_end=420,
+  serialized_end=433,
 )
 
 
@@ -115,21 +115,28 @@ _LBENDPOINT = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='health_status', full_name='envoy.api.v2.endpoint.LbEndpoint.health_status', index=1,
+      name='endpoint_name', full_name='envoy.api.v2.endpoint.LbEndpoint.endpoint_name', index=1,
+      number=5, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='health_status', full_name='envoy.api.v2.endpoint.LbEndpoint.health_status', index=2,
       number=2, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='metadata', full_name='envoy.api.v2.endpoint.LbEndpoint.metadata', index=2,
+      name='metadata', full_name='envoy.api.v2.endpoint.LbEndpoint.metadata', index=3,
       number=3, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='load_balancing_weight', full_name='envoy.api.v2.endpoint.LbEndpoint.load_balancing_weight', index=3,
+      name='load_balancing_weight', full_name='envoy.api.v2.endpoint.LbEndpoint.load_balancing_weight', index=4,
       number=4, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -146,9 +153,12 @@ _LBENDPOINT = _descriptor.Descriptor(
   syntax='proto3',
   extension_ranges=[],
   oneofs=[
+    _descriptor.OneofDescriptor(
+      name='host_identifier', full_name='envoy.api.v2.endpoint.LbEndpoint.host_identifier',
+      index=0, containing_type=None, fields=[]),
   ],
-  serialized_start=423,
-  serialized_end=664,
+  serialized_start=436,
+  serialized_end=723,
 )
 
 
@@ -186,7 +196,7 @@ _LOCALITYLBENDPOINTS = _descriptor.Descriptor(
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None),
+      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005*\003\030\200\001'))),
   ],
   extensions=[
   ],
@@ -199,8 +209,8 @@ _LOCALITYLBENDPOINTS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=667,
-  serialized_end=891,
+  serialized_start=726,
+  serialized_end=962,
 )
 
 _ENDPOINT_HEALTHCHECKCONFIG.containing_type = _ENDPOINT
@@ -210,6 +220,12 @@ _LBENDPOINT.fields_by_name['endpoint'].message_type = _ENDPOINT
 _LBENDPOINT.fields_by_name['health_status'].enum_type = envoy_dot_api_dot_v2_dot_core_dot_health__check__pb2._HEALTHSTATUS
 _LBENDPOINT.fields_by_name['metadata'].message_type = envoy_dot_api_dot_v2_dot_core_dot_base__pb2._METADATA
 _LBENDPOINT.fields_by_name['load_balancing_weight'].message_type = google_dot_protobuf_dot_wrappers__pb2._UINT32VALUE
+_LBENDPOINT.oneofs_by_name['host_identifier'].fields.append(
+  _LBENDPOINT.fields_by_name['endpoint'])
+_LBENDPOINT.fields_by_name['endpoint'].containing_oneof = _LBENDPOINT.oneofs_by_name['host_identifier']
+_LBENDPOINT.oneofs_by_name['host_identifier'].fields.append(
+  _LBENDPOINT.fields_by_name['endpoint_name'])
+_LBENDPOINT.fields_by_name['endpoint_name'].containing_oneof = _LBENDPOINT.oneofs_by_name['host_identifier']
 _LOCALITYLBENDPOINTS.fields_by_name['locality'].message_type = envoy_dot_api_dot_v2_dot_core_dot_base__pb2._LOCALITY
 _LOCALITYLBENDPOINTS.fields_by_name['lb_endpoints'].message_type = _LBENDPOINT
 _LOCALITYLBENDPOINTS.fields_by_name['load_balancing_weight'].message_type = google_dot_protobuf_dot_wrappers__pb2._UINT32VALUE
@@ -249,13 +265,17 @@ _sym_db.RegisterMessage(LocalityLbEndpoints)
 
 
 DESCRIPTOR.has_options = True
-DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('Z\010endpoint\250\342\036\001'))
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n#io.envoyproxy.envoy.api.v2.endpointB\rEndpointProtoP\001Z\010endpoint\250\342\036\001'))
+_ENDPOINT_HEALTHCHECKCONFIG.fields_by_name['port_value'].has_options = True
+_ENDPOINT_HEALTHCHECKCONFIG.fields_by_name['port_value']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\006*\004\030\377\377\003'))
 _LBENDPOINT.fields_by_name['load_balancing_weight'].has_options = True
 _LBENDPOINT.fields_by_name['load_balancing_weight']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\007*\005\030\200\001(\001'))
 _LOCALITYLBENDPOINTS.fields_by_name['lb_endpoints'].has_options = True
 _LOCALITYLBENDPOINTS.fields_by_name['lb_endpoints']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\310\336\037\000'))
 _LOCALITYLBENDPOINTS.fields_by_name['load_balancing_weight'].has_options = True
 _LOCALITYLBENDPOINTS.fields_by_name['load_balancing_weight']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\007*\005\030\200\001(\001'))
+_LOCALITYLBENDPOINTS.fields_by_name['priority'].has_options = True
+_LOCALITYLBENDPOINTS.fields_by_name['priority']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005*\003\030\200\001'))
 try:
   # THESE ELEMENTS WILL BE DEPRECATED.
   # Please use the generated *_pb2_grpc.py files instead.

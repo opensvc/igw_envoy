@@ -26,7 +26,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='envoy/config/filter/network/tcp_proxy/v2/tcp_proxy.proto',
   package='envoy.config.filter.network.tcp_proxy.v2',
   syntax='proto3',
-  serialized_pb=_b('\n8envoy/config/filter/network/tcp_proxy/v2/tcp_proxy.proto\x12(envoy.config.filter.network.tcp_proxy.v2\x1a\x30\x65nvoy/config/filter/accesslog/v2/accesslog.proto\x1a\x1f\x65nvoy/api/v2/core/address.proto\x1a\x1c\x65nvoy/api/v2/core/base.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x17validate/validate.proto\x1a\x14gogoproto/gogo.proto\"\xcd\x06\n\x08TcpProxy\x12\x1e\n\x0bstat_prefix\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12\x0f\n\x07\x63luster\x18\x02 \x01(\t\x12\x33\n\x0emetadata_match\x18\t \x01(\x0b\x32\x1b.envoy.api.v2.core.Metadata\x12?\n\x0cidle_timeout\x18\x08 \x01(\x0b\x32\x19.google.protobuf.DurationB\x0e\xba\xe9\xc0\x03\x05\xaa\x01\x02*\x00\x98\xdf\x1f\x01\x12:\n\x17\x64ownstream_idle_timeout\x18\x03 \x01(\x0b\x32\x19.google.protobuf.Duration\x12\x38\n\x15upstream_idle_timeout\x18\x04 \x01(\x0b\x32\x19.google.protobuf.Duration\x12?\n\naccess_log\x18\x05 \x03(\x0b\x32+.envoy.config.filter.accesslog.v2.AccessLog\x12Z\n\rdeprecated_v1\x18\x06 \x01(\x0b\x32?.envoy.config.filter.network.tcp_proxy.v2.TcpProxy.DeprecatedV1B\x02\x18\x01\x12\x45\n\x14max_connect_attempts\x18\x07 \x01(\x0b\x32\x1c.google.protobuf.UInt32ValueB\t\xba\xe9\xc0\x03\x04*\x02(\x01\x1a\xbf\x02\n\x0c\x44\x65precatedV1\x12\x64\n\x06routes\x18\x01 \x03(\x0b\x32H.envoy.config.filter.network.tcp_proxy.v2.TcpProxy.DeprecatedV1.TCPRouteB\n\xba\xe9\xc0\x03\x05\x92\x01\x02\x08\x01\x1a\xc8\x01\n\x08TCPRoute\x12\x1a\n\x07\x63luster\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12\x39\n\x13\x64\x65stination_ip_list\x18\x02 \x03(\x0b\x32\x1c.envoy.api.v2.core.CidrRange\x12\x19\n\x11\x64\x65stination_ports\x18\x03 \x01(\t\x12\x34\n\x0esource_ip_list\x18\x04 \x03(\x0b\x32\x1c.envoy.api.v2.core.CidrRange\x12\x14\n\x0csource_ports\x18\x05 \x01(\tB\x04Z\x02v2b\x06proto3')
+  serialized_pb=_b('\n8envoy/config/filter/network/tcp_proxy/v2/tcp_proxy.proto\x12(envoy.config.filter.network.tcp_proxy.v2\x1a\x30\x65nvoy/config/filter/accesslog/v2/accesslog.proto\x1a\x1f\x65nvoy/api/v2/core/address.proto\x1a\x1c\x65nvoy/api/v2/core/base.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x17validate/validate.proto\x1a\x14gogoproto/gogo.proto\"\x95\t\n\x08TcpProxy\x12\x1e\n\x0bstat_prefix\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12\x11\n\x07\x63luster\x18\x02 \x01(\tH\x00\x12_\n\x11weighted_clusters\x18\n \x01(\x0b\x32\x42.envoy.config.filter.network.tcp_proxy.v2.TcpProxy.WeightedClusterH\x00\x12\x33\n\x0emetadata_match\x18\t \x01(\x0b\x32\x1b.envoy.api.v2.core.Metadata\x12?\n\x0cidle_timeout\x18\x08 \x01(\x0b\x32\x19.google.protobuf.DurationB\x0e\xba\xe9\xc0\x03\x05\xaa\x01\x02*\x00\x98\xdf\x1f\x01\x12:\n\x17\x64ownstream_idle_timeout\x18\x03 \x01(\x0b\x32\x19.google.protobuf.Duration\x12\x38\n\x15upstream_idle_timeout\x18\x04 \x01(\x0b\x32\x19.google.protobuf.Duration\x12?\n\naccess_log\x18\x05 \x03(\x0b\x32+.envoy.config.filter.accesslog.v2.AccessLog\x12Z\n\rdeprecated_v1\x18\x06 \x01(\x0b\x32?.envoy.config.filter.network.tcp_proxy.v2.TcpProxy.DeprecatedV1B\x02\x18\x01\x12\x45\n\x14max_connect_attempts\x18\x07 \x01(\x0b\x32\x1c.google.protobuf.UInt32ValueB\t\xba\xe9\xc0\x03\x04*\x02(\x01\x1a\xbf\x02\n\x0c\x44\x65precatedV1\x12\x64\n\x06routes\x18\x01 \x03(\x0b\x32H.envoy.config.filter.network.tcp_proxy.v2.TcpProxy.DeprecatedV1.TCPRouteB\n\xba\xe9\xc0\x03\x05\x92\x01\x02\x08\x01\x1a\xc8\x01\n\x08TCPRoute\x12\x1a\n\x07\x63luster\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12\x39\n\x13\x64\x65stination_ip_list\x18\x02 \x03(\x0b\x32\x1c.envoy.api.v2.core.CidrRange\x12\x19\n\x11\x64\x65stination_ports\x18\x03 \x01(\t\x12\x34\n\x0esource_ip_list\x18\x04 \x03(\x0b\x32\x1c.envoy.api.v2.core.CidrRange\x12\x14\n\x0csource_ports\x18\x05 \x01(\t\x1a\xc6\x01\n\x0fWeightedCluster\x12n\n\x08\x63lusters\x18\x01 \x03(\x0b\x32P.envoy.config.filter.network.tcp_proxy.v2.TcpProxy.WeightedCluster.ClusterWeightB\n\xba\xe9\xc0\x03\x05\x92\x01\x02\x08\x01\x1a\x43\n\rClusterWeight\x12\x17\n\x04name\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12\x19\n\x06weight\x18\x02 \x01(\rB\t\xba\xe9\xc0\x03\x04*\x02(\x01\x42\x1a\n\x11\x63luster_specifier\x12\x05\xb8\xe9\xc0\x03\x01\x42M\n6io.envoyproxy.envoy.config.filter.network.tcp_proxy.v2B\rTcpProxyProtoP\x01Z\x02v2b\x06proto3')
   ,
   dependencies=[envoy_dot_config_dot_filter_dot_accesslog_dot_v2_dot_accesslog__pb2.DESCRIPTOR,envoy_dot_api_dot_v2_dot_core_dot_address__pb2.DESCRIPTOR,envoy_dot_api_dot_v2_dot_core_dot_base__pb2.DESCRIPTOR,google_dot_protobuf_dot_duration__pb2.DESCRIPTOR,google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,validate_dot_validate__pb2.DESCRIPTOR,gogoproto_dot_gogo__pb2.DESCRIPTOR,])
 
@@ -87,8 +87,8 @@ _TCPPROXY_DEPRECATEDV1_TCPROUTE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=972,
-  serialized_end=1172,
+  serialized_start=1071,
+  serialized_end=1271,
 )
 
 _TCPPROXY_DEPRECATEDV1 = _descriptor.Descriptor(
@@ -117,8 +117,75 @@ _TCPPROXY_DEPRECATEDV1 = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=853,
-  serialized_end=1172,
+  serialized_start=952,
+  serialized_end=1271,
+)
+
+_TCPPROXY_WEIGHTEDCLUSTER_CLUSTERWEIGHT = _descriptor.Descriptor(
+  name='ClusterWeight',
+  full_name='envoy.config.filter.network.tcp_proxy.v2.TcpProxy.WeightedCluster.ClusterWeight',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='name', full_name='envoy.config.filter.network.tcp_proxy.v2.TcpProxy.WeightedCluster.ClusterWeight.name', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004r\002 \001'))),
+    _descriptor.FieldDescriptor(
+      name='weight', full_name='envoy.config.filter.network.tcp_proxy.v2.TcpProxy.WeightedCluster.ClusterWeight.weight', index=1,
+      number=2, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004*\002(\001'))),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1405,
+  serialized_end=1472,
+)
+
+_TCPPROXY_WEIGHTEDCLUSTER = _descriptor.Descriptor(
+  name='WeightedCluster',
+  full_name='envoy.config.filter.network.tcp_proxy.v2.TcpProxy.WeightedCluster',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='clusters', full_name='envoy.config.filter.network.tcp_proxy.v2.TcpProxy.WeightedCluster.clusters', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\222\001\002\010\001'))),
+  ],
+  extensions=[
+  ],
+  nested_types=[_TCPPROXY_WEIGHTEDCLUSTER_CLUSTERWEIGHT, ],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1274,
+  serialized_end=1472,
 )
 
 _TCPPROXY = _descriptor.Descriptor(
@@ -143,49 +210,56 @@ _TCPPROXY = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='metadata_match', full_name='envoy.config.filter.network.tcp_proxy.v2.TcpProxy.metadata_match', index=2,
+      name='weighted_clusters', full_name='envoy.config.filter.network.tcp_proxy.v2.TcpProxy.weighted_clusters', index=2,
+      number=10, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='metadata_match', full_name='envoy.config.filter.network.tcp_proxy.v2.TcpProxy.metadata_match', index=3,
       number=9, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='idle_timeout', full_name='envoy.config.filter.network.tcp_proxy.v2.TcpProxy.idle_timeout', index=3,
+      name='idle_timeout', full_name='envoy.config.filter.network.tcp_proxy.v2.TcpProxy.idle_timeout', index=4,
       number=8, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\252\001\002*\000\230\337\037\001'))),
     _descriptor.FieldDescriptor(
-      name='downstream_idle_timeout', full_name='envoy.config.filter.network.tcp_proxy.v2.TcpProxy.downstream_idle_timeout', index=4,
+      name='downstream_idle_timeout', full_name='envoy.config.filter.network.tcp_proxy.v2.TcpProxy.downstream_idle_timeout', index=5,
       number=3, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='upstream_idle_timeout', full_name='envoy.config.filter.network.tcp_proxy.v2.TcpProxy.upstream_idle_timeout', index=5,
+      name='upstream_idle_timeout', full_name='envoy.config.filter.network.tcp_proxy.v2.TcpProxy.upstream_idle_timeout', index=6,
       number=4, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='access_log', full_name='envoy.config.filter.network.tcp_proxy.v2.TcpProxy.access_log', index=6,
+      name='access_log', full_name='envoy.config.filter.network.tcp_proxy.v2.TcpProxy.access_log', index=7,
       number=5, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='deprecated_v1', full_name='envoy.config.filter.network.tcp_proxy.v2.TcpProxy.deprecated_v1', index=7,
+      name='deprecated_v1', full_name='envoy.config.filter.network.tcp_proxy.v2.TcpProxy.deprecated_v1', index=8,
       number=6, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\030\001'))),
     _descriptor.FieldDescriptor(
-      name='max_connect_attempts', full_name='envoy.config.filter.network.tcp_proxy.v2.TcpProxy.max_connect_attempts', index=8,
+      name='max_connect_attempts', full_name='envoy.config.filter.network.tcp_proxy.v2.TcpProxy.max_connect_attempts', index=9,
       number=7, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -194,7 +268,7 @@ _TCPPROXY = _descriptor.Descriptor(
   ],
   extensions=[
   ],
-  nested_types=[_TCPPROXY_DEPRECATEDV1, ],
+  nested_types=[_TCPPROXY_DEPRECATEDV1, _TCPPROXY_WEIGHTEDCLUSTER, ],
   enum_types=[
   ],
   options=None,
@@ -202,9 +276,12 @@ _TCPPROXY = _descriptor.Descriptor(
   syntax='proto3',
   extension_ranges=[],
   oneofs=[
+    _descriptor.OneofDescriptor(
+      name='cluster_specifier', full_name='envoy.config.filter.network.tcp_proxy.v2.TcpProxy.cluster_specifier',
+      index=0, containing_type=None, fields=[], options=_descriptor._ParseOptions(descriptor_pb2.OneofOptions(), _b('\270\351\300\003\001'))),
   ],
   serialized_start=327,
-  serialized_end=1172,
+  serialized_end=1500,
 )
 
 _TCPPROXY_DEPRECATEDV1_TCPROUTE.fields_by_name['destination_ip_list'].message_type = envoy_dot_api_dot_v2_dot_core_dot_address__pb2._CIDRRANGE
@@ -212,6 +289,10 @@ _TCPPROXY_DEPRECATEDV1_TCPROUTE.fields_by_name['source_ip_list'].message_type = 
 _TCPPROXY_DEPRECATEDV1_TCPROUTE.containing_type = _TCPPROXY_DEPRECATEDV1
 _TCPPROXY_DEPRECATEDV1.fields_by_name['routes'].message_type = _TCPPROXY_DEPRECATEDV1_TCPROUTE
 _TCPPROXY_DEPRECATEDV1.containing_type = _TCPPROXY
+_TCPPROXY_WEIGHTEDCLUSTER_CLUSTERWEIGHT.containing_type = _TCPPROXY_WEIGHTEDCLUSTER
+_TCPPROXY_WEIGHTEDCLUSTER.fields_by_name['clusters'].message_type = _TCPPROXY_WEIGHTEDCLUSTER_CLUSTERWEIGHT
+_TCPPROXY_WEIGHTEDCLUSTER.containing_type = _TCPPROXY
+_TCPPROXY.fields_by_name['weighted_clusters'].message_type = _TCPPROXY_WEIGHTEDCLUSTER
 _TCPPROXY.fields_by_name['metadata_match'].message_type = envoy_dot_api_dot_v2_dot_core_dot_base__pb2._METADATA
 _TCPPROXY.fields_by_name['idle_timeout'].message_type = google_dot_protobuf_dot_duration__pb2._DURATION
 _TCPPROXY.fields_by_name['downstream_idle_timeout'].message_type = google_dot_protobuf_dot_duration__pb2._DURATION
@@ -219,6 +300,12 @@ _TCPPROXY.fields_by_name['upstream_idle_timeout'].message_type = google_dot_prot
 _TCPPROXY.fields_by_name['access_log'].message_type = envoy_dot_config_dot_filter_dot_accesslog_dot_v2_dot_accesslog__pb2._ACCESSLOG
 _TCPPROXY.fields_by_name['deprecated_v1'].message_type = _TCPPROXY_DEPRECATEDV1
 _TCPPROXY.fields_by_name['max_connect_attempts'].message_type = google_dot_protobuf_dot_wrappers__pb2._UINT32VALUE
+_TCPPROXY.oneofs_by_name['cluster_specifier'].fields.append(
+  _TCPPROXY.fields_by_name['cluster'])
+_TCPPROXY.fields_by_name['cluster'].containing_oneof = _TCPPROXY.oneofs_by_name['cluster_specifier']
+_TCPPROXY.oneofs_by_name['cluster_specifier'].fields.append(
+  _TCPPROXY.fields_by_name['weighted_clusters'])
+_TCPPROXY.fields_by_name['weighted_clusters'].containing_oneof = _TCPPROXY.oneofs_by_name['cluster_specifier']
 DESCRIPTOR.message_types_by_name['TcpProxy'] = _TCPPROXY
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
@@ -237,6 +324,20 @@ TcpProxy = _reflection.GeneratedProtocolMessageType('TcpProxy', (_message.Messag
     # @@protoc_insertion_point(class_scope:envoy.config.filter.network.tcp_proxy.v2.TcpProxy.DeprecatedV1)
     ))
   ,
+
+  WeightedCluster = _reflection.GeneratedProtocolMessageType('WeightedCluster', (_message.Message,), dict(
+
+    ClusterWeight = _reflection.GeneratedProtocolMessageType('ClusterWeight', (_message.Message,), dict(
+      DESCRIPTOR = _TCPPROXY_WEIGHTEDCLUSTER_CLUSTERWEIGHT,
+      __module__ = 'envoy.config.filter.network.tcp_proxy.v2.tcp_proxy_pb2'
+      # @@protoc_insertion_point(class_scope:envoy.config.filter.network.tcp_proxy.v2.TcpProxy.WeightedCluster.ClusterWeight)
+      ))
+    ,
+    DESCRIPTOR = _TCPPROXY_WEIGHTEDCLUSTER,
+    __module__ = 'envoy.config.filter.network.tcp_proxy.v2.tcp_proxy_pb2'
+    # @@protoc_insertion_point(class_scope:envoy.config.filter.network.tcp_proxy.v2.TcpProxy.WeightedCluster)
+    ))
+  ,
   DESCRIPTOR = _TCPPROXY,
   __module__ = 'envoy.config.filter.network.tcp_proxy.v2.tcp_proxy_pb2'
   # @@protoc_insertion_point(class_scope:envoy.config.filter.network.tcp_proxy.v2.TcpProxy)
@@ -244,14 +345,24 @@ TcpProxy = _reflection.GeneratedProtocolMessageType('TcpProxy', (_message.Messag
 _sym_db.RegisterMessage(TcpProxy)
 _sym_db.RegisterMessage(TcpProxy.DeprecatedV1)
 _sym_db.RegisterMessage(TcpProxy.DeprecatedV1.TCPRoute)
+_sym_db.RegisterMessage(TcpProxy.WeightedCluster)
+_sym_db.RegisterMessage(TcpProxy.WeightedCluster.ClusterWeight)
 
 
 DESCRIPTOR.has_options = True
-DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('Z\002v2'))
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n6io.envoyproxy.envoy.config.filter.network.tcp_proxy.v2B\rTcpProxyProtoP\001Z\002v2'))
 _TCPPROXY_DEPRECATEDV1_TCPROUTE.fields_by_name['cluster'].has_options = True
 _TCPPROXY_DEPRECATEDV1_TCPROUTE.fields_by_name['cluster']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004r\002 \001'))
 _TCPPROXY_DEPRECATEDV1.fields_by_name['routes'].has_options = True
 _TCPPROXY_DEPRECATEDV1.fields_by_name['routes']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\222\001\002\010\001'))
+_TCPPROXY_WEIGHTEDCLUSTER_CLUSTERWEIGHT.fields_by_name['name'].has_options = True
+_TCPPROXY_WEIGHTEDCLUSTER_CLUSTERWEIGHT.fields_by_name['name']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004r\002 \001'))
+_TCPPROXY_WEIGHTEDCLUSTER_CLUSTERWEIGHT.fields_by_name['weight'].has_options = True
+_TCPPROXY_WEIGHTEDCLUSTER_CLUSTERWEIGHT.fields_by_name['weight']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004*\002(\001'))
+_TCPPROXY_WEIGHTEDCLUSTER.fields_by_name['clusters'].has_options = True
+_TCPPROXY_WEIGHTEDCLUSTER.fields_by_name['clusters']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\222\001\002\010\001'))
+_TCPPROXY.oneofs_by_name['cluster_specifier'].has_options = True
+_TCPPROXY.oneofs_by_name['cluster_specifier']._options = _descriptor._ParseOptions(descriptor_pb2.OneofOptions(), _b('\270\351\300\003\001'))
 _TCPPROXY.fields_by_name['stat_prefix'].has_options = True
 _TCPPROXY.fields_by_name['stat_prefix']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004r\002 \001'))
 _TCPPROXY.fields_by_name['idle_timeout'].has_options = True

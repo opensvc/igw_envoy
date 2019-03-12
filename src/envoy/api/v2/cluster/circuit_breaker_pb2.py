@@ -22,7 +22,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='envoy/api/v2/cluster/circuit_breaker.proto',
   package='envoy.api.v2.cluster',
   syntax='proto3',
-  serialized_pb=_b('\n*envoy/api/v2/cluster/circuit_breaker.proto\x12\x14\x65nvoy.api.v2.cluster\x1a\x1c\x65nvoy/api/v2/core/base.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x14gogoproto/gogo.proto\"\xf6\x02\n\x0f\x43ircuitBreakers\x12\x44\n\nthresholds\x18\x01 \x03(\x0b\x32\x30.envoy.api.v2.cluster.CircuitBreakers.Thresholds\x1a\x9c\x02\n\nThresholds\x12\x34\n\x08priority\x18\x01 \x01(\x0e\x32\".envoy.api.v2.core.RoutingPriority\x12\x35\n\x0fmax_connections\x18\x02 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12:\n\x14max_pending_requests\x18\x03 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x32\n\x0cmax_requests\x18\x04 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x31\n\x0bmax_retries\x18\x05 \x01(\x0b\x32\x1c.google.protobuf.UInt32ValueB&Z\x07\x63luster\xaa\x02\x16\x45nvoy.Api.V2.ClusterNS\xa8\xe2\x1e\x01\x62\x06proto3')
+  serialized_pb=_b('\n*envoy/api/v2/cluster/circuit_breaker.proto\x12\x14\x65nvoy.api.v2.cluster\x1a\x1c\x65nvoy/api/v2/core/base.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x14gogoproto/gogo.proto\"\xf6\x02\n\x0f\x43ircuitBreakers\x12\x44\n\nthresholds\x18\x01 \x03(\x0b\x32\x30.envoy.api.v2.cluster.CircuitBreakers.Thresholds\x1a\x9c\x02\n\nThresholds\x12\x34\n\x08priority\x18\x01 \x01(\x0e\x32\".envoy.api.v2.core.RoutingPriority\x12\x35\n\x0fmax_connections\x18\x02 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12:\n\x14max_pending_requests\x18\x03 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x32\n\x0cmax_requests\x18\x04 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x31\n\x0bmax_retries\x18\x05 \x01(\x0b\x32\x1c.google.protobuf.UInt32ValueBa\n\"io.envoyproxy.envoy.api.v2.clusterB\x13\x43ircuitBreakerProtoP\x01Z\x07\x63luster\xaa\x02\x16\x45nvoy.Api.V2.ClusterNS\xa8\xe2\x1e\x01\x62\x06proto3')
   ,
   dependencies=[envoy_dot_api_dot_v2_dot_core_dot_base__pb2.DESCRIPTOR,google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,gogoproto_dot_gogo__pb2.DESCRIPTOR,])
 
@@ -144,7 +144,7 @@ _sym_db.RegisterMessage(CircuitBreakers.Thresholds)
 
 
 DESCRIPTOR.has_options = True
-DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('Z\007cluster\252\002\026Envoy.Api.V2.ClusterNS\250\342\036\001'))
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n\"io.envoyproxy.envoy.api.v2.clusterB\023CircuitBreakerProtoP\001Z\007cluster\252\002\026Envoy.Api.V2.ClusterNS\250\342\036\001'))
 try:
   # THESE ELEMENTS WILL BE DEPRECATED.
   # Please use the generated *_pb2_grpc.py files instead.

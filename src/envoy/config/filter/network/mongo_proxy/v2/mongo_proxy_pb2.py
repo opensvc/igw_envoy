@@ -21,7 +21,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='envoy/config/filter/network/mongo_proxy/v2/mongo_proxy.proto',
   package='envoy.config.filter.network.mongo_proxy.v2',
   syntax='proto3',
-  serialized_pb=_b('\n<envoy/config/filter/network/mongo_proxy/v2/mongo_proxy.proto\x12*envoy.config.filter.network.mongo_proxy.v2\x1a(envoy/config/filter/fault/v2/fault.proto\x1a\x17validate/validate.proto\"y\n\nMongoProxy\x12\x1e\n\x0bstat_prefix\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12\x12\n\naccess_log\x18\x02 \x01(\t\x12\x37\n\x05\x64\x65lay\x18\x03 \x01(\x0b\x32(.envoy.config.filter.fault.v2.FaultDelayB\x04Z\x02v2b\x06proto3')
+  serialized_pb=_b('\n<envoy/config/filter/network/mongo_proxy/v2/mongo_proxy.proto\x12*envoy.config.filter.network.mongo_proxy.v2\x1a(envoy/config/filter/fault/v2/fault.proto\x1a\x17validate/validate.proto\"\x98\x01\n\nMongoProxy\x12\x1e\n\x0bstat_prefix\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12\x12\n\naccess_log\x18\x02 \x01(\t\x12\x37\n\x05\x64\x65lay\x18\x03 \x01(\x0b\x32(.envoy.config.filter.fault.v2.FaultDelay\x12\x1d\n\x15\x65mit_dynamic_metadata\x18\x04 \x01(\x08\x42Q\n8io.envoyproxy.envoy.config.filter.network.mongo_proxy.v2B\x0fMongoProxyProtoP\x01Z\x02v2b\x06proto3')
   ,
   dependencies=[envoy_dot_config_dot_filter_dot_fault_dot_v2_dot_fault__pb2.DESCRIPTOR,validate_dot_validate__pb2.DESCRIPTOR,])
 
@@ -56,6 +56,13 @@ _MONGOPROXY = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
+    _descriptor.FieldDescriptor(
+      name='emit_dynamic_metadata', full_name='envoy.config.filter.network.mongo_proxy.v2.MongoProxy.emit_dynamic_metadata', index=3,
+      number=4, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -68,8 +75,8 @@ _MONGOPROXY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=175,
-  serialized_end=296,
+  serialized_start=176,
+  serialized_end=328,
 )
 
 _MONGOPROXY.fields_by_name['delay'].message_type = envoy_dot_config_dot_filter_dot_fault_dot_v2_dot_fault__pb2._FAULTDELAY
@@ -85,7 +92,7 @@ _sym_db.RegisterMessage(MongoProxy)
 
 
 DESCRIPTOR.has_options = True
-DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('Z\002v2'))
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n8io.envoyproxy.envoy.config.filter.network.mongo_proxy.v2B\017MongoProxyProtoP\001Z\002v2'))
 _MONGOPROXY.fields_by_name['stat_prefix'].has_options = True
 _MONGOPROXY.fields_by_name['stat_prefix']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004r\002 \001'))
 try:

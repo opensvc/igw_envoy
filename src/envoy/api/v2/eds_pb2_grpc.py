@@ -6,6 +6,7 @@ from envoy.api.v2 import discovery_pb2 as envoy_dot_api_dot_v2_dot_discovery__pb
 
 class EndpointDiscoveryServiceStub(object):
   """[#protodoc-title: EDS]
+  Endpoint discovery :ref:`architecture overview <arch_overview_service_discovery_types_eds>`
 
   """
 
@@ -29,6 +30,7 @@ class EndpointDiscoveryServiceStub(object):
 
 class EndpointDiscoveryServiceServicer(object):
   """[#protodoc-title: EDS]
+  Endpoint discovery :ref:`architecture overview <arch_overview_service_discovery_types_eds>`
 
   """
 

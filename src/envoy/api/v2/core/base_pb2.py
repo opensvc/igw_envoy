@@ -14,19 +14,21 @@ from google.protobuf import descriptor_pb2
 _sym_db = _symbol_database.Default()
 
 
+from google.protobuf import any_pb2 as google_dot_protobuf_dot_any__pb2
 from google.protobuf import struct_pb2 as google_dot_protobuf_dot_struct__pb2
 from google.protobuf import wrappers_pb2 as google_dot_protobuf_dot_wrappers__pb2
 from validate import validate_pb2 as validate_dot_validate__pb2
 from gogoproto import gogo_pb2 as gogoproto_dot_gogo__pb2
+from envoy.type import percent_pb2 as envoy_dot_type_dot_percent__pb2
 
 
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='envoy/api/v2/core/base.proto',
   package='envoy.api.v2.core',
   syntax='proto3',
-  serialized_pb=_b('\n\x1c\x65nvoy/api/v2/core/base.proto\x12\x11\x65nvoy.api.v2.core\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x17validate/validate.proto\x1a\x14gogoproto/gogo.proto\":\n\x08Locality\x12\x0e\n\x06region\x18\x01 \x01(\t\x12\x0c\n\x04zone\x18\x02 \x01(\t\x12\x10\n\x08sub_zone\x18\x03 \x01(\t\"\x94\x01\n\x04Node\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0f\n\x07\x63luster\x18\x02 \x01(\t\x12)\n\x08metadata\x18\x03 \x01(\x0b\x32\x17.google.protobuf.Struct\x12-\n\x08locality\x18\x04 \x01(\x0b\x32\x1b.envoy.api.v2.core.Locality\x12\x15\n\rbuild_version\x18\x05 \x01(\t\"\xa4\x01\n\x08Metadata\x12H\n\x0f\x66ilter_metadata\x18\x01 \x03(\x0b\x32/.envoy.api.v2.core.Metadata.FilterMetadataEntry\x1aN\n\x13\x46ilterMetadataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12&\n\x05value\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct:\x02\x38\x01\"F\n\rRuntimeUInt32\x12\x15\n\rdefault_value\x18\x02 \x01(\r\x12\x1e\n\x0bruntime_key\x18\x03 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\")\n\x0bHeaderValue\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t\"o\n\x11HeaderValueOption\x12.\n\x06header\x18\x01 \x01(\x0b\x32\x1e.envoy.api.v2.core.HeaderValue\x12*\n\x06\x61ppend\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.BoolValue\"\x86\x01\n\nDataSource\x12\x1d\n\x08\x66ilename\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01H\x00\x12!\n\x0cinline_bytes\x18\x02 \x01(\x0c\x42\t\xba\xe9\xc0\x03\x04z\x02\x10\x01H\x00\x12\"\n\rinline_string\x18\x03 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01H\x00\x42\x12\n\tspecifier\x12\x05\xb8\xe9\xc0\x03\x01\"S\n\x0fTransportSocket\x12\x17\n\x04name\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12\'\n\x06\x63onfig\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\"\x9a\x02\n\x0cSocketOption\x12\x13\n\x0b\x64\x65scription\x18\x01 \x01(\t\x12\r\n\x05level\x18\x02 \x01(\x03\x12\x0c\n\x04name\x18\x03 \x01(\x03\x12\x13\n\tint_value\x18\x04 \x01(\x03H\x00\x12\x13\n\tbuf_value\x18\x05 \x01(\x0cH\x00\x12P\n\x05state\x18\x06 \x01(\x0e\x32+.envoy.api.v2.core.SocketOption.SocketStateB\x14\xba\xe9\xc0\x03\x05\x8a\x01\x02\x10\x01\xba\xe9\xc0\x03\x05\x82\x01\x02\x10\x01\"L\n\x0bSocketState\x12\x11\n\rSTATE_PREBIND\x10\x00\x12\x0f\n\x0bSTATE_BOUND\x10\x01\x12\x13\n\x0fSTATE_LISTENING\x10\x02\x1a\x04\x88\xa3\x1e\x00\x42\x0e\n\x05value\x12\x05\xb8\xe9\xc0\x03\x01*(\n\x0fRoutingPriority\x12\x0b\n\x07\x44\x45\x46\x41ULT\x10\x00\x12\x08\n\x04HIGH\x10\x01*\x84\x01\n\rRequestMethod\x12\x16\n\x12METHOD_UNSPECIFIED\x10\x00\x12\x07\n\x03GET\x10\x01\x12\x08\n\x04HEAD\x10\x02\x12\x08\n\x04POST\x10\x03\x12\x07\n\x03PUT\x10\x04\x12\n\n\x06\x44\x45LETE\x10\x05\x12\x0b\n\x07\x43ONNECT\x10\x06\x12\x0b\n\x07OPTIONS\x10\x07\x12\t\n\x05TRACE\x10\x08\x1a\x04\x88\xa3\x1e\x00\x42\nZ\x04\x63ore\xa8\xe2\x1e\x01\x62\x06proto3')
+  serialized_pb=_b('\n\x1c\x65nvoy/api/v2/core/base.proto\x12\x11\x65nvoy.api.v2.core\x1a\x19google/protobuf/any.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x17validate/validate.proto\x1a\x14gogoproto/gogo.proto\x1a\x18\x65nvoy/type/percent.proto\":\n\x08Locality\x12\x0e\n\x06region\x18\x01 \x01(\t\x12\x0c\n\x04zone\x18\x02 \x01(\t\x12\x10\n\x08sub_zone\x18\x03 \x01(\t\"\x94\x01\n\x04Node\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0f\n\x07\x63luster\x18\x02 \x01(\t\x12)\n\x08metadata\x18\x03 \x01(\x0b\x32\x17.google.protobuf.Struct\x12-\n\x08locality\x18\x04 \x01(\x0b\x32\x1b.envoy.api.v2.core.Locality\x12\x15\n\rbuild_version\x18\x05 \x01(\t\"\xa4\x01\n\x08Metadata\x12H\n\x0f\x66ilter_metadata\x18\x01 \x03(\x0b\x32/.envoy.api.v2.core.Metadata.FilterMetadataEntry\x1aN\n\x13\x46ilterMetadataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12&\n\x05value\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct:\x02\x38\x01\"F\n\rRuntimeUInt32\x12\x15\n\rdefault_value\x18\x02 \x01(\r\x12\x1e\n\x0bruntime_key\x18\x03 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\"E\n\x0bHeaderValue\x12\x1a\n\x03key\x18\x01 \x01(\tB\r\xba\xe9\xc0\x03\x08r\x06 \x01(\x80\x80\x01\x12\x1a\n\x05value\x18\x02 \x01(\tB\x0b\xba\xe9\xc0\x03\x06r\x04(\x80\x80\x01\"{\n\x11HeaderValueOption\x12:\n\x06header\x18\x01 \x01(\x0b\x32\x1e.envoy.api.v2.core.HeaderValueB\n\xba\xe9\xc0\x03\x05\x8a\x01\x02\x10\x01\x12*\n\x06\x61ppend\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.BoolValue\"<\n\tHeaderMap\x12/\n\x07headers\x18\x01 \x03(\x0b\x32\x1e.envoy.api.v2.core.HeaderValue\"\x86\x01\n\nDataSource\x12\x1d\n\x08\x66ilename\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01H\x00\x12!\n\x0cinline_bytes\x18\x02 \x01(\x0c\x42\t\xba\xe9\xc0\x03\x04z\x02\x10\x01H\x00\x12\"\n\rinline_string\x18\x03 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01H\x00\x42\x12\n\tspecifier\x12\x05\xb8\xe9\xc0\x03\x01\"\x96\x01\n\x0fTransportSocket\x12\x17\n\x04name\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12-\n\x06\x63onfig\x18\x02 \x01(\x0b\x32\x17.google.protobuf.StructB\x02\x18\x01H\x00\x12,\n\x0ctyped_config\x18\x03 \x01(\x0b\x32\x14.google.protobuf.AnyH\x00\x42\r\n\x0b\x63onfig_type\"\x9a\x02\n\x0cSocketOption\x12\x13\n\x0b\x64\x65scription\x18\x01 \x01(\t\x12\r\n\x05level\x18\x02 \x01(\x03\x12\x0c\n\x04name\x18\x03 \x01(\x03\x12\x13\n\tint_value\x18\x04 \x01(\x03H\x00\x12\x13\n\tbuf_value\x18\x05 \x01(\x0cH\x00\x12P\n\x05state\x18\x06 \x01(\x0e\x32+.envoy.api.v2.core.SocketOption.SocketStateB\x14\xba\xe9\xc0\x03\x05\x8a\x01\x02\x10\x01\xba\xe9\xc0\x03\x05\x82\x01\x02\x10\x01\"L\n\x0bSocketState\x12\x11\n\rSTATE_PREBIND\x10\x00\x12\x0f\n\x0bSTATE_BOUND\x10\x01\x12\x13\n\x0fSTATE_LISTENING\x10\x02\x1a\x04\x88\xa3\x1e\x00\x42\x0e\n\x05value\x12\x05\xb8\xe9\xc0\x03\x01\"q\n\x18RuntimeFractionalPercent\x12@\n\rdefault_value\x18\x01 \x01(\x0b\x32\x1d.envoy.type.FractionalPercentB\n\xba\xe9\xc0\x03\x05\x8a\x01\x02\x10\x01\x12\x13\n\x0bruntime_key\x18\x02 \x01(\t\"\"\n\x0c\x43ontrolPlane\x12\x12\n\nidentifier\x18\x01 \x01(\t*(\n\x0fRoutingPriority\x12\x0b\n\x07\x44\x45\x46\x41ULT\x10\x00\x12\x08\n\x04HIGH\x10\x01*\x84\x01\n\rRequestMethod\x12\x16\n\x12METHOD_UNSPECIFIED\x10\x00\x12\x07\n\x03GET\x10\x01\x12\x08\n\x04HEAD\x10\x02\x12\x08\n\x04POST\x10\x03\x12\x07\n\x03PUT\x10\x04\x12\n\n\x06\x44\x45LETE\x10\x05\x12\x0b\n\x07\x43ONNECT\x10\x06\x12\x0b\n\x07OPTIONS\x10\x07\x12\t\n\x05TRACE\x10\x08\x1a\x04\x88\xa3\x1e\x00\x42\x38\n\x1fio.envoyproxy.envoy.api.v2.coreB\tBaseProtoP\x01Z\x04\x63ore\xa8\xe2\x1e\x01\x62\x06proto3')
   ,
-  dependencies=[google_dot_protobuf_dot_struct__pb2.DESCRIPTOR,google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,validate_dot_validate__pb2.DESCRIPTOR,gogoproto_dot_gogo__pb2.DESCRIPTOR,])
+  dependencies=[google_dot_protobuf_dot_any__pb2.DESCRIPTOR,google_dot_protobuf_dot_struct__pb2.DESCRIPTOR,google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,validate_dot_validate__pb2.DESCRIPTOR,gogoproto_dot_gogo__pb2.DESCRIPTOR,envoy_dot_type_dot_percent__pb2.DESCRIPTOR,])
 
 _ROUTINGPRIORITY = _descriptor.EnumDescriptor(
   name='RoutingPriority',
@@ -45,8 +47,8 @@ _ROUTINGPRIORITY = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=1273,
-  serialized_end=1313,
+  serialized_start=1647,
+  serialized_end=1687,
 )
 _sym_db.RegisterEnumDescriptor(_ROUTINGPRIORITY)
 
@@ -96,8 +98,8 @@ _REQUESTMETHOD = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=_descriptor._ParseOptions(descriptor_pb2.EnumOptions(), _b('\210\243\036\000')),
-  serialized_start=1316,
-  serialized_end=1448,
+  serialized_start=1690,
+  serialized_end=1822,
 )
 _sym_db.RegisterEnumDescriptor(_REQUESTMETHOD)
 
@@ -136,8 +138,8 @@ _SOCKETOPTION_SOCKETSTATE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=_descriptor._ParseOptions(descriptor_pb2.EnumOptions(), _b('\210\243\036\000')),
-  serialized_start=1179,
-  serialized_end=1255,
+  serialized_start=1402,
+  serialized_end=1478,
 )
 _sym_db.RegisterEnumDescriptor(_SOCKETOPTION_SOCKETSTATE)
 
@@ -182,8 +184,8 @@ _LOCALITY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=160,
-  serialized_end=218,
+  serialized_start=213,
+  serialized_end=271,
 )
 
 
@@ -241,8 +243,8 @@ _NODE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=221,
-  serialized_end=369,
+  serialized_start=274,
+  serialized_end=422,
 )
 
 
@@ -279,8 +281,8 @@ _METADATA_FILTERMETADATAENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=458,
-  serialized_end=536,
+  serialized_start=511,
+  serialized_end=589,
 )
 
 _METADATA = _descriptor.Descriptor(
@@ -309,8 +311,8 @@ _METADATA = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=372,
-  serialized_end=536,
+  serialized_start=425,
+  serialized_end=589,
 )
 
 
@@ -347,8 +349,8 @@ _RUNTIMEUINT32 = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=538,
-  serialized_end=608,
+  serialized_start=591,
+  serialized_end=661,
 )
 
 
@@ -365,14 +367,14 @@ _HEADERVALUE = _descriptor.Descriptor(
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None),
+      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\010r\006 \001(\200\200\001'))),
     _descriptor.FieldDescriptor(
       name='value', full_name='envoy.api.v2.core.HeaderValue.value', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None),
+      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\006r\004(\200\200\001'))),
   ],
   extensions=[
   ],
@@ -385,8 +387,8 @@ _HEADERVALUE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=610,
-  serialized_end=651,
+  serialized_start=663,
+  serialized_end=732,
 )
 
 
@@ -403,7 +405,7 @@ _HEADERVALUEOPTION = _descriptor.Descriptor(
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None),
+      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\212\001\002\020\001'))),
     _descriptor.FieldDescriptor(
       name='append', full_name='envoy.api.v2.core.HeaderValueOption.append', index=1,
       number=2, type=11, cpp_type=10, label=1,
@@ -423,8 +425,39 @@ _HEADERVALUEOPTION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=653,
-  serialized_end=764,
+  serialized_start=734,
+  serialized_end=857,
+)
+
+
+_HEADERMAP = _descriptor.Descriptor(
+  name='HeaderMap',
+  full_name='envoy.api.v2.core.HeaderMap',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='headers', full_name='envoy.api.v2.core.HeaderMap.headers', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=859,
+  serialized_end=919,
 )
 
 
@@ -471,8 +504,8 @@ _DATASOURCE = _descriptor.Descriptor(
       name='specifier', full_name='envoy.api.v2.core.DataSource.specifier',
       index=0, containing_type=None, fields=[], options=_descriptor._ParseOptions(descriptor_pb2.OneofOptions(), _b('\270\351\300\003\001'))),
   ],
-  serialized_start=767,
-  serialized_end=901,
+  serialized_start=922,
+  serialized_end=1056,
 )
 
 
@@ -496,6 +529,13 @@ _TRANSPORTSOCKET = _descriptor.Descriptor(
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
+      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\030\001'))),
+    _descriptor.FieldDescriptor(
+      name='typed_config', full_name='envoy.api.v2.core.TransportSocket.typed_config', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
       options=None),
   ],
   extensions=[
@@ -508,9 +548,12 @@ _TRANSPORTSOCKET = _descriptor.Descriptor(
   syntax='proto3',
   extension_ranges=[],
   oneofs=[
+    _descriptor.OneofDescriptor(
+      name='config_type', full_name='envoy.api.v2.core.TransportSocket.config_type',
+      index=0, containing_type=None, fields=[]),
   ],
-  serialized_start=903,
-  serialized_end=986,
+  serialized_start=1059,
+  serialized_end=1209,
 )
 
 
@@ -579,8 +622,77 @@ _SOCKETOPTION = _descriptor.Descriptor(
       name='value', full_name='envoy.api.v2.core.SocketOption.value',
       index=0, containing_type=None, fields=[], options=_descriptor._ParseOptions(descriptor_pb2.OneofOptions(), _b('\270\351\300\003\001'))),
   ],
-  serialized_start=989,
-  serialized_end=1271,
+  serialized_start=1212,
+  serialized_end=1494,
+)
+
+
+_RUNTIMEFRACTIONALPERCENT = _descriptor.Descriptor(
+  name='RuntimeFractionalPercent',
+  full_name='envoy.api.v2.core.RuntimeFractionalPercent',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='default_value', full_name='envoy.api.v2.core.RuntimeFractionalPercent.default_value', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\212\001\002\020\001'))),
+    _descriptor.FieldDescriptor(
+      name='runtime_key', full_name='envoy.api.v2.core.RuntimeFractionalPercent.runtime_key', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1496,
+  serialized_end=1609,
+)
+
+
+_CONTROLPLANE = _descriptor.Descriptor(
+  name='ControlPlane',
+  full_name='envoy.api.v2.core.ControlPlane',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='identifier', full_name='envoy.api.v2.core.ControlPlane.identifier', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1611,
+  serialized_end=1645,
 )
 
 _NODE.fields_by_name['metadata'].message_type = google_dot_protobuf_dot_struct__pb2._STRUCT
@@ -590,6 +702,7 @@ _METADATA_FILTERMETADATAENTRY.containing_type = _METADATA
 _METADATA.fields_by_name['filter_metadata'].message_type = _METADATA_FILTERMETADATAENTRY
 _HEADERVALUEOPTION.fields_by_name['header'].message_type = _HEADERVALUE
 _HEADERVALUEOPTION.fields_by_name['append'].message_type = google_dot_protobuf_dot_wrappers__pb2._BOOLVALUE
+_HEADERMAP.fields_by_name['headers'].message_type = _HEADERVALUE
 _DATASOURCE.oneofs_by_name['specifier'].fields.append(
   _DATASOURCE.fields_by_name['filename'])
 _DATASOURCE.fields_by_name['filename'].containing_oneof = _DATASOURCE.oneofs_by_name['specifier']
@@ -600,6 +713,13 @@ _DATASOURCE.oneofs_by_name['specifier'].fields.append(
   _DATASOURCE.fields_by_name['inline_string'])
 _DATASOURCE.fields_by_name['inline_string'].containing_oneof = _DATASOURCE.oneofs_by_name['specifier']
 _TRANSPORTSOCKET.fields_by_name['config'].message_type = google_dot_protobuf_dot_struct__pb2._STRUCT
+_TRANSPORTSOCKET.fields_by_name['typed_config'].message_type = google_dot_protobuf_dot_any__pb2._ANY
+_TRANSPORTSOCKET.oneofs_by_name['config_type'].fields.append(
+  _TRANSPORTSOCKET.fields_by_name['config'])
+_TRANSPORTSOCKET.fields_by_name['config'].containing_oneof = _TRANSPORTSOCKET.oneofs_by_name['config_type']
+_TRANSPORTSOCKET.oneofs_by_name['config_type'].fields.append(
+  _TRANSPORTSOCKET.fields_by_name['typed_config'])
+_TRANSPORTSOCKET.fields_by_name['typed_config'].containing_oneof = _TRANSPORTSOCKET.oneofs_by_name['config_type']
 _SOCKETOPTION.fields_by_name['state'].enum_type = _SOCKETOPTION_SOCKETSTATE
 _SOCKETOPTION_SOCKETSTATE.containing_type = _SOCKETOPTION
 _SOCKETOPTION.oneofs_by_name['value'].fields.append(
@@ -608,15 +728,19 @@ _SOCKETOPTION.fields_by_name['int_value'].containing_oneof = _SOCKETOPTION.oneof
 _SOCKETOPTION.oneofs_by_name['value'].fields.append(
   _SOCKETOPTION.fields_by_name['buf_value'])
 _SOCKETOPTION.fields_by_name['buf_value'].containing_oneof = _SOCKETOPTION.oneofs_by_name['value']
+_RUNTIMEFRACTIONALPERCENT.fields_by_name['default_value'].message_type = envoy_dot_type_dot_percent__pb2._FRACTIONALPERCENT
 DESCRIPTOR.message_types_by_name['Locality'] = _LOCALITY
 DESCRIPTOR.message_types_by_name['Node'] = _NODE
 DESCRIPTOR.message_types_by_name['Metadata'] = _METADATA
 DESCRIPTOR.message_types_by_name['RuntimeUInt32'] = _RUNTIMEUINT32
 DESCRIPTOR.message_types_by_name['HeaderValue'] = _HEADERVALUE
 DESCRIPTOR.message_types_by_name['HeaderValueOption'] = _HEADERVALUEOPTION
+DESCRIPTOR.message_types_by_name['HeaderMap'] = _HEADERMAP
 DESCRIPTOR.message_types_by_name['DataSource'] = _DATASOURCE
 DESCRIPTOR.message_types_by_name['TransportSocket'] = _TRANSPORTSOCKET
 DESCRIPTOR.message_types_by_name['SocketOption'] = _SOCKETOPTION
+DESCRIPTOR.message_types_by_name['RuntimeFractionalPercent'] = _RUNTIMEFRACTIONALPERCENT
+DESCRIPTOR.message_types_by_name['ControlPlane'] = _CONTROLPLANE
 DESCRIPTOR.enum_types_by_name['RoutingPriority'] = _ROUTINGPRIORITY
 DESCRIPTOR.enum_types_by_name['RequestMethod'] = _REQUESTMETHOD
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
@@ -671,6 +795,13 @@ HeaderValueOption = _reflection.GeneratedProtocolMessageType('HeaderValueOption'
   ))
 _sym_db.RegisterMessage(HeaderValueOption)
 
+HeaderMap = _reflection.GeneratedProtocolMessageType('HeaderMap', (_message.Message,), dict(
+  DESCRIPTOR = _HEADERMAP,
+  __module__ = 'envoy.api.v2.core.base_pb2'
+  # @@protoc_insertion_point(class_scope:envoy.api.v2.core.HeaderMap)
+  ))
+_sym_db.RegisterMessage(HeaderMap)
+
 DataSource = _reflection.GeneratedProtocolMessageType('DataSource', (_message.Message,), dict(
   DESCRIPTOR = _DATASOURCE,
   __module__ = 'envoy.api.v2.core.base_pb2'
@@ -692,15 +823,35 @@ SocketOption = _reflection.GeneratedProtocolMessageType('SocketOption', (_messag
   ))
 _sym_db.RegisterMessage(SocketOption)
 
+RuntimeFractionalPercent = _reflection.GeneratedProtocolMessageType('RuntimeFractionalPercent', (_message.Message,), dict(
+  DESCRIPTOR = _RUNTIMEFRACTIONALPERCENT,
+  __module__ = 'envoy.api.v2.core.base_pb2'
+  # @@protoc_insertion_point(class_scope:envoy.api.v2.core.RuntimeFractionalPercent)
+  ))
+_sym_db.RegisterMessage(RuntimeFractionalPercent)
+
+ControlPlane = _reflection.GeneratedProtocolMessageType('ControlPlane', (_message.Message,), dict(
+  DESCRIPTOR = _CONTROLPLANE,
+  __module__ = 'envoy.api.v2.core.base_pb2'
+  # @@protoc_insertion_point(class_scope:envoy.api.v2.core.ControlPlane)
+  ))
+_sym_db.RegisterMessage(ControlPlane)
+
 
 DESCRIPTOR.has_options = True
-DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('Z\004core\250\342\036\001'))
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n\037io.envoyproxy.envoy.api.v2.coreB\tBaseProtoP\001Z\004core\250\342\036\001'))
 _REQUESTMETHOD.has_options = True
 _REQUESTMETHOD._options = _descriptor._ParseOptions(descriptor_pb2.EnumOptions(), _b('\210\243\036\000'))
 _METADATA_FILTERMETADATAENTRY.has_options = True
 _METADATA_FILTERMETADATAENTRY._options = _descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001'))
 _RUNTIMEUINT32.fields_by_name['runtime_key'].has_options = True
 _RUNTIMEUINT32.fields_by_name['runtime_key']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004r\002 \001'))
+_HEADERVALUE.fields_by_name['key'].has_options = True
+_HEADERVALUE.fields_by_name['key']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\010r\006 \001(\200\200\001'))
+_HEADERVALUE.fields_by_name['value'].has_options = True
+_HEADERVALUE.fields_by_name['value']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\006r\004(\200\200\001'))
+_HEADERVALUEOPTION.fields_by_name['header'].has_options = True
+_HEADERVALUEOPTION.fields_by_name['header']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\212\001\002\020\001'))
 _DATASOURCE.oneofs_by_name['specifier'].has_options = True
 _DATASOURCE.oneofs_by_name['specifier']._options = _descriptor._ParseOptions(descriptor_pb2.OneofOptions(), _b('\270\351\300\003\001'))
 _DATASOURCE.fields_by_name['filename'].has_options = True
@@ -711,12 +862,16 @@ _DATASOURCE.fields_by_name['inline_string'].has_options = True
 _DATASOURCE.fields_by_name['inline_string']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004r\002 \001'))
 _TRANSPORTSOCKET.fields_by_name['name'].has_options = True
 _TRANSPORTSOCKET.fields_by_name['name']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004r\002 \001'))
+_TRANSPORTSOCKET.fields_by_name['config'].has_options = True
+_TRANSPORTSOCKET.fields_by_name['config']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\030\001'))
 _SOCKETOPTION.oneofs_by_name['value'].has_options = True
 _SOCKETOPTION.oneofs_by_name['value']._options = _descriptor._ParseOptions(descriptor_pb2.OneofOptions(), _b('\270\351\300\003\001'))
 _SOCKETOPTION_SOCKETSTATE.has_options = True
 _SOCKETOPTION_SOCKETSTATE._options = _descriptor._ParseOptions(descriptor_pb2.EnumOptions(), _b('\210\243\036\000'))
 _SOCKETOPTION.fields_by_name['state'].has_options = True
 _SOCKETOPTION.fields_by_name['state']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\212\001\002\020\001\272\351\300\003\005\202\001\002\020\001'))
+_RUNTIMEFRACTIONALPERCENT.fields_by_name['default_value'].has_options = True
+_RUNTIMEFRACTIONALPERCENT.fields_by_name['default_value']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\212\001\002\020\001'))
 try:
   # THESE ELEMENTS WILL BE DEPRECATED.
   # Please use the generated *_pb2_grpc.py files instead.

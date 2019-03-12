@@ -23,7 +23,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='envoy/service/load_stats/v2/lrs.proto',
   package='envoy.service.load_stats.v2',
   syntax='proto3',
-  serialized_pb=_b('\n%envoy/service/load_stats/v2/lrs.proto\x12\x1b\x65nvoy.service.load_stats.v2\x1a\x1c\x65nvoy/api/v2/core/base.proto\x1a\'envoy/api/v2/endpoint/load_report.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x17validate/validate.proto\"u\n\x10LoadStatsRequest\x12%\n\x04node\x18\x01 \x01(\x0b\x32\x17.envoy.api.v2.core.Node\x12:\n\rcluster_stats\x18\x02 \x03(\x0b\x32#.envoy.api.v2.endpoint.ClusterStats\"m\n\x11LoadStatsResponse\x12\x1c\n\x08\x63lusters\x18\x01 \x03(\tB\n\xba\xe9\xc0\x03\x05\x92\x01\x02\x08\x01\x12:\n\x17load_reporting_interval\x18\x02 \x01(\x0b\x32\x19.google.protobuf.Duration2\x8e\x01\n\x14LoadReportingService\x12v\n\x0fStreamLoadStats\x12-.envoy.service.load_stats.v2.LoadStatsRequest\x1a..envoy.service.load_stats.v2.LoadStatsResponse\"\x00(\x01\x30\x01\x42\x07Z\x02v2\x88\x01\x01\x62\x06proto3')
+  serialized_pb=_b('\n%envoy/service/load_stats/v2/lrs.proto\x12\x1b\x65nvoy.service.load_stats.v2\x1a\x1c\x65nvoy/api/v2/core/base.proto\x1a\'envoy/api/v2/endpoint/load_report.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x17validate/validate.proto\"u\n\x10LoadStatsRequest\x12%\n\x04node\x18\x01 \x01(\x0b\x32\x17.envoy.api.v2.core.Node\x12:\n\rcluster_stats\x18\x02 \x03(\x0b\x32#.envoy.api.v2.endpoint.ClusterStats\"\x92\x01\n\x11LoadStatsResponse\x12\x1c\n\x08\x63lusters\x18\x01 \x03(\tB\n\xba\xe9\xc0\x03\x05\x92\x01\x02\x08\x01\x12:\n\x17load_reporting_interval\x18\x02 \x01(\x0b\x32\x19.google.protobuf.Duration\x12#\n\x1breport_endpoint_granularity\x18\x03 \x01(\x08\x32\x8e\x01\n\x14LoadReportingService\x12v\n\x0fStreamLoadStats\x12-.envoy.service.load_stats.v2.LoadStatsRequest\x1a..envoy.service.load_stats.v2.LoadStatsResponse\"\x00(\x01\x30\x01\x42>\n)io.envoyproxy.envoy.service.load_stats.v2B\x08LrsProtoP\x01Z\x02v2\x88\x01\x01\x62\x06proto3')
   ,
   dependencies=[envoy_dot_api_dot_v2_dot_core_dot_base__pb2.DESCRIPTOR,envoy_dot_api_dot_v2_dot_endpoint_dot_load__report__pb2.DESCRIPTOR,google_dot_protobuf_dot_duration__pb2.DESCRIPTOR,validate_dot_validate__pb2.DESCRIPTOR,])
 
@@ -89,6 +89,13 @@ _LOADSTATSRESPONSE = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
+    _descriptor.FieldDescriptor(
+      name='report_endpoint_granularity', full_name='envoy.service.load_stats.v2.LoadStatsResponse.report_endpoint_granularity', index=2,
+      number=3, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -101,8 +108,8 @@ _LOADSTATSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=317,
-  serialized_end=426,
+  serialized_start=318,
+  serialized_end=464,
 )
 
 _LOADSTATSREQUEST.fields_by_name['node'].message_type = envoy_dot_api_dot_v2_dot_core_dot_base__pb2._NODE
@@ -128,7 +135,7 @@ _sym_db.RegisterMessage(LoadStatsResponse)
 
 
 DESCRIPTOR.has_options = True
-DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('Z\002v2\210\001\001'))
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n)io.envoyproxy.envoy.service.load_stats.v2B\010LrsProtoP\001Z\002v2\210\001\001'))
 _LOADSTATSRESPONSE.fields_by_name['clusters'].has_options = True
 _LOADSTATSRESPONSE.fields_by_name['clusters']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\222\001\002\010\001'))
 
@@ -138,8 +145,8 @@ _LOADREPORTINGSERVICE = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   options=None,
-  serialized_start=429,
-  serialized_end=571,
+  serialized_start=467,
+  serialized_end=609,
   methods=[
   _descriptor.MethodDescriptor(
     name='StreamLoadStats',

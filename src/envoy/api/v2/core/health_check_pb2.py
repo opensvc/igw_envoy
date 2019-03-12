@@ -15,6 +15,8 @@ _sym_db = _symbol_database.Default()
 
 
 from envoy.api.v2.core import base_pb2 as envoy_dot_api_dot_v2_dot_core_dot_base__pb2
+from envoy.type import range_pb2 as envoy_dot_type_dot_range__pb2
+from google.protobuf import any_pb2 as google_dot_protobuf_dot_any__pb2
 from google.protobuf import duration_pb2 as google_dot_protobuf_dot_duration__pb2
 from google.protobuf import struct_pb2 as google_dot_protobuf_dot_struct__pb2
 from google.protobuf import wrappers_pb2 as google_dot_protobuf_dot_wrappers__pb2
@@ -26,9 +28,9 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='envoy/api/v2/core/health_check.proto',
   package='envoy.api.v2.core',
   syntax='proto3',
-  serialized_pb=_b('\n$envoy/api/v2/core/health_check.proto\x12\x11\x65nvoy.api.v2.core\x1a\x1c\x65nvoy/api/v2/core/base.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x17validate/validate.proto\x1a\x14gogoproto/gogo.proto\"\xd9\r\n\x0bHealthCheck\x12<\n\x07timeout\x18\x01 \x01(\x0b\x32\x19.google.protobuf.DurationB\x10\xba\xe9\xc0\x03\x07\xaa\x01\x04\x08\x01*\x00\x98\xdf\x1f\x01\x12=\n\x08interval\x18\x02 \x01(\x0b\x32\x19.google.protobuf.DurationB\x10\xba\xe9\xc0\x03\x07\xaa\x01\x04\x08\x01*\x00\x98\xdf\x1f\x01\x12\x32\n\x0finterval_jitter\x18\x03 \x01(\x0b\x32\x19.google.protobuf.Duration\x12\x1f\n\x17interval_jitter_percent\x18\x12 \x01(\r\x12\x39\n\x13unhealthy_threshold\x18\x04 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x37\n\x11healthy_threshold\x18\x05 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12.\n\x08\x61lt_port\x18\x06 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x34\n\x10reuse_connection\x18\x07 \x01(\x0b\x32\x1a.google.protobuf.BoolValue\x12K\n\x11http_health_check\x18\x08 \x01(\x0b\x32..envoy.api.v2.core.HealthCheck.HttpHealthCheckH\x00\x12I\n\x10tcp_health_check\x18\t \x01(\x0b\x32-.envoy.api.v2.core.HealthCheck.TcpHealthCheckH\x00\x12M\n\x12redis_health_check\x18\n \x01(\x0b\x32/.envoy.api.v2.core.HealthCheck.RedisHealthCheckH\x00\x12K\n\x11grpc_health_check\x18\x0b \x01(\x0b\x32..envoy.api.v2.core.HealthCheck.GrpcHealthCheckH\x00\x12O\n\x13\x63ustom_health_check\x18\r \x01(\x0b\x32\x30.envoy.api.v2.core.HealthCheck.CustomHealthCheckH\x00\x12\x36\n\x13no_traffic_interval\x18\x0c \x01(\x0b\x32\x19.google.protobuf.Duration\x12\x35\n\x12unhealthy_interval\x18\x0e \x01(\x0b\x32\x19.google.protobuf.Duration\x12:\n\x17unhealthy_edge_interval\x18\x0f \x01(\x0b\x32\x19.google.protobuf.Duration\x12\x38\n\x15healthy_edge_interval\x18\x10 \x01(\x0b\x32\x19.google.protobuf.Duration\x12\x16\n\x0e\x65vent_log_path\x18\x11 \x01(\t\x1aH\n\x07Payload\x12\x19\n\x04text\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01H\x00\x12\x10\n\x06\x62inary\x18\x02 \x01(\x0cH\x00\x42\x10\n\x07payload\x12\x05\xb8\xe9\xc0\x03\x01\x1a\x96\x02\n\x0fHttpHealthCheck\x12\x0c\n\x04host\x18\x01 \x01(\t\x12\x17\n\x04path\x18\x02 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12\x34\n\x04send\x18\x03 \x01(\x0b\x32&.envoy.api.v2.core.HealthCheck.Payload\x12\x37\n\x07receive\x18\x04 \x01(\x0b\x32&.envoy.api.v2.core.HealthCheck.Payload\x12\x14\n\x0cservice_name\x18\x05 \x01(\t\x12\x44\n\x16request_headers_to_add\x18\x06 \x03(\x0b\x32$.envoy.api.v2.core.HeaderValueOption\x12\x11\n\tuse_http2\x18\x07 \x01(\x08\x1a\x7f\n\x0eTcpHealthCheck\x12\x34\n\x04send\x18\x01 \x01(\x0b\x32&.envoy.api.v2.core.HealthCheck.Payload\x12\x37\n\x07receive\x18\x02 \x03(\x0b\x32&.envoy.api.v2.core.HealthCheck.Payload\x1a\x1f\n\x10RedisHealthCheck\x12\x0b\n\x03key\x18\x01 \x01(\t\x1a\'\n\x0fGrpcHealthCheck\x12\x14\n\x0cservice_name\x18\x01 \x01(\t\x1aU\n\x11\x43ustomHealthCheck\x12\x17\n\x04name\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12\'\n\x06\x63onfig\x18\x02 \x01(\x0b\x32\x17.google.protobuf.StructB\x17\n\x0ehealth_checker\x12\x05\xb8\xe9\xc0\x03\x01*R\n\x0cHealthStatus\x12\x0b\n\x07UNKNOWN\x10\x00\x12\x0b\n\x07HEALTHY\x10\x01\x12\r\n\tUNHEALTHY\x10\x02\x12\x0c\n\x08\x44RAINING\x10\x03\x12\x0b\n\x07TIMEOUT\x10\x04\x42\x04\xa8\xe2\x1e\x01\x62\x06proto3')
+  serialized_pb=_b('\n$envoy/api/v2/core/health_check.proto\x12\x11\x65nvoy.api.v2.core\x1a\x1c\x65nvoy/api/v2/core/base.proto\x1a\x16\x65nvoy/type/range.proto\x1a\x19google/protobuf/any.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x17validate/validate.proto\x1a\x14gogoproto/gogo.proto\"\xb8\x0f\n\x0bHealthCheck\x12<\n\x07timeout\x18\x01 \x01(\x0b\x32\x19.google.protobuf.DurationB\x10\xba\xe9\xc0\x03\x07\xaa\x01\x04\x08\x01*\x00\x98\xdf\x1f\x01\x12=\n\x08interval\x18\x02 \x01(\x0b\x32\x19.google.protobuf.DurationB\x10\xba\xe9\xc0\x03\x07\xaa\x01\x04\x08\x01*\x00\x98\xdf\x1f\x01\x12\x32\n\x0finterval_jitter\x18\x03 \x01(\x0b\x32\x19.google.protobuf.Duration\x12\x1f\n\x17interval_jitter_percent\x18\x12 \x01(\r\x12\x39\n\x13unhealthy_threshold\x18\x04 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x37\n\x11healthy_threshold\x18\x05 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12.\n\x08\x61lt_port\x18\x06 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x34\n\x10reuse_connection\x18\x07 \x01(\x0b\x32\x1a.google.protobuf.BoolValue\x12K\n\x11http_health_check\x18\x08 \x01(\x0b\x32..envoy.api.v2.core.HealthCheck.HttpHealthCheckH\x00\x12I\n\x10tcp_health_check\x18\t \x01(\x0b\x32-.envoy.api.v2.core.HealthCheck.TcpHealthCheckH\x00\x12K\n\x11grpc_health_check\x18\x0b \x01(\x0b\x32..envoy.api.v2.core.HealthCheck.GrpcHealthCheckH\x00\x12O\n\x13\x63ustom_health_check\x18\r \x01(\x0b\x32\x30.envoy.api.v2.core.HealthCheck.CustomHealthCheckH\x00\x12\x42\n\x13no_traffic_interval\x18\x0c \x01(\x0b\x32\x19.google.protobuf.DurationB\n\xba\xe9\xc0\x03\x05\xaa\x01\x02*\x00\x12\x41\n\x12unhealthy_interval\x18\x0e \x01(\x0b\x32\x19.google.protobuf.DurationB\n\xba\xe9\xc0\x03\x05\xaa\x01\x02*\x00\x12\x46\n\x17unhealthy_edge_interval\x18\x0f \x01(\x0b\x32\x19.google.protobuf.DurationB\n\xba\xe9\xc0\x03\x05\xaa\x01\x02*\x00\x12\x44\n\x15healthy_edge_interval\x18\x10 \x01(\x0b\x32\x19.google.protobuf.DurationB\n\xba\xe9\xc0\x03\x05\xaa\x01\x02*\x00\x12\x16\n\x0e\x65vent_log_path\x18\x11 \x01(\t\x12(\n always_log_health_check_failures\x18\x13 \x01(\x08\x1aH\n\x07Payload\x12\x19\n\x04text\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01H\x00\x12\x10\n\x06\x62inary\x18\x02 \x01(\x0cH\x00\x42\x10\n\x07payload\x12\x05\xb8\xe9\xc0\x03\x01\x1a\xf9\x02\n\x0fHttpHealthCheck\x12\x0c\n\x04host\x18\x01 \x01(\t\x12\x17\n\x04path\x18\x02 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12\x34\n\x04send\x18\x03 \x01(\x0b\x32&.envoy.api.v2.core.HealthCheck.Payload\x12\x37\n\x07receive\x18\x04 \x01(\x0b\x32&.envoy.api.v2.core.HealthCheck.Payload\x12\x14\n\x0cservice_name\x18\x05 \x01(\t\x12Q\n\x16request_headers_to_add\x18\x06 \x03(\x0b\x32$.envoy.api.v2.core.HeaderValueOptionB\x0b\xba\xe9\xc0\x03\x06\x92\x01\x03\x10\xe8\x07\x12!\n\x19request_headers_to_remove\x18\x08 \x03(\t\x12\x11\n\tuse_http2\x18\x07 \x01(\x08\x12\x31\n\x11\x65xpected_statuses\x18\t \x03(\x0b\x32\x16.envoy.type.Int64Range\x1a\x7f\n\x0eTcpHealthCheck\x12\x34\n\x04send\x18\x01 \x01(\x0b\x32&.envoy.api.v2.core.HealthCheck.Payload\x12\x37\n\x07receive\x18\x02 \x03(\x0b\x32&.envoy.api.v2.core.HealthCheck.Payload\x1a\x1f\n\x10RedisHealthCheck\x12\x0b\n\x03key\x18\x01 \x01(\t\x1a:\n\x0fGrpcHealthCheck\x12\x14\n\x0cservice_name\x18\x01 \x01(\t\x12\x11\n\tauthority\x18\x02 \x01(\t\x1a\x98\x01\n\x11\x43ustomHealthCheck\x12\x17\n\x04name\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12-\n\x06\x63onfig\x18\x02 \x01(\x0b\x32\x17.google.protobuf.StructB\x02\x18\x01H\x00\x12,\n\x0ctyped_config\x18\x03 \x01(\x0b\x32\x14.google.protobuf.AnyH\x00\x42\r\n\x0b\x63onfig_typeB\x17\n\x0ehealth_checker\x12\x05\xb8\xe9\xc0\x03\x01J\x04\x08\n\x10\x0bR\x12redis_health_check*`\n\x0cHealthStatus\x12\x0b\n\x07UNKNOWN\x10\x00\x12\x0b\n\x07HEALTHY\x10\x01\x12\r\n\tUNHEALTHY\x10\x02\x12\x0c\n\x08\x44RAINING\x10\x03\x12\x0b\n\x07TIMEOUT\x10\x04\x12\x0c\n\x08\x44\x45GRADED\x10\x05\x42\x39\n\x1fio.envoyproxy.envoy.api.v2.coreB\x10HealthCheckProtoP\x01\xa8\xe2\x1e\x01\x62\x06proto3')
   ,
-  dependencies=[envoy_dot_api_dot_v2_dot_core_dot_base__pb2.DESCRIPTOR,google_dot_protobuf_dot_duration__pb2.DESCRIPTOR,google_dot_protobuf_dot_struct__pb2.DESCRIPTOR,google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,validate_dot_validate__pb2.DESCRIPTOR,gogoproto_dot_gogo__pb2.DESCRIPTOR,])
+  dependencies=[envoy_dot_api_dot_v2_dot_core_dot_base__pb2.DESCRIPTOR,envoy_dot_type_dot_range__pb2.DESCRIPTOR,google_dot_protobuf_dot_any__pb2.DESCRIPTOR,google_dot_protobuf_dot_duration__pb2.DESCRIPTOR,google_dot_protobuf_dot_struct__pb2.DESCRIPTOR,google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,validate_dot_validate__pb2.DESCRIPTOR,gogoproto_dot_gogo__pb2.DESCRIPTOR,])
 
 _HEALTHSTATUS = _descriptor.EnumDescriptor(
   name='HealthStatus',
@@ -56,11 +58,15 @@ _HEALTHSTATUS = _descriptor.EnumDescriptor(
       name='TIMEOUT', index=4, number=4,
       options=None,
       type=None),
+    _descriptor.EnumValueDescriptor(
+      name='DEGRADED', index=5, number=5,
+      options=None,
+      type=None),
   ],
   containing_type=None,
   options=None,
-  serialized_start=1986,
-  serialized_end=2068,
+  serialized_start=2260,
+  serialized_end=2356,
 )
 _sym_db.RegisterEnumDescriptor(_HEALTHSTATUS)
 
@@ -70,6 +76,7 @@ HEALTHY = 1
 UNHEALTHY = 2
 DRAINING = 3
 TIMEOUT = 4
+DEGRADED = 5
 
 
 
@@ -109,8 +116,8 @@ _HEALTHCHECK_PAYLOAD = _descriptor.Descriptor(
       name='payload', full_name='envoy.api.v2.core.HealthCheck.Payload.payload',
       index=0, containing_type=None, fields=[], options=_descriptor._ParseOptions(descriptor_pb2.OneofOptions(), _b('\270\351\300\003\001'))),
   ],
-  serialized_start=1316,
-  serialized_end=1388,
+  serialized_start=1378,
+  serialized_end=1450,
 )
 
 _HEALTHCHECK_HTTPHEALTHCHECK = _descriptor.Descriptor(
@@ -161,11 +168,25 @@ _HEALTHCHECK_HTTPHEALTHCHECK = _descriptor.Descriptor(
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
+      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\006\222\001\003\020\350\007'))),
+    _descriptor.FieldDescriptor(
+      name='request_headers_to_remove', full_name='envoy.api.v2.core.HealthCheck.HttpHealthCheck.request_headers_to_remove', index=6,
+      number=8, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='use_http2', full_name='envoy.api.v2.core.HealthCheck.HttpHealthCheck.use_http2', index=6,
+      name='use_http2', full_name='envoy.api.v2.core.HealthCheck.HttpHealthCheck.use_http2', index=7,
       number=7, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='expected_statuses', full_name='envoy.api.v2.core.HealthCheck.HttpHealthCheck.expected_statuses', index=8,
+      number=9, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -181,8 +202,8 @@ _HEALTHCHECK_HTTPHEALTHCHECK = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1391,
-  serialized_end=1669,
+  serialized_start=1453,
+  serialized_end=1830,
 )
 
 _HEALTHCHECK_TCPHEALTHCHECK = _descriptor.Descriptor(
@@ -218,8 +239,8 @@ _HEALTHCHECK_TCPHEALTHCHECK = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1671,
-  serialized_end=1798,
+  serialized_start=1832,
+  serialized_end=1959,
 )
 
 _HEALTHCHECK_REDISHEALTHCHECK = _descriptor.Descriptor(
@@ -248,8 +269,8 @@ _HEALTHCHECK_REDISHEALTHCHECK = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1800,
-  serialized_end=1831,
+  serialized_start=1961,
+  serialized_end=1992,
 )
 
 _HEALTHCHECK_GRPCHEALTHCHECK = _descriptor.Descriptor(
@@ -266,6 +287,13 @@ _HEALTHCHECK_GRPCHEALTHCHECK = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
+    _descriptor.FieldDescriptor(
+      name='authority', full_name='envoy.api.v2.core.HealthCheck.GrpcHealthCheck.authority', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -278,8 +306,8 @@ _HEALTHCHECK_GRPCHEALTHCHECK = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1833,
-  serialized_end=1872,
+  serialized_start=1994,
+  serialized_end=2052,
 )
 
 _HEALTHCHECK_CUSTOMHEALTHCHECK = _descriptor.Descriptor(
@@ -302,6 +330,13 @@ _HEALTHCHECK_CUSTOMHEALTHCHECK = _descriptor.Descriptor(
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
+      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\030\001'))),
+    _descriptor.FieldDescriptor(
+      name='typed_config', full_name='envoy.api.v2.core.HealthCheck.CustomHealthCheck.typed_config', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
       options=None),
   ],
   extensions=[
@@ -314,9 +349,12 @@ _HEALTHCHECK_CUSTOMHEALTHCHECK = _descriptor.Descriptor(
   syntax='proto3',
   extension_ranges=[],
   oneofs=[
+    _descriptor.OneofDescriptor(
+      name='config_type', full_name='envoy.api.v2.core.HealthCheck.CustomHealthCheck.config_type',
+      index=0, containing_type=None, fields=[]),
   ],
-  serialized_start=1874,
-  serialized_end=1959,
+  serialized_start=2055,
+  serialized_end=2207,
 )
 
 _HEALTHCHECK = _descriptor.Descriptor(
@@ -397,58 +435,58 @@ _HEALTHCHECK = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='redis_health_check', full_name='envoy.api.v2.core.HealthCheck.redis_health_check', index=10,
-      number=10, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-    _descriptor.FieldDescriptor(
-      name='grpc_health_check', full_name='envoy.api.v2.core.HealthCheck.grpc_health_check', index=11,
+      name='grpc_health_check', full_name='envoy.api.v2.core.HealthCheck.grpc_health_check', index=10,
       number=11, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='custom_health_check', full_name='envoy.api.v2.core.HealthCheck.custom_health_check', index=12,
+      name='custom_health_check', full_name='envoy.api.v2.core.HealthCheck.custom_health_check', index=11,
       number=13, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='no_traffic_interval', full_name='envoy.api.v2.core.HealthCheck.no_traffic_interval', index=13,
+      name='no_traffic_interval', full_name='envoy.api.v2.core.HealthCheck.no_traffic_interval', index=12,
       number=12, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None),
+      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\252\001\002*\000'))),
     _descriptor.FieldDescriptor(
-      name='unhealthy_interval', full_name='envoy.api.v2.core.HealthCheck.unhealthy_interval', index=14,
+      name='unhealthy_interval', full_name='envoy.api.v2.core.HealthCheck.unhealthy_interval', index=13,
       number=14, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None),
+      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\252\001\002*\000'))),
     _descriptor.FieldDescriptor(
-      name='unhealthy_edge_interval', full_name='envoy.api.v2.core.HealthCheck.unhealthy_edge_interval', index=15,
+      name='unhealthy_edge_interval', full_name='envoy.api.v2.core.HealthCheck.unhealthy_edge_interval', index=14,
       number=15, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None),
+      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\252\001\002*\000'))),
     _descriptor.FieldDescriptor(
-      name='healthy_edge_interval', full_name='envoy.api.v2.core.HealthCheck.healthy_edge_interval', index=16,
+      name='healthy_edge_interval', full_name='envoy.api.v2.core.HealthCheck.healthy_edge_interval', index=15,
       number=16, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None),
+      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\252\001\002*\000'))),
     _descriptor.FieldDescriptor(
-      name='event_log_path', full_name='envoy.api.v2.core.HealthCheck.event_log_path', index=17,
+      name='event_log_path', full_name='envoy.api.v2.core.HealthCheck.event_log_path', index=16,
       number=17, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='always_log_health_check_failures', full_name='envoy.api.v2.core.HealthCheck.always_log_health_check_failures', index=17,
+      number=19, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -467,8 +505,8 @@ _HEALTHCHECK = _descriptor.Descriptor(
       name='health_checker', full_name='envoy.api.v2.core.HealthCheck.health_checker',
       index=0, containing_type=None, fields=[], options=_descriptor._ParseOptions(descriptor_pb2.OneofOptions(), _b('\270\351\300\003\001'))),
   ],
-  serialized_start=231,
-  serialized_end=1984,
+  serialized_start=282,
+  serialized_end=2258,
 )
 
 _HEALTHCHECK_PAYLOAD.containing_type = _HEALTHCHECK
@@ -481,6 +519,7 @@ _HEALTHCHECK_PAYLOAD.fields_by_name['binary'].containing_oneof = _HEALTHCHECK_PA
 _HEALTHCHECK_HTTPHEALTHCHECK.fields_by_name['send'].message_type = _HEALTHCHECK_PAYLOAD
 _HEALTHCHECK_HTTPHEALTHCHECK.fields_by_name['receive'].message_type = _HEALTHCHECK_PAYLOAD
 _HEALTHCHECK_HTTPHEALTHCHECK.fields_by_name['request_headers_to_add'].message_type = envoy_dot_api_dot_v2_dot_core_dot_base__pb2._HEADERVALUEOPTION
+_HEALTHCHECK_HTTPHEALTHCHECK.fields_by_name['expected_statuses'].message_type = envoy_dot_type_dot_range__pb2._INT64RANGE
 _HEALTHCHECK_HTTPHEALTHCHECK.containing_type = _HEALTHCHECK
 _HEALTHCHECK_TCPHEALTHCHECK.fields_by_name['send'].message_type = _HEALTHCHECK_PAYLOAD
 _HEALTHCHECK_TCPHEALTHCHECK.fields_by_name['receive'].message_type = _HEALTHCHECK_PAYLOAD
@@ -488,7 +527,14 @@ _HEALTHCHECK_TCPHEALTHCHECK.containing_type = _HEALTHCHECK
 _HEALTHCHECK_REDISHEALTHCHECK.containing_type = _HEALTHCHECK
 _HEALTHCHECK_GRPCHEALTHCHECK.containing_type = _HEALTHCHECK
 _HEALTHCHECK_CUSTOMHEALTHCHECK.fields_by_name['config'].message_type = google_dot_protobuf_dot_struct__pb2._STRUCT
+_HEALTHCHECK_CUSTOMHEALTHCHECK.fields_by_name['typed_config'].message_type = google_dot_protobuf_dot_any__pb2._ANY
 _HEALTHCHECK_CUSTOMHEALTHCHECK.containing_type = _HEALTHCHECK
+_HEALTHCHECK_CUSTOMHEALTHCHECK.oneofs_by_name['config_type'].fields.append(
+  _HEALTHCHECK_CUSTOMHEALTHCHECK.fields_by_name['config'])
+_HEALTHCHECK_CUSTOMHEALTHCHECK.fields_by_name['config'].containing_oneof = _HEALTHCHECK_CUSTOMHEALTHCHECK.oneofs_by_name['config_type']
+_HEALTHCHECK_CUSTOMHEALTHCHECK.oneofs_by_name['config_type'].fields.append(
+  _HEALTHCHECK_CUSTOMHEALTHCHECK.fields_by_name['typed_config'])
+_HEALTHCHECK_CUSTOMHEALTHCHECK.fields_by_name['typed_config'].containing_oneof = _HEALTHCHECK_CUSTOMHEALTHCHECK.oneofs_by_name['config_type']
 _HEALTHCHECK.fields_by_name['timeout'].message_type = google_dot_protobuf_dot_duration__pb2._DURATION
 _HEALTHCHECK.fields_by_name['interval'].message_type = google_dot_protobuf_dot_duration__pb2._DURATION
 _HEALTHCHECK.fields_by_name['interval_jitter'].message_type = google_dot_protobuf_dot_duration__pb2._DURATION
@@ -498,7 +544,6 @@ _HEALTHCHECK.fields_by_name['alt_port'].message_type = google_dot_protobuf_dot_w
 _HEALTHCHECK.fields_by_name['reuse_connection'].message_type = google_dot_protobuf_dot_wrappers__pb2._BOOLVALUE
 _HEALTHCHECK.fields_by_name['http_health_check'].message_type = _HEALTHCHECK_HTTPHEALTHCHECK
 _HEALTHCHECK.fields_by_name['tcp_health_check'].message_type = _HEALTHCHECK_TCPHEALTHCHECK
-_HEALTHCHECK.fields_by_name['redis_health_check'].message_type = _HEALTHCHECK_REDISHEALTHCHECK
 _HEALTHCHECK.fields_by_name['grpc_health_check'].message_type = _HEALTHCHECK_GRPCHEALTHCHECK
 _HEALTHCHECK.fields_by_name['custom_health_check'].message_type = _HEALTHCHECK_CUSTOMHEALTHCHECK
 _HEALTHCHECK.fields_by_name['no_traffic_interval'].message_type = google_dot_protobuf_dot_duration__pb2._DURATION
@@ -511,9 +556,6 @@ _HEALTHCHECK.fields_by_name['http_health_check'].containing_oneof = _HEALTHCHECK
 _HEALTHCHECK.oneofs_by_name['health_checker'].fields.append(
   _HEALTHCHECK.fields_by_name['tcp_health_check'])
 _HEALTHCHECK.fields_by_name['tcp_health_check'].containing_oneof = _HEALTHCHECK.oneofs_by_name['health_checker']
-_HEALTHCHECK.oneofs_by_name['health_checker'].fields.append(
-  _HEALTHCHECK.fields_by_name['redis_health_check'])
-_HEALTHCHECK.fields_by_name['redis_health_check'].containing_oneof = _HEALTHCHECK.oneofs_by_name['health_checker']
 _HEALTHCHECK.oneofs_by_name['health_checker'].fields.append(
   _HEALTHCHECK.fields_by_name['grpc_health_check'])
 _HEALTHCHECK.fields_by_name['grpc_health_check'].containing_oneof = _HEALTHCHECK.oneofs_by_name['health_checker']
@@ -581,21 +623,33 @@ _sym_db.RegisterMessage(HealthCheck.CustomHealthCheck)
 
 
 DESCRIPTOR.has_options = True
-DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\250\342\036\001'))
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n\037io.envoyproxy.envoy.api.v2.coreB\020HealthCheckProtoP\001\250\342\036\001'))
 _HEALTHCHECK_PAYLOAD.oneofs_by_name['payload'].has_options = True
 _HEALTHCHECK_PAYLOAD.oneofs_by_name['payload']._options = _descriptor._ParseOptions(descriptor_pb2.OneofOptions(), _b('\270\351\300\003\001'))
 _HEALTHCHECK_PAYLOAD.fields_by_name['text'].has_options = True
 _HEALTHCHECK_PAYLOAD.fields_by_name['text']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004r\002 \001'))
 _HEALTHCHECK_HTTPHEALTHCHECK.fields_by_name['path'].has_options = True
 _HEALTHCHECK_HTTPHEALTHCHECK.fields_by_name['path']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004r\002 \001'))
+_HEALTHCHECK_HTTPHEALTHCHECK.fields_by_name['request_headers_to_add'].has_options = True
+_HEALTHCHECK_HTTPHEALTHCHECK.fields_by_name['request_headers_to_add']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\006\222\001\003\020\350\007'))
 _HEALTHCHECK_CUSTOMHEALTHCHECK.fields_by_name['name'].has_options = True
 _HEALTHCHECK_CUSTOMHEALTHCHECK.fields_by_name['name']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004r\002 \001'))
+_HEALTHCHECK_CUSTOMHEALTHCHECK.fields_by_name['config'].has_options = True
+_HEALTHCHECK_CUSTOMHEALTHCHECK.fields_by_name['config']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\030\001'))
 _HEALTHCHECK.oneofs_by_name['health_checker'].has_options = True
 _HEALTHCHECK.oneofs_by_name['health_checker']._options = _descriptor._ParseOptions(descriptor_pb2.OneofOptions(), _b('\270\351\300\003\001'))
 _HEALTHCHECK.fields_by_name['timeout'].has_options = True
 _HEALTHCHECK.fields_by_name['timeout']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\007\252\001\004\010\001*\000\230\337\037\001'))
 _HEALTHCHECK.fields_by_name['interval'].has_options = True
 _HEALTHCHECK.fields_by_name['interval']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\007\252\001\004\010\001*\000\230\337\037\001'))
+_HEALTHCHECK.fields_by_name['no_traffic_interval'].has_options = True
+_HEALTHCHECK.fields_by_name['no_traffic_interval']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\252\001\002*\000'))
+_HEALTHCHECK.fields_by_name['unhealthy_interval'].has_options = True
+_HEALTHCHECK.fields_by_name['unhealthy_interval']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\252\001\002*\000'))
+_HEALTHCHECK.fields_by_name['unhealthy_edge_interval'].has_options = True
+_HEALTHCHECK.fields_by_name['unhealthy_edge_interval']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\252\001\002*\000'))
+_HEALTHCHECK.fields_by_name['healthy_edge_interval'].has_options = True
+_HEALTHCHECK.fields_by_name['healthy_edge_interval']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\252\001\002*\000'))
 try:
   # THESE ELEMENTS WILL BE DEPRECATED.
   # Please use the generated *_pb2_grpc.py files instead.

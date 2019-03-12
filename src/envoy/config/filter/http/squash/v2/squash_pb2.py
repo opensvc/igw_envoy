@@ -23,7 +23,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='envoy/config/filter/http/squash/v2/squash.proto',
   package='envoy.config.filter.http.squash.v2',
   syntax='proto3',
-  serialized_pb=_b('\n/envoy/config/filter/http/squash/v2/squash.proto\x12\"envoy.config.filter.http.squash.v2\x1a\x1egoogle/protobuf/duration.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x17validate/validate.proto\x1a\x14gogoproto/gogo.proto\"\x92\x02\n\x06Squash\x12\x1a\n\x07\x63luster\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12\x34\n\x13\x61ttachment_template\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x12\x38\n\x0frequest_timeout\x18\x03 \x01(\x0b\x32\x19.google.protobuf.DurationB\x04\x98\xdf\x1f\x01\x12;\n\x12\x61ttachment_timeout\x18\x04 \x01(\x0b\x32\x19.google.protobuf.DurationB\x04\x98\xdf\x1f\x01\x12?\n\x16\x61ttachment_poll_period\x18\x05 \x01(\x0b\x32\x19.google.protobuf.DurationB\x04\x98\xdf\x1f\x01\x42\x04Z\x02v2b\x06proto3')
+  serialized_pb=_b('\n/envoy/config/filter/http/squash/v2/squash.proto\x12\"envoy.config.filter.http.squash.v2\x1a\x1egoogle/protobuf/duration.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x17validate/validate.proto\x1a\x14gogoproto/gogo.proto\"\x92\x02\n\x06Squash\x12\x1a\n\x07\x63luster\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12\x34\n\x13\x61ttachment_template\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x12\x38\n\x0frequest_timeout\x18\x03 \x01(\x0b\x32\x19.google.protobuf.DurationB\x04\x98\xdf\x1f\x01\x12;\n\x12\x61ttachment_timeout\x18\x04 \x01(\x0b\x32\x19.google.protobuf.DurationB\x04\x98\xdf\x1f\x01\x12?\n\x16\x61ttachment_poll_period\x18\x05 \x01(\x0b\x32\x19.google.protobuf.DurationB\x04\x98\xdf\x1f\x01\x42\x45\n0io.envoyproxy.envoy.config.filter.http.squash.v2B\x0bSquashProtoP\x01Z\x02v2b\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_duration__pb2.DESCRIPTOR,google_dot_protobuf_dot_struct__pb2.DESCRIPTOR,validate_dot_validate__pb2.DESCRIPTOR,gogoproto_dot_gogo__pb2.DESCRIPTOR,])
 
@@ -104,7 +104,7 @@ _sym_db.RegisterMessage(Squash)
 
 
 DESCRIPTOR.has_options = True
-DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('Z\002v2'))
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n0io.envoyproxy.envoy.config.filter.http.squash.v2B\013SquashProtoP\001Z\002v2'))
 _SQUASH.fields_by_name['cluster'].has_options = True
 _SQUASH.fields_by_name['cluster']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004r\002 \001'))
 _SQUASH.fields_by_name['request_timeout'].has_options = True

@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='envoy/config/filter/http/header_to_metadata/v2/header_to_metadata.proto',
   package='envoy.config.filter.http.header_to_metadata.v2',
   syntax='proto3',
-  serialized_pb=_b('\nGenvoy/config/filter/http/header_to_metadata/v2/header_to_metadata.proto\x12.envoy.config.filter.http.header_to_metadata.v2\x1a\x17validate/validate.proto\"\xee\x04\n\x06\x43onfig\x12R\n\rrequest_rules\x18\x01 \x03(\x0b\x32;.envoy.config.filter.http.header_to_metadata.v2.Config.Rule\x12S\n\x0eresponse_rules\x18\x02 \x03(\x0b\x32;.envoy.config.filter.http.header_to_metadata.v2.Config.Rule\x1a\xa1\x01\n\x0cKeyValuePair\x12\x1a\n\x12metadata_namespace\x18\x01 \x01(\t\x12\x16\n\x03key\x18\x02 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12\r\n\x05value\x18\x03 \x01(\t\x12N\n\x04type\x18\x04 \x01(\x0e\x32@.envoy.config.filter.http.header_to_metadata.v2.Config.ValueType\x1a\xf1\x01\n\x04Rule\x12\x19\n\x06header\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12^\n\x11on_header_present\x18\x02 \x01(\x0b\x32\x43.envoy.config.filter.http.header_to_metadata.v2.Config.KeyValuePair\x12^\n\x11on_header_missing\x18\x03 \x01(\x0b\x32\x43.envoy.config.filter.http.header_to_metadata.v2.Config.KeyValuePair\x12\x0e\n\x06remove\x18\x04 \x01(\x08\"#\n\tValueType\x12\n\n\x06STRING\x10\x00\x12\n\n\x06NUMBER\x10\x01\x42\x04Z\x02v2b\x06proto3')
+  serialized_pb=_b('\nGenvoy/config/filter/http/header_to_metadata/v2/header_to_metadata.proto\x12.envoy.config.filter.http.header_to_metadata.v2\x1a\x17validate/validate.proto\"\xee\x04\n\x06\x43onfig\x12R\n\rrequest_rules\x18\x01 \x03(\x0b\x32;.envoy.config.filter.http.header_to_metadata.v2.Config.Rule\x12S\n\x0eresponse_rules\x18\x02 \x03(\x0b\x32;.envoy.config.filter.http.header_to_metadata.v2.Config.Rule\x1a\xa1\x01\n\x0cKeyValuePair\x12\x1a\n\x12metadata_namespace\x18\x01 \x01(\t\x12\x16\n\x03key\x18\x02 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12\r\n\x05value\x18\x03 \x01(\t\x12N\n\x04type\x18\x04 \x01(\x0e\x32@.envoy.config.filter.http.header_to_metadata.v2.Config.ValueType\x1a\xf1\x01\n\x04Rule\x12\x19\n\x06header\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12^\n\x11on_header_present\x18\x02 \x01(\x0b\x32\x43.envoy.config.filter.http.header_to_metadata.v2.Config.KeyValuePair\x12^\n\x11on_header_missing\x18\x03 \x01(\x0b\x32\x43.envoy.config.filter.http.header_to_metadata.v2.Config.KeyValuePair\x12\x0e\n\x06remove\x18\x04 \x01(\x08\"#\n\tValueType\x12\n\n\x06STRING\x10\x00\x12\n\n\x06NUMBER\x10\x01\x42[\n<io.envoyproxy.envoy.config.filter.http.header_to_metadata.v2B\x15HeaderToMetadataProtoP\x01Z\x02v2b\x06proto3')
   ,
   dependencies=[validate_dot_validate__pb2.DESCRIPTOR,])
 
@@ -225,7 +225,7 @@ _sym_db.RegisterMessage(Config.Rule)
 
 
 DESCRIPTOR.has_options = True
-DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('Z\002v2'))
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n<io.envoyproxy.envoy.config.filter.http.header_to_metadata.v2B\025HeaderToMetadataProtoP\001Z\002v2'))
 _CONFIG_KEYVALUEPAIR.fields_by_name['key'].has_options = True
 _CONFIG_KEYVALUEPAIR.fields_by_name['key']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004r\002 \001'))
 _CONFIG_RULE.fields_by_name['header'].has_options = True

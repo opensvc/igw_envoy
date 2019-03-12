@@ -13,6 +13,7 @@ from google.protobuf import descriptor_pb2
 _sym_db = _symbol_database.Default()
 
 
+from envoy.type import percent_pb2 as envoy_dot_type_dot_percent__pb2
 from google.protobuf import duration_pb2 as google_dot_protobuf_dot_duration__pb2
 from validate import validate_pb2 as validate_dot_validate__pb2
 from gogoproto import gogo_pb2 as gogoproto_dot_gogo__pb2
@@ -22,9 +23,9 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='envoy/config/filter/fault/v2/fault.proto',
   package='envoy.config.filter.fault.v2',
   syntax='proto3',
-  serialized_pb=_b('\n(envoy/config/filter/fault/v2/fault.proto\x12\x1c\x65nvoy.config.filter.fault.v2\x1a\x1egoogle/protobuf/duration.proto\x1a\x17validate/validate.proto\x1a\x14gogoproto/gogo.proto\"\xf9\x01\n\nFaultDelay\x12Q\n\x04type\x18\x01 \x01(\x0e\x32\x37.envoy.config.filter.fault.v2.FaultDelay.FaultDelayTypeB\n\xba\xe9\xc0\x03\x05\x82\x01\x02\x10\x01\x12\x1a\n\x07percent\x18\x02 \x01(\rB\t\xba\xe9\xc0\x03\x04*\x02\x18\x64\x12@\n\x0b\x66ixed_delay\x18\x03 \x01(\x0b\x32\x19.google.protobuf.DurationB\x0e\xba\xe9\xc0\x03\x05\xaa\x01\x02*\x00\x98\xdf\x1f\x01H\x00\"\x1b\n\x0e\x46\x61ultDelayType\x12\t\n\x05\x46IXED\x10\x00\x42\x1d\n\x14\x66\x61ult_delay_secifier\x12\x05\xb8\xe9\xc0\x03\x01\x42\x04Z\x02v2b\x06proto3')
+  serialized_pb=_b('\n(envoy/config/filter/fault/v2/fault.proto\x12\x1c\x65nvoy.config.filter.fault.v2\x1a\x18\x65nvoy/type/percent.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x17validate/validate.proto\x1a\x14gogoproto/gogo.proto\"\x96\x02\n\nFaultDelay\x12Q\n\x04type\x18\x01 \x01(\x0e\x32\x37.envoy.config.filter.fault.v2.FaultDelay.FaultDelayTypeB\n\xba\xe9\xc0\x03\x05\x82\x01\x02\x10\x01\x12@\n\x0b\x66ixed_delay\x18\x03 \x01(\x0b\x32\x19.google.protobuf.DurationB\x0e\xba\xe9\xc0\x03\x05\xaa\x01\x02*\x00\x98\xdf\x1f\x01H\x00\x12\x31\n\npercentage\x18\x04 \x01(\x0b\x32\x1d.envoy.type.FractionalPercent\"\x1b\n\x0e\x46\x61ultDelayType\x12\t\n\x05\x46IXED\x10\x00\x42\x1d\n\x14\x66\x61ult_delay_secifier\x12\x05\xb8\xe9\xc0\x03\x01J\x04\x08\x02\x10\x03\x42>\n*io.envoyproxy.envoy.config.filter.fault.v2B\nFaultProtoP\x01Z\x02v2b\x06proto3')
   ,
-  dependencies=[google_dot_protobuf_dot_duration__pb2.DESCRIPTOR,validate_dot_validate__pb2.DESCRIPTOR,gogoproto_dot_gogo__pb2.DESCRIPTOR,])
+  dependencies=[envoy_dot_type_dot_percent__pb2.DESCRIPTOR,google_dot_protobuf_dot_duration__pb2.DESCRIPTOR,validate_dot_validate__pb2.DESCRIPTOR,gogoproto_dot_gogo__pb2.DESCRIPTOR,])
 
 
 
@@ -41,8 +42,8 @@ _FAULTDELAY_FAULTDELAYTYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=345,
-  serialized_end=372,
+  serialized_start=394,
+  serialized_end=421,
 )
 _sym_db.RegisterEnumDescriptor(_FAULTDELAY_FAULTDELAYTYPE)
 
@@ -62,19 +63,19 @@ _FAULTDELAY = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\202\001\002\020\001'))),
     _descriptor.FieldDescriptor(
-      name='percent', full_name='envoy.config.filter.fault.v2.FaultDelay.percent', index=1,
-      number=2, type=13, cpp_type=3, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004*\002\030d'))),
-    _descriptor.FieldDescriptor(
-      name='fixed_delay', full_name='envoy.config.filter.fault.v2.FaultDelay.fixed_delay', index=2,
+      name='fixed_delay', full_name='envoy.config.filter.fault.v2.FaultDelay.fixed_delay', index=1,
       number=3, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\252\001\002*\000\230\337\037\001'))),
+    _descriptor.FieldDescriptor(
+      name='percentage', full_name='envoy.config.filter.fault.v2.FaultDelay.percentage', index=2,
+      number=4, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -91,12 +92,13 @@ _FAULTDELAY = _descriptor.Descriptor(
       name='fault_delay_secifier', full_name='envoy.config.filter.fault.v2.FaultDelay.fault_delay_secifier',
       index=0, containing_type=None, fields=[], options=_descriptor._ParseOptions(descriptor_pb2.OneofOptions(), _b('\270\351\300\003\001'))),
   ],
-  serialized_start=154,
-  serialized_end=403,
+  serialized_start=180,
+  serialized_end=458,
 )
 
 _FAULTDELAY.fields_by_name['type'].enum_type = _FAULTDELAY_FAULTDELAYTYPE
 _FAULTDELAY.fields_by_name['fixed_delay'].message_type = google_dot_protobuf_dot_duration__pb2._DURATION
+_FAULTDELAY.fields_by_name['percentage'].message_type = envoy_dot_type_dot_percent__pb2._FRACTIONALPERCENT
 _FAULTDELAY_FAULTDELAYTYPE.containing_type = _FAULTDELAY
 _FAULTDELAY.oneofs_by_name['fault_delay_secifier'].fields.append(
   _FAULTDELAY.fields_by_name['fixed_delay'])
@@ -113,13 +115,11 @@ _sym_db.RegisterMessage(FaultDelay)
 
 
 DESCRIPTOR.has_options = True
-DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('Z\002v2'))
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n*io.envoyproxy.envoy.config.filter.fault.v2B\nFaultProtoP\001Z\002v2'))
 _FAULTDELAY.oneofs_by_name['fault_delay_secifier'].has_options = True
 _FAULTDELAY.oneofs_by_name['fault_delay_secifier']._options = _descriptor._ParseOptions(descriptor_pb2.OneofOptions(), _b('\270\351\300\003\001'))
 _FAULTDELAY.fields_by_name['type'].has_options = True
 _FAULTDELAY.fields_by_name['type']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\202\001\002\020\001'))
-_FAULTDELAY.fields_by_name['percent'].has_options = True
-_FAULTDELAY.fields_by_name['percent']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004*\002\030d'))
 _FAULTDELAY.fields_by_name['fixed_delay'].has_options = True
 _FAULTDELAY.fields_by_name['fixed_delay']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\252\001\002*\000\230\337\037\001'))
 try:

@@ -22,7 +22,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='envoy/api/v2/core/http_uri.proto',
   package='envoy.api.v2.core',
   syntax='proto3',
-  serialized_pb=_b('\n envoy/api/v2/core/http_uri.proto\x12\x11\x65nvoy.api.v2.core\x1a\x1egoogle/protobuf/duration.proto\x1a\x14gogoproto/gogo.proto\x1a\x17validate/validate.proto\"\xa2\x01\n\x07HttpUri\x12\x16\n\x03uri\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12\x1c\n\x07\x63luster\x18\x02 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01H\x00\x12\x44\n\x07timeout\x18\x03 \x01(\x0b\x32\x19.google.protobuf.DurationB\x18\xba\xe9\xc0\x03\x05\xaa\x01\x02\x32\x00\xba\xe9\xc0\x03\x05\xaa\x01\x02\x08\x01\x98\xdf\x1f\x01\x42\x1b\n\x12http_upstream_type\x12\x05\xb8\xe9\xc0\x03\x01\x62\x06proto3')
+  serialized_pb=_b('\n envoy/api/v2/core/http_uri.proto\x12\x11\x65nvoy.api.v2.core\x1a\x1egoogle/protobuf/duration.proto\x1a\x14gogoproto/gogo.proto\x1a\x17validate/validate.proto\"\xa2\x01\n\x07HttpUri\x12\x16\n\x03uri\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12\x1c\n\x07\x63luster\x18\x02 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01H\x00\x12\x44\n\x07timeout\x18\x03 \x01(\x0b\x32\x19.google.protobuf.DurationB\x18\xba\xe9\xc0\x03\x05\xaa\x01\x02\x32\x00\xba\xe9\xc0\x03\x05\xaa\x01\x02\x08\x01\x98\xdf\x1f\x01\x42\x1b\n\x12http_upstream_type\x12\x05\xb8\xe9\xc0\x03\x01\x42\x31\n\x1fio.envoyproxy.envoy.api.v2.coreB\x0cHttpUriProtoP\x01\x62\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_duration__pb2.DESCRIPTOR,gogoproto_dot_gogo__pb2.DESCRIPTOR,validate_dot_validate__pb2.DESCRIPTOR,])
 
@@ -91,6 +91,8 @@ HttpUri = _reflection.GeneratedProtocolMessageType('HttpUri', (_message.Message,
 _sym_db.RegisterMessage(HttpUri)
 
 
+DESCRIPTOR.has_options = True
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n\037io.envoyproxy.envoy.api.v2.coreB\014HttpUriProtoP\001'))
 _HTTPURI.oneofs_by_name['http_upstream_type'].has_options = True
 _HTTPURI.oneofs_by_name['http_upstream_type']._options = _descriptor._ParseOptions(descriptor_pb2.OneofOptions(), _b('\270\351\300\003\001'))
 _HTTPURI.fields_by_name['uri'].has_options = True

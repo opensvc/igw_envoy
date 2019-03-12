@@ -21,7 +21,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='envoy/type/percent.proto',
   package='envoy.type',
   syntax='proto3',
-  serialized_pb=_b('\n\x18\x65nvoy/type/percent.proto\x12\nenvoy.type\x1a\x17validate/validate.proto\x1a\x14gogoproto/gogo.proto\"3\n\x07Percent\x12(\n\x05value\x18\x01 \x01(\x01\x42\x19\xba\xe9\xc0\x03\x14\x12\x12\x19\x00\x00\x00\x00\x00\x00Y@)\x00\x00\x00\x00\x00\x00\x00\x00\"\xb5\x01\n\x11\x46ractionalPercent\x12\x11\n\tnumerator\x18\x01 \x01(\r\x12N\n\x0b\x64\x65nominator\x18\x02 \x01(\x0e\x32-.envoy.type.FractionalPercent.DenominatorTypeB\n\xba\xe9\xc0\x03\x05\x82\x01\x02\x10\x01\"=\n\x0f\x44\x65nominatorType\x12\x0b\n\x07HUNDRED\x10\x00\x12\x10\n\x0cTEN_THOUSAND\x10\x01\x12\x0b\n\x07MILLION\x10\x02\x42\x04\xa8\xe2\x1e\x01\x62\x06proto3')
+  serialized_pb=_b('\n\x18\x65nvoy/type/percent.proto\x12\nenvoy.type\x1a\x17validate/validate.proto\x1a\x14gogoproto/gogo.proto\"3\n\x07Percent\x12(\n\x05value\x18\x01 \x01(\x01\x42\x19\xba\xe9\xc0\x03\x14\x12\x12\x19\x00\x00\x00\x00\x00\x00Y@)\x00\x00\x00\x00\x00\x00\x00\x00\"\xb5\x01\n\x11\x46ractionalPercent\x12\x11\n\tnumerator\x18\x01 \x01(\r\x12N\n\x0b\x64\x65nominator\x18\x02 \x01(\x0e\x32-.envoy.type.FractionalPercent.DenominatorTypeB\n\xba\xe9\xc0\x03\x05\x82\x01\x02\x10\x01\"=\n\x0f\x44\x65nominatorType\x12\x0b\n\x07HUNDRED\x10\x00\x12\x10\n\x0cTEN_THOUSAND\x10\x01\x12\x0b\n\x07MILLION\x10\x02\x42.\n\x18io.envoyproxy.envoy.typeB\x0cPercentProtoP\x01\xa8\xe2\x1e\x01\x62\x06proto3')
   ,
   dependencies=[validate_dot_validate__pb2.DESCRIPTOR,gogoproto_dot_gogo__pb2.DESCRIPTOR,])
 
@@ -145,7 +145,7 @@ _sym_db.RegisterMessage(FractionalPercent)
 
 
 DESCRIPTOR.has_options = True
-DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\250\342\036\001'))
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n\030io.envoyproxy.envoy.typeB\014PercentProtoP\001\250\342\036\001'))
 _PERCENT.fields_by_name['value'].has_options = True
 _PERCENT.fields_by_name['value']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\024\022\022\031\000\000\000\000\000\000Y@)\000\000\000\000\000\000\000\000'))
 _FRACTIONALPERCENT.fields_by_name['denominator'].has_options = True

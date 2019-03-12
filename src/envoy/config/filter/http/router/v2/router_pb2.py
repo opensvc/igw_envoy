@@ -21,7 +21,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='envoy/config/filter/http/router/v2/router.proto',
   package='envoy.config.filter.http.router.v2',
   syntax='proto3',
-  serialized_pb=_b('\n/envoy/config/filter/http/router/v2/router.proto\x12\"envoy.config.filter.http.router.v2\x1a\x30\x65nvoy/config/filter/accesslog/v2/accesslog.proto\x1a\x1egoogle/protobuf/wrappers.proto\"\xb8\x01\n\x06Router\x12\x31\n\rdynamic_stats\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.BoolValue\x12\x18\n\x10start_child_span\x18\x02 \x01(\x08\x12\x41\n\x0cupstream_log\x18\x03 \x03(\x0b\x32+.envoy.config.filter.accesslog.v2.AccessLog\x12\x1e\n\x16suppress_envoy_headers\x18\x04 \x01(\x08\x42\x04Z\x02v2b\x06proto3')
+  serialized_pb=_b('\n/envoy/config/filter/http/router/v2/router.proto\x12\"envoy.config.filter.http.router.v2\x1a\x30\x65nvoy/config/filter/accesslog/v2/accesslog.proto\x1a\x1egoogle/protobuf/wrappers.proto\"\xb8\x01\n\x06Router\x12\x31\n\rdynamic_stats\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.BoolValue\x12\x18\n\x10start_child_span\x18\x02 \x01(\x08\x12\x41\n\x0cupstream_log\x18\x03 \x03(\x0b\x32+.envoy.config.filter.accesslog.v2.AccessLog\x12\x1e\n\x16suppress_envoy_headers\x18\x04 \x01(\x08\x42\x45\n0io.envoyproxy.envoy.config.filter.http.router.v2B\x0bRouterProtoP\x01Z\x02v2b\x06proto3')
   ,
   dependencies=[envoy_dot_config_dot_filter_dot_accesslog_dot_v2_dot_accesslog__pb2.DESCRIPTOR,google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,])
 
@@ -93,7 +93,7 @@ _sym_db.RegisterMessage(Router)
 
 
 DESCRIPTOR.has_options = True
-DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('Z\002v2'))
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n0io.envoyproxy.envoy.config.filter.http.router.v2B\013RouterProtoP\001Z\002v2'))
 try:
   # THESE ELEMENTS WILL BE DEPRECATED.
   # Please use the generated *_pb2_grpc.py files instead.

@@ -19,10 +19,10 @@ class ClusterDiscoveryServiceStub(object):
         request_serializer=envoy_dot_api_dot_v2_dot_discovery__pb2.DiscoveryRequest.SerializeToString,
         response_deserializer=envoy_dot_api_dot_v2_dot_discovery__pb2.DiscoveryResponse.FromString,
         )
-    self.IncrementalClusters = channel.stream_stream(
-        '/envoy.api.v2.ClusterDiscoveryService/IncrementalClusters',
-        request_serializer=envoy_dot_api_dot_v2_dot_discovery__pb2.IncrementalDiscoveryRequest.SerializeToString,
-        response_deserializer=envoy_dot_api_dot_v2_dot_discovery__pb2.IncrementalDiscoveryResponse.FromString,
+    self.DeltaClusters = channel.stream_stream(
+        '/envoy.api.v2.ClusterDiscoveryService/DeltaClusters',
+        request_serializer=envoy_dot_api_dot_v2_dot_discovery__pb2.DeltaDiscoveryRequest.SerializeToString,
+        response_deserializer=envoy_dot_api_dot_v2_dot_discovery__pb2.DeltaDiscoveryResponse.FromString,
         )
     self.FetchClusters = channel.unary_unary(
         '/envoy.api.v2.ClusterDiscoveryService/FetchClusters',
@@ -42,7 +42,7 @@ class ClusterDiscoveryServiceServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def IncrementalClusters(self, request_iterator, context):
+  def DeltaClusters(self, request_iterator, context):
     # missing associated documentation comment in .proto file
     pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -64,10 +64,10 @@ def add_ClusterDiscoveryServiceServicer_to_server(servicer, server):
           request_deserializer=envoy_dot_api_dot_v2_dot_discovery__pb2.DiscoveryRequest.FromString,
           response_serializer=envoy_dot_api_dot_v2_dot_discovery__pb2.DiscoveryResponse.SerializeToString,
       ),
-      'IncrementalClusters': grpc.stream_stream_rpc_method_handler(
-          servicer.IncrementalClusters,
-          request_deserializer=envoy_dot_api_dot_v2_dot_discovery__pb2.IncrementalDiscoveryRequest.FromString,
-          response_serializer=envoy_dot_api_dot_v2_dot_discovery__pb2.IncrementalDiscoveryResponse.SerializeToString,
+      'DeltaClusters': grpc.stream_stream_rpc_method_handler(
+          servicer.DeltaClusters,
+          request_deserializer=envoy_dot_api_dot_v2_dot_discovery__pb2.DeltaDiscoveryRequest.FromString,
+          response_serializer=envoy_dot_api_dot_v2_dot_discovery__pb2.DeltaDiscoveryResponse.SerializeToString,
       ),
       'FetchClusters': grpc.unary_unary_rpc_method_handler(
           servicer.FetchClusters,

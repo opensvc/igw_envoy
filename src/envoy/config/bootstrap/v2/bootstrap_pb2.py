@@ -21,6 +21,7 @@ from envoy.api.v2 import cds_pb2 as envoy_dot_api_dot_v2_dot_cds__pb2
 from envoy.api.v2 import lds_pb2 as envoy_dot_api_dot_v2_dot_lds__pb2
 from envoy.config.trace.v2 import trace_pb2 as envoy_dot_config_dot_trace_dot_v2_dot_trace__pb2
 from envoy.config.metrics.v2 import stats_pb2 as envoy_dot_config_dot_metrics_dot_v2_dot_stats__pb2
+from envoy.config.overload.v2alpha import overload_pb2 as envoy_dot_config_dot_overload_dot_v2alpha_dot_overload__pb2
 from envoy.config.ratelimit.v2 import rls_pb2 as envoy_dot_config_dot_ratelimit_dot_v2_dot_rls__pb2
 from google.protobuf import duration_pb2 as google_dot_protobuf_dot_duration__pb2
 from validate import validate_pb2 as validate_dot_validate__pb2
@@ -31,9 +32,9 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='envoy/config/bootstrap/v2/bootstrap.proto',
   package='envoy.config.bootstrap.v2',
   syntax='proto3',
-  serialized_pb=_b('\n)envoy/config/bootstrap/v2/bootstrap.proto\x12\x19\x65nvoy.config.bootstrap.v2\x1a\x1f\x65nvoy/api/v2/core/address.proto\x1a\x1c\x65nvoy/api/v2/core/base.proto\x1a\x1c\x65nvoy/api/v2/auth/cert.proto\x1a%envoy/api/v2/core/config_source.proto\x1a\x16\x65nvoy/api/v2/cds.proto\x1a\x16\x65nvoy/api/v2/lds.proto\x1a!envoy/config/trace/v2/trace.proto\x1a#envoy/config/metrics/v2/stats.proto\x1a#envoy/config/ratelimit/v2/rls.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x17validate/validate.proto\x1a\x14gogoproto/gogo.proto\"\xc6\n\n\tBootstrap\x12%\n\x04node\x18\x01 \x01(\x0b\x32\x17.envoy.api.v2.core.Node\x12N\n\x10static_resources\x18\x02 \x01(\x0b\x32\x34.envoy.config.bootstrap.v2.Bootstrap.StaticResources\x12P\n\x11\x64ynamic_resources\x18\x03 \x01(\x0b\x32\x35.envoy.config.bootstrap.v2.Bootstrap.DynamicResources\x12\x42\n\x0f\x63luster_manager\x18\x04 \x01(\x0b\x32).envoy.config.bootstrap.v2.ClusterManager\x12\x36\n\nhds_config\x18\x0e \x01(\x0b\x32\".envoy.api.v2.core.ApiConfigSource\x12\x12\n\nflags_path\x18\x05 \x01(\t\x12\x37\n\x0bstats_sinks\x18\x06 \x03(\x0b\x32\".envoy.config.metrics.v2.StatsSink\x12:\n\x0cstats_config\x18\r \x01(\x0b\x32$.envoy.config.metrics.v2.StatsConfig\x12=\n\x14stats_flush_interval\x18\x07 \x01(\x0b\x32\x19.google.protobuf.DurationB\x04\x98\xdf\x1f\x01\x12\x35\n\x08watchdog\x18\x08 \x01(\x0b\x32#.envoy.config.bootstrap.v2.Watchdog\x12/\n\x07tracing\x18\t \x01(\x0b\x32\x1e.envoy.config.trace.v2.Tracing\x12M\n\x12rate_limit_service\x18\n \x01(\x0b\x32\x31.envoy.config.ratelimit.v2.RateLimitServiceConfig\x12\x33\n\x07runtime\x18\x0b \x01(\x0b\x32\".envoy.config.bootstrap.v2.Runtime\x12?\n\x05\x61\x64min\x18\x0c \x01(\x0b\x32 .envoy.config.bootstrap.v2.AdminB\x0e\xba\xe9\xc0\x03\x05\x8a\x01\x02\x10\x01\xc8\xde\x1f\x00\x1a\xa3\x01\n\x0fStaticResources\x12/\n\tlisteners\x18\x01 \x03(\x0b\x32\x16.envoy.api.v2.ListenerB\x04\xc8\xde\x1f\x00\x12-\n\x08\x63lusters\x18\x02 \x03(\x0b\x32\x15.envoy.api.v2.ClusterB\x04\xc8\xde\x1f\x00\x12\x30\n\x07secrets\x18\x03 \x03(\x0b\x32\x19.envoy.api.v2.auth.SecretB\x04\xc8\xde\x1f\x00\x1a\xd8\x02\n\x10\x44ynamicResources\x12\x33\n\nlds_config\x18\x01 \x01(\x0b\x32\x1f.envoy.api.v2.core.ConfigSource\x12\x33\n\ncds_config\x18\x02 \x01(\x0b\x32\x1f.envoy.api.v2.core.ConfigSource\x12\x36\n\nads_config\x18\x03 \x01(\x0b\x32\".envoy.api.v2.core.ApiConfigSource\x12]\n\rdeprecated_v1\x18\x04 \x01(\x0b\x32\x42.envoy.config.bootstrap.v2.Bootstrap.DynamicResources.DeprecatedV1B\x02\x18\x01\x1a\x43\n\x0c\x44\x65precatedV1\x12\x33\n\nsds_config\x18\x01 \x01(\x0b\x32\x1f.envoy.api.v2.core.ConfigSource\"~\n\x05\x41\x64min\x12\"\n\x0f\x61\x63\x63\x65ss_log_path\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12\x14\n\x0cprofile_path\x18\x02 \x01(\t\x12;\n\x07\x61\x64\x64ress\x18\x03 \x01(\x0b\x32\x1a.envoy.api.v2.core.AddressB\x0e\xba\xe9\xc0\x03\x05\x8a\x01\x02\x10\x01\xc8\xde\x1f\x00\"\xab\x02\n\x0e\x43lusterManager\x12\x1a\n\x12local_cluster_name\x18\x01 \x01(\t\x12U\n\x11outlier_detection\x18\x02 \x01(\x0b\x32:.envoy.config.bootstrap.v2.ClusterManager.OutlierDetection\x12;\n\x14upstream_bind_config\x18\x03 \x01(\x0b\x32\x1d.envoy.api.v2.core.BindConfig\x12=\n\x11load_stats_config\x18\x04 \x01(\x0b\x32\".envoy.api.v2.core.ApiConfigSource\x1a*\n\x10OutlierDetection\x12\x16\n\x0e\x65vent_log_path\x18\x01 \x01(\t\"\xd7\x01\n\x08Watchdog\x12/\n\x0cmiss_timeout\x18\x01 \x01(\x0b\x32\x19.google.protobuf.Duration\x12\x33\n\x10megamiss_timeout\x18\x02 \x01(\x0b\x32\x19.google.protobuf.Duration\x12/\n\x0ckill_timeout\x18\x03 \x01(\x0b\x32\x19.google.protobuf.Duration\x12\x34\n\x11multikill_timeout\x18\x04 \x01(\x0b\x32\x19.google.protobuf.Duration\"_\n\x07Runtime\x12\x1f\n\x0csymlink_root\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12\x14\n\x0csubdirectory\x18\x02 \x01(\t\x12\x1d\n\x15override_subdirectory\x18\x03 \x01(\tB\x04Z\x02v2b\x06proto3')
+  serialized_pb=_b('\n)envoy/config/bootstrap/v2/bootstrap.proto\x12\x19\x65nvoy.config.bootstrap.v2\x1a\x1f\x65nvoy/api/v2/core/address.proto\x1a\x1c\x65nvoy/api/v2/core/base.proto\x1a\x1c\x65nvoy/api/v2/auth/cert.proto\x1a%envoy/api/v2/core/config_source.proto\x1a\x16\x65nvoy/api/v2/cds.proto\x1a\x16\x65nvoy/api/v2/lds.proto\x1a!envoy/config/trace/v2/trace.proto\x1a#envoy/config/metrics/v2/stats.proto\x1a,envoy/config/overload/v2alpha/overload.proto\x1a#envoy/config/ratelimit/v2/rls.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x17validate/validate.proto\x1a\x14gogoproto/gogo.proto\"\xe6\t\n\tBootstrap\x12%\n\x04node\x18\x01 \x01(\x0b\x32\x17.envoy.api.v2.core.Node\x12N\n\x10static_resources\x18\x02 \x01(\x0b\x32\x34.envoy.config.bootstrap.v2.Bootstrap.StaticResources\x12P\n\x11\x64ynamic_resources\x18\x03 \x01(\x0b\x32\x35.envoy.config.bootstrap.v2.Bootstrap.DynamicResources\x12\x42\n\x0f\x63luster_manager\x18\x04 \x01(\x0b\x32).envoy.config.bootstrap.v2.ClusterManager\x12\x36\n\nhds_config\x18\x0e \x01(\x0b\x32\".envoy.api.v2.core.ApiConfigSource\x12\x12\n\nflags_path\x18\x05 \x01(\t\x12\x37\n\x0bstats_sinks\x18\x06 \x03(\x0b\x32\".envoy.config.metrics.v2.StatsSink\x12:\n\x0cstats_config\x18\r \x01(\x0b\x32$.envoy.config.metrics.v2.StatsConfig\x12=\n\x14stats_flush_interval\x18\x07 \x01(\x0b\x32\x19.google.protobuf.DurationB\x04\x98\xdf\x1f\x01\x12\x35\n\x08watchdog\x18\x08 \x01(\x0b\x32#.envoy.config.bootstrap.v2.Watchdog\x12/\n\x07tracing\x18\t \x01(\x0b\x32\x1e.envoy.config.trace.v2.Tracing\x12Q\n\x12rate_limit_service\x18\n \x01(\x0b\x32\x31.envoy.config.ratelimit.v2.RateLimitServiceConfigB\x02\x18\x01\x12\x33\n\x07runtime\x18\x0b \x01(\x0b\x32\".envoy.config.bootstrap.v2.Runtime\x12/\n\x05\x61\x64min\x18\x0c \x01(\x0b\x32 .envoy.config.bootstrap.v2.Admin\x12H\n\x10overload_manager\x18\x0f \x01(\x0b\x32..envoy.config.overload.v2alpha.OverloadManager\x1a\xa3\x01\n\x0fStaticResources\x12/\n\tlisteners\x18\x01 \x03(\x0b\x32\x16.envoy.api.v2.ListenerB\x04\xc8\xde\x1f\x00\x12-\n\x08\x63lusters\x18\x02 \x03(\x0b\x32\x15.envoy.api.v2.ClusterB\x04\xc8\xde\x1f\x00\x12\x30\n\x07secrets\x18\x03 \x03(\x0b\x32\x19.envoy.api.v2.auth.SecretB\x04\xc8\xde\x1f\x00\x1a\xba\x01\n\x10\x44ynamicResources\x12\x33\n\nlds_config\x18\x01 \x01(\x0b\x32\x1f.envoy.api.v2.core.ConfigSource\x12\x33\n\ncds_config\x18\x02 \x01(\x0b\x32\x1f.envoy.api.v2.core.ConfigSource\x12\x36\n\nads_config\x18\x03 \x01(\x0b\x32\".envoy.api.v2.core.ApiConfigSourceJ\x04\x08\x04\x10\x05\"c\n\x05\x41\x64min\x12\x17\n\x0f\x61\x63\x63\x65ss_log_path\x18\x01 \x01(\t\x12\x14\n\x0cprofile_path\x18\x02 \x01(\t\x12+\n\x07\x61\x64\x64ress\x18\x03 \x01(\x0b\x32\x1a.envoy.api.v2.core.Address\"\xab\x02\n\x0e\x43lusterManager\x12\x1a\n\x12local_cluster_name\x18\x01 \x01(\t\x12U\n\x11outlier_detection\x18\x02 \x01(\x0b\x32:.envoy.config.bootstrap.v2.ClusterManager.OutlierDetection\x12;\n\x14upstream_bind_config\x18\x03 \x01(\x0b\x32\x1d.envoy.api.v2.core.BindConfig\x12=\n\x11load_stats_config\x18\x04 \x01(\x0b\x32\".envoy.api.v2.core.ApiConfigSource\x1a*\n\x10OutlierDetection\x12\x16\n\x0e\x65vent_log_path\x18\x01 \x01(\t\"\xd7\x01\n\x08Watchdog\x12/\n\x0cmiss_timeout\x18\x01 \x01(\x0b\x32\x19.google.protobuf.Duration\x12\x33\n\x10megamiss_timeout\x18\x02 \x01(\x0b\x32\x19.google.protobuf.Duration\x12/\n\x0ckill_timeout\x18\x03 \x01(\x0b\x32\x19.google.protobuf.Duration\x12\x34\n\x11multikill_timeout\x18\x04 \x01(\x0b\x32\x19.google.protobuf.Duration\"_\n\x07Runtime\x12\x1f\n\x0csymlink_root\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12\x14\n\x0csubdirectory\x18\x02 \x01(\t\x12\x1d\n\x15override_subdirectory\x18\x03 \x01(\tB?\n\'io.envoyproxy.envoy.config.bootstrap.v2B\x0e\x42ootstrapProtoP\x01Z\x02v2b\x06proto3')
   ,
-  dependencies=[envoy_dot_api_dot_v2_dot_core_dot_address__pb2.DESCRIPTOR,envoy_dot_api_dot_v2_dot_core_dot_base__pb2.DESCRIPTOR,envoy_dot_api_dot_v2_dot_auth_dot_cert__pb2.DESCRIPTOR,envoy_dot_api_dot_v2_dot_core_dot_config__source__pb2.DESCRIPTOR,envoy_dot_api_dot_v2_dot_cds__pb2.DESCRIPTOR,envoy_dot_api_dot_v2_dot_lds__pb2.DESCRIPTOR,envoy_dot_config_dot_trace_dot_v2_dot_trace__pb2.DESCRIPTOR,envoy_dot_config_dot_metrics_dot_v2_dot_stats__pb2.DESCRIPTOR,envoy_dot_config_dot_ratelimit_dot_v2_dot_rls__pb2.DESCRIPTOR,google_dot_protobuf_dot_duration__pb2.DESCRIPTOR,validate_dot_validate__pb2.DESCRIPTOR,gogoproto_dot_gogo__pb2.DESCRIPTOR,])
+  dependencies=[envoy_dot_api_dot_v2_dot_core_dot_address__pb2.DESCRIPTOR,envoy_dot_api_dot_v2_dot_core_dot_base__pb2.DESCRIPTOR,envoy_dot_api_dot_v2_dot_auth_dot_cert__pb2.DESCRIPTOR,envoy_dot_api_dot_v2_dot_core_dot_config__source__pb2.DESCRIPTOR,envoy_dot_api_dot_v2_dot_cds__pb2.DESCRIPTOR,envoy_dot_api_dot_v2_dot_lds__pb2.DESCRIPTOR,envoy_dot_config_dot_trace_dot_v2_dot_trace__pb2.DESCRIPTOR,envoy_dot_config_dot_metrics_dot_v2_dot_stats__pb2.DESCRIPTOR,envoy_dot_config_dot_overload_dot_v2alpha_dot_overload__pb2.DESCRIPTOR,envoy_dot_config_dot_ratelimit_dot_v2_dot_rls__pb2.DESCRIPTOR,google_dot_protobuf_dot_duration__pb2.DESCRIPTOR,validate_dot_validate__pb2.DESCRIPTOR,gogoproto_dot_gogo__pb2.DESCRIPTOR,])
 
 
 
@@ -78,38 +79,8 @@ _BOOTSTRAP_STATICRESOURCES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1281,
-  serialized_end=1444,
-)
-
-_BOOTSTRAP_DYNAMICRESOURCES_DEPRECATEDV1 = _descriptor.Descriptor(
-  name='DeprecatedV1',
-  full_name='envoy.config.bootstrap.v2.Bootstrap.DynamicResources.DeprecatedV1',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='sds_config', full_name='envoy.config.bootstrap.v2.Bootstrap.DynamicResources.DeprecatedV1.sds_config', index=0,
-      number=1, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=1724,
-  serialized_end=1791,
+  serialized_start=1389,
+  serialized_end=1552,
 )
 
 _BOOTSTRAP_DYNAMICRESOURCES = _descriptor.Descriptor(
@@ -140,17 +111,10 @@ _BOOTSTRAP_DYNAMICRESOURCES = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
-    _descriptor.FieldDescriptor(
-      name='deprecated_v1', full_name='envoy.config.bootstrap.v2.Bootstrap.DynamicResources.deprecated_v1', index=3,
-      number=4, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\030\001'))),
   ],
   extensions=[
   ],
-  nested_types=[_BOOTSTRAP_DYNAMICRESOURCES_DEPRECATEDV1, ],
+  nested_types=[],
   enum_types=[
   ],
   options=None,
@@ -159,8 +123,8 @@ _BOOTSTRAP_DYNAMICRESOURCES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1447,
-  serialized_end=1791,
+  serialized_start=1555,
+  serialized_end=1741,
 )
 
 _BOOTSTRAP = _descriptor.Descriptor(
@@ -253,7 +217,7 @@ _BOOTSTRAP = _descriptor.Descriptor(
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None),
+      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\030\001'))),
     _descriptor.FieldDescriptor(
       name='runtime', full_name='envoy.config.bootstrap.v2.Bootstrap.runtime', index=12,
       number=11, type=11, cpp_type=10, label=1,
@@ -267,7 +231,14 @@ _BOOTSTRAP = _descriptor.Descriptor(
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\212\001\002\020\001\310\336\037\000'))),
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='overload_manager', full_name='envoy.config.bootstrap.v2.Bootstrap.overload_manager', index=14,
+      number=15, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -280,8 +251,8 @@ _BOOTSTRAP = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=441,
-  serialized_end=1791,
+  serialized_start=487,
+  serialized_end=1741,
 )
 
 
@@ -298,7 +269,7 @@ _ADMIN = _descriptor.Descriptor(
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004r\002 \001'))),
+      options=None),
     _descriptor.FieldDescriptor(
       name='profile_path', full_name='envoy.config.bootstrap.v2.Admin.profile_path', index=1,
       number=2, type=9, cpp_type=9, label=1,
@@ -312,7 +283,7 @@ _ADMIN = _descriptor.Descriptor(
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\212\001\002\020\001\310\336\037\000'))),
+      options=None),
   ],
   extensions=[
   ],
@@ -325,8 +296,8 @@ _ADMIN = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1793,
-  serialized_end=1919,
+  serialized_start=1743,
+  serialized_end=1842,
 )
 
 
@@ -356,8 +327,8 @@ _CLUSTERMANAGER_OUTLIERDETECTION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2179,
-  serialized_end=2221,
+  serialized_start=2102,
+  serialized_end=2144,
 )
 
 _CLUSTERMANAGER = _descriptor.Descriptor(
@@ -407,8 +378,8 @@ _CLUSTERMANAGER = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1922,
-  serialized_end=2221,
+  serialized_start=1845,
+  serialized_end=2144,
 )
 
 
@@ -459,8 +430,8 @@ _WATCHDOG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2224,
-  serialized_end=2439,
+  serialized_start=2147,
+  serialized_end=2362,
 )
 
 
@@ -504,20 +475,17 @@ _RUNTIME = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2441,
-  serialized_end=2536,
+  serialized_start=2364,
+  serialized_end=2459,
 )
 
 _BOOTSTRAP_STATICRESOURCES.fields_by_name['listeners'].message_type = envoy_dot_api_dot_v2_dot_lds__pb2._LISTENER
 _BOOTSTRAP_STATICRESOURCES.fields_by_name['clusters'].message_type = envoy_dot_api_dot_v2_dot_cds__pb2._CLUSTER
 _BOOTSTRAP_STATICRESOURCES.fields_by_name['secrets'].message_type = envoy_dot_api_dot_v2_dot_auth_dot_cert__pb2._SECRET
 _BOOTSTRAP_STATICRESOURCES.containing_type = _BOOTSTRAP
-_BOOTSTRAP_DYNAMICRESOURCES_DEPRECATEDV1.fields_by_name['sds_config'].message_type = envoy_dot_api_dot_v2_dot_core_dot_config__source__pb2._CONFIGSOURCE
-_BOOTSTRAP_DYNAMICRESOURCES_DEPRECATEDV1.containing_type = _BOOTSTRAP_DYNAMICRESOURCES
 _BOOTSTRAP_DYNAMICRESOURCES.fields_by_name['lds_config'].message_type = envoy_dot_api_dot_v2_dot_core_dot_config__source__pb2._CONFIGSOURCE
 _BOOTSTRAP_DYNAMICRESOURCES.fields_by_name['cds_config'].message_type = envoy_dot_api_dot_v2_dot_core_dot_config__source__pb2._CONFIGSOURCE
 _BOOTSTRAP_DYNAMICRESOURCES.fields_by_name['ads_config'].message_type = envoy_dot_api_dot_v2_dot_core_dot_config__source__pb2._APICONFIGSOURCE
-_BOOTSTRAP_DYNAMICRESOURCES.fields_by_name['deprecated_v1'].message_type = _BOOTSTRAP_DYNAMICRESOURCES_DEPRECATEDV1
 _BOOTSTRAP_DYNAMICRESOURCES.containing_type = _BOOTSTRAP
 _BOOTSTRAP.fields_by_name['node'].message_type = envoy_dot_api_dot_v2_dot_core_dot_base__pb2._NODE
 _BOOTSTRAP.fields_by_name['static_resources'].message_type = _BOOTSTRAP_STATICRESOURCES
@@ -532,6 +500,7 @@ _BOOTSTRAP.fields_by_name['tracing'].message_type = envoy_dot_config_dot_trace_d
 _BOOTSTRAP.fields_by_name['rate_limit_service'].message_type = envoy_dot_config_dot_ratelimit_dot_v2_dot_rls__pb2._RATELIMITSERVICECONFIG
 _BOOTSTRAP.fields_by_name['runtime'].message_type = _RUNTIME
 _BOOTSTRAP.fields_by_name['admin'].message_type = _ADMIN
+_BOOTSTRAP.fields_by_name['overload_manager'].message_type = envoy_dot_config_dot_overload_dot_v2alpha_dot_overload__pb2._OVERLOADMANAGER
 _ADMIN.fields_by_name['address'].message_type = envoy_dot_api_dot_v2_dot_core_dot_address__pb2._ADDRESS
 _CLUSTERMANAGER_OUTLIERDETECTION.containing_type = _CLUSTERMANAGER
 _CLUSTERMANAGER.fields_by_name['outlier_detection'].message_type = _CLUSTERMANAGER_OUTLIERDETECTION
@@ -558,13 +527,6 @@ Bootstrap = _reflection.GeneratedProtocolMessageType('Bootstrap', (_message.Mess
   ,
 
   DynamicResources = _reflection.GeneratedProtocolMessageType('DynamicResources', (_message.Message,), dict(
-
-    DeprecatedV1 = _reflection.GeneratedProtocolMessageType('DeprecatedV1', (_message.Message,), dict(
-      DESCRIPTOR = _BOOTSTRAP_DYNAMICRESOURCES_DEPRECATEDV1,
-      __module__ = 'envoy.config.bootstrap.v2.bootstrap_pb2'
-      # @@protoc_insertion_point(class_scope:envoy.config.bootstrap.v2.Bootstrap.DynamicResources.DeprecatedV1)
-      ))
-    ,
     DESCRIPTOR = _BOOTSTRAP_DYNAMICRESOURCES,
     __module__ = 'envoy.config.bootstrap.v2.bootstrap_pb2'
     # @@protoc_insertion_point(class_scope:envoy.config.bootstrap.v2.Bootstrap.DynamicResources)
@@ -577,7 +539,6 @@ Bootstrap = _reflection.GeneratedProtocolMessageType('Bootstrap', (_message.Mess
 _sym_db.RegisterMessage(Bootstrap)
 _sym_db.RegisterMessage(Bootstrap.StaticResources)
 _sym_db.RegisterMessage(Bootstrap.DynamicResources)
-_sym_db.RegisterMessage(Bootstrap.DynamicResources.DeprecatedV1)
 
 Admin = _reflection.GeneratedProtocolMessageType('Admin', (_message.Message,), dict(
   DESCRIPTOR = _ADMIN,
@@ -617,23 +578,17 @@ _sym_db.RegisterMessage(Runtime)
 
 
 DESCRIPTOR.has_options = True
-DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('Z\002v2'))
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n\'io.envoyproxy.envoy.config.bootstrap.v2B\016BootstrapProtoP\001Z\002v2'))
 _BOOTSTRAP_STATICRESOURCES.fields_by_name['listeners'].has_options = True
 _BOOTSTRAP_STATICRESOURCES.fields_by_name['listeners']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\310\336\037\000'))
 _BOOTSTRAP_STATICRESOURCES.fields_by_name['clusters'].has_options = True
 _BOOTSTRAP_STATICRESOURCES.fields_by_name['clusters']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\310\336\037\000'))
 _BOOTSTRAP_STATICRESOURCES.fields_by_name['secrets'].has_options = True
 _BOOTSTRAP_STATICRESOURCES.fields_by_name['secrets']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\310\336\037\000'))
-_BOOTSTRAP_DYNAMICRESOURCES.fields_by_name['deprecated_v1'].has_options = True
-_BOOTSTRAP_DYNAMICRESOURCES.fields_by_name['deprecated_v1']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\030\001'))
 _BOOTSTRAP.fields_by_name['stats_flush_interval'].has_options = True
 _BOOTSTRAP.fields_by_name['stats_flush_interval']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\230\337\037\001'))
-_BOOTSTRAP.fields_by_name['admin'].has_options = True
-_BOOTSTRAP.fields_by_name['admin']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\212\001\002\020\001\310\336\037\000'))
-_ADMIN.fields_by_name['access_log_path'].has_options = True
-_ADMIN.fields_by_name['access_log_path']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004r\002 \001'))
-_ADMIN.fields_by_name['address'].has_options = True
-_ADMIN.fields_by_name['address']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\005\212\001\002\020\001\310\336\037\000'))
+_BOOTSTRAP.fields_by_name['rate_limit_service'].has_options = True
+_BOOTSTRAP.fields_by_name['rate_limit_service']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\030\001'))
 _RUNTIME.fields_by_name['symlink_root'].has_options = True
 _RUNTIME.fields_by_name['symlink_root']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004r\002 \001'))
 try:

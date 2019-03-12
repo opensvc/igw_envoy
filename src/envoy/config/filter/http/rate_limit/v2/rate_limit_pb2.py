@@ -13,6 +13,7 @@ from google.protobuf import descriptor_pb2
 _sym_db = _symbol_database.Default()
 
 
+from envoy.config.ratelimit.v2 import rls_pb2 as envoy_dot_config_dot_ratelimit_dot_v2_dot_rls__pb2
 from google.protobuf import duration_pb2 as google_dot_protobuf_dot_duration__pb2
 from validate import validate_pb2 as validate_dot_validate__pb2
 from gogoproto import gogo_pb2 as gogoproto_dot_gogo__pb2
@@ -22,9 +23,9 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='envoy/config/filter/http/rate_limit/v2/rate_limit.proto',
   package='envoy.config.filter.http.rate_limit.v2',
   syntax='proto3',
-  serialized_pb=_b('\n7envoy/config/filter/http/rate_limit/v2/rate_limit.proto\x12&envoy.config.filter.http.rate_limit.v2\x1a\x1egoogle/protobuf/duration.proto\x1a\x17validate/validate.proto\x1a\x14gogoproto/gogo.proto\"\x88\x01\n\tRateLimit\x12\x19\n\x06\x64omain\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12\x18\n\x05stage\x18\x02 \x01(\rB\t\xba\xe9\xc0\x03\x04*\x02\x18\n\x12\x14\n\x0crequest_type\x18\x03 \x01(\t\x12\x30\n\x07timeout\x18\x04 \x01(\x0b\x32\x19.google.protobuf.DurationB\x04\x98\xdf\x1f\x01\x42\x04Z\x02v2b\x06proto3')
+  serialized_pb=_b('\n7envoy/config/filter/http/rate_limit/v2/rate_limit.proto\x12&envoy.config.filter.http.rate_limit.v2\x1a#envoy/config/ratelimit/v2/rls.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x17validate/validate.proto\x1a\x14gogoproto/gogo.proto\"\x9e\x02\n\tRateLimit\x12\x19\n\x06\x64omain\x18\x01 \x01(\tB\t\xba\xe9\xc0\x03\x04r\x02 \x01\x12\x18\n\x05stage\x18\x02 \x01(\rB\t\xba\xe9\xc0\x03\x04*\x02\x18\n\x12\x14\n\x0crequest_type\x18\x03 \x01(\t\x12\x30\n\x07timeout\x18\x04 \x01(\x0b\x32\x19.google.protobuf.DurationB\x04\x98\xdf\x1f\x01\x12\x19\n\x11\x66\x61ilure_mode_deny\x18\x05 \x01(\x08\x12*\n\"rate_limited_as_resource_exhausted\x18\x06 \x01(\x08\x12M\n\x12rate_limit_service\x18\x07 \x01(\x0b\x32\x31.envoy.config.ratelimit.v2.RateLimitServiceConfigBL\n4io.envoyproxy.envoy.config.filter.http.rate_limit.v2B\x0eRateLimitProtoP\x01Z\x02v2b\x06proto3')
   ,
-  dependencies=[google_dot_protobuf_dot_duration__pb2.DESCRIPTOR,validate_dot_validate__pb2.DESCRIPTOR,gogoproto_dot_gogo__pb2.DESCRIPTOR,])
+  dependencies=[envoy_dot_config_dot_ratelimit_dot_v2_dot_rls__pb2.DESCRIPTOR,google_dot_protobuf_dot_duration__pb2.DESCRIPTOR,validate_dot_validate__pb2.DESCRIPTOR,gogoproto_dot_gogo__pb2.DESCRIPTOR,])
 
 
 
@@ -64,6 +65,27 @@ _RATELIMIT = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\230\337\037\001'))),
+    _descriptor.FieldDescriptor(
+      name='failure_mode_deny', full_name='envoy.config.filter.http.rate_limit.v2.RateLimit.failure_mode_deny', index=4,
+      number=5, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='rate_limited_as_resource_exhausted', full_name='envoy.config.filter.http.rate_limit.v2.RateLimit.rate_limited_as_resource_exhausted', index=5,
+      number=6, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='rate_limit_service', full_name='envoy.config.filter.http.rate_limit.v2.RateLimit.rate_limit_service', index=6,
+      number=7, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -76,11 +98,12 @@ _RATELIMIT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=179,
-  serialized_end=315,
+  serialized_start=216,
+  serialized_end=502,
 )
 
 _RATELIMIT.fields_by_name['timeout'].message_type = google_dot_protobuf_dot_duration__pb2._DURATION
+_RATELIMIT.fields_by_name['rate_limit_service'].message_type = envoy_dot_config_dot_ratelimit_dot_v2_dot_rls__pb2._RATELIMITSERVICECONFIG
 DESCRIPTOR.message_types_by_name['RateLimit'] = _RATELIMIT
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
@@ -93,7 +116,7 @@ _sym_db.RegisterMessage(RateLimit)
 
 
 DESCRIPTOR.has_options = True
-DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('Z\002v2'))
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n4io.envoyproxy.envoy.config.filter.http.rate_limit.v2B\016RateLimitProtoP\001Z\002v2'))
 _RATELIMIT.fields_by_name['domain'].has_options = True
 _RATELIMIT.fields_by_name['domain']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\272\351\300\003\004r\002 \001'))
 _RATELIMIT.fields_by_name['stage'].has_options = True

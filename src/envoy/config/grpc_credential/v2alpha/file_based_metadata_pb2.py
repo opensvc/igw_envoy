@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='envoy/config/grpc_credential/v2alpha/file_based_metadata.proto',
   package='envoy.config.grpc_credential.v2alpha',
   syntax='proto3',
-  serialized_pb=_b('\n>envoy/config/grpc_credential/v2alpha/file_based_metadata.proto\x12$envoy.config.grpc_credential.v2alpha\x1a\x1c\x65nvoy/api/v2/core/base.proto\"x\n\x17\x46ileBasedMetadataConfig\x12\x32\n\x0bsecret_data\x18\x01 \x01(\x0b\x32\x1d.envoy.api.v2.core.DataSource\x12\x12\n\nheader_key\x18\x02 \x01(\t\x12\x15\n\rheader_prefix\x18\x03 \x01(\tB\tZ\x07v2alphab\x06proto3')
+  serialized_pb=_b('\n>envoy/config/grpc_credential/v2alpha/file_based_metadata.proto\x12$envoy.config.grpc_credential.v2alpha\x1a\x1c\x65nvoy/api/v2/core/base.proto\"x\n\x17\x46ileBasedMetadataConfig\x12\x32\n\x0bsecret_data\x18\x01 \x01(\x0b\x32\x1d.envoy.api.v2.core.DataSource\x12\x12\n\nheader_key\x18\x02 \x01(\t\x12\x15\n\rheader_prefix\x18\x03 \x01(\tBW\n2io.envoyproxy.envoy.config.grpc_credential.v2alphaB\x16\x46ileBasedMetadataProtoP\x01Z\x07v2alphab\x06proto3')
   ,
   dependencies=[envoy_dot_api_dot_v2_dot_core_dot_base__pb2.DESCRIPTOR,])
 
@@ -84,7 +84,7 @@ _sym_db.RegisterMessage(FileBasedMetadataConfig)
 
 
 DESCRIPTOR.has_options = True
-DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('Z\007v2alpha'))
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n2io.envoyproxy.envoy.config.grpc_credential.v2alphaB\026FileBasedMetadataProtoP\001Z\007v2alpha'))
 try:
   # THESE ELEMENTS WILL BE DEPRECATED.
   # Please use the generated *_pb2_grpc.py files instead.

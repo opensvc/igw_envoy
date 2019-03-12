@@ -21,7 +21,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='envoy/type/matcher/number.proto',
   package='envoy.type.matcher',
   syntax='proto3',
-  serialized_pb=_b('\n\x1f\x65nvoy/type/matcher/number.proto\x12\x12\x65nvoy.type.matcher\x1a\x16\x65nvoy/type/range.proto\x1a\x17validate/validate.proto\"b\n\rDoubleMatcher\x12(\n\x05range\x18\x01 \x01(\x0b\x32\x17.envoy.type.DoubleRangeH\x00\x12\x0f\n\x05\x65xact\x18\x02 \x01(\x01H\x00\x42\x16\n\rmatch_pattern\x12\x05\xb8\xe9\xc0\x03\x01\x42\tZ\x07matcherb\x06proto3')
+  serialized_pb=_b('\n\x1f\x65nvoy/type/matcher/number.proto\x12\x12\x65nvoy.type.matcher\x1a\x16\x65nvoy/type/range.proto\x1a\x17validate/validate.proto\"b\n\rDoubleMatcher\x12(\n\x05range\x18\x01 \x01(\x0b\x32\x17.envoy.type.DoubleRangeH\x00\x12\x0f\n\x05\x65xact\x18\x02 \x01(\x01H\x00\x42\x16\n\rmatch_pattern\x12\x05\xb8\xe9\xc0\x03\x01\x42:\n io.envoyproxy.envoy.type.matcherB\x0bNumberProtoP\x01Z\x07matcherb\x06proto3')
   ,
   dependencies=[envoy_dot_type_dot_range__pb2.DESCRIPTOR,validate_dot_validate__pb2.DESCRIPTOR,])
 
@@ -87,7 +87,7 @@ _sym_db.RegisterMessage(DoubleMatcher)
 
 
 DESCRIPTOR.has_options = True
-DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('Z\007matcher'))
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n io.envoyproxy.envoy.type.matcherB\013NumberProtoP\001Z\007matcher'))
 _DOUBLEMATCHER.oneofs_by_name['match_pattern'].has_options = True
 _DOUBLEMATCHER.oneofs_by_name['match_pattern']._options = _descriptor._ParseOptions(descriptor_pb2.OneofOptions(), _b('\270\351\300\003\001'))
 try:
