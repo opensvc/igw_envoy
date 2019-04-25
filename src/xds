@@ -161,6 +161,7 @@ from google.protobuf import text_format
 from google.protobuf import json_format
 
 DEFAULT_OSOCK = "/var/lib/opensvc/lsnr/osvcd.sock"
+DEFAULT_JSOCK = "unix:///var/run/xds/xds.sock"
 DEFAULT_CONNECT_TIMEOUT = 0.25
 DEFAULT_LB_POLICY = "ROUND ROBIN"
 DEFAULT_GATEWAY_NAME = "envoy"
@@ -615,6 +616,8 @@ def get_options():
                            "default %s" % DEFAULT_PORT_RANGE)
     parser.add_option("-S", "--socket", action="store", dest="osock",
                       help="The OpenSVC daemon unix socket path. default %s" % DEFAULT_OSOCK)
+    parser.add_option("--janitor-socket", action="store", dest="jsock",
+                      help="The janitor gRPC unix socket path. default %s" % DEFAULT_JSOCK)
     parser.add_option("-w", "--max-workers", action="store", dest="max_workers",
                       help="The maximum number of workers. default %s" % DEFAULT_MAX_WORKERS)
     options, _ = parser.parse_args()
@@ -1918,6 +1921,8 @@ class Osvc(object):
         """
         if options["osock"] is None:
             options["osock"] = DEFAULT_OSOCK
+        if options["jsock"] is None:
+            options["jsock"] = DEFAULT_JSOCK
         if options["max_workers"] is None:
             options["max_workers"] = DEFAULT_MAX_WORKERS
         if options["gateway_name"] is None:
@@ -1953,7 +1958,9 @@ class Osvc(object):
         envoy.api.v2.rds_pb2_grpc.add_RouteDiscoveryServiceServicer_to_server(RouteDiscoveryServiceServicer(), self.server)
         #envoy.service.discovery.v2.ads_pb2_grpc.add_AggregatedDiscoveryServiceServicer_to_server(AggregatedDiscoveryServiceServicer(), self.server)
 
-        print('Starting server. Listening on port %d.' % self.options["port"])
+        print('Starting server. Listening on %s' % self.options["jsock"])
+        self.server.add_insecure_port(self.options["jsock"])
+        print('Starting server. Listening on [::]:%d' % self.options["port"])
         self.server.add_insecure_port('[::]:%d' % self.options["port"])
         self.server.start()
 
