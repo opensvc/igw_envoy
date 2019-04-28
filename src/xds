@@ -154,8 +154,10 @@ import envoy.api.v2.lds_pb2
 import envoy.api.v2.lds_pb2_grpc
 import envoy.api.v2.rds_pb2
 import envoy.api.v2.rds_pb2_grpc
-import envoy.service.discovery.v2.ads_pb2
-import envoy.service.discovery.v2.ads_pb2_grpc
+import envoy.service.discovery.v2.sds_pb2
+import envoy.service.discovery.v2.sds_pb2_grpc
+#import envoy.service.discovery.v2.ads_pb2
+#import envoy.service.discovery.v2.ads_pb2_grpc
 
 from google.protobuf import text_format
 from google.protobuf import json_format
@@ -175,6 +177,7 @@ CDS_Q = queue.Queue()
 LDS_Q = queue.Queue()
 EDS_Q = {}
 RDS_Q = {}
+SDS_Q = {}
 
 VERSION = {}
 NONCE = 0
@@ -587,6 +590,85 @@ class _StreamRoutes(object):
             except queue.Empty:
                 pass
 
+
+class _StreamSecrets(object):
+    def __init__(self, request_iterator, context):
+        print("+++ StreamSecrets")
+        self.sid = "sds-%s" % str(uuid.uuid4())
+        self.request_iterator = request_iterator
+        self.context = context
+        self.n_req = 0
+        self.names = set()
+        self.last_request = None
+        self.queue = queue.Queue()
+        self.waiter = threading.Thread(target=request_waiter, args=("sds", request_iterator, self.queue))
+        self.waiter.start()
+
+    def __iter__(self):
+        return self
+
+    def next(self):
+        """
+        This method required by the Python 2 iterator protocol
+        """
+        return self._next()
+
+    def __next__(self):
+        """
+        This method required by the Python 3 iterator protocol
+        """
+        return self._next()
+
+    def set_names(self, data):
+        self.names = data.resource_names
+
+    def _next(self):
+        """
+        This method ends by either returning a response value or raising a StopIteration
+        """
+        while True:
+            if STATE == "SHUTTING":
+                self.waiter.join()
+                print("--- StreamSecrets shutdown")
+                break
+            if not self.context.is_active():
+                self.waiter.join()
+                print("--- StreamSecrets context not active")
+                break
+            try:
+                kind, data = self.queue.get(True, 1)
+                self.last_request = data
+                self.set_names(data)
+                #print(text_format.MessageToString(data))
+                self.n_req += 1
+                if self.n_req == 1:
+                    print("<<< StreamSecrets", data.resource_names, "first message")
+                    message = OSVC.secrets(data, sid=self.sid)
+                    print(message)
+                    if message:
+                        return message
+                else:
+                    message = OSVC.stream_secrets(data, sid=self.sid)
+                    if message:
+                        return message
+            except queue.Empty:
+                pass
+            if not self.last_request:
+                continue
+            try:
+                for name in self.names:
+                    qname = name.split("/", 1)[-1]
+                    q = SDS_Q.get(qname)
+                    if not q:
+                        continue
+                    q.get(False)
+                    message = OSVC.secrets(self.last_request, sid=self.sid)
+                    if message:
+                        return message
+            except queue.Empty:
+                pass
+
+
 class ClusterDiscoveryServiceServicer(envoy.api.v2.cds_pb2_grpc.ClusterDiscoveryServiceServicer):
     StreamClusters = _StreamClusters
     DeltaClusters = _DeltaClusters
@@ -599,6 +681,9 @@ class ListenerDiscoveryServiceServicer(envoy.api.v2.lds_pb2_grpc.ListenerDiscove
 
 class RouteDiscoveryServiceServicer(envoy.api.v2.rds_pb2_grpc.RouteDiscoveryServiceServicer):
     StreamRoutes = _StreamRoutes
+
+class SecretDiscoveryServiceServicer(envoy.service.discovery.v2.sds_pb2_grpc.SecretDiscoveryServiceServicer):
+    StreamSecrets = _StreamSecrets
 
 def get_options():
     parser = optparse.OptionParser()
@@ -665,6 +750,43 @@ def msg_decode(message):
         return
     return json.loads(message)
 
+#
+# from opensvc agent rcUtilities module
+#
+def split_svcpath(path):
+    path = path.strip("/")
+    if path in ("node", "auth"):
+        raise ValueError
+    if not path:
+        raise ValueError
+    if "," in path or "+" in path:
+        raise ValueError
+    nsep = path.count("/")
+    if nsep == 2:
+        namespace, kind, name = path.split("/")
+    elif nsep == 1:
+        kind, name = path.split("/")
+        namespace = "root"
+    elif nsep == 0:
+        name = path
+        namespace = "root"
+        kind = "svc"
+    else:
+        raise ValueError(path)
+    if namespace == "root":
+        namespace = None
+        if name == "cluster":
+            kind = "ccfg"
+    return name, namespace, kind
+
+def fmt_svcpath(name, namespace, kind):
+    if namespace:
+        return "/".join((namespace.strip("/"), kind, name))
+    elif kind not in ("svc", "ccfg"):
+        return "/".join((kind, name))
+    else:
+        return name
+
 class Osvc(object):
     """
     The daemon class.
@@ -718,6 +840,7 @@ class Osvc(object):
         return data.values()
 
     def get_svc_clusters(self, svcname):
+        _, namespace, _ = split_svcpath(svcname)
         clusters = {}
         cluster_svcname = self.scaler_svcname(svcname)
         if not cluster_svcname:
@@ -770,7 +893,7 @@ class Osvc(object):
                             },
                         ]
                     certs = expose_data.get("cluster_certificates")
-                    tls_context = self.get_tls_context(certs, instance)
+                    tls_context = self.get_tls_context(certs, instance, namespace=namespace)
                     if tls_context and "tls_context" not in cluster_data:
                         cluster_data["tls_context"] = tls_context
                     clusters[name] = cluster_data
@@ -1052,6 +1175,84 @@ class Osvc(object):
         return data
 
     #
+    # GRPC helpers: Secrets
+    #
+    def stream_secrets(self, request, sid=""):
+        nonce, version = get_nonce(sid)
+        announce = "<<< StreamSecrets %s %s v%s" % (str(request.resource_names), request.response_nonce, request.version_info)
+        if nonce is None:
+            print(announce, "manager restart")
+            return self.secrets(request, sid=sid)
+        elif request.response_nonce is None:
+            print(announce, "client restart")
+            return self.secrets(request, sid=sid)
+        elif request.response_nonce == nonce:
+            if request.version_info == version:
+                print(announce, "ACK")
+            else:
+                print(announce, "NACK")
+                time.sleep(10)
+                return self.secrets(request, sid=sid)
+        else:
+            print(announce, "unsync: expected %s v%s" % (nonce, version))
+
+    def secrets(self, request, sid=""):
+        version = inc_version(sid, v=request.version_info)
+        response = envoy.api.v2.discovery_pb2.DiscoveryResponse()
+        data = {
+            "version_info": version,
+            "nonce": gen_nonce(sid, version),
+            "type_url": "type.googleapis.com/envoy.api.v2.auth.Secret",
+            "resources": [],
+        }
+        for name in request.resource_names:
+            res = self.secret(name)
+            if res:
+                data["resources"].append(res)
+        try:
+            json_format.Parse(json.dumps(data), response, ignore_unknown_fields=False)
+        except Exception as exc:
+            print(">>> StreamSecrets error:", str(exc))
+            print(json.dumps(data, indent=4))
+            return
+        print(">>> StreamSecrets %s %s v%s" % (str(request.resource_names), response.nonce, response.version_info))
+        print(text_format.MessageToString(response))
+        return response
+
+    def secret(self, name):
+        conf = {
+            "@type": "type.googleapis.com/envoy.api.v2.auth.Secret",
+            "name": name,
+        }
+        if name.startswith("tls_certificate/"):
+            secpath = name[len("tls_certificate/"):]
+            conf["tls_certificate"] = {}
+            for key in ("certificate_chain", "private_key", "password"):
+                val = self.get_secret_key(secpath, key)
+                if isinstance(val, six.string_types):
+                    subkey = "inline_string"
+                else:
+                    subkey = "inline_bytes"
+                if val:
+                    conf["tls_certificate"][key] = {
+                        subkey: val
+                    }
+        if name.startswith("validation_context/"):
+            secpath = name[len("validation_context/"):]
+            conf["validation_context"] = {}
+            for key in ():
+                val = self.get_secret_key(secpath, key)
+                if isinstance(val, six.string_types):
+                    subkey = "inline_string"
+                else:
+                    subkey = "inline_bytes"
+                if val:
+                    conf["validation_context"][key] = {
+                        subkey: val
+                    }
+        return conf
+
+    #
     # osvcd socket helpers
     #
     @contextlib.contextmanager
@@ -1187,6 +1388,23 @@ class Osvc(object):
                 }
             }))
             return self.recv_message(lsnr)
+
+    def get_secret_key(self, secpath, key):
+        """
+        Request the OpenSVC listener for the secret key data.
+        """
+        with self.lsnr_socket() as lsnr:
+            lsnr.sendall(msg_encode({
+                "action": "get_secret_key",
+                "options": {
+                    "svcpath": secpath,
+                    "key": key
+                }
+            }))
+            data = self.recv_message(lsnr)
+        if data is None:
+            return
+        return data.get("data")
 
     def get_clustername(self):
         """
@@ -1484,6 +1702,7 @@ class Osvc(object):
                     print("EVT endpoint change:", change)
                     return key[2], "update"
                 if key[4].startswith("expose#") or \
+                   key[4].startswith("data#") or \
                    key[4].startswith("vhost#") or \
                    key[4].startswith("route#") or \
                    key[4].startswith("hash_policy#") or \
@@ -1533,12 +1752,16 @@ class Osvc(object):
             svcname = scaler_svcname
 
         if evt == "add":
-            if self.service_needs_lb(svcname):
+            if svcname.startswith("sec/") or "/sec/" in svcname:
+                self.update_secret(svcname)
+            elif self.service_needs_lb(svcname):
                 self.add_service_lb(svcname)
             else:
                 print("service '%s' doesn't enable load balancing" % svcname)
         elif evt == "update":
-            if self.service_needs_lb(svcname):
+            if svcname.startswith("sec/") or "/sec/" in svcname:
+                self.update_secret(svcname)
+            elif self.service_needs_lb(svcname):
                 self.update_service_lb(svcname)
             else:
                 print("service '%s' no longer enables load balancing" % svcname)
@@ -1664,6 +1887,7 @@ class Osvc(object):
         chains = {}
 
         for svcname in self.get_svcnames():
+            _, namespace, _ = split_svcpath(svcname)
             cluster_svcname = self.scaler_svcname(svcname)
             if not cluster_svcname:
                 cluster_svcname = svcname
@@ -1816,12 +2040,17 @@ class Osvc(object):
                             if idx is not None:
                                 # add certificates to an existing http_connection_manager
                                 tls_context = self.get_tls_context(certs, instance,
-                                                                   tls_context=_data["filter_chains"][idx].get("tls_context"))
+                                                                   tls_context=_data["filter_chains"][idx].get("tls_context"),
+                                                                   namespace=namespace)
                                 if tls_context:
                                     _data["filter_chains"][idx]["tls_context"] = tls_context
                             else:
                                 # new http_connection_manager
-                                tls_context = self.get_tls_context(certs, instance)
+                                try:
+                                    tls_context = self.get_tls_context(certs, instance,
+                                                                       namespace=namespace)
+                                except Exception as exc:
+                                    print(exc)
                                 if tls_context:
                                     chain["tls_context"] = tls_context
                                 chains[(name, "envoy.http_connection_manager", server_names)] = len(_data["filter_chains"])
@@ -1830,22 +2059,68 @@ class Osvc(object):
 
         return data.values()
 
-    def get_tls_context(self, certs, instance, tls_context=None):
+    def get_tls_context(self, certs, instance, tls_context=None, namespace=None):
         if not certs:
             return
         if tls_context is None:
-            tls_context = {"common_tls_context": {"tls_certificates": []}}
+            tls_context = {
+                "common_tls_context": {
+                    "tls_certificates": [],
+                    "tls_certificate_sds_secret_configs": [],
+                }
+            }
         for cert in certs:
-            _data = self.get_tls_cert(cert, instance)
+            cert_data = instance.get("resources", {}).get(cert, {}).get("info")
+            if "certificate_secret" in cert_data:
+                name, _, _ = split_svcpath(cert_data["certificate_secret"])
+                secpath = fmt_svcpath(name, namespace, "sec")
+                _data = {
+                    "name": "tls_certificate/"+secpath,
+                    "sds_config": {
+                        "api_config_source": {
+                            "api_type": "GRPC",
+                            "grpc_services": [
+                                {
+                                    "envoy_grpc": {
+                                        "cluster_name": "xds_cluster",
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+                if _data not in tls_context["common_tls_context"]["tls_certificate_sds_secret_configs"]:
+                    tls_context["common_tls_context"]["tls_certificate_sds_secret_configs"].append(_data)
+            if "validation_secret" in cert_data:
+                name, _, _ = split_svcpath(cert_data["validation_secret"])
+                secpath = fmt_svcpath(name, namespace, "sec")
+                _data = {
+                    "name": "validation_secret/"+secpath,
+                    "sds_config": {
+                        "api_config_source": {
+                            "api_type": "GRPC",
+                            "grpc_services": [
+                                {
+                                    "envoy_grpc": {
+                                        "cluster_name": "xds_cluster",
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+                tls_context["common_tls_context"]["validation_context_sds_secret_config"] = _data
+            _data = self.get_tls_cert(cert, cert_data)
             if _data is None:
                 continue
             if _data not in tls_context["common_tls_context"]["tls_certificates"]:
                 tls_context["common_tls_context"]["tls_certificates"].append(_data)
-        if tls_context["common_tls_context"]["tls_certificates"]:
+        if tls_context["common_tls_context"]["tls_certificates"] or \
+           tls_context["common_tls_context"]["tls_certificate_sds_secret_configs"] or \
+           tls_context["common_tls_context"]["validation_context_sds_secret_config"]:
             return tls_context
 
-    def get_tls_cert(self, cert, instance):
-        cert_data = instance.get("resources", {}).get(cert, {}).get("info")
+    def get_tls_cert(self, cert, cert_data):
         if not cert_data:
             return
         _data = {
@@ -1868,6 +2143,8 @@ class Osvc(object):
         if val:
             _data["certificate_chain"]["inline_string"] = val
 
+        if not _data["private_key"] or not _data["certificate_chain"]:
+            return
         return _data
 
     def update_clusters(self):
@@ -1889,6 +2166,11 @@ class Osvc(object):
             if name not in RDS_Q:
                 RDS_Q[name] = queue.Queue()
             RDS_Q[name].put(True)
+
+    def update_secret(self, svcname):
+        if svcname not in RDS_Q:
+            SDS_Q[svcname] = queue.Queue()
+        SDS_Q[svcname].put(True)
 
     def update_service_lb(self, svcname):
         """
@@ -1956,6 +2238,7 @@ class Osvc(object):
         envoy.api.v2.eds_pb2_grpc.add_EndpointDiscoveryServiceServicer_to_server(EndpointDiscoveryServiceServicer(), self.server)
         envoy.api.v2.lds_pb2_grpc.add_ListenerDiscoveryServiceServicer_to_server(ListenerDiscoveryServiceServicer(), self.server)
         envoy.api.v2.rds_pb2_grpc.add_RouteDiscoveryServiceServicer_to_server(RouteDiscoveryServiceServicer(), self.server)
+        envoy.service.discovery.v2.sds_pb2_grpc.add_SecretDiscoveryServiceServicer_to_server(SecretDiscoveryServiceServicer(), self.server)
         #envoy.service.discovery.v2.ads_pb2_grpc.add_AggregatedDiscoveryServiceServicer_to_server(AggregatedDiscoveryServiceServicer(), self.server)
 
         print('Starting server. Listening on %s' % self.options["jsock"])
@@ -1984,6 +2267,7 @@ class Osvc(object):
         self.cds_stub = envoy.api.v2.cds_pb2_grpc.ClusterDiscoveryServiceStub(self.channel)
         self.lds_stub = envoy.api.v2.lds_pb2_grpc.ListenerDiscoveryServiceStub(self.channel)
         self.eds_stub = envoy.api.v2.eds_pb2_grpc.EndpointDiscoveryServiceStub(self.channel)
+        self.sds_stub = envoy.service.discovery.v2.sds_pb2_grpc.SecretDiscoveryServiceStub(self.channel)
         self.rds_stub = envoy.api.v2.rds_pb2_grpc.RouteDiscoveryServiceStub(self.channel)
         #self.ads_stub = envoy.service.discovery.v2.ads_pb2_grpc.AggregatedDiscoveryServiceStub(self.channel)
 
