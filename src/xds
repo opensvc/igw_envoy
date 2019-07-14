@@ -1683,6 +1683,10 @@ class Osvc(object):
             return None, None
         key = change[0]
         key_len = len(key)
+        if key[:2] == ["monitor", "nodes"] and key_len > 2:
+            # 2.0 events format
+            key = key[3:]
+        key_len = len(key)
         if change_len == 2:
             if key_len == 3 and \
                key[0] == "services" and \
