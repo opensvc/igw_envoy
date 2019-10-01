@@ -185,7 +185,7 @@ LAST_NONCE = {}
 RES_VERSION = {}
 ADDED_CLUSTERS = set()
 STATE = "INIT"
-EVT2_MON_PREFIX = ["monitor", "nodes"]     
+EVT2_MON_PREFIX = ["monitor", "nodes"]
 
 ACTION_ROUTE_DEFAULTS = {
     "prefix_rewrite": None,
@@ -1683,17 +1683,11 @@ class Osvc(object):
         if change_len == 0:
             return None, None
         key = change[0]
-        try:                                              
-            if key[0:2] == EVT2_MON_PREFIX:
-                # v2.0 style events                                
-                key = key[3:]                                       
-        except Exception:         
-            pass              
         key_len = len(key)
-        if key[:2] == ["monitor", "nodes"] and key_len > 2:
+        if key_len > 2 and key[:2] == EVT2_MON_PREFIX:
             # 2.0 events format
             key = key[3:]
-        key_len = len(key)
+            key_len -= 3
         if change_len == 2:
             if key_len == 3 and \
                key[0] == "services" and \
