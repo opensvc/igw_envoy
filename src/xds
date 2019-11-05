@@ -143,6 +143,8 @@ import threading
 import select
 import uuid
 
+import json_delta
+
 import envoy.api.v2.core.config_source_pb2
 import envoy.api.v2.core.address_pb2
 import envoy.api.v2.discovery_pb2
@@ -793,6 +795,7 @@ class Osvc(object):
     The daemon class.
     """
     daemon_status_data = None
+    last_patch_id = None
 
     #
     # GRPC helpers: Cluster
@@ -1519,6 +1522,7 @@ class Osvc(object):
                 print("unable to get opensvc daemon data")
                 return
             self.daemon_status_data = data
+            print("FULL")
 
     def get_instances(self, svcname):
         instances = {}
@@ -1742,7 +1746,6 @@ class Osvc(object):
         if not valid_changes:
             return
 
-        self.get_daemon_status()
         for svcname, evt in valid_changes:
             self.do_action(svcname, evt)
 
@@ -2236,6 +2239,32 @@ class Osvc(object):
         else:
             self.lsnr_path = "/var/lib/opensvc/lsnr/lsnr.sock"
 
+    def patch_daemon_status(self, patch):
+        if patch.get("kind") != "patch":
+            return
+        print("PATCH", patch["id"])
+        if self.last_patch_id and patch["id"] != self.last_patch_id + 1:
+            try:
+                self.get_daemon_status()
+                self.last_patch_id = patch["id"]
+            except Exception as exc:
+                # seen on solaris under high load: decode_msg() raising on invalid json
+                print("PATCH error 1:", exc)
+                pass
+        else:
+            try:
+                json_delta.patch(self.daemon_status_data, patch["data"])
+                self.last_patch_id = patch["id"]
+            except Exception as exc:
+                print("PATCH error 2:", exc)
+                try:
+                    self.get_daemon_status()
+                    self.last_patch_id = patch["id"]
+                except Exception as exc:
+                    # seen on solaris under high load: decode_msg() raising on invalid json
+                    print("PATCH error 3:", exc)
+                    pass
+
     def start_grpc_server(self):
         self.server = grpc.server(futures.ThreadPoolExecutor(max_workers=self.options["max_workers"]))
 
@@ -2257,6 +2286,7 @@ class Osvc(object):
         Mainloop where we listen to the server events.
         """
         for message in self.daemon_get_stream({"action": "events"}):
+            self.patch_daemon_status(message)
             self.event_router(message)
 
     def main(self, **kwargs):
