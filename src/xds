@@ -1944,7 +1944,6 @@ class Osvc(object):
                             tls_inspector_data = [
                                 {
                                     "name": "envoy.listener.tls_inspector",
-                                    "type_config": {},
                                 },
                             ]
                             if "listener_filters" not in _data:
