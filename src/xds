@@ -897,9 +897,14 @@ class Osvc(object):
                             },
                         ]
                     certs = expose_data.get("cluster_certificates")
-                    tls_context = self.get_tls_context(certs, instance, namespace=namespace)
-                    if tls_context and "tls_context" not in cluster_data:
-                        cluster_data["tls_context"] = tls_context
+                    if self.envoy_version < (1, 12, 0):
+                        tls_context = self.get_tls_context(certs, instance, namespace=namespace)
+                        if tls_context and "tls_context" not in cluster_data:
+                            cluster_data["tls_context"] = tls_context
+                    else:
+                        transport_socket = self.get_transport_socket(certs, instance, namespace=namespace)
+                        if transport_socket and "transport_socket" not in cluster_data:
+                            cluster_data["transport_socket"] = transport_socket
                     clusters[name] = cluster_data
         return clusters
 
@@ -1777,6 +1782,18 @@ class Osvc(object):
         elif evt == "delete":
             self.del_service_lb(svcname)
 
+    def set_envoy_version(self):
+        import requests
+        resp = requests.get("http://127.0.0.1:%d/server_info" % self.options["envoy_port"])
+        data = resp.json()
+        try:
+            version = data["version"]
+            version = tuple([int(e) for e in version.split("/")[1].split(".")])
+            self.envoy_version = version
+        except:
+            self.envoy_version = (0, 0, 0)
+        print("detected envoy version", self.envoy_version)
+
     def allocate_port(self, svcname, rid, addr):
         import requests
         allocated = set()
@@ -2066,12 +2083,22 @@ class Osvc(object):
 
         return data.values()
 
+    def get_transport_socket(self, certs, instance, tls_context=None, namespace=None):
+        tls_context = self.get_tls_context(certs, instance, tls_context=tls_context, namespace=namespace)
+        if not tls_context:
+            return
+        data = {"name": "tls", "config": tls_context}
+        return data
+
     def get_tls_context(self, certs, instance, tls_context=None, namespace=None):
         if not certs:
             return
         if tls_context is None:
             tls_context = {
                 "common_tls_context": {
+                    "tls_params": {
+                        "tls_minimum_protocol_version": "TLSv1_0",
+                    },
                     "tls_certificates": [],
                     "tls_certificate_sds_secret_configs": [],
                 }
@@ -2294,6 +2321,7 @@ class Osvc(object):
         """
         global STATE
         self.set_options(**kwargs)
+        self.set_envoy_version()
         self.start_grpc_server()
 
         # grpc client subs
