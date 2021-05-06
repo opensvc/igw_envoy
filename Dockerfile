@@ -7,7 +7,7 @@ RUN apk upgrade
 
 RUN apk add --no-cache libstdc++
 RUN apk add --no-cache --virtual .build-deps g++ gcc musl-dev python3-dev linux-headers
-RUN pip3 install --no-cache-dir protobuf grpcio requests
+RUN pip3 install --no-cache-dir protobuf grpcio requests googleapis-common-protos
 
 RUN apk del python3-dev .build-deps g++ gcc musl-dev python3-dev linux-headers
 
