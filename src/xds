@@ -239,6 +239,12 @@ def request_waiter(name, request_iterator, q):
             print("*** exit '%s' waiter on KeyboardInterrupt" % name)
             break
 
+def fmt_listener(addr, port):
+    if ":" in addr:
+        return "[%s]:%d" % (addr, port)
+    else:
+        return "%s:%d" % (addr, port)
+
 class SockReset(Exception):
     pass
 
@@ -1489,11 +1495,22 @@ class Osvc(object):
         return svcname, "expose#"+suffix
 
     def format_listenername(self, ipaddr, port, protocol):
-        return "%s:%d/%s" % (ipaddr, port, protocol)
+        return "%s/%s" % (fmt_listener(ipaddr, port), protocol)
 
     def split_listenername(self, name):
+        if "]:" in name:
+            ipaddr, rest = name.split("]:", 1)
+            ipaddr = ipaddr.lstrip("[")
+        elif ":" in name:
+            i = name.rindex(":")
+            ipaddr = name[:i]
+            try:
+                rest = name[i+1:]
+            except IndexError:
+                raise TypeError
+        else:
+            raise TypeError
         try:
-            ipaddr, rest = name.split(":", 1)
             port, protocol = rest.split("/", 1)
             port = int(port)
         except (ValueError, IndexError, TypeError):
