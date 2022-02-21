@@ -1736,6 +1736,7 @@ class Osvc(object):
                    key[4].startswith("data#") or \
                    key[4].startswith("vhost#") or \
                    key[4].startswith("route#") or \
+                   key[4].startswith("hashpolicy#") or \
                    key[4].startswith("hash_policy#") or \
                    key[4].startswith("certificate#"):
                     print("EVT expose config change:", change)
@@ -2114,7 +2115,7 @@ class Osvc(object):
             tls_context = {
                 "common_tls_context": {
                     "tls_params": {
-                        "tls_minimum_protocol_version": "TLSv1_0",
+                        "tls_minimum_protocol_version": "TLSv1_2",
                     },
                     "tls_certificates": [],
                     "tls_certificate_sds_secret_configs": [],
