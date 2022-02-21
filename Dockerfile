@@ -1,15 +1,8 @@
-FROM python:3-alpine
+FROM alpine
 
 LABEL maintainer="support@opensvc.com"
 
-RUN apk update
-RUN apk upgrade
-
-RUN apk add --no-cache libstdc++
-RUN apk add --no-cache --virtual .build-deps g++ gcc musl-dev python3-dev linux-headers
-RUN pip3 install --no-cache-dir protobuf grpcio requests
-
-RUN apk del python3-dev .build-deps g++ gcc musl-dev python3-dev linux-headers
+RUN apk update; apk upgrade; apk add py3-grpcio py3-requests py3-six py3-protobuf py3-googleapis-common-protos
 
 COPY src /usr/share/igw_envoy
 
