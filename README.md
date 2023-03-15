@@ -11,3 +11,6 @@ OpenSVC cluster.
 * The gateway can be a TLS endpoint
 
 * The gateway can redirect and rewrite paths
+
+The setup of a envoy ingress gateway in a cluster is described at
+https://github.com/opensvc/opensvc_templates/tree/main/igw_envoy
